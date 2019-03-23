@@ -1,0 +1,200 @@
+D:\uVK\uVK\obj\Debug\uVK.csprojAssemblyReference.cache
+D:\uVK\uVK\obj\Debug\MainWindow.g.cs
+D:\uVK\uVK\obj\Debug\App.g.cs
+D:\uVK\uVK\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\uVK\uVK\obj\Debug\uVK_MarkupCompile.cache
+D:\uVK\uVK\obj\Debug\uVK_MarkupCompile.lref
+D:\uVK\uVK\bin\Debug\uVK.exe.config
+D:\uVK\uVK\bin\Debug\uVK.exe
+D:\uVK\uVK\bin\Debug\uVK.pdb
+D:\uVK\uVK\bin\Debug\MaterialDesignColors.dll
+D:\uVK\uVK\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\uVK\uVK\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\uVK\uVK\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\uVK\uVK\obj\Debug\App.baml
+D:\uVK\uVK\obj\Debug\MainWindow.baml
+D:\uVK\uVK\obj\Debug\Styles\Buttons.baml
+D:\uVK\uVK\obj\Debug\Styles\Colors.baml
+D:\uVK\uVK\obj\Debug\Styles\Fonts.baml
+D:\uVK\uVK\obj\Debug\Styles\Texts.baml
+D:\uVK\uVK\obj\Debug\uVK.g.resources
+D:\uVK\uVK\obj\Debug\uVK.Properties.Resources.resources
+D:\uVK\uVK\obj\Debug\uVK.csproj.GenerateResource.cache
+D:\uVK\uVK\obj\Debug\uVK.csproj.CoreCompileInputs.cache
+D:\uVK\uVK\obj\Debug\uVK.csproj.CopyComplete
+D:\uVK\uVK\obj\Debug\uVK.exe
+D:\uVK\uVK\obj\Debug\uVK.pdb
+D:\uVK\uVK\bin\Debug\Microsoft.Win32.Primitives.dll
+D:\uVK\uVK\bin\Debug\netstandard.dll
+D:\uVK\uVK\bin\Debug\System.AppContext.dll
+D:\uVK\uVK\bin\Debug\System.Collections.Concurrent.dll
+D:\uVK\uVK\bin\Debug\System.Collections.dll
+D:\uVK\uVK\bin\Debug\System.Collections.NonGeneric.dll
+D:\uVK\uVK\bin\Debug\System.Collections.Specialized.dll
+D:\uVK\uVK\bin\Debug\System.ComponentModel.dll
+D:\uVK\uVK\bin\Debug\System.ComponentModel.EventBasedAsync.dll
+D:\uVK\uVK\bin\Debug\System.ComponentModel.Primitives.dll
+D:\uVK\uVK\bin\Debug\System.ComponentModel.TypeConverter.dll
+D:\uVK\uVK\bin\Debug\System.Console.dll
+D:\uVK\uVK\bin\Debug\System.Data.Common.dll
+D:\uVK\uVK\bin\Debug\System.Diagnostics.Contracts.dll
+D:\uVK\uVK\bin\Debug\System.Diagnostics.Debug.dll
+D:\uVK\uVK\bin\Debug\System.Diagnostics.FileVersionInfo.dll
+D:\uVK\uVK\bin\Debug\System.Diagnostics.Process.dll
+D:\uVK\uVK\bin\Debug\System.Diagnostics.StackTrace.dll
+D:\uVK\uVK\bin\Debug\System.Diagnostics.TextWriterTraceListener.dll
+D:\uVK\uVK\bin\Debug\System.Diagnostics.Tools.dll
+D:\uVK\uVK\bin\Debug\System.Diagnostics.TraceSource.dll
+D:\uVK\uVK\bin\Debug\System.Diagnostics.Tracing.dll
+D:\uVK\uVK\bin\Debug\System.Drawing.Primitives.dll
+D:\uVK\uVK\bin\Debug\System.Dynamic.Runtime.dll
+D:\uVK\uVK\bin\Debug\System.Globalization.Calendars.dll
+D:\uVK\uVK\bin\Debug\System.Globalization.dll
+D:\uVK\uVK\bin\Debug\System.Globalization.Extensions.dll
+D:\uVK\uVK\bin\Debug\System.IO.Compression.dll
+D:\uVK\uVK\bin\Debug\System.IO.Compression.ZipFile.dll
+D:\uVK\uVK\bin\Debug\System.IO.dll
+D:\uVK\uVK\bin\Debug\System.IO.FileSystem.dll
+D:\uVK\uVK\bin\Debug\System.IO.FileSystem.DriveInfo.dll
+D:\uVK\uVK\bin\Debug\System.IO.FileSystem.Primitives.dll
+D:\uVK\uVK\bin\Debug\System.IO.FileSystem.Watcher.dll
+D:\uVK\uVK\bin\Debug\System.IO.IsolatedStorage.dll
+D:\uVK\uVK\bin\Debug\System.IO.MemoryMappedFiles.dll
+D:\uVK\uVK\bin\Debug\System.IO.Pipes.dll
+D:\uVK\uVK\bin\Debug\System.IO.UnmanagedMemoryStream.dll
+D:\uVK\uVK\bin\Debug\System.Linq.dll
+D:\uVK\uVK\bin\Debug\System.Linq.Expressions.dll
+D:\uVK\uVK\bin\Debug\System.Linq.Parallel.dll
+D:\uVK\uVK\bin\Debug\System.Linq.Queryable.dll
+D:\uVK\uVK\bin\Debug\System.Net.Http.dll
+D:\uVK\uVK\bin\Debug\System.Net.NameResolution.dll
+D:\uVK\uVK\bin\Debug\System.Net.NetworkInformation.dll
+D:\uVK\uVK\bin\Debug\System.Net.Ping.dll
+D:\uVK\uVK\bin\Debug\System.Net.Primitives.dll
+D:\uVK\uVK\bin\Debug\System.Net.Requests.dll
+D:\uVK\uVK\bin\Debug\System.Net.Security.dll
+D:\uVK\uVK\bin\Debug\System.Net.Sockets.dll
+D:\uVK\uVK\bin\Debug\System.Net.WebHeaderCollection.dll
+D:\uVK\uVK\bin\Debug\System.Net.WebSockets.Client.dll
+D:\uVK\uVK\bin\Debug\System.Net.WebSockets.dll
+D:\uVK\uVK\bin\Debug\System.ObjectModel.dll
+D:\uVK\uVK\bin\Debug\System.Reflection.dll
+D:\uVK\uVK\bin\Debug\System.Reflection.Extensions.dll
+D:\uVK\uVK\bin\Debug\System.Reflection.Primitives.dll
+D:\uVK\uVK\bin\Debug\System.Resources.Reader.dll
+D:\uVK\uVK\bin\Debug\System.Resources.ResourceManager.dll
+D:\uVK\uVK\bin\Debug\System.Resources.Writer.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.CompilerServices.VisualC.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.Extensions.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.Handles.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.InteropServices.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.Numerics.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.Serialization.Formatters.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.Serialization.Json.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.Serialization.Primitives.dll
+D:\uVK\uVK\bin\Debug\System.Runtime.Serialization.Xml.dll
+D:\uVK\uVK\bin\Debug\System.Security.Claims.dll
+D:\uVK\uVK\bin\Debug\System.Security.Cryptography.Algorithms.dll
+D:\uVK\uVK\bin\Debug\System.Security.Cryptography.Csp.dll
+D:\uVK\uVK\bin\Debug\System.Security.Cryptography.Encoding.dll
+D:\uVK\uVK\bin\Debug\System.Security.Cryptography.Primitives.dll
+D:\uVK\uVK\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+D:\uVK\uVK\bin\Debug\System.Security.Principal.dll
+D:\uVK\uVK\bin\Debug\System.Security.SecureString.dll
+D:\uVK\uVK\bin\Debug\System.Text.Encoding.dll
+D:\uVK\uVK\bin\Debug\System.Text.Encoding.Extensions.dll
+D:\uVK\uVK\bin\Debug\System.Text.RegularExpressions.dll
+D:\uVK\uVK\bin\Debug\System.Threading.dll
+D:\uVK\uVK\bin\Debug\System.Threading.Overlapped.dll
+D:\uVK\uVK\bin\Debug\System.Threading.Tasks.dll
+D:\uVK\uVK\bin\Debug\System.Threading.Tasks.Parallel.dll
+D:\uVK\uVK\bin\Debug\System.Threading.Thread.dll
+D:\uVK\uVK\bin\Debug\System.Threading.ThreadPool.dll
+D:\uVK\uVK\bin\Debug\System.Threading.Timer.dll
+D:\uVK\uVK\bin\Debug\System.ValueTuple.dll
+D:\uVK\uVK\bin\Debug\System.Xml.ReaderWriter.dll
+D:\uVK\uVK\bin\Debug\System.Xml.XDocument.dll
+D:\uVK\uVK\bin\Debug\System.Xml.XmlDocument.dll
+D:\uVK\uVK\bin\Debug\System.Xml.XmlSerializer.dll
+D:\uVK\uVK\bin\Debug\System.Xml.XPath.dll
+D:\uVK\uVK\bin\Debug\System.Xml.XPath.XDocument.dll
+D:\uVK\uVK\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\uVK\uVK\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
+D:\uVK\uVK\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+D:\uVK\uVK\bin\Debug\Newtonsoft.Json.dll
+D:\uVK\uVK\bin\Debug\protobuf-net.dll
+D:\uVK\uVK\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
+D:\uVK\uVK\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+D:\uVK\uVK\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
+D:\uVK\uVK\bin\Debug\Newtonsoft.Json.pdb
+D:\uVK\uVK\bin\Debug\Newtonsoft.Json.xml
+D:\uVK\uVK\bin\Debug\protobuf-net.xml
+D:\uVK\uVK\obj\Debug\uVK.exe.config
+D:\uVK — копия\uVK\bin\Debug\uVK.exe.config
+D:\uVK — копия\uVK\bin\Debug\uVK.exe
+D:\uVK — копия\uVK\bin\Debug\uVK.pdb
+D:\uVK — копия\uVK\obj\Debug\MainWindow.g.cs
+D:\uVK — копия\uVK\obj\Debug\App.g.cs
+D:\uVK — копия\uVK\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\uVK — копия\uVK\obj\Debug\uVK_MarkupCompile.cache
+D:\uVK — копия\uVK\obj\Debug\uVK_MarkupCompile.lref
+D:\uVK — копия\uVK\obj\Debug\App.baml
+D:\uVK — копия\uVK\obj\Debug\MainWindow.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\Buttons.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\Colors.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\Fonts.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\Texts.baml
+D:\uVK — копия\uVK\obj\Debug\uVK.g.resources
+D:\uVK — копия\uVK\obj\Debug\uVK.Properties.Resources.resources
+D:\uVK — копия\uVK\obj\Debug\uVK.csproj.GenerateResource.cache
+D:\uVK — копия\uVK\obj\Debug\uVK.csproj.CoreCompileInputs.cache
+D:\uVK — копия\uVK\obj\Debug\uVK.exe
+D:\uVK — копия\uVK\obj\Debug\uVK.pdb
+D:\uVK — копия\uVK\obj\Debug\InputBoxWindow.g.cs
+D:\uVK — копия\uVK\obj\Debug\InputBoxWindow.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\Controls\AudioControlStyles.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\Controls\ImageTransitionControl.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\Controls\VolumeControl.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\Icons.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\SliderStyles.baml
+D:\uVK — копия\uVK\obj\Debug\Styles\Controls\ImageTransitionControl.g.cs
+D:\uVK — копия\uVK\obj\Debug\Styles\Controls\PlayerControl.g.cs
+D:\uVK — копия\uVK\obj\Debug\Styles\Controls\VolumeControl.g.cs
+D:\uVK — копия\uVK\obj\Debug\uVK_Content.g.cs
+D:\uVK — копия\uVK\obj\Debug\Styles\Controls\PlayerControl.baml
+D:\uVK — копия\uVK\obj\Debug\uVK.csprojAssemblyReference.cache
+C:\Users\andre\Desktop\uVK\uVK\bin\Debug\uVK.exe.config
+C:\Users\andre\Desktop\uVK\uVK\bin\Debug\uVK.exe
+C:\Users\andre\Desktop\uVK\uVK\bin\Debug\uVK.pdb
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Controls\AudioControlStyles.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Controls\ImageTransitionControl.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Controls\VolumeControl.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Icons.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\SliderStyles.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\InputBoxWindow.g.cs
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\MainWindow.g.cs
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Controls\ImageTransitionControl.g.cs
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Controls\PlayerControl.g.cs
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Controls\VolumeControl.g.cs
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\App.g.cs
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\uVK_MarkupCompile.cache
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\uVK_MarkupCompile.lref
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\App.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\InputBoxWindow.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\MainWindow.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Buttons.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Colors.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Controls\PlayerControl.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Fonts.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\Texts.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\uVK.g.resources
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\uVK.Properties.Resources.resources
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\uVK.csproj.GenerateResource.cache
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\uVK.csproj.CoreCompileInputs.cache
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\uVK.exe
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\uVK.pdb
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\Styles\ListBox.baml
+C:\Users\andre\Desktop\uVK\uVK\obj\Debug\uVK.csprojAssemblyReference.cache
