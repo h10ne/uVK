@@ -154,14 +154,19 @@
                     </Border.Effect>
 
                     <Grid>
-                        <StackPanel>
-                            
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="233*"/>
+                            <RowDefinition Height="14*"/>
+                            <RowDefinition Height="288*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.RowSpan="3">
+
                             <Button Content="Моя музыка" 
                                 FontSize="14"
                                 Background="#FF6BA1FF" 
                                 BorderBrush="#FF6BA1FF" 
                                 Margin="5,301,5,0" Height="30"/>
-                            
+
                             <Button Content="Популярное" 
                                 FontSize="14"
                                 Background="#FF6BA1FF" 
@@ -173,7 +178,7 @@
                                 Background="#FF6BA1FF" 
                                 BorderBrush="#FF6BA1FF" 
                                 Margin="5,10,5,0" Height="30"/>
-                            
+
                             <Button Content="Друзья" 
                                 FontSize="14"
                                 Background="#FF6BA1FF" 
@@ -183,8 +188,8 @@
                         </StackPanel>
 
 
-                        <controls:PlayerControl Margin="15,10,0,0"/>
-                        
+                        <controls:PlayerControl Margin="15,10,0,0" Grid.RowSpan="3"/>
+
                     </Grid>
 
 
@@ -239,7 +244,7 @@
                              ItemTemplate="{DynamicResource MetroListBoxItemTemplate}" 
                              ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
                              ItemsSource="{Binding Menu}" Margin="5"/>
-                    
+
                 </Border>
 
             </Grid>

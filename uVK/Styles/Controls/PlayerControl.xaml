@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:uVK.Styles.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="185">
-    
+
     <StackPanel>
         <Grid Height="150">
             <Grid.ColumnDefinitions>
@@ -16,7 +16,7 @@
             <Grid>
                 <Rectangle Fill="#FFFFFF" Opacity="0.6"/>
                 <Image Source="/Images/logo.png" Margin="50" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <controls:ImageTransitionControl  HorizontalContentAlignment="Center"/>
+                <controls:ImageTransitionControl  HorizontalContentAlignment="Center" Loaded="ImageTransitionControl_Loaded"/>
             </Grid>
             <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="0,-36,0,0">
                 <ToggleButton Margin="0,0,0,0" Width="32" Height="32"  Style="{StaticResource VkStatusButtonStyle}"
@@ -41,24 +41,29 @@
             </StackPanel>
         </Grid>
 
-            <StackPanel DataContext="{Binding CurrentAudio}" HorizontalAlignment="Left" Width="150">
-                <TextBlock Text="Название" FontWeight="Bold" FontSize="15" TextTrimming="CharacterEllipsis" MaxHeight="36"
+        <StackPanel DataContext="{Binding CurrentAudio}" HorizontalAlignment="Left" Width="150">
+            <TextBlock Text="Название" Name="title_name" FontWeight="Bold" FontSize="15" TextTrimming="CharacterEllipsis" MaxHeight="36"
                        Foreground="{DynamicResource SidebarForegroundBrush}" ToolTip="{Binding Title}">
-                </TextBlock>
-                <TextBlock Text="Исполнитель" FontWeight="Normal" FontSize="14" Opacity="0.6" Margin="0,0,0,0" TextTrimming="CharacterEllipsis"
+            </TextBlock>
+            <TextBlock Text="Исполнитель" Name="artist_name" FontWeight="Normal" FontSize="14" Opacity="0.6" Margin="0,0,0,0" TextTrimming="CharacterEllipsis"
                        Foreground="{DynamicResource SidebarForegroundBrush}" ToolTip="{Binding Artist}">
-                </TextBlock>
-            </StackPanel>
+            </TextBlock>
+        </StackPanel>
 
-            <Grid HorizontalAlignment="Left" Margin="0,10,0,0" Width="150">
+        <Grid HorizontalAlignment="Left" Margin="0,10,0,0" Width="150">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="28*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="43*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Slider IsMoveToPointEnabled="True"
-                Style="{StaticResource CommonSliderStyle}" Background="{DynamicResource SidebarSliderBackgroundBrush}" />
-            <TextBlock Text="Прошло" FontSize="10" Opacity="0.5" Margin="0,17,0,0" Foreground="{DynamicResource SidebarForegroundBrush}"/>
-            <TextBlock Text="Всего" FontSize="10" Opacity="0.5" Margin="0,17,0,0" HorizontalAlignment="Right" Foreground="{DynamicResource SidebarForegroundBrush}"/>
+            <Slider IsMoveToPointEnabled="True" Name="duration_bar"
+                Style="{StaticResource CommonSliderStyle}" Background="{DynamicResource SidebarSliderBackgroundBrush}" Grid.ColumnSpan="3" />
+            <TextBlock Text="Прошло" Name="DurationTime_now" FontSize="10" Opacity="0.5" Margin="0,17,0,0" Foreground="{DynamicResource SidebarForegroundBrush}" Grid.ColumnSpan="3"/>
+            <TextBlock Text="Всего" Name="DurationTime_all"  FontSize="10" Opacity="0.5" Margin="0,17,-1,0" HorizontalAlignment="Right" Foreground="{DynamicResource SidebarForegroundBrush}" Grid.Column="2"/>
         </Grid>
 
         <Border Width="150" HorizontalAlignment="Left">
