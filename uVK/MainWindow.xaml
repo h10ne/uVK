@@ -1,0 +1,322 @@
+﻿<Window x:Class="uVK.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:controls="clr-namespace:uVK.Styles.Controls"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:uVK"
+        mc:Ignorable="d"
+        MinWidth="{Binding WindowMinimumWidth}"
+        MinHeight="{Binding WindowMinimumHeight}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        Deactivated="AppWindow_Deactivated"
+        Activated="AppWindow_Activated"
+        AllowsTransparency="True"
+        Icon="Images/logo-small.png"
+        BorderThickness="0"
+        WindowStyle="None"
+        
+        Title="uVK" Height="600" Width="900">
+
+    <!-- Стиль окна -->
+    <Window.Resources>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:MainWindow}">
+                        <!-- Внешняя граница с полем тени -->
+                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+
+                            <!-- Контур MainWindow -->
+                            <Grid>
+
+                                <!-- Маска непрозрачности для углов-->
+                                <Border x:Name="Container"
+                                        Background="{StaticResource BackgroundLightBrush}"
+                                        CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"/>
+
+                                <!-- Граница окна и тени -->
+                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
+                                        Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Opacity="0.2" />
+                                    </Border.Effect>
+                                </Border>
+
+                                <!-- Содержимое MainWindow -->
+                                <Grid>
+
+                                    <!-- Угловая обрезка -->
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Container}" />
+                                    </Grid.OpacityMask>
+
+                                    <Grid.RowDefinitions>
+
+                                        <!-- Строка заголовка -->
+                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=30}" />
+
+                                        <!-- Содержимое окна -->
+                                        <RowDefinition Height="*" />
+
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Строка заголовка -->
+                                    <Grid Grid.Column="0" Panel.ZIndex="1">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Название -->
+                                            <ColumnDefinition Width="*" />
+                                            <!-- Кнопки управления окном -->
+                                            <ColumnDefinition Width="Auto" />
+
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--Иконка-->
+                                        <Button Style="{StaticResource SystemIconButton}" Command="{Binding MenuCommand}">
+                                            <Image Source="/Images/logo-small.png" />
+                                        </Button>
+
+                                        <Grid Margin="0" HorizontalAlignment="Center" Grid.ColumnSpan="3" Grid.Column="0">
+
+                                            <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="5">
+                                                <StackPanel>
+                                                    <TextBlock HorizontalAlignment="Center" FontFamily="{StaticResource LatoBold}" FontSize="{StaticResource FontSizeRegular}" Margin="0,0,0,-5">
+                                                      <Run Text="u" Foreground="{StaticResource Dr0bOrangeBrush}" /><Run Text="VK" Foreground="{StaticResource Dr0bBlueBrush}" />
+                                                    </TextBlock>
+                                                    <TextBlock Text="by Dr0b" Foreground="{StaticResource ForegroundDarkBrush}" TextAlignment="Center" />
+                                                </StackPanel>
+                                            </Viewbox>
+
+                                        </Grid>
+
+                                        <!-- Window Buttons -->
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <Button Command="{Binding MinimizeCommand}" Style="{StaticResource WindowControlButton}" Content="_" />
+                                            <Button Command="{Binding MaximizeCommand}" Style="{StaticResource WindowControlButton}" Content="[ ]" />
+                                            <Button Command="{Binding CloseCommand}" Style="{StaticResource WindowCloseButton}" Content="X" />
+                                        </StackPanel>
+
+                                    </Grid>
+
+                                    <!-- Содержимое страницы -->
+                                    <Border Grid.Row="1" Padding="{Binding InnerContentPadding}">
+                                        <ContentPresenter Content="{TemplateBinding Content}" />
+                                    </Border>
+
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            CornerRadius="0"
+            GlassFrameThickness="0"
+            />
+    </WindowChrome.WindowChrome>
+
+
+    <Grid Margin="5,5,5,5" >
+
+        <Grid Name="gridMain"
+              Visibility="Visible"
+              Background="#FFFFFF">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Плеер-->
+            <Grid Margin="5,0,0,5" >
+
+                <Border Background="{StaticResource BackgroundLightBrush}"
+                        CornerRadius="{Binding FallbackValue=5}"/>
+
+                <!-- Граница окна и тени -->
+                <Border CornerRadius="{Binding FallbackValue=5}"
+                        Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}">
+
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="0" Opacity="0.3" />
+                    </Border.Effect>
+
+                    <Grid>
+                        <StackPanel>
+                            
+                            <Button Content="Моя музыка" 
+                                FontSize="14"
+                                Background="#FF6BA1FF" 
+                                BorderBrush="#FF6BA1FF" 
+                                Margin="5,301,5,0" Height="30"/>
+                            
+                            <Button Content="Популярное" 
+                                FontSize="14"
+                                Background="#FF6BA1FF" 
+                                BorderBrush="#FF6BA1FF" 
+                                Margin="5,10,5,0" Height="30"/>
+
+                            <Button Content="Рекомендации" 
+                                FontSize="14"
+                                Background="#FF6BA1FF" 
+                                BorderBrush="#FF6BA1FF" 
+                                Margin="5,10,5,0" Height="30"/>
+                            
+                            <Button Content="Друзья" 
+                                FontSize="14"
+                                Background="#FF6BA1FF" 
+                                BorderBrush="#FF6BA1FF" 
+                                Margin="5,10,5,0" Height="30"/>
+
+                        </StackPanel>
+
+
+                        <controls:PlayerControl Margin="15,10,0,0" x:Name="PlayerControl"/>
+                        
+                    </Grid>
+
+
+                </Border>
+
+            </Grid>
+
+            <!--Управление музыкой-->
+            <Grid Margin="10,0,5,0" Grid.Column="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="90"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Background="{StaticResource BackgroundLightBrush}"
+                        CornerRadius="{Binding FallbackValue=5}"/>
+
+                <!-- Граница окна и тени -->
+                <Border CornerRadius="{Binding FallbackValue=5}"
+                        Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}">
+
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="0" Opacity="0.3" />
+                    </Border.Effect>
+
+                    <Grid>
+
+                        <TextBox Tag="  Найти" 
+                             Margin="0,0,7,50" 
+                             HorizontalAlignment="Right"
+                             Height="24" Width="130" />
+
+                        <!--Текст который будет отображать чья музыка-->
+                        <TextBlock Text="Моя музыка"
+                                   Margin="15,-40,0,0" 
+                                   HorizontalAlignment="Left"
+                                   Width="Auto" Height="26"
+                                   FontSize="20" />
+
+                    </Grid>
+
+                </Border>
+
+                <Border Margin="0,10,0,5" CornerRadius="{Binding FallbackValue=5}"
+                        Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}" Grid.Row="1">
+
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="0" Opacity="0.3" />
+                    </Border.Effect>
+
+                    <ListBox x:Name="LbxMenu" Background="{x:Null}" BorderBrush="{x:Null}" 
+                             ItemTemplate="{DynamicResource MetroListBoxItemTemplate}" 
+                             ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
+                             ItemsSource="{Binding Menu}" Margin="5"/>
+                    
+                </Border>
+
+            </Grid>
+
+
+        </Grid>
+
+        <!-- Авторизация -->
+        <Grid Background="#FFFFFF" Name="gridLogin"
+              Visibility="Hidden">
+
+            <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=5}">
+                <Grid HorizontalAlignment="Center" Width="280" Height="250" >
+                    <!-- Маска непрозрачности для углов-->
+                    <Border Background="{StaticResource BackgroundLightBrush}"
+                            CornerRadius="{Binding FallbackValue=10}"/>
+                    <!-- Граница окна и тени -->
+                    <Border CornerRadius="{Binding FallbackValue=10}"
+                            Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}">
+                        <Grid>
+                            <Viewbox Margin="10,10,10,190">
+                                <StackPanel>
+                                    <TextBlock HorizontalAlignment="Center" FontSize="{StaticResource FontSizeRegular}" Margin="0,0,0,0">
+                                               <Run Text="Авторизация" Foreground="{StaticResource Dr0bBlackBrush}" />
+                                    </TextBlock>
+                                    <TextBlock Margin="0,10,0,0" Text="Используйте аккаунт Вконтакте" HorizontalAlignment="Center"  Foreground="{StaticResource ForegroundDarkBrush}" TextAlignment="Center" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Grid>
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.3" />
+                        </Border.Effect>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <PasswordBox Name="tbPassword"
+                         Tag="  Пароль"
+                         Height="30"
+                         VerticalAlignment="Center"
+                         Width="254"
+                         Margin="0,40,0,0" 
+                         />
+
+            <TextBox Name="tbLogin"
+                     Tag="  Номер телефона или email"
+                     Height="30"
+                     VerticalAlignment="Center"
+                     Width="255"
+                     Margin="0,-50,0,0"/>
+
+            <Button Name="btnLogin"
+                    Height="37"
+                    Width="100"
+                    Content="Войти" 
+                    FontSize="13"
+                    Margin="0,150,155,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" 
+                    Background="#FF6BA1FF" 
+                    BorderBrush="#FF6BA1FF" 
+                    Foreground="White"
+                    FontFamily="Segoe UI, Lucida Sans Unicode, Verdana"
+                    FontWeight="Normal"/>
+
+            <Button Style="{StaticResource TextButton}" Content="Забыли пароль?" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" Margin="100,151,0,0" FontSize="13" />
+
+            <Label Content="Project Dr0b 2019"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Bottom"
+                   Foreground="#7E8FA5"
+                   Margin="0,0,10,10" />
+
+        </Grid>
+
+    </Grid>
+
+</Window>
