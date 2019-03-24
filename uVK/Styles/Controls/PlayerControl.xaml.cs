@@ -20,11 +20,9 @@ namespace uVK.Styles.Controls
     /// </summary>
     public partial class PlayerControl : UserControl
     {
-
         public PlayerControl()
         {
             InitializeComponent();
         }
-        
     }
 }

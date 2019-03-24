@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using uVK;
+using uVK.Styles.Controls;
 
 class Playlist
 {
@@ -178,7 +178,7 @@ class OwnAudios : IState
             Thread.Sleep(270);
             if (main.vkDatas._offset == -1)
                 main.vkDatas._offset++;
-            //main.player.settings.volume = (int) main.PlayerControl.volume_bar.Volume;
+            main.player.settings.volume = (int) main.PlayerControl.volume_bar.Volume;
             main.player.URL = main.vkDatas.Audio[main.vkDatas._offset].Url.ToString();
             main.PlayerControl.artist_name.Text = main.vkDatas.Audio[main.vkDatas._offset].Artist;
             main.PlayerControl.title_name.Text = main.vkDatas.Audio[main.vkDatas._offset].Title;

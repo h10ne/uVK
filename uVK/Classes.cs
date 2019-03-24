@@ -13,6 +13,20 @@ public class Switches
     public bool IsOwn { get; set; } = true;
     public bool random { get; set; } = false;
     public bool isId { get; set; } = false;
+    public Switches()
+    {
+        isPlay = false;
+        mute = false;
+        isBlack = false;
+        IsMaximize  = false;
+        repeat  = false;
+        IsSearch  = false;
+        IsHot = false;
+        IsRecommend  = false;
+        IsOwn = true;
+        random = false;
+        isId  = false;
+    }
 }
 
 public class VkDatas
@@ -25,4 +39,8 @@ public class VkDatas
     public long user_id { get; set; }
     public ServiceCollection service { get; set; }
     public int _offset { get; set; } = -1;
+    public VkDatas()
+    {
+        _offset = -1;
+    }
 }

@@ -14,22 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
-using System.Drawing;
 using VkNet;
 using VkNet.Abstractions;
 using VkNet.Model;
@@ -60,10 +44,11 @@ namespace uVK
         public Switches VkBools;
         public VkDatas vkDatas;
         public bool isAuth = false;
-        public PlayerControl PlayerControl;
+       // public PlayerControl PlayerControl;
         public MainWindow()
         {
             InitializeComponent();
+            //PlayerControl = new PlayerControl();
             this.DataContext = new WindowViewModel(this);
             VkBools = new Switches();
             vkDatas = new VkDatas();
@@ -74,7 +59,7 @@ namespace uVK
                 GetAuth();
                 gridMain.Visibility = Visibility.Visible;
                 gridLogin.Visibility = Visibility.Hidden;
-            }            
+            }
             player = new WindowsMediaPlayer();
             duration_timer = new Timer(700);
             duration_timer.Stop();
@@ -163,7 +148,13 @@ namespace uVK
         {
             LbxMenu.Items.Clear();
             foreach (var audio in audios)
-                LbxMenu.Items.Add($"{audio.Artist} - {audio.Title}");
+            {
+                Object title = new object();
+                title = $"{audio.Artist} - {audio.Title}";
+                LbxMenu.Items.Add(title);
+
+            }
+                //LbxMenu.Items.Add($"{audio.Artist} - {audio.Title}");
         }
 
         private void AppWindow_Deactivated(object sender, EventArgs e)
