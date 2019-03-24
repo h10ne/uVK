@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using uVK.Styles.Controls;
 
 class Playlist
 {
@@ -44,7 +43,7 @@ class IdAudios : IState
     public void AudioMenuClick(uVK.MainWindow main)
     {
         foreach (var audio in main.vkDatas.IdAudios)
-            if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
             {
                 main.api.Audio.Add(audio.Id.GetValueOrDefault(), audio.OwnerId.GetValueOrDefault());
             }
@@ -52,10 +51,10 @@ class IdAudios : IState
 
     public void SetAudioInfo(uVK.MainWindow main, bool isback = false)
     {
-        if (main.LbxMenu.SelectedIndex == -1)
-            main.LbxMenu.SelectedItem = 0;
+        if (main.MusicList.SelectedIndex == -1)
+            main.MusicList.SelectedItem = 0;
         foreach (var audio in main.vkDatas.IdAudios)
-            if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
             {
                 if (audio.Url != null)
                 {
@@ -67,12 +66,12 @@ class IdAudios : IState
                 }
                 else if (isback)
                 {
-                    main.LbxMenu.SelectedIndex -= 1;
+                    main.MusicList.SelectedIndex -= 1;
                     SetAudioInfo(main, true);
                 }
                 else
                 {
-                    main.LbxMenu.SelectedIndex += 1;
+                    main.MusicList.SelectedIndex += 1;
                     SetAudioInfo(main, false);
                 }
             }
@@ -92,7 +91,7 @@ class IdAudios : IState
             if (rnd_max > 1800)
                 rnd_max = 1800;
             int value = rnds.Next(0, rnd_max - 1);
-            main.LbxMenu.SelectedIndex = value;
+            main.MusicList.SelectedIndex = value;
             Thread.Sleep(270);
             SetAudioInfo(main);
         }
@@ -100,12 +99,12 @@ class IdAudios : IState
         {
             try
             {
-                main.LbxMenu.SelectedIndex += 1;
+                main.MusicList.SelectedIndex += 1;
                 SetAudioInfo(main);
             }
             catch
             {
-                main.LbxMenu.SelectedIndex = 0;
+                main.MusicList.SelectedIndex = 0;
                 SetAudioInfo(main);
             }
         }
@@ -117,17 +116,17 @@ class IdAudios : IState
         {
 
 
-            if (main.LbxMenu.SelectedIndex <= -1)
+            if (main.MusicList.SelectedIndex <= -1)
             {
-                main.LbxMenu.SelectedIndex = main.LbxMenu.Items.Count;
+                main.MusicList.SelectedIndex = main.MusicList.Items.Count;
             }
             else
-                main.LbxMenu.SelectedIndex -= 1;
+                main.MusicList.SelectedIndex -= 1;
             SetAudioInfo(main, true);
         }
         catch (Exception ex)
         {
-            main.LbxMenu.SelectedIndex = 4998;
+            main.MusicList.SelectedIndex = 4998;
             SetAudioInfo(main, true);
         }
     }
@@ -138,7 +137,7 @@ class OwnAudios : IState
     public void AudioMenuClick(uVK.MainWindow main)
     {
         foreach (var audio in main.vkDatas.Audio)
-            if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
             {
                 main.api.Audio.Delete(audio.Id.GetValueOrDefault(), audio.OwnerId.GetValueOrDefault());
             }
@@ -151,9 +150,9 @@ class OwnAudios : IState
             if (main.vkDatas._offset == -1)
                 throw new Exception();
             foreach (var audio in main.vkDatas.Audio)
-                if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+                if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
                 {
-                    main.vkDatas._offset = main.LbxMenu.SelectedIndex;
+                    main.vkDatas._offset = main.MusicList.SelectedIndex;
                     bool th = false;
                     while (main.vkDatas.Audio[main.vkDatas._offset].Url == null)
                     {
@@ -166,8 +165,8 @@ class OwnAudios : IState
                     if (th) throw new Exception("1");
                     //main.music_picture.Source = audio.
                     main.player.URL = audio.Url.ToString();
-                    main.PlayerControl.artist_name.Text = audio.Artist;
-                    main.PlayerControl.title_name.Text = audio.Title;
+                    main.MusicArtist.Text = audio.Artist;
+                    main.MusicName.Text = audio.Title;
                     main.player.controls.play();
                     break;
                 }
@@ -178,22 +177,15 @@ class OwnAudios : IState
             Thread.Sleep(270);
             if (main.vkDatas._offset == -1)
                 main.vkDatas._offset++;
-            main.player.settings.volume = (int) main.PlayerControl.volume_bar.Volume;
+            //main.player.settings.volume = (int) main.VolumeSlider.Value;
             main.player.URL = main.vkDatas.Audio[main.vkDatas._offset].Url.ToString();
-            main.PlayerControl.artist_name.Text = main.vkDatas.Audio[main.vkDatas._offset].Artist;
-            main.PlayerControl.title_name.Text = main.vkDatas.Audio[main.vkDatas._offset].Title;
-            main.duration_timer.Start();
-            main.PlayerControl.duration_bar.Value = 0;
+            main.MusicArtist.Text = main.vkDatas.Audio[main.vkDatas._offset].Artist;
+            main.MusicName.Text = main.vkDatas.Audio[main.vkDatas._offset].Title;
+            main.DurrationTimer.Start();
+            main.DurrationSlider.Value = 0;
             main.AddAudioToList(main.vkDatas.Audio);
-            main.LbxMenu.SelectedIndex = main.vkDatas._offset;
+            main.MusicList.SelectedIndex = main.vkDatas._offset;
         }
-
-
-        //if (main.VkBools.isBlack)
-        //    main.play_pause_btn.Image = Resource1.pause_white;
-        //else
-        //    main.play_pause_btn.Image = Resource1.pause;
-        //main.VkBools.isPlay = true;
     }
 
     public void NextSong(uVK.MainWindow main)
@@ -202,7 +194,7 @@ class OwnAudios : IState
         {
             Random rnds = new Random();
             int value = rnds.Next(0, int.Parse(main.api.Audio.GetCount(main.vkDatas.user_id).ToString()) - 1);
-            main.LbxMenu.SelectedIndex = value;
+            main.MusicList.SelectedIndex = value;
             Thread.Sleep(270);
             SetAudioInfo(main);
         }
@@ -210,12 +202,12 @@ class OwnAudios : IState
         {
             try
             {
-                main.LbxMenu.SelectedIndex += 1;
+                main.MusicList.SelectedIndex += 1;
                 SetAudioInfo(main);
             }
             catch
             {
-                main.LbxMenu.SelectedIndex = 0;
+                main.MusicList.SelectedIndex = 0;
                 SetAudioInfo(main);
             }
         }
@@ -226,9 +218,9 @@ class OwnAudios : IState
         try
         {
 
-            main.LbxMenu.SelectedIndex -= 1;
-            if (main.LbxMenu.SelectedIndex == -1)
-                main.LbxMenu.SelectedIndex = int.Parse(main.api.Audio.GetCount(main.vkDatas.user_id).ToString()) - 1;
+            main.MusicList.SelectedIndex -= 1;
+            if (main.MusicList.SelectedIndex == -1)
+                main.MusicList.SelectedIndex = int.Parse(main.api.Audio.GetCount(main.vkDatas.user_id).ToString()) - 1;
             SetAudioInfo(main, true);
         }
         catch
@@ -243,7 +235,7 @@ class SearchAudios : IState
     public void AudioMenuClick(uVK.MainWindow main)
     {
         foreach (var audio in main.vkDatas.SearchAudios)
-            if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
             {
                 main.api.Audio.Add(audio.Id.GetValueOrDefault(), audio.OwnerId.GetValueOrDefault());
             }
@@ -253,12 +245,12 @@ class SearchAudios : IState
         try
         {
 
-            main.LbxMenu.SelectedIndex -= 1;
+            main.MusicList.SelectedIndex -= 1;
             SetAudioInfo(main);
         }
         catch
         {
-            main.LbxMenu.SelectedIndex = main.LbxMenu.Items.Count - 1;
+            main.MusicList.SelectedIndex = main.MusicList.Items.Count - 1;
             SetAudioInfo(main, true);
         }
     }
@@ -271,20 +263,20 @@ class SearchAudios : IState
             {
                 Random rnds = new Random();
                 int value;
-                value = rnds.Next(0, main.LbxMenu.Items.Count);
-                main.LbxMenu.SelectedIndex = value;
+                value = rnds.Next(0, main.MusicList.Items.Count);
+                main.MusicList.SelectedIndex = value;
                 SetAudioInfo(main);
             }
             else
             {
                 try
                 {
-                    main.LbxMenu.SelectedIndex += 1;
+                    main.MusicList.SelectedIndex += 1;
                     SetAudioInfo(main);
                 }
                 catch
                 {
-                    main.LbxMenu.SelectedIndex = 0;
+                    main.MusicList.SelectedIndex = 0;
                     SetAudioInfo(main);
                 }
             }
@@ -293,24 +285,24 @@ class SearchAudios : IState
     public void SetAudioInfo(uVK.MainWindow main, bool isback = false)
     {
         foreach (var audio in main.vkDatas.SearchAudios)
-            if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
             {
                 if (audio.Url != null)
                 {
                     main.player.URL = audio.Url.ToString();
-                    main.PlayerControl.artist_name.Text = audio.Artist;
-                    main.PlayerControl.title_name.Text = audio.Title;
+                    main.MusicArtist.Text = audio.Artist;
+                    main.MusicName.Text = audio.Title;
                     main.player.controls.play();
                     break;
                 }
                 else if (isback)
                 {
-                    main.LbxMenu.SelectedIndex -= 1;
+                    main.MusicList.SelectedIndex -= 1;
                     SetAudioInfo(main, true);
                 }
                 else
                 {
-                    main.LbxMenu.SelectedIndex += 1;
+                    main.MusicList.SelectedIndex += 1;
                     SetAudioInfo(main, false);
                 }
             }
@@ -327,7 +319,7 @@ class RecommendedAudio : IState
     public void AudioMenuClick(uVK.MainWindow main)
     {
         foreach (var audio in main.vkDatas.RecommendedAudio)
-            if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
             {
                 main.api.Audio.Add(audio.Id.GetValueOrDefault(), audio.OwnerId.GetValueOrDefault());
             }
@@ -337,12 +329,12 @@ class RecommendedAudio : IState
         try
         {
 
-            main.LbxMenu.SelectedIndex -= 1;
+            main.MusicList.SelectedIndex -= 1;
             SetAudioInfo(main, true);
         }
         catch
         {
-            main.LbxMenu.SelectedIndex = main.LbxMenu.Items.Count - 1;
+            main.MusicList.SelectedIndex = main.MusicList.Items.Count - 1;
             SetAudioInfo(main, true);
         }
     }
@@ -352,47 +344,47 @@ class RecommendedAudio : IState
         if (main.VkBools.random)
         {
             Random rnds = new Random();
-            int value = rnds.Next(0, main.LbxMenu.Items.Count);
-            main.LbxMenu.SelectedIndex = value;
+            int value = rnds.Next(0, main.MusicList.Items.Count);
+            main.MusicList.SelectedIndex = value;
             SetAudioInfo(main);
         }
         else
         {
             try
             {
-                main.LbxMenu.SelectedIndex += 1;
+                main.MusicList.SelectedIndex += 1;
                 SetAudioInfo(main);
             }
             catch
             {
-                main.LbxMenu.SelectedIndex = 0;
+                main.MusicList.SelectedIndex = 0;
                 SetAudioInfo(main);
             }
         }
     }
     public void SetAudioInfo(uVK.MainWindow main, bool isback = false)
     {
-        if (main.LbxMenu.SelectedIndex == -1)
-            main.LbxMenu.SelectedIndex = 0;
+        if (main.MusicList.SelectedIndex == -1)
+            main.MusicList.SelectedIndex = 0;
         foreach (var audio in main.vkDatas.RecommendedAudio)
-            if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
             {
                 if (audio.Url != null)
                 {
                     main.player.URL = audio.Url.ToString();
-                    main.PlayerControl.artist_name.Text = audio.Artist;
-                    main.PlayerControl.title_name.Text = audio.Title;
+                    main.MusicArtist.Text = audio.Artist;
+                    main.MusicName.Text = audio.Title;
                     main.player.controls.play();
                     break;
                 }
                 else if (isback)
                 {
-                    main.LbxMenu.SelectedIndex -= 1;
+                    main.MusicList.SelectedIndex -= 1;
                     SetAudioInfo(main, true);
                 }
                 else
                 {
-                    main.LbxMenu.SelectedIndex += 1;
+                    main.MusicList.SelectedIndex += 1;
                     SetAudioInfo(main, false);
                 }
             }
@@ -410,7 +402,7 @@ class HotAudio : IState
     public void AudioMenuClick(uVK.MainWindow main)
     {
         foreach (var audio in main.vkDatas.HotAudios)
-            if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
             {
                 main.api.Audio.Add(audio.Id.GetValueOrDefault(), audio.OwnerId.GetValueOrDefault());
             }
@@ -420,12 +412,12 @@ class HotAudio : IState
         try
         {
 
-            main.LbxMenu.SelectedIndex -= 1;
+            main.MusicList.SelectedIndex -= 1;
             SetAudioInfo(main, true);
         }
         catch
         {
-            main.LbxMenu.SelectedIndex = main.LbxMenu.Items.Count - 1;
+            main.MusicList.SelectedIndex = main.MusicList.Items.Count - 1;
             SetAudioInfo(main, true);
         }
     }
@@ -435,20 +427,20 @@ class HotAudio : IState
         if (main.VkBools.random)
         {
             Random rnds = new Random();
-            int value = rnds.Next(0, main.LbxMenu.Items.Count);
-            main.LbxMenu.SelectedIndex = value;
+            int value = rnds.Next(0, main.MusicList.Items.Count);
+            main.MusicList.SelectedIndex = value;
             SetAudioInfo(main);
         }
         else
         {
             try
             {
-                main.LbxMenu.SelectedIndex += 1;
+                main.MusicList.SelectedIndex += 1;
                 SetAudioInfo(main);
             }
             catch
             {
-                main.LbxMenu.SelectedIndex = 0;
+                main.MusicList.SelectedIndex = 0;
                 SetAudioInfo(main);
             }
         }
@@ -456,24 +448,24 @@ class HotAudio : IState
     public void SetAudioInfo(uVK.MainWindow main, bool isback = false)
     {
         foreach (var audio in main.vkDatas.HotAudios)
-            if (audio.Artist + " - " + audio.Title == main.LbxMenu.SelectedItem.ToString())
+            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
             {
                 if (audio.Url != null)
                 {
                     main.player.URL = audio.Url.ToString();
-                    main.PlayerControl.artist_name.Text = audio.Artist;
-                    main.PlayerControl.title_name.Text = audio.Title;
+                    main.MusicArtist.Text = audio.Artist;
+                    main.MusicName.Text = audio.Title;
                     main.player.controls.play();
                     break;
                 }
                 else if (isback)
                 {
-                    main.LbxMenu.SelectedIndex -= 1;
+                    main.MusicList.SelectedIndex -= 1;
                     SetAudioInfo(main, true);
                 }
                 else
                 {
-                    main.LbxMenu.SelectedIndex += 1;
+                    main.MusicList.SelectedIndex += 1;
                     SetAudioInfo(main, false);
                 }
             }

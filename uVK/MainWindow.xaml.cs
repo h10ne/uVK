@@ -14,16 +14,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Drawing;
-using VkNet;
+using System.Timers;
 using VkNet.Abstractions;
+using VkNet.Model.RequestParams;
+using WMPLib;
 using VkNet.Model;
+using VkNet.AudioBypassService;
 using VkNet.Enums.Filters;
 using Microsoft.Extensions.DependencyInjection;
+using VkNet;
 using VkNet.AudioBypassService.Extensions;
-using System.Timers;
-using WMPLib;
-using VkNet.Model.RequestParams;
-using uVK.Styles.Controls;
+
 namespace uVK
 {
     /// <summary>
@@ -32,11 +33,9 @@ namespace uVK
     public partial class MainWindow : Window
     {
         public WMPLib.WindowsMediaPlayer player;
-        public Timer duration_timer;
+        public Timer DurrationTimer;
         public string Token = null;
         public IVkApi api;
-        private Color MainColor;
-        private Color addColor;
         public string code = null;
         public Random rnd;
         private int clr;
@@ -44,11 +43,10 @@ namespace uVK
         public Switches VkBools;
         public VkDatas vkDatas;
         public bool isAuth = false;
-       // public PlayerControl PlayerControl;
+
         public MainWindow()
         {
             InitializeComponent();
-            //PlayerControl = new PlayerControl();
             this.DataContext = new WindowViewModel(this);
             VkBools = new Switches();
             vkDatas = new VkDatas();
@@ -61,13 +59,25 @@ namespace uVK
                 gridLogin.Visibility = Visibility.Hidden;
             }
             player = new WindowsMediaPlayer();
-            duration_timer = new Timer(700);
-            duration_timer.Stop();
+            DurrationTimer = new Timer(700);
+            DurrationTimer.Stop();
+            DurrationTimer.Elapsed += DurrationTimer_Tick;
             vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.user_id) });
             playlist.SetAudioInfo(this);
-
         }
 
+
+        private void AppWindow_Deactivated(object sender, EventArgs e)
+        {
+            // Show overlay if we lose focus
+            (DataContext as WindowViewModel).DimmableOverlayVisible = true;
+        }
+
+        private void AppWindow_Activated(object sender, EventArgs e)
+        {
+            // Hide overlay if we are focused
+            (DataContext as WindowViewModel).DimmableOverlayVisible = false;
+        }
 
         private void AuthToken()
         {
@@ -144,29 +154,40 @@ namespace uVK
             isAuth = true;
         }
 
+
         public void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios)
         {
-            LbxMenu.Items.Clear();
+            MusicList.Items.Clear();
             foreach (var audio in audios)
             {
                 Object title = new object();
                 title = $"{audio.Artist} - {audio.Title}";
-                LbxMenu.Items.Add(title);
+                MusicList.Items.Add(title);
 
             }
-                //LbxMenu.Items.Add($"{audio.Artist} - {audio.Title}");
         }
 
-        private void AppWindow_Deactivated(object sender, EventArgs e)
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-            // Show overlay if we lose focus
-            (DataContext as WindowViewModel).DimmableOverlayVisible = true;
+            if (!VkBools.isPlay)
+            {
+                player.controls.play();
+                VkBools.isPlay = true;
+            }
+            else
+            {
+                player.controls.pause();
+                VkBools.isPlay = false;
+            }
         }
 
-        private void AppWindow_Activated(object sender, EventArgs e)
+
+        private void DurrationTimer_Tick(object sender, ElapsedEventArgs e)
         {
-            // Hide overlay if we are focused
-            (DataContext as WindowViewModel).DimmableOverlayVisible = false;
+            //AllTimeDur.Text = player.currentMedia.durationString;
+            DurrationSlider.Maximum = (int)player.currentMedia.duration;
+            DurrationSlider.Value = (int)player.controls.currentPosition;
+           // currentTimeDur.Text = player.controls.currentPositionString;
         }
     }
 }
