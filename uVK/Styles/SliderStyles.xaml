@@ -10,7 +10,7 @@
     <SolidColorBrush x:Key="SliderThumb.Static.Background" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="SliderThumb.Static.Border" Color="#231f20" Opacity="0.2"/>
     <SolidColorBrush x:Key="SliderThumb.Track.Border" Color="Transparent"/>
-    <SolidColorBrush x:Key="SliderThumb.Track.Background" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="SliderThumb.Track.Background" />
 
     <ControlTemplate x:Key="SliderThumbHorizontalTop" TargetType="{x:Type Thumb}">
         <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
