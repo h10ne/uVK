@@ -294,6 +294,10 @@ namespace uVK
                 gridLogin.Visibility = Visibility.Hidden;
                 DoAfterLogin();
             }
+            else
+            {
+
+            }
         }
     }
 }
