@@ -172,7 +172,7 @@ class OwnAudios : IState
                     try
                     {
                         var uriImageSource = new Uri(main.vkDatas.Audio[main.vkDatas._offset].Album.Cover.Photo135, UriKind.RelativeOrAbsolute);
-                        main.MusicImage.Source = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
+                        main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
                     }
                     catch { }
                     break;

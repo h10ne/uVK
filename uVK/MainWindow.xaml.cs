@@ -53,10 +53,15 @@ namespace uVK
             playlist = new Playlist(new OwnAudios());
             if (File.Exists("auth.dat"))
             {
+                gridLogin.Visibility = Visibility.Hidden;
                 Token = File.ReadAllText("auth.dat");
                 GetAuth();
                 gridMain.Visibility = Visibility.Visible;
                 gridLogin.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                
             }
             player = new WindowsMediaPlayer();
             DurrationTimer = new DispatcherTimer
@@ -218,10 +223,10 @@ namespace uVK
             }
         }
 
-        private void DurrationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            //player.controls.currentPosition = DurrationSlider.Value;
-        }
+      //  private void DurrationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+       // {
+        //    player.controls.currentPosition = DurrationSlider.Value;
+        //}
 
         private void NextAudioButton_Click(object sender, RoutedEventArgs e)
         {
@@ -231,6 +236,27 @@ namespace uVK
         private void BackAudioButton_Click(object sender, RoutedEventArgs e)
         {
             playlist.PrevSong(this);
+        }
+
+        private void RandomAudioButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (VkBools.random)
+                VkBools.random = false;
+            else
+                VkBools.random = true;
+        }
+
+        private void PovtorAudioButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (VkBools.repeat)
+                VkBools.repeat = false;
+            else
+                VkBools.repeat = true;
+        }
+
+        private void ExitVK_Click(object sender, RoutedEventArgs e)
+        {
+            MusicList.Visibility = Visibility.Hidden;
         }
     }
 }
