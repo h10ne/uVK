@@ -163,7 +163,6 @@ class OwnAudios : IState
                         th = true;
                     }
                     if (th) throw new Exception("1");
-                    //main.music_picture.Source = audio.
                     main.player.URL = audio.Url.ToString();
                     main.MusicArtist.Text = audio.Artist;
                     main.MusicName.Text = audio.Title;
@@ -177,7 +176,7 @@ class OwnAudios : IState
             Thread.Sleep(270);
             if (main.vkDatas._offset == -1)
                 main.vkDatas._offset++;
-            //main.player.settings.volume = (int) main.VolumeSlider.Value;
+            main.player.settings.volume = (int) main.VolumeSlider.Value;
             main.player.URL = main.vkDatas.Audio[main.vkDatas._offset].Url.ToString();
             main.MusicArtist.Text = main.vkDatas.Audio[main.vkDatas._offset].Artist;
             main.MusicName.Text = main.vkDatas.Audio[main.vkDatas._offset].Title;
