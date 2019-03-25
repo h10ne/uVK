@@ -288,6 +288,7 @@
                                     <ToggleButton x:Name="RandomAudioButton"
                                                   Width="32" Height="32"
                                                   Style="{StaticResource ShuffleButtonStyle}" 
+                                                  Checked="RandomAudioButton_Click"
                                                   RenderTransformOrigin="0.5,0.5">
 
                                         <ToggleButton.RenderTransform>
@@ -304,7 +305,8 @@
                                     <!--Кнопка "Повторять аудиозапись"-->
                                     <ToggleButton x:Name="PovtorAudioButton" 
                                                   Width="32" Height="32" 
-                                                  Style="{StaticResource RepeatButtonStyle}">
+                                                  Style="{StaticResource RepeatButtonStyle}"
+                                                  Checked="PovtorAudioButton_Click">
 
                                         <ToggleButton.RenderTransform>
                                             <TranslateTransform />
@@ -416,7 +418,7 @@
             Name="gridLogin"
             Grid.RowSpan="2"
             Background="#FFFFFF"
-            Visibility="Visible">
+            Visibility="Hidden">
 
             <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=5}">
                 <Grid Width="280" Height="250" HorizontalAlignment="Center">

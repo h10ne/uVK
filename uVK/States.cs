@@ -150,7 +150,8 @@ class OwnAudios : IState
         try
         {
             if (main.vkDatas._offset == -1)
-                throw new Exception();
+                //throw new Exception();
+                main.MusicList.SelectedItem = 0;
             foreach (var audio in main.vkDatas.Audio)
                 if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
                 {
@@ -174,7 +175,11 @@ class OwnAudios : IState
                         var uriImageSource = new Uri(main.vkDatas.Audio[main.vkDatas._offset].Album.Cover.Photo135, UriKind.RelativeOrAbsolute);
                         main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
                     }
-                    catch { }
+                    catch
+                    {
+                        var uriImageSource = new Uri("https://raw.githubusercontent.com/h10ne/uVK/master/uVK/Images/logo.png", UriKind.RelativeOrAbsolute);
+                        main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
+                    }
                     break;
                 }
 
