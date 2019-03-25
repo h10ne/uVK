@@ -220,7 +220,7 @@ namespace uVK
 
         private void DurrationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            player.controls.currentPosition = DurrationSlider.Value;
+            //player.controls.currentPosition = DurrationSlider.Value;
         }
 
         private void NextAudioButton_Click(object sender, RoutedEventArgs e)
