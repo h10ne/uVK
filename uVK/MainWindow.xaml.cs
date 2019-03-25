@@ -36,7 +36,7 @@ namespace uVK
         public DispatcherTimer DurrationTimer;
         public string Token = null;
         public IVkApi api;
-        public string code = null;
+        //public string code = null;
         public Random rnd;
         private int clr;
         Playlist playlist;
@@ -56,13 +56,13 @@ namespace uVK
                 gridLogin.Visibility = Visibility.Hidden;
                 Token = File.ReadAllText("auth.dat");
                 GetAuth();
-                gridMain.Visibility = Visibility.Visible;
                 gridLogin.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                
-            }
+                DoAfterLogin();
+            }            
+        }
+
+        private void DoAfterLogin()
+        {
             player = new WindowsMediaPlayer();
             DurrationTimer = new DispatcherTimer
             {
@@ -110,25 +110,46 @@ namespace uVK
 
         private void Auth2Fact(string login, string password)
         {
-            api.Authorize(new ApiAuthParams
+            string trueCode;
+            try
             {
-                Login = login,
-                Password = password,
-                Settings = Settings.Offline,
-                TwoFactorAuthorization = () =>
+                api.Authorize(new ApiAuthParams
                 {
-                    while (code == null)
+                    Login = login,
+                    Password = password,
+                    Settings = Settings.Offline,
+                    TwoFactorAuthorization = () =>
                     {
-                        code = File.ReadAllText("someFile.tempdat");
+                        string code = "1";
+                        //while (code == null)
+                        //{
+                        //    code = File.ReadAllText("someFile.tempdat");
+                        //}
+                        //System.IO.File.Delete("someFile.tempdat");
+                        return code;
                     }
-                    System.IO.File.Delete("someFile.tempdat");
-                    return code;
-                }
-            });
-            vkDatas.user_id = api.UserId.GetHashCode();
-            File.WriteAllText("user_id.dat", vkDatas.user_id.ToString());
-            File.WriteAllText("auth.dat", api.Token);
-            Show();
+                });
+            }
+            catch
+            {
+                var input = new InputBoxWindow();
+                input.ShowDialog();
+                trueCode = File.ReadAllText("someFile.tempdat");
+
+                api.Authorize(new ApiAuthParams
+                {
+                    Login = login,
+                    Password = password,
+                    Settings = Settings.Offline,
+                    TwoFactorAuthorization = () =>
+                    {
+                        string code = File.ReadAllText("someFile.tempdat");                        
+                        return code;
+                    }
+                });
+                System.IO.File.Delete("someFile.tempdat");
+            }
+
         }
 
         private void AuthLogPass(string login, string password)
@@ -160,8 +181,11 @@ namespace uVK
                 try
                 {
                     Auth2Fact(login, password);
-                    if (!api.IsAuthorized)
-                        AuthLogPass(login, password);
+                    if (api.IsAuthorized)
+                    {
+                        rnd = new Random();
+                        isAuth = true;
+                    }
                 }
                 catch
                 {
@@ -169,8 +193,6 @@ namespace uVK
                 }
 
             }
-            rnd = new Random();
-            isAuth = true;
         }
 
 
@@ -223,11 +245,6 @@ namespace uVK
             }
         }
 
-      //  private void DurrationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-       // {
-        //    player.controls.currentPosition = DurrationSlider.Value;
-        //}
-
         private void NextAudioButton_Click(object sender, RoutedEventArgs e)
         {
             playlist.NextSong(this);
@@ -256,7 +273,27 @@ namespace uVK
 
         private void ExitVK_Click(object sender, RoutedEventArgs e)
         {
-            MusicList.Visibility = Visibility.Hidden;
+            
+        }
+
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                GetAuth(tbLogin.Text, tbPassword.Password);
+            }
+            catch
+            { }
+            if (isAuth == true)
+            {
+                File.WriteAllText("user_id.dat", api.UserId.Value.ToString());
+                File.WriteAllText("auth.dat", api.Token);
+                vkDatas.user_id = api.UserId.GetHashCode();
+                Token = api.Token;
+                vkDatas.user_id = api.UserId.Value;
+                gridLogin.Visibility = Visibility.Hidden;
+                DoAfterLogin();
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,12 @@ namespace uVK
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void BtnOK_Click(object sender, RoutedEventArgs e)
+        {
+            File.WriteAllText("someFile.tempdat", tbCode.Text);
+            Close();
         }
     }
 }

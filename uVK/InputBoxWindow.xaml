@@ -90,7 +90,7 @@
                     VerticalAlignment="Bottom"
                     Height="37"
                     Width="100"
-                    FontSize="12" Background="#FF6BA1FF" BorderBrush="#FFACACAC"/>
+                    FontSize="12" Background="#FF6BA1FF" BorderBrush="#FFACACAC" Click="BtnOK_Click"/>
 
         </Grid>
 
