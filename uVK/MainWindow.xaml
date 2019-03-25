@@ -288,8 +288,7 @@
                                     <ToggleButton x:Name="RandomAudioButton"
                                                   Width="32" Height="32"
                                                   Style="{StaticResource ShuffleButtonStyle}" 
-                                                  Checked="RandomAudioButton_Click"
-                                                  RenderTransformOrigin="0.5,0.5">
+                                                  RenderTransformOrigin="0.5,0.5" Click="RandomAudioButton_Click">
 
                                         <ToggleButton.RenderTransform>
                                             <TransformGroup>
@@ -305,8 +304,7 @@
                                     <!--Кнопка "Повторять аудиозапись"-->
                                     <ToggleButton x:Name="PovtorAudioButton" 
                                                   Width="32" Height="32" 
-                                                  Style="{StaticResource RepeatButtonStyle}"
-                                                  Checked="PovtorAudioButton_Click">
+                                                  Style="{StaticResource RepeatButtonStyle}" Click="PovtorAudioButton_Click">
 
                                         <ToggleButton.RenderTransform>
                                             <TranslateTransform />
@@ -330,7 +328,6 @@
                                 
                             </Border>
 
-                            <!--Кнопка "Перемешать аудио"-->
                             <Border Margin="5 5 0 0 " 
                                     Background="#E9EDF1"
                                     Height="25" CornerRadius="5">
@@ -345,7 +342,7 @@
                                             Margin="0,0,10,0"
                                             HorizontalAlignment="Center"
                                             Opacity="0.5"
-                                            Template="{StaticResource MuteButton}" />
+                                            Template="{StaticResource MuteButton}" Click="MinVolumeButton_Click" />
 
                                     <!--  Качеля громкости  -->
                                     <Slider x:Name="VolumeSlider"
@@ -361,7 +358,7 @@
                                             Margin="10,0,0,0"
                                             HorizontalAlignment="Center"
                                             Opacity="0.5"
-                                            Template="{StaticResource VolumeButton}" />
+                                            Template="{StaticResource VolumeButton}" Click="MaxVolumeButton_Click" />
 
                                 </StackPanel>
 
@@ -391,7 +388,7 @@
 
                 <Grid>
                     <!--Список аудиозаписей-->
-                    <ListBox  Name="MusicList" ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" Margin="5" BorderThickness="0" />
+                    <ListBox  Name="MusicList" MouseDoubleClick="MusicList_MouseDoubleClick" ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" Margin="5" BorderThickness="0" />
                 </Grid>
             </Border>
 
@@ -451,7 +448,6 @@
             <PasswordBox
                 Name="tbPassword"
                 Width="254"
-                TabIndex="2"
                 Height="30"
                 Margin="0,40,0,0"
                 VerticalAlignment="Center"
@@ -460,7 +456,6 @@
             <TextBox
                 Name="tbLogin"
                 Width="255"
-                TabIndex="1"
                 Height="30"
                 Margin="0,-50,0,0"
                 VerticalAlignment="Center"
@@ -470,8 +465,7 @@
                 Name="btnLogin"
                 Width="100"
                 Height="37"
-                TabIndex="3"
-                Margin="0,150,155,0"
+                Margin="0,165,155,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Background="#FF6BA1FF"
@@ -480,10 +474,16 @@
                 FontFamily="Segoe UI, Lucida Sans Unicode, Verdana"
                 FontSize="13"
                 FontWeight="Normal"
-                Foreground="White" />
+                Foreground="White" Click="BtnLogin_Click" />
 
+            <!--Текст (ошибка авторизации)-->
+            <TextBlock  Margin="0 100 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="" 
+                        Name="Error"
+                        FontFamily="{StaticResource LatoRegular}"
+                        Foreground="{StaticResource Dr0bRedBrush}" />
+            
             <Button
-                Margin="100,151,0,0"
+                Margin="100,165,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Content="Забыли пароль?"

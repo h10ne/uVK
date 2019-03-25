@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
-using System.Drawing;
 using VkNet.Abstractions;
 using VkNet.Model.RequestParams;
 using WMPLib;
 using VkNet.Model;
-using VkNet.AudioBypassService;
 using VkNet.Enums.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using VkNet;
@@ -27,18 +15,13 @@ using System.Windows.Threading;
 
 namespace uVK
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public WMPLib.WindowsMediaPlayer player;
         public DispatcherTimer DurrationTimer;
         public string Token = null;
         public IVkApi api;
-        //public string code = null;
         public Random rnd;
-        private int clr;
         Playlist playlist;
         public Switches VkBools;
         public VkDatas vkDatas;
@@ -84,6 +67,12 @@ namespace uVK
             DurrationSlider.Maximum = (int)player.currentMedia.duration;
             DurrationSlider.Value = (int)player.controls.currentPosition;
             PassedTimeText.Text = player.controls.currentPositionString;
+            if (player.status == "Остановлено")
+            {
+                if (!VkBools.repeat)
+                    playlist.NextSong(this);
+                player.controls.play();
+            }
         }
 
         private void AppWindow_Deactivated(object sender, EventArgs e)
@@ -120,13 +109,7 @@ namespace uVK
                     Settings = Settings.Offline,
                     TwoFactorAuthorization = () =>
                     {
-                        string code = "1";
-                        //while (code == null)
-                        //{
-                        //    code = File.ReadAllText("someFile.tempdat");
-                        //}
-                        //System.IO.File.Delete("someFile.tempdat");
-                        return code;
+                        return "0";
                     }
                 });
             }
@@ -296,8 +279,23 @@ namespace uVK
             }
             else
             {
-
+                Error.Text = "Неправильный логин или пароль";
             }
+        }
+
+        private void MusicList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            playlist.SetAudioInfo(this);
+        }
+
+        private void MaxVolumeButton_Click(object sender, RoutedEventArgs e)
+        {
+            VolumeSlider.Value = 100;
+        }
+
+        private void MinVolumeButton_Click(object sender, RoutedEventArgs e)
+        {
+            VolumeSlider.Value = 0;
         }
     }
 }
