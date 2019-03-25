@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
+using System.Windows.Media;
 
 class Playlist
 {
@@ -167,6 +169,12 @@ class OwnAudios : IState
                     main.MusicArtist.Text = audio.Artist;
                     main.MusicName.Text = audio.Title;
                     main.player.controls.play();
+                    try
+                    {
+                        var uriImageSource = new Uri(main.vkDatas.Audio[main.vkDatas._offset].Album.Cover.Photo135, UriKind.RelativeOrAbsolute);
+                        main.MusicImage.Source = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
+                    }
+                    catch { }
                     break;
                 }
 

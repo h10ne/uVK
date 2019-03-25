@@ -187,7 +187,7 @@
                                 Height="23"
                                 Margin="0,0,0,0"
                                 Foreground="{DynamicResource SidebarForegroundBrush}"
-                                Style="{StaticResource PrevButtonStyle}">
+                                Style="{StaticResource PrevButtonStyle}" Click="BackAudioButton_Click">
 
                                 <Button.RenderTransform>
                                     <TranslateTransform />
@@ -201,7 +201,7 @@
                                 Width="23"
                                 Height="23"
                                 Foreground="{DynamicResource SidebarForegroundBrush}"
-                                Style="{StaticResource NextButtonStyle}">
+                                Style="{StaticResource NextButtonStyle}" Click="NextAudioButton_Click">
                                 <Button.RenderTransform>
                                     <TranslateTransform />
                                 </Button.RenderTransform>

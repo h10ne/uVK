@@ -222,5 +222,15 @@ namespace uVK
         {
             player.controls.currentPosition = DurrationSlider.Value;
         }
+
+        private void NextAudioButton_Click(object sender, RoutedEventArgs e)
+        {
+            playlist.NextSong(this);
+        }
+
+        private void BackAudioButton_Click(object sender, RoutedEventArgs e)
+        {
+            playlist.PrevSong(this);
+        }
     }
 }
