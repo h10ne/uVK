@@ -135,7 +135,7 @@
 
     <Grid Margin="5,5,5,5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="75" />
+            <RowDefinition Height="85" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -162,8 +162,8 @@
                         <StackPanel Orientation="Horizontal">
 
                             <Border Background="#58595b"
-                                    CornerRadius="40" Margin="0,10" >
-                                
+                                    CornerRadius="40" Margin="0,15" >
+
                                 <!--Кнопка "Пауза"-->
                                 <ToggleButton
                                              Name="PauseButton"
@@ -187,7 +187,7 @@
                                 Height="23"
                                 Margin="0,0,0,0"
                                 Foreground="{DynamicResource SidebarForegroundBrush}"
-                                Style="{StaticResource PrevButtonStyle}">
+                                Style="{StaticResource PrevButtonStyle}" Click="BackAudioButton_Click">
 
                                 <Button.RenderTransform>
                                     <TranslateTransform />
@@ -200,9 +200,8 @@
                                 Name="NextAudioButton"
                                 Width="23"
                                 Height="23"
-                                Margin="0,0,0,0"
                                 Foreground="{DynamicResource SidebarForegroundBrush}"
-                                Style="{StaticResource NextButtonStyle}">
+                                Style="{StaticResource NextButtonStyle}" Click="NextAudioButton_Click">
                                 <Button.RenderTransform>
                                     <TranslateTransform />
                                 </Button.RenderTransform>
@@ -251,7 +250,20 @@
                                 Name="DurrationSlider"
                                 Background="{DynamicResource SidebarSliderBackgroundBrush}"
                                 IsMoveToPointEnabled="True"
-                                Style="{StaticResource CommonSliderStyle}" />
+                                Style="{StaticResource CommonSliderStyle}" MouseUp="DurrationSlider_MouseUp" ValueChanged="DurrationSlider_ValueChanged" />
+
+                            <!--Текст "сколько прошло времени"-->
+                            <TextBlock Name="PassedTimeText"
+                                           Text="Прошло" FontSize="10"
+                                           Opacity="0.5" 
+                                           Foreground="{DynamicResource SidebarForegroundBrush}"/>
+
+                            <!--Текст "Длительность аудиозаписи"-->
+                            <TextBlock Name="LongTimeText" Margin="0 -10  0 0" Text="Всего" FontSize="10" 
+                                           Opacity="0.5" 
+                                           HorizontalAlignment="Right" 
+                                           Foreground="{DynamicResource SidebarForegroundBrush}"/>
+
                         </StackPanel>
                     </Grid>
 
@@ -274,7 +286,7 @@
                                 VerticalAlignment="Center"
                                 Background="{DynamicResource SidebarSliderBackgroundBrush}"
                                 IsMoveToPointEnabled="True"
-                                Style="{StaticResource VolumeSliderStyle}" />
+                                Style="{StaticResource VolumeSliderStyle}" MouseWheel="VolumeSlider_MouseWheel" ValueChanged="VolumeSlider_ValueChanged" />
 
                             <!--  Громкость максимум  -->
                             <Button
@@ -287,9 +299,9 @@
                                 Template="{StaticResource VolumeButton}" />
 
                             <!--Кнопка "Перемешать аудио"-->
-                            <ToggleButton Name="RandomAudioButton" Margin="15 15 0 0" Width="32" Height="32"
+                            <ToggleButton Name="RandomAudioButton" Margin="15 35 0 0" Width="32" Height="32"
                                           Style="{StaticResource ShuffleButtonStyle}" RenderTransformOrigin="0.5,0.5">
-                                
+
                                 <ToggleButton.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -304,7 +316,7 @@
                             </ToggleButton>
 
                             <!--Кнопка "Повторять аудиозапись"-->
-                            <ToggleButton Name="PovtorAudioButton" Margin="0 15 0 0 " Width="32" Height="32" Style="{StaticResource RepeatButtonStyle}">
+                            <ToggleButton Name="PovtorAudioButton" Margin="0 35 0 0 " Width="32" Height="32" Style="{StaticResource RepeatButtonStyle}">
 
                                 <ToggleButton.RenderTransform>
                                     <TranslateTransform />
@@ -317,7 +329,7 @@
                                 Name="ExitVK"
                                 Width="32"
                                 Height="32"
-                                Margin="0,15,0,0"
+                                Margin="0,35,0,0"
                                 Style="{StaticResource VkStatusButtonStyle}">
 
                                 <ToggleButton.RenderTransform>
@@ -350,7 +362,7 @@
 
                 <Grid>
                     <!--Список аудиозаписей-->
-                    <ListBox Name="MusicList" Margin="5" /> 
+                    <ListBox Name="MusicList" Margin="5" />
                 </Grid>
             </Border>
 
@@ -366,7 +378,7 @@
 
                 <Grid>
                     <!--Список друзей-->
-                    <ListBox Name="FrendList" Margin="5"  /> 
+                    <ListBox Name="FrendList" Margin="5"  />
                 </Grid>
 
             </Border>

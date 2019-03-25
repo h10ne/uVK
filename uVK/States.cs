@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
+using System.Windows.Media;
 
 class Playlist
 {
@@ -163,11 +165,16 @@ class OwnAudios : IState
                         th = true;
                     }
                     if (th) throw new Exception("1");
-                    //main.music_picture.Source = audio.
                     main.player.URL = audio.Url.ToString();
                     main.MusicArtist.Text = audio.Artist;
                     main.MusicName.Text = audio.Title;
                     main.player.controls.play();
+                    try
+                    {
+                        var uriImageSource = new Uri(main.vkDatas.Audio[main.vkDatas._offset].Album.Cover.Photo135, UriKind.RelativeOrAbsolute);
+                        main.MusicImage.Source = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
+                    }
+                    catch { }
                     break;
                 }
 
@@ -177,7 +184,7 @@ class OwnAudios : IState
             Thread.Sleep(270);
             if (main.vkDatas._offset == -1)
                 main.vkDatas._offset++;
-            //main.player.settings.volume = (int) main.VolumeSlider.Value;
+            main.player.settings.volume = (int) main.VolumeSlider.Value;
             main.player.URL = main.vkDatas.Audio[main.vkDatas._offset].Url.ToString();
             main.MusicArtist.Text = main.vkDatas.Audio[main.vkDatas._offset].Artist;
             main.MusicName.Text = main.vkDatas.Audio[main.vkDatas._offset].Title;

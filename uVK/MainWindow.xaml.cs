@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Drawing;
-using System.Timers;
 using VkNet.Abstractions;
 using VkNet.Model.RequestParams;
 using WMPLib;
@@ -24,6 +23,7 @@ using VkNet.Enums.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using VkNet;
 using VkNet.AudioBypassService.Extensions;
+using System.Windows.Threading;
 
 namespace uVK
 {
@@ -33,7 +33,7 @@ namespace uVK
     public partial class MainWindow : Window
     {
         public WMPLib.WindowsMediaPlayer player;
-        public Timer DurrationTimer;
+        public DispatcherTimer DurrationTimer;
         public string Token = null;
         public IVkApi api;
         public string code = null;
@@ -59,13 +59,27 @@ namespace uVK
                 gridLogin.Visibility = Visibility.Hidden;
             }
             player = new WindowsMediaPlayer();
-            DurrationTimer = new Timer(700);
+            DurrationTimer = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 400)
+            };
             DurrationTimer.Stop();
-            DurrationTimer.Elapsed += DurrationTimer_Tick;
+            DurrationTimer.Tick += DurrationTimer_Tick;
+            VolumeSlider.Maximum = 100;
+            VolumeSlider.Value = 30;
             vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.user_id) });
             playlist.SetAudioInfo(this);
+            player.controls.stop();
         }
 
+        private void DurrationTimer_Tick(object sender, EventArgs e)
+        {
+
+            LongTimeText.Text = player.currentMedia.durationString;
+            DurrationSlider.Maximum = (int)player.currentMedia.duration;
+            DurrationSlider.Value = (int)player.controls.currentPosition;
+            PassedTimeText.Text = player.controls.currentPositionString;
+        }
 
         private void AppWindow_Deactivated(object sender, EventArgs e)
         {
@@ -181,13 +195,42 @@ namespace uVK
             }
         }
 
-
-        private void DurrationTimer_Tick(object sender, ElapsedEventArgs e)
+        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            //AllTimeDur.Text = player.currentMedia.durationString;
-            DurrationSlider.Maximum = (int)player.currentMedia.duration;
-            DurrationSlider.Value = (int)player.controls.currentPosition;
-           // currentTimeDur.Text = player.controls.currentPositionString;
+            player.settings.volume = (int) (sender as Slider).Value;
+        }
+
+        private void DurrationSlider_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            player.controls.currentPosition = DurrationSlider.Value;
+            DurrationTimer.Start();
+        }
+
+        private void VolumeSlider_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0 && player.settings.volume + 2 <= 100)
+            {
+                VolumeSlider.Value += 2;
+            }
+            else if (e.Delta < 0 && player.settings.volume - 2 >= 0)
+            {
+                VolumeSlider.Value -= 2;
+            }
+        }
+
+        private void DurrationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            player.controls.currentPosition = DurrationSlider.Value;
+        }
+
+        private void NextAudioButton_Click(object sender, RoutedEventArgs e)
+        {
+            playlist.NextSong(this);
+        }
+
+        private void BackAudioButton_Click(object sender, RoutedEventArgs e)
+        {
+            playlist.PrevSong(this);
         }
     }
 }
