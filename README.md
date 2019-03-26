@@ -7,5 +7,5 @@ uVK - неофициальный музыкальный плеер и мессе
 <hr>
 <b>Проект находится в разработке</b>
 <hr>
-<li><a href="https://github.com/h10ne">Код</a> </li>
-<li><a href="https://github.com/dr0b99">Дизайн</a></li>
+<li><h2><a href="https://github.com/h10ne">Код</a> </li>
+<li><a href="https://github.com/dr0b99">Дизайн</a></li></h2>
