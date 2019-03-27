@@ -49,7 +49,7 @@ namespace uVK
             player = new WindowsMediaPlayer();
             DurrationTimer = new DispatcherTimer
             {
-                Interval = new TimeSpan(0, 0, 0, 0, 400)
+                Interval = new TimeSpan(0, 0, 0, 0, 300)
             };
             DurrationTimer.Stop();
             DurrationTimer.Tick += DurrationTimer_Tick;
@@ -58,6 +58,81 @@ namespace uVK
             vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.user_id) });
             playlist.SetAudioInfo(this);
             player.controls.stop();
+            DownloadFriendList();
+            
+        }
+
+        private void DownloadFriendList()
+        {
+            var friends = api.Friends.Get(new FriendsGetParams
+            {
+                Fields = ProfileFields.All,
+                //Order = Order.Name
+            });
+            foreach (var friend in friends)
+                this.FrendList.Items.Add($"{friend.FirstName} {friend.LastName}");
+        }
+
+        private void SwitchStatesOff()
+        {
+            VkBools.IsHot = false;
+            VkBools.IsOwn = false;
+            VkBools.IsRecommend = false;
+            VkBools.IsSearch = false;
+        }
+
+        private void SetState(string state)
+        {
+            state = state.ToUpper();
+            switch (state)
+            {
+                case "OWN":
+                    SwitchStatesOff();
+                    MusicList.Items.Clear();
+                    VkBools.IsOwn = true;
+                    playlist = new Playlist(new OwnAudios());
+                    AddAudioToList(vkDatas.Audio);
+                    MusicList.SelectedIndex = vkDatas._offset;
+                    break;
+                case "HOT":
+                    SwitchStatesOff();
+                    MusicList.Items.Clear();
+                    VkBools.IsHot = true;
+                    playlist = new Playlist(new HotAudio());
+                    vkDatas.HotAudios = api.Audio.GetPopular(false, null, 35, null);
+                    foreach (var audio in vkDatas.HotAudios)
+                        MusicList.Items.Add($"{audio.Artist} - {audio.Title}");
+                    break;
+                case "SEARCH":
+                    SwitchStatesOff();
+                    MusicList.Items.Clear();
+                    VkBools.IsSearch = true;
+                    playlist = new Playlist(new SearchAudios());
+                    MusicList.Items.Clear();
+                    try
+                    {
+                        vkDatas.SearchAudios = api.Audio.Search(new AudioSearchParams
+                        {
+                            Query = MusicSearch.Text,
+                            Autocomplete = true,
+                            SearchOwn = true,
+                            Count = 20,
+                            PerformerOnly = false
+                        });
+                        AddAudioToList(vkDatas.SearchAudios);
+                    }
+                    catch { }
+                    break;
+                case "RECOM":
+                    SwitchStatesOff();
+                    MusicList.Items.Clear();
+                    VkBools.IsRecommend = true;
+                    playlist = new Playlist(new RecommendedAudio());
+                    vkDatas.RecommendedAudio = api.Audio.GetRecommendations(null, null, 50, null, true);
+                    AddAudioToList(vkDatas.RecommendedAudio);
+                    break;               
+
+            }
         }
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
@@ -69,7 +144,7 @@ namespace uVK
             PassedTimeText.Text = player.controls.currentPositionString;
             if (player.status == "Остановлено")
             {
-                if (!VkBools.repeat)
+                if (RepeatAudioButton.IsChecked.Value)
                     playlist.NextSong(this);
                 player.controls.play();
             }
@@ -100,6 +175,7 @@ namespace uVK
         private void Auth2Fact(string login, string password)
         {
             string trueCode;
+            bool needCode = false;
             try
             {
                 api.Authorize(new ApiAuthParams
@@ -109,12 +185,15 @@ namespace uVK
                     Settings = Settings.Offline,
                     TwoFactorAuthorization = () =>
                     {
+                        needCode = true;
                         return "0";
                     }
                 });
             }
             catch
             {
+                if (!needCode)
+                    return;
                 var input = new InputBoxWindow();
                 input.ShowDialog();
                 trueCode = File.ReadAllText("someFile.tempdat");
@@ -135,20 +214,6 @@ namespace uVK
 
         }
 
-        private void AuthLogPass(string login, string password)
-        {
-            api.Authorize(new ApiAuthParams
-            {
-                Login = login,
-                Password = password,
-                Settings = Settings.Offline
-            });
-            vkDatas.user_id = api.UserId.GetHashCode();
-            File.WriteAllText("user_id.dat", vkDatas.user_id.ToString());
-            File.WriteAllText("auth.dat", api.Token);
-            Show();
-        }
-
         public void GetAuth(string login = null, string password = null)
         {
 
@@ -161,20 +226,12 @@ namespace uVK
             }
             else
             {
-                try
+                Auth2Fact(login, password);
+                if (api.IsAuthorized)
                 {
-                    Auth2Fact(login, password);
-                    if (api.IsAuthorized)
-                    {
-                        rnd = new Random();
-                        isAuth = true;
-                    }
+                    rnd = new Random();
+                    isAuth = true;
                 }
-                catch
-                {
-                    //MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButtons.OK);
-                }
-
             }
         }
 
@@ -193,27 +250,19 @@ namespace uVK
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!VkBools.isPlay)
+            if (PauseButton.IsChecked.Value)
             {
                 player.controls.play();
-                VkBools.isPlay = true;
             }
             else
             {
                 player.controls.pause();
-                VkBools.isPlay = false;
             }
         }
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             player.settings.volume = (int) (sender as Slider).Value;
-        }
-
-        private void DurrationSlider_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            player.controls.currentPosition = DurrationSlider.Value;
-            DurrationTimer.Start();
         }
 
         private void VolumeSlider_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -231,32 +280,13 @@ namespace uVK
         private void NextAudioButton_Click(object sender, RoutedEventArgs e)
         {
             playlist.NextSong(this);
+            PauseButton.IsChecked = true;
         }
 
         private void BackAudioButton_Click(object sender, RoutedEventArgs e)
         {
             playlist.PrevSong(this);
-        }
-
-        private void RandomAudioButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (VkBools.random)
-                VkBools.random = false;
-            else
-                VkBools.random = true;
-        }
-
-        private void PovtorAudioButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (VkBools.repeat)
-                VkBools.repeat = false;
-            else
-                VkBools.repeat = true;
-        }
-
-        private void ExitVK_Click(object sender, RoutedEventArgs e)
-        {
-            
+            PauseButton.IsChecked = true;
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
@@ -286,6 +316,7 @@ namespace uVK
         private void MusicList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             playlist.SetAudioInfo(this);
+            PauseButton.IsChecked = true;
         }
 
         private void MaxVolumeButton_Click(object sender, RoutedEventArgs e)
@@ -296,6 +327,22 @@ namespace uVK
         private void MinVolumeButton_Click(object sender, RoutedEventArgs e)
         {
             VolumeSlider.Value = 0;
+        }
+
+        private void MusicSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SetState("search");
+            }
+        }
+
+        private void MusicSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(MusicSearch.Text))
+            {
+                SetState("own");
+            }
         }
     }
 }

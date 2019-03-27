@@ -177,7 +177,7 @@ class OwnAudios : IState
                     }
                     catch
                     {
-                        var uriImageSource = new Uri("https://raw.githubusercontent.com/h10ne/uVK/master/uVK/Images/logo.png", UriKind.RelativeOrAbsolute);
+                        var uriImageSource = new Uri("https://raw.githubusercontent.com/dr0b99/uVK/master/uVK/Images/ImageMusic.png", UriKind.RelativeOrAbsolute);
                         main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
                     }
                     break;
@@ -202,7 +202,7 @@ class OwnAudios : IState
 
     public void NextSong(uVK.MainWindow main)
     {
-        if (main.VkBools.random)
+        if (main.RandomAudioButton.IsChecked.Value)
         {
             Random rnds = new Random();
             int value = rnds.Next(0, int.Parse(main.api.Audio.GetCount(main.vkDatas.user_id).ToString()) - 1);
@@ -271,7 +271,7 @@ class SearchAudios : IState
     {
         if (main.vkDatas.SearchAudios != null)
         {
-            if (main.VkBools.random)
+            if (main.RandomAudioButton.IsChecked.Value)
             {
                 Random rnds = new Random();
                 int value;
@@ -305,7 +305,17 @@ class SearchAudios : IState
                     main.MusicArtist.Text = audio.Artist;
                     main.MusicName.Text = audio.Title;
                     main.player.controls.play();
-                    break;
+                    try
+                    {
+                        var uriImageSource = new Uri(main.vkDatas.SearchAudios[main.vkDatas._offset].Album.Cover.Photo68, UriKind.RelativeOrAbsolute);
+                        main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
+                    }
+                    catch
+                    {
+                        var uriImageSource = new Uri("https://raw.githubusercontent.com/dr0b99/uVK/master/uVK/Images/ImageMusic.png", UriKind.RelativeOrAbsolute);
+                        main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
+                    }
+                        break;
                 }
                 else if (isback)
                 {
@@ -353,7 +363,7 @@ class RecommendedAudio : IState
 
     public void NextSong(uVK.MainWindow main)
     {
-        if (main.VkBools.random)
+        if (main.RandomAudioButton.IsChecked.Value)
         {
             Random rnds = new Random();
             int value = rnds.Next(0, main.MusicList.Items.Count);
@@ -436,7 +446,7 @@ class HotAudio : IState
 
     public void NextSong(uVK.MainWindow main)
     {
-        if (main.VkBools.random)
+        if (main.RandomAudioButton.IsChecked.Value)
         {
             Random rnds = new Random();
             int value = rnds.Next(0, main.MusicList.Items.Count);

@@ -138,7 +138,7 @@
             <RowDefinition Height="85" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
+        
         <!--  Title  -->
         <Grid Name="MainGrid" Visibility="Visible" >
             <Border Margin="5" Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}" CornerRadius="{Binding FallbackValue=5}">
@@ -218,7 +218,7 @@
 
                                     <Rectangle.Fill>
                                         <ImageBrush x:Name="MusicImage"
-                                                    ImageSource="/Images/logo.png"
+                                                    ImageSource="/Images/ImageMusic.png"
                                                     Stretch="UniformToFill" />
                                     </Rectangle.Fill>
                                     
@@ -288,7 +288,7 @@
                                     <ToggleButton x:Name="RandomAudioButton"
                                                   Width="32" Height="32"
                                                   Style="{StaticResource ShuffleButtonStyle}" 
-                                                  RenderTransformOrigin="0.5,0.5" Click="RandomAudioButton_Click">
+                                                  RenderTransformOrigin="0.5,0.5" >
 
                                         <ToggleButton.RenderTransform>
                                             <TransformGroup>
@@ -302,9 +302,9 @@
                                     </ToggleButton>
 
                                     <!--Кнопка "Повторять аудиозапись"-->
-                                    <ToggleButton x:Name="PovtorAudioButton" 
+                                    <ToggleButton x:Name="RepeatAudioButton" 
                                                   Width="32" Height="32" 
-                                                  Style="{StaticResource RepeatButtonStyle}" Click="PovtorAudioButton_Click">
+                                                  Style="{StaticResource RepeatButtonStyle}" >
 
                                         <ToggleButton.RenderTransform>
                                             <TranslateTransform />
@@ -387,8 +387,17 @@
                 </Border.Effect>
 
                 <Grid>
+                    
+                    <!--Поиск по музыке-->
+                    <TextBox Name="MusicSearch" Tag="  Поиск по музыке" 
+                             Height="30" Margin="10" 
+                             VerticalAlignment="Top" KeyDown="MusicSearch_KeyDown" KeyUp="MusicSearch_KeyUp" />
+                    
                     <!--Список аудиозаписей-->
-                    <ListBox  Name="MusicList" MouseDoubleClick="MusicList_MouseDoubleClick" ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" Margin="5" BorderThickness="0" />
+                    <ListBox  Name="MusicList" 
+                              MouseDoubleClick="MusicList_MouseDoubleClick" 
+                              ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" 
+                              Margin="5 60 5 5 " BorderThickness="0" />
                 </Grid>
             </Border>
 
