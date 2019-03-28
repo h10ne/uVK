@@ -94,7 +94,6 @@ namespace uVK
                     MusicList.Items.Clear();
                     VkBools.IsOwn = true;
                     AddAudioToList(vkDatas.Audio);
-                    vkDatas.OffsetOwn = -1;
                     break;
                 case "HOT":
                     SwitchStatesOff();
