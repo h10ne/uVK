@@ -26,7 +26,8 @@ namespace uVK
         public Switches VkBools;
         public VkDatas vkDatas;
         public bool isAuth = false;
-
+        string state = "OWN";
+        private bool ChangePlaylist;
         public MainWindow()
         {
             InitializeComponent();
@@ -56,7 +57,9 @@ namespace uVK
             VolumeSlider.Maximum = 100;
             VolumeSlider.Value = 30;
             vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.user_id) });
+            AddAudioToList(vkDatas.Audio);
             playlist.SetAudioInfo(this);
+            DurrationTimer.Start();
             player.controls.stop();
             DownloadFriendList();
             
@@ -81,25 +84,24 @@ namespace uVK
             VkBools.IsSearch = false;
         }
 
-        private void SetState(string state)
+        private void SetAndDownloadState(string State)
         {
-            state = state.ToUpper();
+            this.state = State.ToUpper();
             switch (state)
             {
                 case "OWN":
                     SwitchStatesOff();
                     MusicList.Items.Clear();
                     VkBools.IsOwn = true;
-                    playlist = new Playlist(new OwnAudios());
                     AddAudioToList(vkDatas.Audio);
-                    MusicList.SelectedIndex = vkDatas._offset;
+                    vkDatas.OffsetOwn = -1;
                     break;
                 case "HOT":
                     SwitchStatesOff();
                     MusicList.Items.Clear();
                     VkBools.IsHot = true;
-                    playlist = new Playlist(new HotAudio());
                     vkDatas.HotAudios = api.Audio.GetPopular(false, null, 35, null);
+                    vkDatas.OffsetHot = -1;
                     foreach (var audio in vkDatas.HotAudios)
                         MusicList.Items.Add($"{audio.Artist} - {audio.Title}");
                     break;
@@ -107,7 +109,7 @@ namespace uVK
                     SwitchStatesOff();
                     MusicList.Items.Clear();
                     VkBools.IsSearch = true;
-                    playlist = new Playlist(new SearchAudios());
+                    vkDatas.OffsetSearch = -1;
                     MusicList.Items.Clear();
                     try
                     {
@@ -116,7 +118,7 @@ namespace uVK
                             Query = MusicSearch.Text,
                             Autocomplete = true,
                             SearchOwn = true,
-                            Count = 20,
+                            Count = 50,
                             PerformerOnly = false
                         });
                         AddAudioToList(vkDatas.SearchAudios);
@@ -127,8 +129,9 @@ namespace uVK
                     SwitchStatesOff();
                     MusicList.Items.Clear();
                     VkBools.IsRecommend = true;
-                    playlist = new Playlist(new RecommendedAudio());
+                    //playlist = new Playlist(new RecommendedAudio());
                     vkDatas.RecommendedAudio = api.Audio.GetRecommendations(null, null, 50, null, true);
+                    vkDatas.OffsetRecom = -1;
                     AddAudioToList(vkDatas.RecommendedAudio);
                     break;               
 
@@ -144,7 +147,7 @@ namespace uVK
             PassedTimeText.Text = player.controls.currentPositionString;
             if (player.status == "Остановлено")
             {
-                if (RepeatAudioButton.IsChecked.Value)
+                if (!RepeatAudioButton.IsChecked.Value)
                     playlist.NextSong(this);
                 player.controls.play();
             }
@@ -315,7 +318,16 @@ namespace uVK
 
         private void MusicList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            playlist.SetAudioInfo(this);
+            switch (state)
+            {
+                case "OWN":
+                    playlist = new Playlist(new OwnAudios());
+                    break;
+                case "SEARCH":
+                    playlist = new Playlist(new SearchAudios());
+                    break;
+            }
+            playlist.SetAudioInfo(this, fromClick:true);
             PauseButton.IsChecked = true;
         }
 
@@ -333,7 +345,7 @@ namespace uVK
         {
             if (e.Key == Key.Enter)
             {
-                SetState("search");
+                SetAndDownloadState("search");
             }
         }
 
@@ -341,7 +353,7 @@ namespace uVK
         {
             if (String.IsNullOrWhiteSpace(MusicSearch.Text))
             {
-                SetState("own");
+                SetAndDownloadState("own");
             }
         }
     }

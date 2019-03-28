@@ -26,9 +26,12 @@ public class VkDatas
     public System.Collections.Generic.IEnumerable<VkNet.Model.Attachments.Audio> HotAudios { get; set; }
     public long user_id { get; set; }
     public ServiceCollection service { get; set; }
-    public int _offset { get; set; } = -1;
+    public int OffsetOwn = 0;
+    public int OffsetSearch = 0;
+    public int OffsetHot = -1;
+    public int OffsetRecom = -1;
     public VkDatas()
     {
-        _offset = -1;
+
     }
 }
