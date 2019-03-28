@@ -128,7 +128,6 @@ namespace uVK
                     SwitchStatesOff();
                     MusicList.Items.Clear();
                     VkBools.IsRecommend = true;
-                    //playlist = new Playlist(new RecommendedAudio());
                     vkDatas.RecommendedAudio = api.Audio.GetRecommendations(null, null, 50, null, true);
                     vkDatas.OffsetRecom = -1;
                     AddAudioToList(vkDatas.RecommendedAudio);
@@ -241,6 +240,34 @@ namespace uVK
         public void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios)
         {
             MusicList.Items.Clear();
+            if (state == "SEARCH")
+            {
+                bool IncludeOwn = false;
+                int startValue = 0;
+                for (int i = 0; i < vkDatas.SearchAudios.Count; i++)
+                {
+                    foreach (var ownaudio in vkDatas.Audio)
+                    {
+                        if (ownaudio.AccessKey == vkDatas.SearchAudios[i].AccessKey)
+                        {
+                            if (!IncludeOwn)
+                            {
+                                IncludeOwn = true;
+                                MusicList.Items.Add("               Ваши аудиозаписи:");
+                            }
+                            MusicList.Items.Add(vkDatas.SearchAudios[i].Artist + " - " + vkDatas.SearchAudios[i].Title);
+                            startValue++;
+                        }
+                    }
+                }
+                if (startValue != 0)
+                    MusicList.Items.Add("               Все аудиозаписи:");
+                for (int j = startValue; j < vkDatas.SearchAudios.Count; j++)
+                {
+                    MusicList.Items.Add(vkDatas.SearchAudios[j].Artist + " - " + vkDatas.SearchAudios[j].Title);
+                }
+                return;
+            }
             foreach (var audio in audios)
             {
                 Object title = new object();

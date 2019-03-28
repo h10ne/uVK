@@ -298,15 +298,21 @@ class SearchAudios : IState
         else
         {
             main.player.URL = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Url.ToString();
-            main.MusicArtist.Text = main.vkDatas.Audio[main.vkDatas.OffsetSearch].Artist;
-            main.MusicName.Text = main.vkDatas.Audio[main.vkDatas.OffsetSearch].Title;
+            main.MusicArtist.Text = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist;
+            main.MusicName.Text = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title;
             for (int i = 0; i < main.MusicList.Items.Count; i++)
-                if (main.MusicList.Items[i].ToString() == main.vkDatas.Audio[main.vkDatas.OffsetSearch].Artist + " - " + main.vkDatas.Audio[main.vkDatas.OffsetOwn].Title)
+            {
+                string str = main.MusicList.Items[i].ToString();
+                string str2 = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist + " - " + 
+                    main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title;
+                if (main.MusicList.Items[i].ToString() == main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist 
+                    + " - " + main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title)
                 {
-                    string str = main.MusicList.Items[i].ToString();
                     main.MusicList.SelectedIndex = i;
                     break;
                 }
+            }
+                
             main.player.controls.play();
         }
 
