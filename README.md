@@ -3,7 +3,7 @@ uVK - неофициальный музыкальный плеер и мессе
 <hr>
 <h3><a href="https://www.microsoft.com/ru-RU/download/details.aspx?id=17851">Для функционирования приложения требуется .NET Framework</a></h3>
 <hr>
-<h3> Подробнее о версиях и обновлениях <a href="https://github.com/h10ne/uVK/releases">сдесь</a> </h3>
+<h3> Подробнее о версиях и обновлениях <a href="https://github.com/h10ne/uVK/releases">здесь</a> </h3>
 <hr>
 <b>Проект находится в разработке</b>
 <hr>
