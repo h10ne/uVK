@@ -397,7 +397,8 @@
                     <ListBox  Name="MusicList" 
                               MouseDoubleClick="MusicList_MouseDoubleClick" 
                               ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" 
-                              Margin="5 60 5 5 " BorderThickness="0" />
+                              Margin="5 60 5 5 " BorderThickness="0" >                       
+                    </ListBox>
                 </Grid>
             </Border>
 
