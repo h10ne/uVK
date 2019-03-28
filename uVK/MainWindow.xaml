@@ -95,7 +95,6 @@
                                                         FontSize="{StaticResource FontSizeRegular}">
                                                         <Run Foreground="{StaticResource Dr0bOrangeBrush}" Text="u" /><Run Foreground="{StaticResource Dr0bBlueBrush}" Text="VK" />
                                                     </TextBlock>
-                                                    <TextBlock Foreground="{StaticResource ForegroundDarkBrush}" Text="by Dr0b" TextAlignment="Center" />
                                                 </StackPanel>
                                             </Viewbox>
 
@@ -138,7 +137,7 @@
             <RowDefinition Height="85" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <!--  Title  -->
         <Grid Name="MainGrid" Visibility="Visible" >
             <Border Margin="5" Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}" CornerRadius="{Binding FallbackValue=5}">
@@ -157,7 +156,7 @@
                           Grid.RowSpan="2"
                           Margin="5"
                           Background="#FFFFFF">
-                        
+
                         <StackPanel Orientation="Horizontal">
 
                             <Border Background="#58595b"
@@ -221,7 +220,7 @@
                                                     ImageSource="/Images/ImageMusic.png"
                                                     Stretch="UniformToFill" />
                                     </Rectangle.Fill>
-                                    
+
                                 </Rectangle>
 
                             </Border>
@@ -275,15 +274,15 @@
 
                     <Grid Grid.Column="2" Margin="5">
                         <StackPanel>
-                            
+
                             <Border Height="36"
                                     Background="#E9EDF1"
                                     Margin="5 0 0 0" 
                                     CornerRadius="5">
-                                
+
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" 
                                             Orientation="Horizontal" >
-                                    
+
                                     <!--Кнопка "Перемешать аудио"-->
                                     <ToggleButton x:Name="RandomAudioButton"
                                                   Width="32" Height="32"
@@ -323,9 +322,9 @@
                                         </ToggleButton.RenderTransform>
 
                                     </ToggleButton>
-                                    
+
                                 </StackPanel>
-                                
+
                             </Border>
 
                             <Border Margin="5 5 0 0 " 
@@ -387,17 +386,22 @@
                 </Border.Effect>
 
                 <Grid>
-                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="588*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="16*"/>
+                    </Grid.ColumnDefinitions>
+
                     <!--Поиск по музыке-->
                     <TextBox Name="MusicSearch" Tag="  Поиск по музыке" 
-                             Height="30" Margin="10" 
-                             VerticalAlignment="Top" KeyDown="MusicSearch_KeyDown" KeyUp="MusicSearch_KeyUp" />
-                    
+                             Height="30" Margin="10,10,10,0" 
+                             VerticalAlignment="Top" KeyDown="MusicSearch_KeyDown" KeyUp="MusicSearch_KeyUp" Grid.ColumnSpan="3" />
+
                     <!--Список аудиозаписей-->
                     <ListBox  Name="MusicList" 
                               MouseDoubleClick="MusicList_MouseDoubleClick" 
                               ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" 
-                              Margin="5 60 5 5 " BorderThickness="0" >                       
+                              Margin="5 60 5 5 " BorderThickness="0" Grid.ColumnSpan="3" >
                     </ListBox>
                 </Grid>
             </Border>
@@ -425,7 +429,7 @@
             Name="gridLogin"
             Grid.RowSpan="2"
             Background="#FFFFFF"
-            Visibility="Hidden">
+            Visibility="Visible">
 
             <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=5}">
                 <Grid Width="280" Height="250" HorizontalAlignment="Center">
@@ -491,20 +495,20 @@
                         Name="Error"
                         FontFamily="{StaticResource LatoRegular}"
                         Foreground="{StaticResource Dr0bRedBrush}" />
-            
+
             <Button
                 Margin="100,165,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Content="Забыли пароль?"
                 FontSize="13"
-                Style="{StaticResource TextButton}" />
+                Style="{StaticResource TextButton}" Click="Button_Click" />
 
             <Label
                 Margin="0,0,10,10"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Content="Project Dr0b 2019"
+                Content="Project uVK 2019"
                 Foreground="#7E8FA5" />
 
         </Grid>
