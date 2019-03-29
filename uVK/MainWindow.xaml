@@ -95,7 +95,6 @@
                                                         FontSize="{StaticResource FontSizeRegular}">
                                                         <Run Foreground="{StaticResource Dr0bOrangeBrush}" Text="u" /><Run Foreground="{StaticResource Dr0bBlueBrush}" Text="VK" />
                                                     </TextBlock>
-                                                    <TextBlock Foreground="{StaticResource ForegroundDarkBrush}" Text="by Dr0b" TextAlignment="Center" />
                                                 </StackPanel>
                                             </Viewbox>
 
@@ -435,7 +434,7 @@
             Name="gridLogin"
             Grid.RowSpan="2"
             Background="#FFFFFF"
-            Visibility="Hidden">
+            Visibility="Visible">
 
             <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=5}">
                 <Grid Width="280" Height="250" HorizontalAlignment="Center">
@@ -508,13 +507,13 @@
                 VerticalAlignment="Center"
                 Content="Забыли пароль?"
                 FontSize="13"
-                Style="{StaticResource TextButton}" />
+                Style="{StaticResource TextButton}" Click="Button_Click" />
 
             <Label
                 Margin="0,0,10,10"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Content="Project Dr0b 2019"
+                Content="Project uVK 2019"
                 Foreground="#7E8FA5" />
 
         </Grid>

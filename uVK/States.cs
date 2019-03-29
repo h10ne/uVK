@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
-using System.Windows.Media;
 
 class Playlist
 {
@@ -178,7 +176,7 @@ class OwnAudios : IState
         }
         catch
         {
-            var uriImageSource = new Uri("https://raw.githubusercontent.com/dr0b99/uVK/master/uVK/Images/ImageMusic.png", UriKind.RelativeOrAbsolute);
+            var uriImageSource = new Uri("https://psv4.userapi.com/c848020/u279747195/docs/d8/fcf47e1de875/ImageMusic.png?extra=Eg29TEEFEi0S4zJLnuwE0cRiU1o8hJIiZiLOB3R5N3Eh-pBt0pH0xvY4l50PlgBbN0igJqVWxpEwDwfLH07PzZIYy2iR2KacvClEbsd0c6xXhhErCsdUoRKluT22E7qX_xTZmDEQjvifY8fKSyl43MYQSw", UriKind.RelativeOrAbsolute);
             main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
         }
     }
@@ -323,7 +321,7 @@ class SearchAudios : IState
         }
         catch
         {
-            var uriImageSource = new Uri("https://raw.githubusercontent.com/dr0b99/uVK/master/uVK/Images/ImageMusic.png", UriKind.RelativeOrAbsolute);
+            var uriImageSource = new Uri("https://psv4.userapi.com/c848020/u279747195/docs/d8/fcf47e1de875/ImageMusic.png?extra=Eg29TEEFEi0S4zJLnuwE0cRiU1o8hJIiZiLOB3R5N3Eh-pBt0pH0xvY4l50PlgBbN0igJqVWxpEwDwfLH07PzZIYy2iR2KacvClEbsd0c6xXhhErCsdUoRKluT22E7qX_xTZmDEQjvifY8fKSyl43MYQSw", UriKind.RelativeOrAbsolute);
             main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
         }
     }

@@ -21,13 +21,11 @@ namespace uVK
         public DispatcherTimer DurrationTimer;
         public string Token = null;
         public IVkApi api;
-        public Random rnd;
         Playlist playlist;
         public Switches VkBools;
         public VkDatas vkDatas;
         public bool isAuth = false;
         string state = "OWN";
-        private bool ChangePlaylist;
         public MainWindow()
         {
             InitializeComponent();
@@ -61,7 +59,8 @@ namespace uVK
             playlist.SetAudioInfo(this);
             DurrationTimer.Start();
             player.controls.stop();
-            DownloadFriendList();
+            TryToJoinGroup();
+            //DownloadFriendList();
             
         }
 
@@ -230,7 +229,6 @@ namespace uVK
                 Auth2Fact(login, password);
                 if (api.IsAuthorized)
                 {
-                    rnd = new Random();
                     isAuth = true;
                 }
             }
@@ -294,6 +292,11 @@ namespace uVK
             player.settings.volume = (int) (sender as Slider).Value;
         }
 
+        private void TryToJoinGroup()
+        {
+            api.Groups.Join(180253523);
+        }
+
         private void VolumeSlider_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0 && player.settings.volume + 2 <= 100)
@@ -320,6 +323,12 @@ namespace uVK
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+            if (String.IsNullOrWhiteSpace(tbLogin.Text) || String.IsNullOrWhiteSpace(tbLogin.Text))
+            {
+                Error.Text = "Все поля должны быть заполнены!";
+                return;
+            }
+
             try
             {
                 GetAuth(tbLogin.Text, tbPassword.Password);
@@ -338,7 +347,7 @@ namespace uVK
             }
             else
             {
-                Error.Text = "Неправильный логин или пароль";
+                Error.Text = "Неправильный логин или пароль!";
             }
         }
 
@@ -381,6 +390,11 @@ namespace uVK
             {
                 SetAndDownloadState("own");
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://vk.com/restore");
         }
     }
 }
