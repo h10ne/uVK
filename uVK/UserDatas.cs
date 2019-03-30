@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace uVK
 {
     [Serializable]
-    class UserDatas
+    public class UserDatas
     {
         public string User_id { get; set; }
         public string Token { get; set; }

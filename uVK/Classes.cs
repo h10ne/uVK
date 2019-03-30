@@ -24,15 +24,15 @@ public class SaveAudios
     internal List<StructSaveAudios> Audio { get; private set; }
     public SaveAudios()
     {
+        Audio = new List<StructSaveAudios>();
         Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\");
         string pathToSave = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\";
         string[] files2 = Directory.GetFiles(pathToSave, "*.*");
         List<string> filesname = Directory.GetFiles(pathToSave, "*.*").ToList();
         foreach (var name in filesname)
         {
-            string[] AudioMix = name.Split('↨');
-            string title = AudioMix[1];
-            title = title.Remove(title.Length - 5, 5);
+            string[] fullPath = name.Split('\\');
+            string[] AudioMix = fullPath[fullPath.Length-1].Split('↨');
             Audio.Add(new StructSaveAudios(AudioMix[0], AudioMix[1], name));
         }
     }
@@ -74,7 +74,7 @@ public class VkDatas
         Cache = new SaveAudios();
     }
 }
-public static class Des_ser
+public static class Des_Ser
 {
     public static void Serialize(uVK.UserDatas datas)
     {

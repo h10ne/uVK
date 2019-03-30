@@ -51,6 +51,7 @@ namespace uVK
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 300)
             };
+            DownloadFriendList();
             DurrationTimer.Stop();
             DurrationTimer.Tick += DurrationTimer_Tick;
             VolumeSlider.Maximum = 100;
@@ -60,17 +61,13 @@ namespace uVK
             playlist.SetAudioInfo(this);
             DurrationTimer.Start();
             player.controls.stop();
-            //TryToJoinGroup();
-            //DownloadFriendList();
-            
         }
 
         private void DownloadFriendList()
         {
             var friends = api.Friends.Get(new FriendsGetParams
             {
-                Fields = ProfileFields.All,
-                //Order = Order.Name
+                Fields = ProfileFields.All
             });
             foreach (var friend in friends)
                 this.FrendList.Items.Add($"{friend.FirstName} {friend.LastName}");
