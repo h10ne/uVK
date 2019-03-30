@@ -103,11 +103,11 @@
 
                                         <!--  Window Buttons  -->
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            
+
                                             <!--Кнопка "Настройка"-->
-                                                    <Button Margin="3" Foreground="{StaticResource Dr0bBlackBrush}"
+                                            <Button Margin="3" Foreground="{StaticResource Dr0bBlackBrush}"
                                                             Style="{StaticResource SettingsButton}"/>
-                                                    
+
 
 
                                             <Button Command="{Binding MinimizeCommand}" Content="_" Style="{StaticResource WindowControlButton}" />
@@ -173,11 +173,11 @@
                                           Click="PauseButton_Click"
                                           Style="{StaticResource PlayPauseButtonStyle}">
 
-                                    <ToggleButton.RenderTransform>
-                                        <TranslateTransform />
-                                    </ToggleButton.RenderTransform>
+                                <ToggleButton.RenderTransform>
+                                    <TranslateTransform />
+                                </ToggleButton.RenderTransform>
 
-                                </ToggleButton>
+                            </ToggleButton>
 
 
                             <!--Кнопка "Предыдущая аудиозапись"-->
@@ -200,7 +200,7 @@
                                     Height="23"
                                     Foreground="#7E9EC1"
                                     Style="{StaticResource NextButtonStyle}" Click="NextAudioButton_Click">
-                                
+
                                 <Button.RenderTransform>
                                     <TranslateTransform />
                                 </Button.RenderTransform>
@@ -392,16 +392,20 @@
                         <!--Свои аудизаписи-->
                         <TabItem Header="Моя музыка">
                             <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="97*"/>
+                                </Grid.ColumnDefinitions>
                                 <!--Поиск по музыке-->
                                 <TextBox Name="MusicSearch" Tag="  Поиск по музыке" 
-                             Height="30" Margin="10" 
-                             VerticalAlignment="Top" KeyDown="MusicSearch_KeyDown" KeyUp="MusicSearch_KeyUp" />
+                             Height="30" Margin="10,10,10,0" 
+                             VerticalAlignment="Top" KeyDown="MusicSearch_KeyDown" KeyUp="MusicSearch_KeyUp" Grid.ColumnSpan="2" />
 
                                 <!--Список аудиозаписей-->
                                 <ListBox  Name="MusicList" 
                                           MouseDoubleClick="MusicList_MouseDoubleClick" 
                                           ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" 
-                                          Margin="5 60 5 5 " BorderThickness="0" />
+                                          Margin="5 60 5 5 " BorderThickness="0" Grid.ColumnSpan="2" />
                             </Grid>
                         </TabItem>
 
@@ -420,7 +424,7 @@
                                      Visibility="Hidden"
                                      ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
                                      BorderThickness="0" Margin="5" />
-                                
+
                                 <!--Информирование о том что нету сохранённой музыки-->
                                 <TextBlock Name="NoSaveMusicText" 
                                            Text="У вас пока нет сохранённых аудио"
@@ -447,7 +451,7 @@
             </Border>
 
             <Grid Grid.Column="1" >
-                
+
                 <!--Список друзей-->
                 <ListBox Name="FrendList"
                          ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
@@ -461,7 +465,7 @@
         <Grid Name="gridLogin"
               Grid.RowSpan="2"
               Background="#FFFFFF"
-              Visibility="Visible">
+              Visibility="Hidden">
 
             <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=5}">
                 <Grid Width="280" Height="250" HorizontalAlignment="Center">
