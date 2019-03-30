@@ -34,10 +34,11 @@ namespace uVK
             VkBools = new Switches();
             vkDatas = new VkDatas();
             playlist = new Playlist(new OwnAudios());
-            if (File.Exists("auth.dat"))
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
             {
                 gridLogin.Visibility = Visibility.Hidden;
-                Token = File.ReadAllText("auth.dat");
+                Des_Ser.Deserialize(ref vkDatas.datas);
+                Token = vkDatas.datas.Token;
                 GetAuth();
                 gridLogin.Visibility = Visibility.Hidden;
                 DoAfterLogin();
@@ -56,7 +57,7 @@ namespace uVK
             DurrationTimer.Tick += DurrationTimer_Tick;
             VolumeSlider.Maximum = 100;
             VolumeSlider.Value = 30;
-            vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.user_id) });
+            vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.datas.User_id) });
             AddAudioToList(vkDatas.Audio);
             playlist.SetAudioInfo(this);
             DurrationTimer.Start();
@@ -167,7 +168,6 @@ namespace uVK
                 AccessToken = Token,
                 Settings = Settings.Offline
             });
-            vkDatas.user_id = long.Parse(File.ReadAllText("user_id.dat"));
         }
 
         private void Auth2Fact(string login, string password)
@@ -335,11 +335,12 @@ namespace uVK
             { }
             if (isAuth == true)
             {
-                File.WriteAllText("user_id.dat", api.UserId.Value.ToString());
-                File.WriteAllText("auth.dat", api.Token);
-                vkDatas.user_id = api.UserId.GetHashCode();
+                vkDatas.datas.Token = api.Token;
+                vkDatas.datas.User_id = api.UserId.Value;
+                Des_Ser.Serialize(vkDatas.datas);
+                vkDatas.datas.User_id = api.UserId.GetHashCode();
                 Token = api.Token;
-                vkDatas.user_id = api.UserId.Value;
+                vkDatas.datas.User_id = api.UserId.Value;
                 gridLogin.Visibility = Visibility.Hidden;
                 DoAfterLogin();
             }

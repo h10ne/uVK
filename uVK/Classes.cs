@@ -63,14 +63,15 @@ public class VkDatas
     public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> IdAudios { get; set; }
     public System.Collections.Generic.IEnumerable<VkNet.Model.Attachments.Audio> HotAudios { get; set; }
     public SaveAudios Cache;
-    public long user_id { get; set; }
     public ServiceCollection service { get; set; }
     public int OffsetOwn = 0;
     public int OffsetSearch = 0;
     public int OffsetHot = -1;
     public int OffsetRecom = -1;
+    public uVK.UserDatas datas;
     public VkDatas()
     {
+        datas = new uVK.UserDatas();
         Cache = new SaveAudios();
     }
 }
@@ -79,13 +80,18 @@ public static class Des_Ser
     public static void Serialize(uVK.UserDatas datas)
     {
         IFormatter formatter = new BinaryFormatter();
-        using (Stream stream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\", FileMode.Create))
+        Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\");
+        using (Stream stream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin", FileMode.Create))
         {
             formatter.Serialize(stream, datas);
         }
     }
-    static public void Deserialize(uVK.UserDatas datas)
+    static public void Deserialize(ref uVK.UserDatas datas)
     {
-
+        IFormatter formatter = new BinaryFormatter();
+        using (Stream stream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin", FileMode.Open))
+        {
+            datas = (uVK.UserDatas)formatter.Deserialize(stream);
+        }
     }
 }

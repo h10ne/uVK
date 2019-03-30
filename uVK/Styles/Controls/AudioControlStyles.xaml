@@ -7,11 +7,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Grid Name="RootGrid" Background="Transparent">
-                        <Viewbox>
-                            <Path x:Name="Icon" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Margin="20,15,15,15" HorizontalAlignment="Center" Data="{StaticResource PlayIcon}"/>
-                        </Viewbox>
-                    </Grid>
+                    <Border x:Name="Circle" CornerRadius="40" Background="#5181B8">
+                        <Grid Name="RootGrid" Background="Transparent">
+                            <Viewbox>
+                                <Path x:Name="Icon" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Margin="20,15,15,15" HorizontalAlignment="Center" Data="{StaticResource PlayIcon}"/>
+                            </Viewbox>
+                        </Grid>
+                    </Border>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Icon" Property="Data" Value="{StaticResource PauseIcon}"/>
@@ -30,8 +33,11 @@
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="#FFFFFF"/>
                         </MultiTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Circle" Property="Background" Value="#5B88BD" />
+                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="RootGrid" Property="Opacity" Value="0.2" />
                         </Trigger>
@@ -67,7 +73,7 @@
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="#4A76A8"/>
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="RootGrid" Property="Opacity" Value="0.2" />
@@ -105,7 +111,7 @@
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="#4A76A8"/>
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="RootGrid" Property="Opacity" Value="0.2" />
@@ -120,12 +126,12 @@
         <Setter Property="Width" Value="56"/>
         <Setter Property="Height" Value="56"/>
         <Setter Property="Padding" Value="10"/>
-        <Setter Property="Foreground" Value="{DynamicResource SidebarForegroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0bBlackBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid x:Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="{TemplateBinding Foreground}" Opacity="0.5" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource ShuffleIcon}"/>
+                        <Path x:Name="Icon" Opacity="0.3" Fill="{TemplateBinding Foreground}" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource ShuffleIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -148,12 +154,12 @@
         <Setter Property="Width" Value="56"/>
         <Setter Property="Height" Value="56"/>
         <Setter Property="Padding" Value="10"/>
-        <Setter Property="Foreground" Value="{DynamicResource SidebarForegroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0bBlackBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid x:Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="{TemplateBinding Foreground}" Opacity="0.5" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource RepeatIcon}"/>
+                        <Path x:Name="Icon" Opacity="0.3" Fill="{TemplateBinding Foreground}" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource RepeatIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -176,11 +182,12 @@
         <Setter Property="Width" Value="56"/>
         <Setter Property="Height" Value="56"/>
         <Setter Property="Padding" Value="10"/>
+        <Setter Property="Foreground" Value="{DynamicResource Dr0bBlackBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid x:Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Fill="{DynamicResource SidebarForegroundBrush}" Opacity="0.5" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource SaveIcon}"/>
+                        <Path x:Name="Icon" Opacity="0.3" Fill="{TemplateBinding Foreground}" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource SaveIcon}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -228,7 +235,7 @@
 
     <ControlTemplate x:Key="MuteButton" TargetType="Button">
         <Grid Background="#00000000">
-            <Path Name="Icon" Data="{StaticResource VolumeMuteIcon}" Fill="{DynamicResource SidebarForegroundBrush}" Stretch="Uniform" Opacity="0.7"/>
+            <Path Name="Icon" Data="{StaticResource VolumeMuteIcon}" Fill="{DynamicResource PlayerButtonsColor}"  Stretch="Uniform" Opacity="0.7" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -246,7 +253,7 @@
 
     <ControlTemplate x:Key="VolumeButton" TargetType="Button">
         <Grid Background="#00000000">
-            <Path Name="Icon" Data="{StaticResource VolumeIcon}" Fill="{DynamicResource SidebarForegroundBrush}" Stretch="Uniform" Opacity="0.7"/>
+            <Path Name="Icon" Data="{StaticResource VolumeIcon}" Fill="{DynamicResource PlayerButtonsColor}" Stretch="Uniform" Opacity="0.7"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

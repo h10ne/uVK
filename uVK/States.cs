@@ -186,7 +186,7 @@ class OwnAudios : IState
         if (main.RandomAudioButton.IsChecked.Value)
         {
             Random rnds = new Random();
-            int value = rnds.Next(0, int.Parse(main.api.Audio.GetCount(main.vkDatas.user_id).ToString()) - 1);
+            int value = rnds.Next(0, int.Parse(main.api.Audio.GetCount(main.vkDatas.datas.User_id).ToString()) - 1);
             main.MusicList.SelectedIndex = value;
             Thread.Sleep(270);
             main.vkDatas.OffsetOwn += 1;
@@ -214,7 +214,7 @@ class OwnAudios : IState
 
             main.vkDatas.OffsetOwn -= 1; ;
             if (main.vkDatas.OffsetOwn == -1)
-                main.vkDatas.OffsetOwn = int.Parse(main.api.Audio.GetCount(main.vkDatas.user_id).ToString()) - 1;
+                main.vkDatas.OffsetOwn = int.Parse(main.api.Audio.GetCount(main.vkDatas.datas.User_id).ToString()) - 1;
             SetAudioInfo(main, true);
         }
         catch
