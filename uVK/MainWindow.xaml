@@ -315,7 +315,7 @@
                                     <ToggleButton x:Name="ExitVK"
                                                   Width="32"
                                                   Height="32"
-                                                  Style="{StaticResource SaveMusic}" Click="ExitVK_Click">
+                                                  Style="{StaticResource SaveMusic}">
 
                                         <ToggleButton.RenderTransform>
                                             <TranslateTransform />
