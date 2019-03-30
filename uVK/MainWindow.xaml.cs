@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using VkNet;
 using VkNet.AudioBypassService.Extensions;
 using System.Windows.Threading;
+using System.Net;
 
 namespace uVK
 {
@@ -59,7 +60,7 @@ namespace uVK
             playlist.SetAudioInfo(this);
             DurrationTimer.Start();
             player.controls.stop();
-            TryToJoinGroup();
+            //TryToJoinGroup();
             //DownloadFriendList();
             
         }
@@ -395,6 +396,12 @@ namespace uVK
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://vk.com/restore");
+        }
+
+        private void ExitVK_Click(object sender, RoutedEventArgs e)
+        {
+            WebClient webClient = new WebClient();
+            webClient.DownloadFileAsync(new Uri(player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\"+ MusicArtist.Text + "↨" + MusicName.Text);
         }
     }
 }

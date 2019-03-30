@@ -155,6 +155,7 @@
       <DependentUpon>InputBoxWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="States.cs" />
+    <Compile Include="UserDatas.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\StringRGBToBrushConverter.cs" />

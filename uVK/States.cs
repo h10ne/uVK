@@ -327,6 +327,14 @@ class SearchAudios : IState
     }
 }
 
+//class SaveAudios : IState
+//{
+//    public void SetAudioInfo(uVK.MainWindow main, bool isback = false, bool fromClick = false)
+//    {
+
+//    }
+//}
+
 class RecommendedAudio : IState
 {
     public void PrevSong(uVK.MainWindow main)
