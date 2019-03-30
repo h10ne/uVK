@@ -35,7 +35,9 @@
     <Color x:Key="Dr0bBlack">#000000</Color>
     <SolidColorBrush x:Key="Dr0bBlackBrush" Color="{StaticResource Dr0bBlack}" />
 
-
+    <Color x:Key="Dr0bVolumColorBlue">#7E9EC1</Color>
+    <SolidColorBrush x:Key="Dr0bBlueVolum" Color="{StaticResource Dr0bBlueVolum}" />
+    
     <!-- Colors -->
     <Color x:Key="ForegroundColor">#414042</Color>
     <Color x:Key="BackgroundColor">White</Color>
@@ -98,6 +100,7 @@
     <SolidColorBrush x:Key="ProgressBarBackgroundBrush" Color="#22000000"/>
 
     <!-- Volume bar -->
+    <SolidColorBrush x:Key="PlayerButtonsColor" Color="#99A0AB" />
     <SolidColorBrush x:Key="VolumeBarBackgroundBrush" Color="#58595b"/>
 
     <SolidColorBrush x:Key="SearchBarBackgroundBrush" Color="#ecebec" Opacity="0.7"/>
@@ -127,5 +130,6 @@
     <SolidColorBrush x:Key="SidebarSliderBackgroundBrush" Color="Black" Opacity="0.1"/>
 
     <SolidColorBrush x:Key="SidebarNowPlayingImageBackgroundBrush" Color="Transparent"/>
+
 
 </ResourceDictionary>

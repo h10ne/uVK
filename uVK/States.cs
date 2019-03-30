@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
-using System.Windows.Media;
 
 class Playlist
 {
@@ -178,7 +176,7 @@ class OwnAudios : IState
         }
         catch
         {
-            var uriImageSource = new Uri("https://raw.githubusercontent.com/dr0b99/uVK/master/uVK/Images/ImageMusic.png", UriKind.RelativeOrAbsolute);
+            var uriImageSource = new Uri("https://psv4.userapi.com/c848020/u279747195/docs/d8/f81b6ea0493b/ImageMusic.png?extra=eAix6htvrxG4hUmiCSjYZFxb05FSZFEuJMjSpZXm5a3QVGsK6OOUkCOSYmjwrnV0VoILNas2Rf3ZN0M3QQNRTCG-39Ff_lkWs28baALlQGZaCkQLoLejYgpYKhoqnmuCYjABlFLmzm-zOWJ4CIPMm-2Q9PU", UriKind.RelativeOrAbsolute);
             main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
         }
     }
@@ -188,7 +186,7 @@ class OwnAudios : IState
         if (main.RandomAudioButton.IsChecked.Value)
         {
             Random rnds = new Random();
-            int value = rnds.Next(0, int.Parse(main.api.Audio.GetCount(main.vkDatas.user_id).ToString()) - 1);
+            int value = rnds.Next(0, int.Parse(main.api.Audio.GetCount(main.vkDatas.datas.User_id).ToString()) - 1);
             main.MusicList.SelectedIndex = value;
             Thread.Sleep(270);
             main.vkDatas.OffsetOwn += 1;
@@ -216,7 +214,7 @@ class OwnAudios : IState
 
             main.vkDatas.OffsetOwn -= 1; ;
             if (main.vkDatas.OffsetOwn == -1)
-                main.vkDatas.OffsetOwn = int.Parse(main.api.Audio.GetCount(main.vkDatas.user_id).ToString()) - 1;
+                main.vkDatas.OffsetOwn = int.Parse(main.api.Audio.GetCount(main.vkDatas.datas.User_id).ToString()) - 1;
             SetAudioInfo(main, true);
         }
         catch
@@ -323,11 +321,19 @@ class SearchAudios : IState
         }
         catch
         {
-            var uriImageSource = new Uri("https://raw.githubusercontent.com/dr0b99/uVK/master/uVK/Images/ImageMusic.png", UriKind.RelativeOrAbsolute);
+            var uriImageSource = new Uri("https://psv4.userapi.com/c848020/u279747195/docs/d8/f81b6ea0493b/ImageMusic.png?extra=eAix6htvrxG4hUmiCSjYZFxb05FSZFEuJMjSpZXm5a3QVGsK6OOUkCOSYmjwrnV0VoILNas2Rf3ZN0M3QQNRTCG-39Ff_lkWs28baALlQGZaCkQLoLejYgpYKhoqnmuCYjABlFLmzm-zOWJ4CIPMm-2Q9PU", UriKind.RelativeOrAbsolute);
             main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
         }
     }
 }
+
+//class SaveAudios : IState
+//{
+//    public void SetAudioInfo(uVK.MainWindow main, bool isback = false, bool fromClick = false)
+//    {
+
+//    }
+//}
 
 class RecommendedAudio : IState
 {

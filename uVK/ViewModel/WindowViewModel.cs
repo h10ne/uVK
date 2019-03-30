@@ -9,8 +9,8 @@ namespace uVK
     {
         #region Private Member
         private Window mWindow;
-        private int mOuterMarginSize = 10;
-        private int mWindowRadius = 8;
+        private int mOuterMarginSize = 5;
+        private int mWindowRadius = 5;
         private WindowDockPosition mDockPosition = WindowDockPosition.Undocked;
         #endregion
 

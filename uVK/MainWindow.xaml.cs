@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using VkNet;
 using VkNet.AudioBypassService.Extensions;
 using System.Windows.Threading;
+using System.Net;
 
 namespace uVK
 {
@@ -21,13 +22,11 @@ namespace uVK
         public DispatcherTimer DurrationTimer;
         public string Token = null;
         public IVkApi api;
-        public Random rnd;
         Playlist playlist;
         public Switches VkBools;
         public VkDatas vkDatas;
         public bool isAuth = false;
         string state = "OWN";
-        private bool ChangePlaylist;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,10 +34,11 @@ namespace uVK
             VkBools = new Switches();
             vkDatas = new VkDatas();
             playlist = new Playlist(new OwnAudios());
-            if (File.Exists("auth.dat"))
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
             {
                 gridLogin.Visibility = Visibility.Hidden;
-                Token = File.ReadAllText("auth.dat");
+                Des_Ser.Deserialize(ref vkDatas.datas);
+                Token = vkDatas.datas.Token;
                 GetAuth();
                 gridLogin.Visibility = Visibility.Hidden;
                 DoAfterLogin();
@@ -52,25 +52,23 @@ namespace uVK
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 300)
             };
+            DownloadFriendList();
             DurrationTimer.Stop();
             DurrationTimer.Tick += DurrationTimer_Tick;
             VolumeSlider.Maximum = 100;
             VolumeSlider.Value = 30;
-            vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.user_id) });
+            vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.datas.User_id) });
             AddAudioToList(vkDatas.Audio);
             playlist.SetAudioInfo(this);
             DurrationTimer.Start();
             player.controls.stop();
-            DownloadFriendList();
-            
         }
 
         private void DownloadFriendList()
         {
             var friends = api.Friends.Get(new FriendsGetParams
             {
-                Fields = ProfileFields.All,
-                //Order = Order.Name
+                Fields = ProfileFields.All
             });
             foreach (var friend in friends)
                 this.FrendList.Items.Add($"{friend.FirstName} {friend.LastName}");
@@ -170,7 +168,6 @@ namespace uVK
                 AccessToken = Token,
                 Settings = Settings.Offline
             });
-            vkDatas.user_id = long.Parse(File.ReadAllText("user_id.dat"));
         }
 
         private void Auth2Fact(string login, string password)
@@ -230,7 +227,6 @@ namespace uVK
                 Auth2Fact(login, password);
                 if (api.IsAuthorized)
                 {
-                    rnd = new Random();
                     isAuth = true;
                 }
             }
@@ -294,6 +290,11 @@ namespace uVK
             player.settings.volume = (int) (sender as Slider).Value;
         }
 
+        private void TryToJoinGroup()
+        {
+            api.Groups.Join(180253523);
+        }
+
         private void VolumeSlider_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0 && player.settings.volume + 2 <= 100)
@@ -320,6 +321,12 @@ namespace uVK
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+            if (String.IsNullOrWhiteSpace(tbLogin.Text) || String.IsNullOrWhiteSpace(tbLogin.Text))
+            {
+                Error.Text = "Все поля должны быть заполнены!";
+                return;
+            }
+
             try
             {
                 GetAuth(tbLogin.Text, tbPassword.Password);
@@ -328,17 +335,18 @@ namespace uVK
             { }
             if (isAuth == true)
             {
-                File.WriteAllText("user_id.dat", api.UserId.Value.ToString());
-                File.WriteAllText("auth.dat", api.Token);
-                vkDatas.user_id = api.UserId.GetHashCode();
+                vkDatas.datas.Token = api.Token;
+                vkDatas.datas.User_id = api.UserId.Value;
+                Des_Ser.Serialize(vkDatas.datas);
+                vkDatas.datas.User_id = api.UserId.GetHashCode();
                 Token = api.Token;
-                vkDatas.user_id = api.UserId.Value;
+                vkDatas.datas.User_id = api.UserId.Value;
                 gridLogin.Visibility = Visibility.Hidden;
                 DoAfterLogin();
             }
             else
             {
-                Error.Text = "Неправильный логин или пароль";
+                Error.Text = "Неправильный логин или пароль!";
             }
         }
 
@@ -381,6 +389,17 @@ namespace uVK
             {
                 SetAndDownloadState("own");
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://vk.com/restore");
+        }
+
+        private void ExitVK_Click(object sender, RoutedEventArgs e)
+        {
+            WebClient webClient = new WebClient();
+            webClient.DownloadFileAsync(new Uri(player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\"+ MusicArtist.Text + "↨" + MusicName.Text);
         }
     }
 }

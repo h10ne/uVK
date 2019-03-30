@@ -6,7 +6,8 @@
             <!-- Важен порядок -->
             <ResourceDictionary Source="Colors.xaml" />
             <ResourceDictionary Source="Fonts.xaml" />
-        </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="Icons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Button}" x:Key="Hoverless">
         <Setter Property="Background" Value="Transparent" />
@@ -23,6 +24,7 @@
         </Setter>
     </Style>
 
+    <!--Меню окна-->
     <Style TargetType="{x:Type Button}" x:Key="SystemIconButton" BasedOn="{StaticResource Hoverless}">
 
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
@@ -75,6 +77,43 @@
 
     </Style>
 
+    <!-- Кнопки управления и настройки -->
+    <Style x:Key="SettingsButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#000000" />
+
+        <Setter Property="LayoutTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1.0" />
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border" CornerRadius="5"  Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border x:Name="Circle" CornerRadius="5">
+                                <Viewbox>
+                                    <Grid x:Name="RootGrid" Background="Transparent">
+                                        <Path x:Name="Icon" Fill="{TemplateBinding Foreground}" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource SettingsIcon}"/>
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#E5E5E5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!--Текст кнопка-->
     <Style x:Key="TextButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
