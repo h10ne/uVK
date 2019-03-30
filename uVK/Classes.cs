@@ -32,7 +32,7 @@ public class SaveAudios
         foreach (var name in filesname)
         {
             string[] fullPath = name.Split('\\');
-            string[] AudioMix = fullPath[fullPath.Length-1].Split('↨');
+            string[] AudioMix = fullPath[fullPath.Length - 1].Split('↨');
             Audio.Add(new StructSaveAudios(AudioMix[0], AudioMix[1], name));
         }
     }
@@ -47,11 +47,11 @@ public class Switches
     public bool IsId { get; set; } = false;
     public Switches()
     {
-        IsSearch  = false;
+        IsSearch = false;
         IsHot = false;
-        IsRecommend  = false;
+        IsRecommend = false;
         IsOwn = true;
-        IsId  = false;
+        IsId = false;
     }
 }
 
@@ -68,6 +68,7 @@ public class VkDatas
     public int OffsetSearch = 0;
     public int OffsetHot = -1;
     public int OffsetRecom = -1;
+    public int OffsetSave = -1;
     public uVK.UserDatas datas;
     public VkDatas()
     {

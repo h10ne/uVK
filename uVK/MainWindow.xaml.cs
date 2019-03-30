@@ -26,7 +26,7 @@ namespace uVK
         public Switches VkBools;
         public VkDatas vkDatas;
         public bool isAuth = false;
-        string state = "OWN";
+        string state;
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +34,12 @@ namespace uVK
             VkBools = new Switches();
             vkDatas = new VkDatas();
             playlist = new Playlist(new OwnAudios());
+            player = new WindowsMediaPlayer();
+            AddCacheToList();
+            DurrationTimer = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 300)
+            };
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
             {
                 gridLogin.Visibility = Visibility.Hidden;
@@ -42,16 +48,11 @@ namespace uVK
                 GetAuth();
                 gridLogin.Visibility = Visibility.Hidden;
                 DoAfterLogin();
-            }            
+            }
         }
 
         private void DoAfterLogin()
-        {
-            player = new WindowsMediaPlayer();
-            DurrationTimer = new DispatcherTimer
-            {
-                Interval = new TimeSpan(0, 0, 0, 0, 300)
-            };
+        {            
             DownloadFriendList();
             DurrationTimer.Stop();
             DurrationTimer.Tick += DurrationTimer_Tick;
@@ -62,6 +63,7 @@ namespace uVK
             playlist.SetAudioInfo(this);
             DurrationTimer.Start();
             player.controls.stop();
+            state = "OWN";
         }
 
         private void DownloadFriendList()
@@ -129,7 +131,7 @@ namespace uVK
                     vkDatas.RecommendedAudio = api.Audio.GetRecommendations(null, null, 50, null, true);
                     vkDatas.OffsetRecom = -1;
                     AddAudioToList(vkDatas.RecommendedAudio);
-                    break;               
+                    break;
 
             }
         }
@@ -203,7 +205,7 @@ namespace uVK
                     Settings = Settings.Offline,
                     TwoFactorAuthorization = () =>
                     {
-                        string code = File.ReadAllText("someFile.tempdat");                        
+                        string code = File.ReadAllText("someFile.tempdat");
                         return code;
                     }
                 });
@@ -232,6 +234,14 @@ namespace uVK
             }
         }
 
+        private void AddCacheToList()
+        {
+            MusicList.Items.Clear();
+            foreach (var audio in vkDatas.Cache.Audio)
+                SaveMusic.Items.Add($"{audio.Artist} - {audio.Title}");
+            if (SaveMusic.Items.Count != 0)
+                NoSaveMusicText.Visibility = Visibility.Hidden;
+        }
 
         public void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios)
         {
@@ -287,7 +297,7 @@ namespace uVK
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            player.settings.volume = (int) (sender as Slider).Value;
+            player.settings.volume = (int)(sender as Slider).Value;
         }
 
         private void TryToJoinGroup()
@@ -352,16 +362,17 @@ namespace uVK
 
         private void MusicList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            SaveAudioBtn.IsEnabled = true;
             switch (state)
-            {
-                case "OWN":
-                    playlist = new Playlist(new OwnAudios());
-                    break;
+            {                
                 case "SEARCH":
                     playlist = new Playlist(new SearchAudios());
                     break;
+                default:
+                    playlist = new Playlist(new OwnAudios());
+                    break;
             }
-            playlist.SetAudioInfo(this, fromClick:true);
+            playlist.SetAudioInfo(this, fromClick: true);
             PauseButton.IsChecked = true;
         }
 
@@ -399,7 +410,18 @@ namespace uVK
         private void ExitVK_Click(object sender, RoutedEventArgs e)
         {
             WebClient webClient = new WebClient();
-            webClient.DownloadFileAsync(new Uri(player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\"+ MusicArtist.Text + "↨" + MusicName.Text);
+            webClient.DownloadFileAsync(new Uri(player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\" + MusicArtist.Text + "↨" + MusicName.Text);
+        }
+
+        private void SaveMusic_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(NoSaveMusicText.Visibility==Visibility.Hidden)
+            {
+                state = "search";
+                playlist = new Playlist(new SavesAudios());
+                playlist.SetAudioInfo(this, fromClick: true);
+                SaveAudioBtn.IsEnabled = false;
+            }
         }
     }
 }

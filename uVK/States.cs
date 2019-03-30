@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 
 class Playlist
@@ -126,6 +127,87 @@ class IdAudios : IState
     }
 }
 */
+
+public class SavesAudios:IState
+{
+    public void NextSong(uVK.MainWindow main)
+    {
+        if (main.RandomAudioButton.IsChecked.Value)
+        {
+            Random rnds = new Random();
+            int value = rnds.Next(0, main.vkDatas.Cache.Audio.Count);
+            Thread.Sleep(270);
+            Debug.Print(value.ToString());
+            main.vkDatas.OffsetSave = value;
+            SetAudioInfo(main);
+        }
+        else
+        {
+            try
+            {
+                main.vkDatas.OffsetSave += 1;
+                SetAudioInfo(main);
+            }
+            catch
+            {
+                main.vkDatas.OffsetSave = 1;
+                SetAudioInfo(main);
+            }
+        }
+    }
+    public void PrevSong(uVK.MainWindow main)
+    {
+        try
+        {
+
+            main.vkDatas.OffsetSave -= 1; ;
+            if (main.vkDatas.OffsetSave == -1)
+                main.vkDatas.OffsetSave = main.vkDatas.Cache.Audio.Count - 1;
+            SetAudioInfo(main, true);
+        }
+        catch
+        {
+            SetAudioInfo(main, true);
+        }
+    }
+    public void SetAudioInfo(uVK.MainWindow main, bool isback = false, bool fromClick = false)
+    {
+        if (fromClick)
+            foreach (var audio in main.vkDatas.Cache.Audio)
+            {
+                if (audio.Artist + " - " + audio.Title == main.SaveMusic.SelectedItem.ToString())
+                {
+                    main.vkDatas.OffsetSave = main.SaveMusic.SelectedIndex;
+                    main.player.URL = audio.Url.ToString();
+                    main.MusicArtist.Text = audio.Artist;
+                    main.MusicName.Text = audio.Title;
+                    main.player.controls.play();
+                    break;
+                }
+            }
+        else
+        {
+            main.player.URL = main.vkDatas.Cache.Audio[main.vkDatas.OffsetSave].Url.ToString();
+            main.MusicArtist.Text = main.vkDatas.Cache.Audio[main.vkDatas.OffsetSave].Artist;
+            main.MusicName.Text = main.vkDatas.Cache.Audio[main.vkDatas.OffsetSave].Title;
+            for (int i = 0; i < main.SaveMusic.Items.Count; i++)
+            {
+                string saveitem = main.SaveMusic.Items[i].ToString();
+                if (main.SaveMusic.Items[i].ToString() == main.vkDatas.Cache.Audio[main.vkDatas.OffsetSave].Artist + " - " + main.vkDatas.Cache.Audio[main.vkDatas.OffsetSave].Title)
+                {
+                    string str = main.SaveMusic.Items[i].ToString();
+                    main.SaveMusic.SelectedIndex = i;
+                    break;
+                }
+            }
+            main.player.controls.play();
+
+        }
+        var uriImageSource = new Uri("https://psv4.userapi.com/c848020/u279747195/docs/d8/f81b6ea0493b/ImageMusic.png?extra=eAix6htvrxG4hUmiCSjYZFxb05FSZFEuJMjSpZXm5a3QVGsK6OOUkCOSYmjwrnV0VoILNas2Rf3ZN0M3QQNRTCG-39Ff_lkWs28baALlQGZaCkQLoLejYgpYKhoqnmuCYjABlFLmzm-zOWJ4CIPMm-2Q9PU", UriKind.RelativeOrAbsolute);
+        main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
+
+    }
+}
 class OwnAudios : IState
 {
 
@@ -150,7 +232,7 @@ class OwnAudios : IState
                     main.player.URL = audio.Url.ToString();
                     main.MusicArtist.Text = audio.Artist;
                     main.MusicName.Text = audio.Title;
-                    main.player.controls.play();                    
+                    main.player.controls.play();
                     break;
                 }
             }
@@ -187,9 +269,8 @@ class OwnAudios : IState
         {
             Random rnds = new Random();
             int value = rnds.Next(0, int.Parse(main.api.Audio.GetCount(main.vkDatas.datas.User_id).ToString()) - 1);
-            main.MusicList.SelectedIndex = value;
             Thread.Sleep(270);
-            main.vkDatas.OffsetOwn += 1;
+            main.vkDatas.OffsetOwn = value;
             SetAudioInfo(main);
         }
         else
@@ -201,7 +282,7 @@ class OwnAudios : IState
             }
             catch
             {
-                main.vkDatas.OffsetOwn += 1;
+                main.vkDatas.OffsetOwn = 0;
                 SetAudioInfo(main);
             }
         }
@@ -301,16 +382,16 @@ class SearchAudios : IState
             for (int i = 0; i < main.MusicList.Items.Count; i++)
             {
                 string str = main.MusicList.Items[i].ToString();
-                string str2 = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist + " - " + 
+                string str2 = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist + " - " +
                     main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title;
-                if (main.MusicList.Items[i].ToString() == main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist 
+                if (main.MusicList.Items[i].ToString() == main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist
                     + " - " + main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title)
                 {
                     main.MusicList.SelectedIndex = i;
                     break;
                 }
             }
-                
+
             main.player.controls.play();
         }
 
