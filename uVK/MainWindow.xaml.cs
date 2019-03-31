@@ -84,7 +84,7 @@ namespace uVK
             VolumeSlider.Value = 30;
             vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.datas.User_id) });
             AddAudioToList(vkDatas.Audio);
-            vkDatas.RecommendedAudio = api.Audio.GetRecommendations(count: 70, shuffle: true);
+            vkDatas.RecommendedAudio = api.Audio.GetRecommendations(count: 100, shuffle: true);
             playlist.SetAudioInfo(this);
             AddRecomList();
             player.controls.stop();
@@ -104,9 +104,7 @@ namespace uVK
 
         private void SwitchStatesOff()
         {
-            VkBools.IsHot = false;
             VkBools.IsOwn = false;
-            VkBools.IsRecommend = false;
             VkBools.IsSearch = false;
         }
 
@@ -120,16 +118,7 @@ namespace uVK
                     MusicList.Items.Clear();
                     VkBools.IsOwn = true;
                     AddAudioToList(vkDatas.Audio);
-                    break;
-                case "HOT":
-                    SwitchStatesOff();
-                    MusicList.Items.Clear();
-                    VkBools.IsHot = true;
-                    vkDatas.HotAudios = api.Audio.GetPopular(false, null, 35, null);
-                    vkDatas.OffsetHot = -1;
-                    foreach (var audio in vkDatas.HotAudios)
-                        MusicList.Items.Add($"{audio.Artist} - {audio.Title}");
-                    break;
+                    break;               
                 case "SEARCH":
                     SwitchStatesOff();
                     MusicList.Items.Clear();
@@ -149,10 +138,6 @@ namespace uVK
                         AddAudioToList(vkDatas.SearchAudios);
                     }
                     catch { }
-                    break;
-                case "RECOM":
-                    SwitchStatesOff();
-                    VkBools.IsRecommend = true;
                     break;
 
             }
