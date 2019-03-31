@@ -61,14 +61,14 @@ public class VkDatas
     public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> Audio { get; set; }
     public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
     public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> IdAudios { get; set; }
-    public System.Collections.Generic.IEnumerable<VkNet.Model.Attachments.Audio> HotAudios { get; set; }
+    public IEnumerable<VkNet.Model.Attachments.Audio> HotAudios { get; set; }
     public SaveAudios Cache;
     public ServiceCollection service { get; set; }
     public int OffsetOwn = 0;
     public int OffsetSearch = 0;
     public int OffsetHot = -1;
-    public int OffsetRecom = -1;
-    public int OffsetSave = -1;
+    public int OffsetRecom = 0;
+    public int OffsetSave = 0;
     public uVK.UserDatas datas;
     public VkDatas()
     {

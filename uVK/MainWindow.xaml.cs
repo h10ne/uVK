@@ -27,18 +27,19 @@ namespace uVK
         public VkDatas vkDatas;
         public bool isAuth = false;
         string state;
+        FrameworkElement pnlClient;
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = new WindowViewModel(this);
             VkBools = new Switches();
             vkDatas = new VkDatas();
-            playlist = new Playlist(new OwnAudios());
+            pnlClient = this.Content as FrameworkElement;
             player = new WindowsMediaPlayer();
             AddCacheToList();
             DurrationTimer = new DispatcherTimer
             {
-                Interval = new TimeSpan(0, 0, 0, 0, 300)
+                Interval = new TimeSpan(0, 0, 0, 0, 400)
             };
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
             {
@@ -46,13 +47,36 @@ namespace uVK
                 Des_Ser.Deserialize(ref vkDatas.datas);
                 Token = vkDatas.datas.Token;
                 GetAuth();
-                gridLogin.Visibility = Visibility.Hidden;
-                DoAfterLogin();
+                try
+                {
+                    DoAfterLogin();
+                }
+                catch
+                {
+                    DoAfterNoConnection();
+                }
             }
         }
 
+        private void DoAfterNoConnection()
+        {
+            PlaylistTabControl.SelectedIndex = 2;
+            playlist = new Playlist(new SavesAudios());
+            playlist.SetAudioInfo(this);
+            DurrationTimer.Stop();
+            DurrationTimer.Tick += DurrationTimer_Tick;
+            VolumeSlider.Maximum = 100;
+            VolumeSlider.Value = 30;
+            SaveAudioBtn.IsEnabled = false;
+            MusicSearch.IsEnabled = false;
+            DurrationTimer.Start();
+            player.controls.stop();
+            state = "save";
+        }
+
         private void DoAfterLogin()
-        {            
+        {
+            playlist = new Playlist(new OwnAudios());
             DownloadFriendList();
             DurrationTimer.Stop();
             DurrationTimer.Tick += DurrationTimer_Tick;
@@ -60,9 +84,11 @@ namespace uVK
             VolumeSlider.Value = 30;
             vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.datas.User_id) });
             AddAudioToList(vkDatas.Audio);
+            vkDatas.RecommendedAudio = api.Audio.GetRecommendations(count: 70, shuffle: true);
             playlist.SetAudioInfo(this);
-            DurrationTimer.Start();
+            AddRecomList();
             player.controls.stop();
+            DurrationTimer.Start();
             state = "OWN";
         }
 
@@ -126,30 +152,13 @@ namespace uVK
                     break;
                 case "RECOM":
                     SwitchStatesOff();
-                    MusicList.Items.Clear();
                     VkBools.IsRecommend = true;
-                    vkDatas.RecommendedAudio = api.Audio.GetRecommendations(null, null, 50, null, true);
-                    vkDatas.OffsetRecom = -1;
-                    AddAudioToList(vkDatas.RecommendedAudio);
                     break;
 
             }
         }
 
-        private void DurrationTimer_Tick(object sender, EventArgs e)
-        {
-
-            LongTimeText.Text = player.currentMedia.durationString;
-            DurrationSlider.Maximum = (int)player.currentMedia.duration;
-            DurrationSlider.Value = (int)player.controls.currentPosition;
-            PassedTimeText.Text = player.controls.currentPositionString;
-            if (player.status == "Остановлено")
-            {
-                if (!RepeatAudioButton.IsChecked.Value)
-                    playlist.NextSong(this);
-                player.controls.play();
-            }
-        }
+        
 
         private void AppWindow_Deactivated(object sender, EventArgs e)
         {
@@ -240,7 +249,23 @@ namespace uVK
             foreach (var audio in vkDatas.Cache.Audio)
                 SaveMusic.Items.Add($"{audio.Artist} - {audio.Title}");
             if (SaveMusic.Items.Count != 0)
+            {
                 NoSaveMusicText.Visibility = Visibility.Hidden;
+                SaveMusic.IsEnabled = true;
+                SaveMusic.SelectedItem = 0;
+            }
+            
+        }
+        
+        private void AddRecomList()
+        {
+            foreach (var audio in vkDatas.RecommendedAudio)
+            {
+                Object title = new object();
+                title = $"{audio.Artist} - {audio.Title}";
+                RecommendationsList.Items.Add(title);
+            }
+            RecommendationsList.SelectedItem = 0;
         }
 
         public void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios)
@@ -281,7 +306,13 @@ namespace uVK
                 MusicList.Items.Add(title);
 
             }
+        }             
+
+        private void TryToJoinGroup()
+        {
+            api.Groups.Join(180253523);
         }
+        #region Objects Events
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -300,9 +331,19 @@ namespace uVK
             player.settings.volume = (int)(sender as Slider).Value;
         }
 
-        private void TryToJoinGroup()
+        private void DurrationTimer_Tick(object sender, EventArgs e)
         {
-            api.Groups.Join(180253523);
+
+            LongTimeText.Text = player.currentMedia.durationString;
+            DurrationSlider.Maximum = (int)player.currentMedia.duration;
+            DurrationSlider.Value = (int)player.controls.currentPosition;
+            PassedTimeText.Text = player.controls.currentPositionString;
+            if (player.status == "Остановлено")
+            {
+                if (!RepeatAudioButton.IsChecked.Value)
+                    playlist.NextSong(this);
+                player.controls.play();
+            }
         }
 
         private void VolumeSlider_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -364,7 +405,7 @@ namespace uVK
         {
             SaveAudioBtn.IsEnabled = true;
             switch (state)
-            {                
+            {
                 case "SEARCH":
                     playlist = new Playlist(new SearchAudios());
                     break;
@@ -372,8 +413,12 @@ namespace uVK
                     playlist = new Playlist(new OwnAudios());
                     break;
             }
-            playlist.SetAudioInfo(this, fromClick: true);
-            PauseButton.IsChecked = true;
+            try
+            {
+                playlist.SetAudioInfo(this, fromClick: true);
+                PauseButton.IsChecked = true;
+            }
+            catch { }
         }
 
         private void MaxVolumeButton_Click(object sender, RoutedEventArgs e)
@@ -424,7 +469,7 @@ namespace uVK
         {
             if(NoSaveMusicText.Visibility==Visibility.Hidden)
             {
-                state = "search";
+                state = "save";
                 playlist = new Playlist(new SavesAudios());
                 playlist.SetAudioInfo(this, fromClick: true);
                 SaveAudioBtn.IsEnabled = false;
@@ -465,6 +510,14 @@ namespace uVK
         {
             player.controls.currentPosition = DurrationSlider.Value;
             DurrationTimer.Start();
+        }
+        #endregion
+
+        private void RecommendationsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (state != "recom")
+                playlist = new Playlist(new RecommendedAudio());
+            playlist.SetAudioInfo(this, fromClick: true);
         }
     }
 }

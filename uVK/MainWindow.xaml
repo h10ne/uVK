@@ -21,7 +21,7 @@
     TextOptions.TextRenderingMode="Auto"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
-    mc:Ignorable="d">
+    mc:Ignorable="d" ResizeMode="CanMinimize">
 
     <!--  Стиль окна  -->
     <Window.Resources>
@@ -407,7 +407,7 @@
                             <!--Рекомендации-->
                             <ListBox Name="RecommendationsList" 
                                      ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
-                                     BorderThickness="0" Margin="5"/>
+                                     BorderThickness="0" Margin="5" MouseDoubleClick="RecommendationsList_MouseDoubleClick"/>
                         </TabItem>
 
                         <TabItem x:Name="SaveAudioTabItem" Header="Сохранённые аудиозаписи" Margin="0,0,0,0">
@@ -416,7 +416,7 @@
                                 <ListBox Name="SaveMusic"
                                      Visibility="Visible"
                                      ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
-                                     BorderThickness="0" Margin="5"/>
+                                     BorderThickness="0" Margin="5" MouseDoubleClick="SaveMusic_MouseDoubleClick"/>
                                 
                                 <!--Информирование о том что нету сохранённой музыки-->
                                 <TextBlock Name="NoSaveMusicText" 
