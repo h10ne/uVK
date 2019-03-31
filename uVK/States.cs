@@ -218,38 +218,29 @@ class OwnAudios : IState
             {
                 if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
                 {
-                    main.vkDatas.OffsetOwn = main.MusicList.SelectedIndex;
-                    bool th = false;
-                    while (main.vkDatas.Audio[main.vkDatas.OffsetOwn].Url == null)
-                    {
-                        if (isback)
-                            main.vkDatas.OffsetOwn--;
-                        else
-                            main.vkDatas.OffsetOwn++;
-                        th = true;
-                    }
-                    if (th) throw new Exception("1");
-                    main.player.URL = audio.Url.ToString();
-                    main.MusicArtist.Text = audio.Artist;
-                    main.MusicName.Text = audio.Title;
-                    main.player.controls.play();
-                    break;
+                    main.vkDatas.OffsetOwn = main.MusicList.SelectedIndex;                    
                 }
             }
-        else
-        {
-            main.player.URL = main.vkDatas.Audio[main.vkDatas.OffsetOwn].Url.ToString();
-            main.MusicArtist.Text = main.vkDatas.Audio[main.vkDatas.OffsetOwn].Artist;
-            main.MusicName.Text = main.vkDatas.Audio[main.vkDatas.OffsetOwn].Title;
-            for (int i = 0; i < main.MusicList.Items.Count; i++)
-                if (main.MusicList.Items[i].ToString() == main.vkDatas.Audio[main.vkDatas.OffsetOwn].Artist + " - " + main.vkDatas.Audio[main.vkDatas.OffsetOwn].Title)
-                {
-                    string str = main.MusicList.Items[i].ToString();
-                    main.MusicList.SelectedIndex = i;
-                    break;
-                }
-            main.player.controls.play();
-        }
+            while (main.vkDatas.Audio[main.vkDatas.OffsetOwn].Url == null)
+            {
+                if (isback)
+                    main.vkDatas.OffsetOwn--;
+                else
+                    main.vkDatas.OffsetOwn++;
+            }
+        var url = main.vkDatas.Audio[main.vkDatas.OffsetOwn].Url;
+        string path = url.Scheme + "://" + url.Authority + url.AbsolutePath;
+        main.player.URL = url.Scheme + "://" + url.Authority + url.AbsolutePath;
+        main.MusicArtist.Text = main.vkDatas.Audio[main.vkDatas.OffsetOwn].Artist;
+        main.MusicName.Text = main.vkDatas.Audio[main.vkDatas.OffsetOwn].Title;
+        for (int i = 0; i < main.MusicList.Items.Count; i++)
+            if (main.MusicList.Items[i].ToString() == main.vkDatas.Audio[main.vkDatas.OffsetOwn].Artist + " - " + main.vkDatas.Audio[main.vkDatas.OffsetOwn].Title)
+            {
+                string str = main.MusicList.Items[i].ToString();
+                main.MusicList.SelectedIndex = i;
+                break;
+            }
+        main.player.controls.play();
 
         try
         {
@@ -357,43 +348,34 @@ class SearchAudios : IState
                 if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
                 {
                     main.vkDatas.OffsetSearch = main.MusicList.SelectedIndex;
-                    bool th = false;
-                    while (main.vkDatas.Audio[main.vkDatas.OffsetSearch].Url == null)
-                    {
-                        if (isback)
-                            main.vkDatas.OffsetSearch--;
-                        else
-                            main.vkDatas.OffsetSearch++;
-                        th = true;
-                    }
-                    if (th) throw new Exception("1");
-                    main.player.URL = audio.Url.ToString();
-                    main.MusicArtist.Text = audio.Artist;
-                    main.MusicName.Text = audio.Title;
-                    main.player.controls.play();
-                    break;
-                }
-            }
-        else
-        {
-            main.player.URL = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Url.ToString();
-            main.MusicArtist.Text = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist;
-            main.MusicName.Text = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title;
-            for (int i = 0; i < main.MusicList.Items.Count; i++)
-            {
-                string str = main.MusicList.Items[i].ToString();
-                string str2 = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist + " - " +
-                    main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title;
-                if (main.MusicList.Items[i].ToString() == main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist
-                    + " - " + main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title)
-                {
-                    main.MusicList.SelectedIndex = i;
-                    break;
                 }
             }
 
-            main.player.controls.play();
+        while (main.vkDatas.Audio[main.vkDatas.OffsetSearch].Url == null)
+        {
+            if (isback)
+                main.vkDatas.OffsetSearch--;
+            else
+                main.vkDatas.OffsetSearch++;
         }
+        main.player.URL = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Url.ToString();
+        main.MusicArtist.Text = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist;
+        main.MusicName.Text = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title;
+        for (int i = 0; i < main.MusicList.Items.Count; i++)
+        {
+            string str = main.MusicList.Items[i].ToString();
+            string str2 = main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist + " - " +
+                main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title;
+            if (main.MusicList.Items[i].ToString() == main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Artist
+                + " - " + main.vkDatas.SearchAudios[main.vkDatas.OffsetSearch].Title)
+            {
+                main.MusicList.SelectedIndex = i;
+                break;
+            }
+        }
+
+        main.player.controls.play();
+
 
         try
         {

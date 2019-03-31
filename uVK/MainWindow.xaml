@@ -256,7 +256,7 @@
                                 Name="DurrationSlider"
                                 Background="{DynamicResource SidebarSliderBackgroundBrush}"
                                 IsMoveToPointEnabled="True"
-                                Style="{StaticResource CommonSliderStyle}" />
+                                Style="{StaticResource CommonSliderStyle}" PreviewMouseDown="DurrationSlider_PreviewMouseDown" PreviewMouseUp="DurrationSlider_PreviewMouseUp" ValueChanged="DurrationSlider_ValueChanged" />
 
                             <!--Текст "сколько прошло времени"-->
                             <TextBlock Name="PassedTimeText"
@@ -385,7 +385,7 @@
                 </Border.Effect>
 
                 <Grid>
-                    <TabControl BorderThickness="0" Margin="0,5,0,10" >
+                    <TabControl x:Name="PlaylistTabControl" BorderThickness="0" Margin="0,5,0,10" >
                         <!--Свои аудизаписи-->
                         <TabItem Header="Моя музыка" Margin="0,0,0,0">
                             <Grid Margin="0,0,0,0">
@@ -410,13 +410,13 @@
                                      BorderThickness="0" Margin="5"/>
                         </TabItem>
 
-                        <TabItem Header="Сохранённые аудиозаписи" Margin="0,0,0,0">
+                        <TabItem x:Name="SaveAudioTabItem" Header="Сохранённые аудиозаписи" Margin="0,0,0,0">
                             <Grid>
                                 <!--Сохранённая музыка-->
                                 <ListBox Name="SaveMusic"
                                      Visibility="Visible"
                                      ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
-                                     BorderThickness="0" Margin="5" MouseDoubleClick="SaveMusic_MouseDoubleClick" />
+                                     BorderThickness="0" Margin="5"/>
                                 
                                 <!--Информирование о том что нету сохранённой музыки-->
                                 <TextBlock Name="NoSaveMusicText" 

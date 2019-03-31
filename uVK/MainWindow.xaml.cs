@@ -236,7 +236,7 @@ namespace uVK
 
         private void AddCacheToList()
         {
-            MusicList.Items.Clear();
+            SaveMusic.Items.Clear();
             foreach (var audio in vkDatas.Cache.Audio)
                 SaveMusic.Items.Add($"{audio.Artist} - {audio.Title}");
             if (SaveMusic.Items.Count != 0)
@@ -409,8 +409,15 @@ namespace uVK
 
         private void ExitVK_Click(object sender, RoutedEventArgs e)
         {
+            SaveAudioBtn.IsEnabled = false;
             WebClient webClient = new WebClient();
+            webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
             webClient.DownloadFileAsync(new Uri(player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\" + MusicArtist.Text + "↨" + MusicName.Text);
+        }
+
+        private void WebClient_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            SaveAudioBtn.IsEnabled = true;
         }
 
         private void SaveMusic_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -422,6 +429,42 @@ namespace uVK
                 playlist.SetAudioInfo(this, fromClick: true);
                 SaveAudioBtn.IsEnabled = false;
             }
+        }
+
+        private void DurrationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (DurrationTimer.IsEnabled == false)
+            {
+                string DurrSliderStr = null;
+                int DurrMinute = (int)DurrationSlider.Value / 60;
+                int DurrSec = (int)DurrationSlider.Value % 60;
+                string DurMinStr = null;
+                string DurrSecStr = null;
+                if (DurrMinute < 10)
+                    DurMinStr = '0' + DurrMinute.ToString();
+                else
+                    DurMinStr = DurrMinute.ToString();
+
+                if (DurrSec < 10)
+                    DurrSecStr = '0' + DurrSec.ToString();
+                else
+                    DurrSecStr = DurrSec.ToString();
+                DurrSliderStr = DurMinStr + ':' + DurrSecStr;
+                PassedTimeText.Text = DurrSliderStr;
+
+            }
+        }
+
+        private void DurrationSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+            DurrationTimer.Stop();
+        }
+
+        private void DurrationSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            player.controls.currentPosition = DurrationSlider.Value;
+            DurrationTimer.Start();
         }
     }
 }
