@@ -203,7 +203,7 @@ public class SavesAudios:IState
             main.player.controls.play();
 
         }
-        var uriImageSource = new Uri("https://psv4.userapi.com/c848020/u279747195/docs/d8/f81b6ea0493b/ImageMusic.png?extra=eAix6htvrxG4hUmiCSjYZFxb05FSZFEuJMjSpZXm5a3QVGsK6OOUkCOSYmjwrnV0VoILNas2Rf3ZN0M3QQNRTCG-39Ff_lkWs28baALlQGZaCkQLoLejYgpYKhoqnmuCYjABlFLmzm-zOWJ4CIPMm-2Q9PU", UriKind.RelativeOrAbsolute);
+        var uriImageSource = new Uri("https://s8.hostingkartinok.com/uploads/images/2019/04/ba91888882438a65608f0f6c2906af44.png", UriKind.RelativeOrAbsolute);
         main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
 
     }
@@ -250,7 +250,7 @@ class OwnAudios : IState
         }
         catch
         {
-            var uriImageSource = new Uri("https://psv4.userapi.com/c848020/u279747195/docs/d8/f81b6ea0493b/ImageMusic.png?extra=eAix6htvrxG4hUmiCSjYZFxb05FSZFEuJMjSpZXm5a3QVGsK6OOUkCOSYmjwrnV0VoILNas2Rf3ZN0M3QQNRTCG-39Ff_lkWs28baALlQGZaCkQLoLejYgpYKhoqnmuCYjABlFLmzm-zOWJ4CIPMm-2Q9PU", UriKind.RelativeOrAbsolute);
+            var uriImageSource = new Uri("https://s8.hostingkartinok.com/uploads/images/2019/04/ba91888882438a65608f0f6c2906af44.png", UriKind.RelativeOrAbsolute);
             main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
         }
     }
@@ -385,7 +385,7 @@ class SearchAudios : IState
         }
         catch
         {
-            var uriImageSource = new Uri("https://psv4.userapi.com/c848020/u279747195/docs/d8/f81b6ea0493b/ImageMusic.png?extra=eAix6htvrxG4hUmiCSjYZFxb05FSZFEuJMjSpZXm5a3QVGsK6OOUkCOSYmjwrnV0VoILNas2Rf3ZN0M3QQNRTCG-39Ff_lkWs28baALlQGZaCkQLoLejYgpYKhoqnmuCYjABlFLmzm-zOWJ4CIPMm-2Q9PU", UriKind.RelativeOrAbsolute);
+            var uriImageSource = new Uri("https://s8.hostingkartinok.com/uploads/images/2019/04/ba91888882438a65608f0f6c2906af44.png", UriKind.RelativeOrAbsolute);
             main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
         }
     }
@@ -472,7 +472,7 @@ class RecommendedAudio : IState
         }
         catch
         {
-            var uriImageSource = new Uri("https://psv4.userapi.com/c848020/u279747195/docs/d8/f81b6ea0493b/ImageMusic.png?extra=eAix6htvrxG4hUmiCSjYZFxb05FSZFEuJMjSpZXm5a3QVGsK6OOUkCOSYmjwrnV0VoILNas2Rf3ZN0M3QQNRTCG-39Ff_lkWs28baALlQGZaCkQLoLejYgpYKhoqnmuCYjABlFLmzm-zOWJ4CIPMm-2Q9PU", UriKind.RelativeOrAbsolute);
+            var uriImageSource = new Uri("https://s8.hostingkartinok.com/uploads/images/2019/04/ba91888882438a65608f0f6c2906af44.png", UriKind.RelativeOrAbsolute);
             main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
         }
     }

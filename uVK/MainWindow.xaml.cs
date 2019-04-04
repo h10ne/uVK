@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.IO;
-using VkNet.Abstractions;
 using VkNet.Model.RequestParams;
 using WMPLib;
 using VkNet.Model;
@@ -13,7 +12,6 @@ using VkNet;
 using VkNet.AudioBypassService.Extensions;
 using System.Windows.Threading;
 using System.Net;
-
 namespace uVK
 {
     public partial class MainWindow : Window
@@ -21,12 +19,13 @@ namespace uVK
         public WMPLib.WindowsMediaPlayer player;
         public DispatcherTimer DurrationTimer;
         public string Token = null;
-        public IVkApi api;
+        public VkApi api;
         Playlist playlist;
         public Switches VkBools;
         public VkDatas vkDatas;
         public bool isAuth = false;
         string state;
+        private DispatcherTimer OnlineTimer;
         FrameworkElement pnlClient;
         public MainWindow()
         {
@@ -34,6 +33,11 @@ namespace uVK
             this.DataContext = new WindowViewModel(this);
             VkBools = new Switches();
             vkDatas = new VkDatas();
+            OnlineTimer = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 10, 0)
+            };
+            OnlineTimer.Tick += OnlineTimer_Tick;
             pnlClient = this.Content as FrameworkElement;
             player = new WindowsMediaPlayer();
             AddCacheToList();
@@ -58,6 +62,11 @@ namespace uVK
             }
         }
 
+        private void OnlineTimer_Tick(object sender, EventArgs e)
+        {
+            api.Account.SetOnline(false);
+        }
+
         private void DoAfterNoConnection()
         {
             PlaylistTabControl.SelectedIndex = 2;
@@ -76,6 +85,8 @@ namespace uVK
 
         private void DoAfterLogin()
         {
+            UserName.Text = api.Account.GetProfileInfo().FirstName;
+            LastUserName.Text = api.Account.GetProfileInfo().LastName;
             playlist = new Playlist(new OwnAudios());
             DownloadFriendList();
             DurrationTimer.Stop();
@@ -162,7 +173,7 @@ namespace uVK
             api.Authorize(new ApiAuthParams
             {
                 AccessToken = Token,
-                Settings = Settings.Offline
+                Settings = VkNet.Enums.Filters.Settings.Offline
             });
         }
 
@@ -176,7 +187,7 @@ namespace uVK
                 {
                     Login = login,
                     Password = password,
-                    Settings = Settings.Offline,
+                    Settings = VkNet.Enums.Filters.Settings.Offline,
                     TwoFactorAuthorization = () =>
                     {
                         needCode = true;
@@ -196,7 +207,7 @@ namespace uVK
                 {
                     Login = login,
                     Password = password,
-                    Settings = Settings.Offline,
+                    Settings = VkNet.Enums.Filters.Settings.Offline,
                     TwoFactorAuthorization = () =>
                     {
                         string code = File.ReadAllText("someFile.tempdat");
@@ -447,18 +458,24 @@ namespace uVK
 
         private void WebClient_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
+            vkDatas.Cache = new SaveAudios();
+            AddCacheToList();
             SaveAudioBtn.IsEnabled = true;
         }
 
         private void SaveMusic_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(NoSaveMusicText.Visibility==Visibility.Hidden)
+            try
             {
-                state = "save";
-                playlist = new Playlist(new SavesAudios());
-                playlist.SetAudioInfo(this, fromClick: true);
-                SaveAudioBtn.IsEnabled = false;
+                if (NoSaveMusicText.Visibility == Visibility.Hidden)
+                {
+                    state = "save";
+                    playlist = new Playlist(new SavesAudios());
+                    playlist.SetAudioInfo(this, fromClick: true);
+                    SaveAudioBtn.IsEnabled = false;
+                }
             }
+            catch { }
         }
 
         private void DurrationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -500,9 +517,49 @@ namespace uVK
 
         private void RecommendationsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (state != "recom")
-                playlist = new Playlist(new RecommendedAudio());
-            playlist.SetAudioInfo(this, fromClick: true);
+            try
+            {
+                if (state != "recom")
+                    playlist = new Playlist(new RecommendedAudio());
+                playlist.SetAudioInfo(this, fromClick: true);
+            }
+            catch { }
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.Visibility == Visibility.Hidden)
+                Settings.Visibility = Visibility.Visible;
+            else
+                Settings.Visibility = Visibility.Hidden;
+        }
+
+        private void OfflineCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (OnlineCheckBox.IsChecked == true)
+            {
+                api.Account.SetOnline(false);
+                OnlineTimer.Start();
+                OnlineSwitch.Text = "Вы будете в сети, \nпока запущено приложение.";
+            }
+            else
+            {
+                OnlineTimer.Stop();
+                api.Account.SetOffline();
+                OnlineSwitch.Text = "Вы не будете отображаться в сети.";
+            }
+        }
+
+        private void ExitUserAccount_Click(object sender, RoutedEventArgs e)
+        {
+            File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin");
+            System.Windows.Forms.Application.Restart();
+            System.Environment.Exit(1);
+        }
+
+        private void DurrationSlider_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            player.controls.currentPosition = DurrationSlider.Value;
         }
     }
 }
