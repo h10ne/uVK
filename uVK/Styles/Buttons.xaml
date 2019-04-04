@@ -198,5 +198,83 @@
     </Style>
 
 
-    
+    <Style TargetType="TabItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border Name="Border" BorderThickness="1,1,1,1" BorderBrush="Gainsboro" CornerRadius="4,4,4,4" Margin="4,0">
+                        <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#FFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="#FAFBFC" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="CheckBox" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Cursor" Value="Hand"></Setter>
+        <Setter Property="Content" Value=""></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate >
+                    <Border Name="BorderCB" CornerRadius="10" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Background="Gray"
+                    Height="{TemplateBinding Height}"
+                    Width="{TemplateBinding Width}" MinWidth="40" MinHeight="20">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="9*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="9*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" TextAlignment="Center" FontSize="12" Foreground="White" VerticalAlignment="Center">✓</TextBlock>
+                            <TextBlock Grid.Column="2" TextAlignment="Center" FontSize="12" Foreground="Black" VerticalAlignment="Center">✘</TextBlock>
+                            <Ellipse Name="SliderCB" Grid.Column="0" Height="{TemplateBinding Height}" Fill="White" Margin="0 0 20 0" Grid.ColumnSpan="3"></Ellipse>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="CheckBox.Checked">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard >
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="SliderCB" Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                                            <SplineThicknessKeyFrame KeyTime="00:00:00" Value="0, 0,20,0" />
+                                            <SplineThicknessKeyFrame KeyTime="00:00:00.4" Value="0, 0,5,0" />
+                                            <SplineThicknessKeyFrame KeyTime="00:00:00.6" Value="20, 0,0,0" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ColorAnimation Storyboard.TargetName="BorderCB" Storyboard.TargetProperty="Background.Color" To="#FF6BA1FF" Duration="0:0:0.6"></ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="CheckBox.Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="SliderCB" Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                                        <SplineThicknessKeyFrame KeyTime="00:00:00" Value="20, 0,0,0" />
+                                        <SplineThicknessKeyFrame KeyTime="00:00:00.4" Value="0, 0,5,0" />
+                                        <SplineThicknessKeyFrame KeyTime="00:00:00.6" Value="0, 0,20,0" />
+                                    </ThicknessAnimationUsingKeyFrames>
+                                    <ColorAnimation Storyboard.TargetName="BorderCB" Storyboard.TargetProperty="Background.Color" Duration="0:0:0.6"></ColorAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

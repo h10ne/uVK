@@ -39,7 +39,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Border Height="27" CornerRadius="5" Margin="10 0 20 5" x:Name="Bd" BorderBrush="#FF6BA1FF" BorderThickness="{TemplateBinding BorderThickness}" Background="#FF6BA1FF" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                    <Border Height="27" CornerRadius="5" Margin="5 0 20 5" x:Name="Bd" BorderBrush="#FF6BA1FF" BorderThickness="{TemplateBinding BorderThickness}" Background="#FF6BA1FF" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                         <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>

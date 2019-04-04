@@ -178,33 +178,41 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SaveMusic" TargetType="ToggleButton">
+
+    <Style x:Key="SaveMusic" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="56"/>
         <Setter Property="Height" Value="56"/>
-        <Setter Property="Padding" Value="10"/>
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bBlackBrush}" />
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#000000" />
+
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
-                    <Grid x:Name="RootGrid" Background="Transparent">
-                        <Path x:Name="Icon" Opacity="0.3" Fill="{TemplateBinding Foreground}" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource SaveIcon}"/>
-                    </Grid>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border x:Name="Circle" CornerRadius="5">
+                                <Viewbox>
+                                    <Grid x:Name="RootGrid" Background="Transparent">
+                                        <Path x:Name="Icon" Opacity="0.3" Fill="{TemplateBinding Foreground}" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource SaveIcon}"/>
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
-                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Icon" Property="Opacity" Value="1"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Icon" Property="Opacity" Value="0.2"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    
+
 
     <Style x:Key="LastFmScrobbleButtonStyle" TargetType="ToggleButton">
         <Setter Property="Width" Value="56"/>

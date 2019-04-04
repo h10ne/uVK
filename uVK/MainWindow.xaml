@@ -21,7 +21,7 @@
     TextOptions.TextRenderingMode="Auto"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
-    mc:Ignorable="d">
+    mc:Ignorable="d" ResizeMode="CanMinimize">
 
     <!--  Стиль окна  -->
     <Window.Resources>
@@ -92,24 +92,19 @@
                                                         Margin="0,0,0,-5"
                                                         HorizontalAlignment="Center"
                                                         FontFamily="{StaticResource LatoBold}"
-                                                        FontSize="{StaticResource FontSizeRegular}">
+                                                        FontSize="{StaticResource FontSizeRegular}" Height="29">
                                                         <Run Foreground="{StaticResource Dr0bOrangeBrush}" Text="u" /><Run Foreground="{StaticResource Dr0bBlueBrush}" Text="VK" />
                                                     </TextBlock>
-                                                    <TextBlock Foreground="{StaticResource ForegroundDarkBrush}" Text="by Dr0b" TextAlignment="Center" />
                                                 </StackPanel>
                                             </Viewbox>
 
                                         </Grid>
 
                                         <!--  Window Buttons  -->
-                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
-
+                                        <StackPanel Name="Paanel" Grid.Column="2" Orientation="Horizontal">
+                                            
                                             <!--Кнопка "Настройка"-->
-                                            <Button Margin="3" Foreground="{StaticResource Dr0bBlackBrush}"
-                                                            Style="{StaticResource SettingsButton}"/>
-
-
-
+                                            <Button Name="SettingsButton" Margin="3" Foreground="{StaticResource Dr0bBlackBrush}" Style="{StaticResource SettingsButton}" Click="SettingsButton_Click"/>
                                             <Button Command="{Binding MinimizeCommand}" Content="_" Style="{StaticResource WindowControlButton}" />
                                             <Button Command="{Binding MaximizeCommand}" Content="[ ]" Style="{StaticResource WindowControlButton}" />
                                             <Button Command="{Binding CloseCommand}" Content="X" Style="{StaticResource WindowCloseButton}" />
@@ -140,6 +135,9 @@
     </WindowChrome.WindowChrome>
 
 
+    <Grid>
+        
+
     <Grid Margin="5,5,5,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="85" />
@@ -148,7 +146,7 @@
 
         <!--  Title  -->
         <Grid Name="MainGrid" Visibility="Visible" >
-            <Border Margin="5" Background="{Binding ForegroundLightBrush, FallbackValue=#FAFBFC}" CornerRadius="{Binding FallbackValue=5}">
+            <Border Margin="5 5 5 0" Background="{Binding ForegroundLightBrush, FallbackValue=#FAFBFC}" CornerRadius="{Binding FallbackValue=5 5 0 0}">
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.3" ShadowDepth="0" />
                 </Border.Effect>
@@ -207,7 +205,7 @@
 
                             </Button>
 
-                            <Border Margin="5 0 0 0" 
+                            <Border Margin="2" 
                                     Background="#E9EDF1"
                                     CornerRadius="5" Width="67">
 
@@ -256,7 +254,7 @@
                                 Name="DurrationSlider"
                                 Background="{DynamicResource SidebarSliderBackgroundBrush}"
                                 IsMoveToPointEnabled="True"
-                                Style="{StaticResource CommonSliderStyle}" />
+                                Style="{StaticResource CommonSliderStyle}" PreviewMouseDown="DurrationSlider_PreviewMouseDown" PreviewMouseUp="DurrationSlider_PreviewMouseUp" ValueChanged="DurrationSlider_ValueChanged" MouseUp="DurrationSlider_MouseUp" />
 
                             <!--Текст "сколько прошло времени"-->
                             <TextBlock Name="PassedTimeText"
@@ -313,16 +311,13 @@
                                     </ToggleButton>
 
                                     <!--  Кнопка "Добавить аудиозапись"-->
-                                    <ToggleButton x:Name="ExitVK"
+                                    <Button x:Name="SaveAudioBtn"
                                                   Width="32"
                                                   Height="32"
                                                   Style="{StaticResource SaveMusic}" Click="ExitVK_Click">
 
-                                        <ToggleButton.RenderTransform>
-                                            <TranslateTransform />
-                                        </ToggleButton.RenderTransform>
+                                    </Button>
 
-                                    </ToggleButton>
 
                                 </StackPanel>
 
@@ -379,60 +374,56 @@
             </Grid.ColumnDefinitions>
 
 
-            <Border Margin="5" 
+            <Border Margin="5 0 0 5" 
                     Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}" 
-                    CornerRadius="{Binding FallbackValue=5}">
+                    CornerRadius="{Binding FallbackValue=0 0 0 5}">
 
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.3" ShadowDepth="0" />
                 </Border.Effect>
 
                 <Grid>
-                    <TabControl>
+                    <TabControl x:Name="PlaylistTabControl" BorderThickness="0" Margin="0,5,0,10" >
                         <!--Свои аудизаписи-->
-                        <TabItem Header="Моя музыка">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="97*"/>
-                                </Grid.ColumnDefinitions>
+                        <TabItem Header="Моя музыка" Margin="0,0,0,0">
+                            <Grid Margin="0,0,0,0">
                                 <!--Поиск по музыке-->
                                 <TextBox Name="MusicSearch" Tag="  Поиск по музыке" 
-                             Height="30" Margin="10,10,10,0" 
-                             VerticalAlignment="Top" KeyDown="MusicSearch_KeyDown" KeyUp="MusicSearch_KeyUp" Grid.ColumnSpan="2" />
+                                         Height="30" Margin="5,10,5,0" 
+                                         VerticalAlignment="Top" KeyDown="MusicSearch_KeyDown" KeyUp="MusicSearch_KeyUp" />
 
                                 <!--Список аудиозаписей-->
                                 <ListBox  Name="MusicList" 
                                           MouseDoubleClick="MusicList_MouseDoubleClick" 
                                           ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" 
-                                          Margin="5 60 5 5 " BorderThickness="0" Grid.ColumnSpan="2" />
+                                          Margin="0,50,5,10" BorderThickness="0" />
                             </Grid>
                         </TabItem>
 
 
-                        <TabItem Header="Рекомендации">
+                        <TabItem Header="Рекомендации" Margin="0,0,0,0">
                             <!--Рекомендации-->
                             <ListBox Name="RecommendationsList" 
                                      ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
-                                     BorderThickness="0" Margin="5"/>
+                                     BorderThickness="0" Margin="5" MouseDoubleClick="RecommendationsList_MouseDoubleClick"/>
                         </TabItem>
 
-                        <TabItem Header="Сохранённые аудиозаписи">
+                        <TabItem x:Name="SaveAudioTabItem" Header="Сохранённые аудиозаписи" Margin="0,0,0,0">
                             <Grid>
                                 <!--Сохранённая музыка-->
                                 <ListBox Name="SaveMusic"
-                                     Visibility="Hidden"
+                                     Visibility="Visible"
                                      ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
-                                     BorderThickness="0" Margin="5" />
+                                     BorderThickness="0" Margin="5" MouseDoubleClick="SaveMusic_MouseDoubleClick"/>
 
                                 <!--Информирование о том что нету сохранённой музыки-->
                                 <TextBlock Name="NoSaveMusicText" 
-                                           Text="У вас пока нет сохранённых аудио"
+                                           Text="У вас пока нет сохранённых аудиозаписей"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            Visibility="Visible"
                                            Foreground="#7E8FA5"
-                                           FontSize="25"/>
+                                           FontSize="18"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -442,9 +433,9 @@
 
             <!--Выбор аудиозаписей друзей-->
             <Border Grid.Column="1"
-                    Margin="5"
+                    Margin="0 0 5 5"
                     Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}"
-                    CornerRadius="{Binding FallbackValue=5}">
+                    CornerRadius="{Binding FallbackValue=0 0 5 0}">
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.3" ShadowDepth="0" />
                 </Border.Effect>
@@ -462,93 +453,223 @@
         </Grid>
 
         <!--  Авторизация  -->
-        <Grid Name="gridLogin"
+            <Grid Name="gridLogin"
               Grid.RowSpan="2"
               Background="#FFFFFF"
-              Visibility="Hidden">
+              Visibility="Visible">
 
-            <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=5}">
-                <Grid Width="280" Height="250" HorizontalAlignment="Center">
-                    <!--  Маска непрозрачности для углов  -->
-                    <Border Background="{StaticResource BackgroundLightBrush}" CornerRadius="{Binding FallbackValue=10}" />
-                    <!--  Граница окна и тени  -->
-                    <Border Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}" CornerRadius="{Binding FallbackValue=10}">
-                        <Grid>
-                            <Viewbox Margin="10,10,10,190">
-                                <StackPanel>
-                                    <TextBlock Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="{StaticResource FontSizeRegular}">
-                                        <Run Foreground="{StaticResource Dr0bBlackBrush}" Text="Авторизация" />
-                                    </TextBlock>
-                                    <TextBlock
-                                        Margin="0,10,0,0"
-                                        HorizontalAlignment="Center"
-                                        Foreground="{StaticResource ForegroundDarkBrush}"
-                                        Text="Используйте аккаунт Вконтакте"
-                                        TextAlignment="Center" />
-                                </StackPanel>
-                            </Viewbox>
-                        </Grid>
-                        <Border.Effect>
-                            <DropShadowEffect Opacity="0.3" ShadowDepth="0" />
-                        </Border.Effect>
-                    </Border>
-                </Grid>
-            </Border>
+                <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=5}">
+                    
+                    <Grid Width="280" 
+                          Height="250" 
+                          HorizontalAlignment="Center">
+                        
+                        <!--  Маска непрозрачности для углов  -->
+                        <Border Background="{StaticResource BackgroundLightBrush}" 
+                                CornerRadius="{Binding FallbackValue=10}" />
+                        
+                        <!--  Граница окна и тени  -->
+                        <Border Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}" 
+                                CornerRadius="{Binding FallbackValue=10}">
+                            
+                            <Grid>
+                                <Viewbox Margin="10,10,10,190">
+                                    <StackPanel>
+                                        
+                                        <TextBlock Margin="0,0,0,0" 
+                                                   HorizontalAlignment="Center" 
+                                                   FontSize="{StaticResource FontSizeRegular}">
+                                            <Run Foreground="{StaticResource Dr0bBlackBrush}" Text="Авторизация" />
+                                            
+                                        </TextBlock>
+                                        
+                                        <TextBlock Margin="0,10,0,0"
+                                                   HorizontalAlignment="Center" 
+                                                   Foreground="{StaticResource ForegroundDarkBrush}"
+                                                   Text="Используйте аккаунт Вконтакте"
+                                                   TextAlignment="Center" />
+                                        
+                                    </StackPanel>
+                                </Viewbox>
+                            </Grid>
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.3" ShadowDepth="0" />
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                </Border>
 
-            <PasswordBox
-                Name="tbPassword"
-                Width="254"
-                Height="30"
-                Margin="0,40,0,0"
-                VerticalAlignment="Center"
-                Tag="  Пароль" />
+                <PasswordBox Name="tbPassword"
+                             Width="254"
+                             Height="30"
+                             Margin="0,40,0,0"
+                             VerticalAlignment="Center"
+                             Tag="  Пароль" />
 
-            <TextBox
-                Name="tbLogin"
-                Width="255"
-                Height="30"
-                Margin="0,-50,0,0"
-                VerticalAlignment="Center"
-                Tag="  Номер телефона или email" />
+                <TextBox Name="tbLogin"
+                         Width="255"
+                         Height="30"
+                         Margin="0,-50,0,0"
+                         VerticalAlignment="Center"
+                         Tag=" Номер телефона или email" />
 
-            <Button
-                Name="btnLogin"
-                Width="100"
-                Height="37"
-                Margin="0,165,155,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="#FF6BA1FF"
-                BorderBrush="#FF6BA1FF"
-                Content="Войти"
-                FontFamily="Segoe UI, Lucida Sans Unicode, Verdana"
-                FontSize="13"
-                FontWeight="Normal"
-                Foreground="White" Click="BtnLogin_Click" />
+                <Button Name="btnLogin"
+                        Width="100"
+                        Height="37"
+                        Margin="0,165,155,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="#FF6BA1FF"
+                        BorderBrush="#FF6BA1FF"
+                        Content="Войти"
+                        FontFamily="Segoe UI, Lucida Sans Unicode, Verdana"
+                        FontSize="13"
+                        FontWeight="Normal"
+                        Foreground="White" 
+                        Click="BtnLogin_Click" />
 
-            <!--Текст (ошибка авторизации)-->
-            <TextBlock  Margin="0 100 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="" 
-                        Name="Error"
-                        FontFamily="{StaticResource LatoRegular}"
-                        Foreground="{StaticResource Dr0bRedBrush}" />
+                <!--Текст (ошибка авторизации)-->
+                <TextBlock Margin="0 100 0 0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" 
+                           Text="" 
+                           Name="Error"
+                           FontFamily="{StaticResource LatoRegular}"
+                           Foreground="{StaticResource Dr0bRedBrush}" />
 
-            <Button
-                Margin="100,165,0,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Content="Забыли пароль?"
-                FontSize="13"
-                Style="{StaticResource TextButton}" />
-
-            <Label
-                Margin="0,0,10,10"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Content="Project Dr0b 2019"
-                Foreground="#7E8FA5" />
-
+                <Button Margin="100,165,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Content="Забыли пароль?"
+                        FontSize="13"
+                        Style="{StaticResource TextButton}" />
+            </Grid>
         </Grid>
 
+        <!--Настройки-->
+        <Grid Name="Settings"
+              Visibility="Hidden">
+
+            <Border Grid.Column="1"
+                    Margin="5"
+                    Background="#FFFFFF">
+                
+                <TabControl Margin="5"
+                            BorderThickness="0">
+                    
+                    <TabItem Header="Учётная запись">
+                        <Grid Margin="60,20">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="1" Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}"
+                                    CornerRadius="{Binding FallbackValue=1}">
+
+                                <Border.Effect>
+                                    <DropShadowEffect Opacity="0.3" ShadowDepth="0" />
+                                </Border.Effect>
+
+                            </Border>
+
+                            <Border BorderBrush="#DEE2E8" BorderThickness="1" 
+                                    Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}"
+                                    CornerRadius="{Binding FallbackValue=3}"
+                                    HorizontalAlignment="Right" 
+                                    VerticalAlignment="Top" Margin="10" >
+                                
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                    
+                                    <Border CornerRadius="5"
+                                            Background="#E9EDF1"
+                                            HorizontalAlignment="Right" 
+                                            VerticalAlignment="Top"
+                                            Margin="10">
+                                        <!--Картинка профиля-->
+                                        <Rectangle Margin="5"
+                                                   RadiusX="5"
+                                                   RadiusY="5"
+                                                   Width="65"
+                                                   Height="65">
+                                            <Rectangle.Fill>
+                                                <ImageBrush x:Name="UserImage"
+                                                    ImageSource="/Images/ImageMusic.png"
+                                                    Stretch="UniformToFill" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Border>
+                                    
+                                    <Border>
+                                        <StackPanel Margin="0,10,15,0" Orientation="Vertical" >
+                                            
+                                            <!--Имя пользователя-->
+                                            <TextBlock Name="UserName" Text="Имя" />
+                                            
+                                            <!--Фамилия пользователя-->
+                                            <TextBlock Name="LastUserName" Text="Фамилия" />
+                                            
+                                            <!--Кнопка "выйти с аккаунта"-->
+                                            <Button Name="ExitUserAccount"
+                                                    Margin="0 20 0 0" Background="#FF6BA1FF"
+                                                    BorderBrush="#FF6BA1FF" 
+                                                    Content="Выйти"
+                                                    FontSize="18"
+                                                    Width="95" Click="ExitUserAccount_Click"/>
+                                            
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+
+                            <!--Настройки активности аккаунта-->
+                            <Border BorderBrush="#DEE2E8"
+                                    BorderThickness="1"
+                                    CornerRadius="3" 
+                                    HorizontalAlignment="Left" 
+                                    Margin="10"
+                                    Width="187">
+
+                                <StackPanel Orientation="Vertical" Margin="10">
+                                    <Border>
+                                        
+                                        <StackPanel>
+                                            <TextBlock Margin="5" FontSize="20" 
+                                               HorizontalAlignment="Center" 
+                                               Text="Активность " />
+                                            <Rectangle Margin="10" Fill="#DEE2E8" Height="1" />
+                                        </StackPanel>
+
+                                    </Border>
+
+                                    <!--Посылать запрос на offline-->
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                                            <TextBlock Margin="0,3,5,0" Text="Вечный онлайн"/>
+                                            <CheckBox Name="OnlineCheckBox" Background="#12C78C" HorizontalAlignment="Center" Click="OfflineCheckBox_Checked" />
+
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Border>
+                                        <StackPanel>
+
+                                            <TextBlock Name="OnlineSwitch" FontSize="10" Margin="3" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#7E8FA5" 
+                                                       Text="Вы не будете отображаться в сети." />
+                                            <Rectangle Margin="10" Fill="#DEE2E8" Height="1" />
+
+                                        </StackPanel>
+                                    </Border>
+
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Border>
+        </Grid>
+        
     </Grid>
 
 </Window>

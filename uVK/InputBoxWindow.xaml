@@ -56,11 +56,10 @@
                     <Grid Margin="0" HorizontalAlignment="Center" Grid.ColumnSpan="3" Grid.Column="0">
 
                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="5">
-                            <StackPanel>
+                            <StackPanel Height="27">
                                 <TextBlock HorizontalAlignment="Center" FontFamily="{StaticResource LatoBold}" FontSize="{StaticResource FontSizeRegular}" Margin="0,0,0,-5">
                                            <Run Text="u" Foreground="{StaticResource Dr0bOrangeBrush}" /><Run Text="VK" Foreground="{StaticResource Dr0bBlueBrush}" />
                                 </TextBlock>
-                                <TextBlock Text="by Dr0b" Foreground="{StaticResource ForegroundDarkBrush}" TextAlignment="Center" />
                             </StackPanel>
                         </Viewbox>
 

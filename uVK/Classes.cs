@@ -32,7 +32,7 @@ public class SaveAudios
         foreach (var name in filesname)
         {
             string[] fullPath = name.Split('\\');
-            string[] AudioMix = fullPath[fullPath.Length-1].Split('↨');
+            string[] AudioMix = fullPath[fullPath.Length - 1].Split('↨');
             Audio.Add(new StructSaveAudios(AudioMix[0], AudioMix[1], name));
         }
     }
@@ -47,11 +47,11 @@ public class Switches
     public bool IsId { get; set; } = false;
     public Switches()
     {
-        IsSearch  = false;
+        IsSearch = false;
         IsHot = false;
-        IsRecommend  = false;
+        IsRecommend = false;
         IsOwn = true;
-        IsId  = false;
+        IsId = false;
     }
 }
 
@@ -61,13 +61,14 @@ public class VkDatas
     public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> Audio { get; set; }
     public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
     public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> IdAudios { get; set; }
-    public System.Collections.Generic.IEnumerable<VkNet.Model.Attachments.Audio> HotAudios { get; set; }
+    public IEnumerable<VkNet.Model.Attachments.Audio> HotAudios { get; set; }
     public SaveAudios Cache;
     public ServiceCollection service { get; set; }
     public int OffsetOwn = 0;
     public int OffsetSearch = 0;
     public int OffsetHot = -1;
-    public int OffsetRecom = -1;
+    public int OffsetRecom = 0;
+    public int OffsetSave = 0;
     public uVK.UserDatas datas;
     public VkDatas()
     {
