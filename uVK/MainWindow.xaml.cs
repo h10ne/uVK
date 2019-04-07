@@ -12,13 +12,14 @@ using VkNet;
 using VkNet.AudioBypassService.Extensions;
 using System.Windows.Threading;
 using System.Net;
+using System.Threading.Tasks;
+
 namespace uVK
 {
     public partial class MainWindow : Window
     {
         public WMPLib.WindowsMediaPlayer player;
         public DispatcherTimer DurrationTimer;
-        public string Token = null;
         public VkApi api;
         Playlist playlist;
         public Switches VkBools;
@@ -47,9 +48,8 @@ namespace uVK
             };
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
             {
-                gridLogin.Visibility = Visibility.Hidden;
+                gridLogin.Visibility = Visibility.Hidden;                
                 Des_Ser.Deserialize(ref vkDatas.datas);
-                Token = vkDatas.datas.Token;
                 GetAuth();
                 try
                 {
@@ -59,7 +59,9 @@ namespace uVK
                 {
                     DoAfterNoConnection();
                 }
+
             }
+            
         }
 
         private void OnlineTimer_Tick(object sender, EventArgs e)
@@ -75,7 +77,7 @@ namespace uVK
             DurrationTimer.Stop();
             DurrationTimer.Tick += DurrationTimer_Tick;
             VolumeSlider.Maximum = 100;
-            VolumeSlider.Value = 30;
+            VolumeSlider.Value = 50;
             SaveAudioBtn.IsEnabled = false;
             MusicSearch.IsEnabled = false;
             DurrationTimer.Start();
@@ -87,12 +89,13 @@ namespace uVK
         {
             UserName.Text = api.Account.GetProfileInfo().FirstName;
             LastUserName.Text = api.Account.GetProfileInfo().LastName;
+            UserImage.ImageSource= new System.Windows.Media.Imaging.BitmapImage(new Uri(api.Users.Get(new long[] { vkDatas.datas.User_id }, ProfileFields.Photo100)[0].Photo100.AbsoluteUri, UriKind.Absolute));
             playlist = new Playlist(new OwnAudios());
             DownloadFriendList();
             DurrationTimer.Stop();
             DurrationTimer.Tick += DurrationTimer_Tick;
             VolumeSlider.Maximum = 100;
-            VolumeSlider.Value = 30;
+            VolumeSlider.Value = 50;
             vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.datas.User_id) });
             AddAudioToList(vkDatas.Audio);
             vkDatas.RecommendedAudio = api.Audio.GetRecommendations(count: 100, shuffle: true);
@@ -119,7 +122,7 @@ namespace uVK
             VkBools.IsSearch = false;
         }
 
-        private void SetAndDownloadState(string State)
+        private async void SetAndDownloadState(string State)
         {
             this.state = State.ToUpper();
             switch (state)
@@ -138,7 +141,7 @@ namespace uVK
                     MusicList.Items.Clear();
                     try
                     {
-                        vkDatas.SearchAudios = api.Audio.Search(new AudioSearchParams
+                        vkDatas.SearchAudios = await api.Audio.SearchAsync(new AudioSearchParams
                         {
                             Query = MusicSearch.Text,
                             Autocomplete = true,
@@ -168,16 +171,16 @@ namespace uVK
             (DataContext as WindowViewModel).DimmableOverlayVisible = false;
         }
 
-        private void AuthToken()
+        private async void AuthToken()
         {
-            api.Authorize(new ApiAuthParams
+            await api.AuthorizeAsync(new ApiAuthParams
             {
-                AccessToken = Token,
+                AccessToken = vkDatas.datas.Token,
                 Settings = VkNet.Enums.Filters.Settings.Offline
             });
         }
 
-        private void Auth2Fact(string login, string password)
+        private async void Auth2Fact(string login, string password)
         {
             string trueCode;
             bool needCode = false;
@@ -203,7 +206,7 @@ namespace uVK
                 input.ShowDialog();
                 trueCode = File.ReadAllText("someFile.tempdat");
 
-                api.Authorize(new ApiAuthParams
+                await api.AuthorizeAsync(new ApiAuthParams
                 {
                     Login = login,
                     Password = password,
@@ -225,7 +228,7 @@ namespace uVK
             vkDatas.service = new ServiceCollection();
             vkDatas.service.AddAudioBypass();
             api = new VkApi(vkDatas.service);
-            if (Token != null)
+            if (vkDatas.datas.Token != null)
             {
                 AuthToken();
             }
@@ -344,13 +347,13 @@ namespace uVK
 
         private void VolumeSlider_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (e.Delta > 0 && player.settings.volume + 2 <= 100)
+            if (e.Delta > 0 && player.settings.volume + 1 <= 100)
             {
-                VolumeSlider.Value += 2;
+                VolumeSlider.Value += 1;
             }
-            else if (e.Delta < 0 && player.settings.volume - 2 >= 0)
+            else if (e.Delta < 0 && player.settings.volume - 1 >= 0)
             {
-                VolumeSlider.Value -= 2;
+                VolumeSlider.Value -= 1;
             }
         }
 
@@ -386,7 +389,7 @@ namespace uVK
                 vkDatas.datas.User_id = api.UserId.Value;
                 Des_Ser.Serialize(vkDatas.datas);
                 vkDatas.datas.User_id = api.UserId.GetHashCode();
-                Token = api.Token;
+                vkDatas.datas.Token = api.Token;
                 vkDatas.datas.User_id = api.UserId.Value;
                 gridLogin.Visibility = Visibility.Hidden;
                 DoAfterLogin();
@@ -427,7 +430,7 @@ namespace uVK
             VolumeSlider.Value = 0;
         }
 
-        private void MusicSearch_KeyDown(object sender, KeyEventArgs e)
+        private  void MusicSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -469,6 +472,7 @@ namespace uVK
             {
                 if (NoSaveMusicText.Visibility == Visibility.Hidden)
                 {
+                    PauseButton.IsChecked = true;
                     state = "save";
                     playlist = new Playlist(new SavesAudios());
                     playlist.SetAudioInfo(this, fromClick: true);
@@ -522,6 +526,7 @@ namespace uVK
                 if (state != "recom")
                     playlist = new Playlist(new RecommendedAudio());
                 playlist.SetAudioInfo(this, fromClick: true);
+                PauseButton.IsChecked = true;
             }
             catch { }
         }

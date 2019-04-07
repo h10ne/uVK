@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 
 class StructSaveAudios
 {
@@ -78,14 +79,17 @@ public class VkDatas
 }
 public static class Des_Ser
 {
-    public static void Serialize(uVK.UserDatas datas)
+    public async static void Serialize(uVK.UserDatas datas)
     {
-        IFormatter formatter = new BinaryFormatter();
-        Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\");
-        using (Stream stream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin", FileMode.Create))
+        await Task.Run(() =>
         {
-            formatter.Serialize(stream, datas);
-        }
+            IFormatter formatter = new BinaryFormatter();
+            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\");
+            using (Stream stream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin", FileMode.Create))
+            {
+                formatter.Serialize(stream, datas);
+            }
+        });
     }
     static public void Deserialize(ref uVK.UserDatas datas)
     {
