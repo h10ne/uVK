@@ -24,10 +24,9 @@ namespace uVK
         Playlist playlist;
         public Switches VkBools;
         public VkDatas vkDatas;
-        public bool isAuth = false;
+        //public bool isAuth = false;
         string state;
         private DispatcherTimer OnlineTimer;
-        FrameworkElement pnlClient;
         public MainWindow()
         {
             InitializeComponent();
@@ -39,7 +38,6 @@ namespace uVK
                 Interval = new TimeSpan(0, 10, 0)
             };
             OnlineTimer.Tick += OnlineTimer_Tick;
-            pnlClient = this.Content as FrameworkElement;
             player = new WindowsMediaPlayer();
             AddCacheToList();
             DurrationTimer = new DispatcherTimer
@@ -89,14 +87,14 @@ namespace uVK
         {
             UserName.Text = api.Account.GetProfileInfo().FirstName;
             LastUserName.Text = api.Account.GetProfileInfo().LastName;
-            UserImage.ImageSource= new System.Windows.Media.Imaging.BitmapImage(new Uri(api.Users.Get(new long[] { vkDatas.datas.User_id }, ProfileFields.Photo100)[0].Photo100.AbsoluteUri, UriKind.Absolute));
+            UserImage.ImageSource= new System.Windows.Media.Imaging.BitmapImage(new Uri(api.Users.Get(new long[] { vkDatas.datas.User_id.Value }, ProfileFields.Photo100)[0].Photo100.AbsoluteUri, UriKind.Absolute));
             playlist = new Playlist(new OwnAudios());
-            DownloadFriendList();
             DurrationTimer.Stop();
+            DownloadFriendList();
             DurrationTimer.Tick += DurrationTimer_Tick;
             VolumeSlider.Maximum = 100;
             VolumeSlider.Value = 50;
-            vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.datas.User_id) });
+            vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.datas.User_id.Value) });
             AddAudioToList(vkDatas.Audio);
             vkDatas.RecommendedAudio = api.Audio.GetRecommendations(count: 100, shuffle: true);
             playlist.SetAudioInfo(this);
@@ -110,6 +108,7 @@ namespace uVK
         {
             var friends = api.Friends.Get(new FriendsGetParams
             {
+                UserId = vkDatas.datas.User_id,
                 Fields = ProfileFields.All
             });
             foreach (var friend in friends)
@@ -180,7 +179,7 @@ namespace uVK
             });
         }
 
-        private async void Auth2Fact(string login, string password)
+        private void Auth2Fact(string login, string password)
         {
             string trueCode;
             bool needCode = false;
@@ -206,7 +205,7 @@ namespace uVK
                 input.ShowDialog();
                 trueCode = File.ReadAllText("someFile.tempdat");
 
-                await api.AuthorizeAsync(new ApiAuthParams
+                api.Authorize(new ApiAuthParams
                 {
                     Login = login,
                     Password = password,
@@ -235,10 +234,6 @@ namespace uVK
             else
             {
                 Auth2Fact(login, password);
-                if (api.IsAuthorized)
-                {
-                    isAuth = true;
-                }
             }
         }
 
@@ -379,11 +374,12 @@ namespace uVK
 
             try
             {
+                Error.Text = "";
                 GetAuth(tbLogin.Text, tbPassword.Password);
             }
             catch
             { }
-            if (isAuth == true)
+            if (api.IsAuthorized == true)
             {
                 vkDatas.datas.Token = api.Token;
                 vkDatas.datas.User_id = api.UserId.Value;
@@ -392,6 +388,8 @@ namespace uVK
                 vkDatas.datas.Token = api.Token;
                 vkDatas.datas.User_id = api.UserId.Value;
                 gridLogin.Visibility = Visibility.Hidden;
+                OnlineCheckBox.IsChecked = false;
+                OnlineSwitch.Text = "Вы не будете отображаться в сети.";
                 DoAfterLogin();
             }
             else
@@ -558,8 +556,15 @@ namespace uVK
         private void ExitUserAccount_Click(object sender, RoutedEventArgs e)
         {
             File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin");
-            System.Windows.Forms.Application.Restart();
-            System.Environment.Exit(1);
+            vkDatas.datas.Token = null;
+            vkDatas.datas.User_id = null;
+            FrendList.Items.Clear();
+            OnlineTimer.Stop();
+            api.Account.SetOffline();
+            tbLogin.Text = "";
+            tbPassword.Password = "";
+            Settings.Visibility = Visibility.Hidden;
+            gridLogin.Visibility = Visibility.Visible;
         }
 
         private void DurrationSlider_MouseUp(object sender, MouseButtonEventArgs e)
