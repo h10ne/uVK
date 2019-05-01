@@ -26,7 +26,6 @@ namespace uVK
         public bool isAuth = false;
         string state;
         private DispatcherTimer OnlineTimer;
-        FrameworkElement pnlClient;
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +37,6 @@ namespace uVK
                 Interval = new TimeSpan(0, 10, 0)
             };
             OnlineTimer.Tick += OnlineTimer_Tick;
-            pnlClient = this.Content as FrameworkElement;
             player = new WindowsMediaPlayer();
             AddCacheToList();
             DurrationTimer = new DispatcherTimer
@@ -159,13 +157,13 @@ namespace uVK
         private void AppWindow_Deactivated(object sender, EventArgs e)
         {
             // Show overlay if we lose focus
-            (DataContext as WindowViewModel).DimmableOverlayVisible = true;
+            //(DataContext as WindowViewModel).DimmableOverlayVisible = true;
         }
 
         private void AppWindow_Activated(object sender, EventArgs e)
         {
             // Hide overlay if we are focused
-            (DataContext as WindowViewModel).DimmableOverlayVisible = false;
+            //(DataContext as WindowViewModel).DimmableOverlayVisible = false;
         }
 
         private void AuthToken()

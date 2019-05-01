@@ -8,7 +8,7 @@
     Title="uVK"
     Width="900"
     Height="600"
-    MinWidth="{Binding WindowMinimumWidth}"
+    MinWidth="{Binding WindowMinimumWidth}" 
     MinHeight="{Binding WindowMinimumHeight}"
     Activated="AppWindow_Activated"
     AllowsTransparency="True"
@@ -76,7 +76,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <!--  Иконка  -->
-                                        <Button Command="{Binding MenuCommand}" Style="{StaticResource SystemIconButton}">
+                                        <Button Style="{StaticResource SystemIconButton}">
                                             <Image Source="/Images/logo-small.png" />
                                         </Button>
 
@@ -456,7 +456,7 @@
             <Grid Name="gridLogin"
               Grid.RowSpan="2"
               Background="#FFFFFF"
-              Visibility="Visible">
+              Visibility="Hidden">
 
                 <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=5}">
                     

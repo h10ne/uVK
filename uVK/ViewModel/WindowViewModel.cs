@@ -16,9 +16,9 @@ namespace uVK
 
         #region Public Properties
 
-        public double WindowMinimumWidth { get; set; } = 800;
+        public double WindowMinimumWidth { get; set; } = 500;
 
-        public double WindowMinimumHeight { get; set; } = 500;
+        public double WindowMinimumHeight { get; set; } = 135;
 
         public bool Borderless {  get { return (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked); } }
 
@@ -92,10 +92,21 @@ namespace uVK
                 WindowResized();
             };
 
-            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
-            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
+            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized); 
+            MaximizeCommand = new RelayCommand(() => 
+            {
+                if (mWindow.Width==900)
+                {
+                    mWindow.Width = 500;
+                    mWindow.Height = 135;                    
+                }
+                else
+                {
+                    mWindow.Width = 900;
+                    mWindow.Height = 600;
+                }
+            }); 
             CloseCommand = new RelayCommand(() => mWindow.Close());
-            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
 
             var resizer = new WindowResizer(mWindow);
 
