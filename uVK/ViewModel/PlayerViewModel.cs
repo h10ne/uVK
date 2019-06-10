@@ -54,6 +54,7 @@ namespace uVK.ViewModel
         private string _maximumTimePosition;
         private double _currentTimePositionValue;
         private double _durrationMaximum;
+        private string _selectedItem;
         #endregion
 
 
@@ -70,6 +71,7 @@ namespace uVK.ViewModel
         public double CurrentTimePositionValue { get { return _currentTimePositionValue; } set { _currentTimePositionValue = value; OnPropertyChanged(nameof(CurrentTimePositionValue)); } }
         public string MaximumTimePosition { get { return _maximumTimePosition; } set { _maximumTimePosition = value; OnPropertyChanged(nameof(MaximumTimePosition)); } }
         public double DurrationMaximum { get { return _durrationMaximum; } set { _durrationMaximum = value; OnPropertyChanged(nameof(DurrationMaximum)); } }
+        public string SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
         #endregion
 
 
@@ -130,6 +132,16 @@ namespace uVK.ViewModel
                 return new RelayCommand((obj) =>
                 {
                     PlayerModel.Playlist.PrevSong(this);
+                });
+            }
+        }
+        public RelayCommand SetAudioFromClick
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
                 });
             }
         }

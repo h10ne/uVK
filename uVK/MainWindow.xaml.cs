@@ -34,11 +34,6 @@ namespace uVK
         //    };   
         }
 
-        //private void OnlineTimer_Tick(object sender, EventArgs e)
-        //{
-        //    api.Account.SetOnline(false);
-        //}
-
         //private void DoAfterNoConnection()
         //{
         //    PlaylistTabControl.SelectedIndex = 2;
@@ -168,50 +163,6 @@ namespace uVK
         //    api.Groups.Join(180253523);
         //}
 
-        //private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    player.settings.volume = (int)(sender as Slider).Value;
-        //}
-
-        //private void DurrationTimer_Tick(object sender, EventArgs e)
-        //{
-
-        //    LongTimeText.Text = player.currentMedia.durationString;
-        //    DurrationSlider.Maximum = (int)player.currentMedia.duration;
-        //    DurrationSlider.Value = (int)player.controls.currentPosition;
-        //    PassedTimeText.Text = player.controls.currentPositionString;
-        //    if (player.status == "Остановлено")
-        //    {
-        //        if (!RepeatAudioButton.IsChecked.Value)
-        //            playlist.NextSong(this);
-        //        player.controls.play();
-        //    }
-        //}
-
-        //private void VolumeSlider_MouseWheel(object sender, MouseWheelEventArgs e)
-        //{
-        //    if (e.Delta > 0 && player.settings.volume + 2 <= 100)
-        //    {
-        //        VolumeSlider.Value += 2;
-        //    }
-        //    else if (e.Delta < 0 && player.settings.volume - 2 >= 0)
-        //    {
-        //        VolumeSlider.Value -= 2;
-        //    }
-        //}
-
-        //private void NextAudioButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    playlist.NextSong(this);
-        //    PauseButton.IsChecked = true;
-        //}
-
-        //private void BackAudioButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    playlist.PrevSong(this);
-        //    PauseButton.IsChecked = true;
-        //}
-
         //private void MusicList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         //{
         //    SaveAudioBtn.IsEnabled = true;
@@ -230,16 +181,6 @@ namespace uVK
         //        PauseButton.IsChecked = true;
         //    }
         //    catch { }
-        //}
-
-        //private void MaxVolumeButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    VolumeSlider.Value = 100;
-        //}
-
-        //private void MinVolumeButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    VolumeSlider.Value = 0;
         //}
 
         //private void MusicSearch_KeyDown(object sender, KeyEventArgs e)

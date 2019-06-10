@@ -220,7 +220,7 @@ public class OwnAudios : IState
         if (fromClick)
             foreach (var audio in PlayerModel.Audio)
             {
-                if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
+                if (audio.Artist + " - " + audio.Title == main.SelectedItem)
                 {
                     PlayerModel.OffsetOwn = main.SelectedIndex;
                     break;
