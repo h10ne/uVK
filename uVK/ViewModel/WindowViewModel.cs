@@ -1,26 +1,29 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using uVK.View;
 
 namespace uVK
 {
     public class WindowViewModel : BaseViewModel
     {
-        #region Private Member
-        private Window mWindow;
-        private int mOuterMarginSize = 5;
-        private int mWindowRadius = 5;
-        private WindowDockPosition mDockPosition = WindowDockPosition.Undocked;
+        #region Private window Member
+        static private Window mWindow;
+        static private int mOuterMarginSize = 5;
+        static private int mWindowRadius = 5;
+        static private WindowDockPosition mDockPosition = WindowDockPosition.Undocked;
         #endregion
 
-        #region Public Properties
+        #region Window public  Properties
 
         public double WindowMinimumWidth { get; set; } = 500;
 
         public double WindowMinimumHeight { get; set; } = 135;
 
-        public bool Borderless {  get { return (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked); } }
+        public bool Borderless { get { return (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked); } }
 
         public int ResizeBorder { get { return Borderless ? 0 : 3; } }
 
@@ -72,12 +75,10 @@ namespace uVK
         #region Commands
 
         public ICommand MinimizeCommand { get; set; }
-
         public ICommand MaximizeCommand { get; set; }
-
         public ICommand CloseCommand { get; set; }
-
         public ICommand MenuCommand { get; set; }
+        public ICommand SettingCommand { get; set; }
 
         #endregion
 
@@ -87,26 +88,49 @@ namespace uVK
         {
             mWindow = window;
 
+            CurrentPage = AuthPage;
+
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
+            {
+                UserDatasToSerialize datas1 = new UserDatasToSerialize();
+                Des_Ser.Deserialize(ref datas1);
+                UserDatas.Name = datas1.Name;
+                UserDatas.Surname = datas1.Surname;
+                UserDatas.Token = datas1.Token;
+                UserDatas.User_id = datas1.User_id;
+                SettingsPage = new SettingsView();
+                PlayerPage = new PlayerView();
+                CurrentPage = PlayerPage;
+            }
+
             mWindow.StateChanged += (sender, e) =>
             {
                 WindowResized();
             };
 
-            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized); 
-            MaximizeCommand = new RelayCommand(() => 
+            MinimizeCommand = new RelayCommand((obj) => mWindow.WindowState = WindowState.Minimized);
+            MaximizeCommand = new RelayCommand((obj) =>
             {
-                if (mWindow.Width==900)
+                if (mWindow.Width == 900)
                 {
                     mWindow.Width = 500;
-                    mWindow.Height = 135;                    
+                    mWindow.Height = 135;
                 }
                 else
                 {
                     mWindow.Width = 900;
                     mWindow.Height = 600;
                 }
-            }); 
-            CloseCommand = new RelayCommand(() => mWindow.Close());
+            }, (obj) => PlayerPage != null);
+            CloseCommand = new RelayCommand((obj) => mWindow.Close());
+            SettingCommand = new RelayCommand((obj) =>
+            {
+                if (CurrentPage == SettingsPage)
+                    CurrentPage = PlayerPage;
+                else
+                    CurrentPage = SettingsPage;
+
+            },(obj) => SettingsPage != null);
 
             var resizer = new WindowResizer(mWindow);
 
@@ -141,5 +165,27 @@ namespace uVK
 
 
         #endregion
+
+        #region Player Private properties
+        private string _title;
+        private string _artist;
+        private string _currentDurration;
+        private string _maxDurration;
+        #endregion
+
+        //#region Player public  properties
+        //public  string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
+        //public  string Artist { get { return _title; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
+
+        //#endregion
+        private Page _currentPage;
+        public Page AuthPage = new AuthView();
+        public Page SettingsPage;
+        public Page PlayerPage;
+        public Page CurrentPage
+        {
+            get { return _currentPage; }
+            set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }
+        }
     }
 }

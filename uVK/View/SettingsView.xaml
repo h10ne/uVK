@@ -1,0 +1,135 @@
+﻿<Page x:Class="uVK.View.SettingsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:uVK.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="800"
+      Title="SettingsView">
+
+    <Grid>
+        <Grid Name="Settings"
+              Visibility="Visible">
+
+            <Border Grid.Column="1"
+                    Margin="5"
+                    Background="#FFFFFF">
+
+                <TabControl Margin="5"
+                            BorderThickness="0">
+
+                    <TabItem Header="Учётная запись">
+                        <Grid Margin="60,20">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="1" Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}"
+                                    CornerRadius="{Binding FallbackValue=1}">
+
+                                <Border.Effect>
+                                    <DropShadowEffect Opacity="0.3" ShadowDepth="0" />
+                                </Border.Effect>
+
+                            </Border>
+
+                            <Border BorderBrush="#DEE2E8" BorderThickness="1" 
+                                    Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}"
+                                    CornerRadius="{Binding FallbackValue=3}"
+                                    HorizontalAlignment="Right" 
+                                    VerticalAlignment="Top" Margin="10" >
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+
+                                    <Border CornerRadius="5"
+                                            Background="#E9EDF1"
+                                            HorizontalAlignment="Right" 
+                                            VerticalAlignment="Top"
+                                            Margin="10">
+                                        <!--Картинка профиля-->
+                                        <Rectangle Margin="5"
+                                                   RadiusX="5"
+                                                   RadiusY="5"
+                                                   Width="65"
+                                                   Height="65">
+                                            <Rectangle.Fill>
+                                                <ImageBrush x:Name="UserImage"
+                                                    ImageSource="/Images/ImageMusic.png"
+                                                    Stretch="UniformToFill" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Border>
+
+                                    <Border>
+                                        <StackPanel Margin="0,10,15,0" Orientation="Vertical" >
+
+                                            <!--Имя пользователя-->
+                                            <TextBlock Name="UserName" Text="{Binding Firstname}" />
+
+                                            <!--Фамилия пользователя-->
+                                            <TextBlock Name="LastUserName" Text="{Binding Lastname}" />
+
+                                            <!--Кнопка "выйти с аккаунта"-->
+                                            <Button Command="{Binding Logout}"
+                                                    Margin="0 20 0 0" Background="#FF6BA1FF"
+                                                    BorderBrush="#FF6BA1FF" 
+                                                    Content="Выйти"
+                                                    FontSize="18"
+                                                    Width="95"/>
+
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+
+                            <!--Настройки активности аккаунта-->
+                            <Border BorderBrush="#DEE2E8"
+                                    BorderThickness="1"
+                                    CornerRadius="3" 
+                                    HorizontalAlignment="Left" 
+                                    Margin="10"
+                                    Width="187">
+
+                                <StackPanel Orientation="Vertical" Margin="10">
+                                    <Border>
+
+                                        <StackPanel>
+                                            <TextBlock Margin="5" FontSize="20" 
+                                               HorizontalAlignment="Center" 
+                                               Text="Активность " />
+                                            <Rectangle Margin="10" Fill="#DEE2E8" Height="1" />
+                                        </StackPanel>
+
+                                    </Border>
+
+                                    <!--Посылать запрос на offline-->
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                                            <TextBlock Margin="0,3,5,0" Text="Вечный онлайн"/>
+                                            <CheckBox Name="OnlineCheckBox" Background="#12C78C" HorizontalAlignment="Center"/>
+
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Border>
+                                        <StackPanel>
+
+                                            <TextBlock Name="OnlineSwitch" FontSize="10" Margin="3" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#7E8FA5" 
+                                                       Text="Вы не будете отображаться в сети." />
+                                            <Rectangle Margin="10" Fill="#DEE2E8" Height="1" />
+
+                                        </StackPanel>
+                                    </Border>
+
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

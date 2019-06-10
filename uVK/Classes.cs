@@ -38,47 +38,18 @@ public class SaveAudios
     }
 
 }
-public class Switches
+public static class Switches
 {
-    public bool IsSearch { get; set; } = false;
-    public bool IsHot { get; set; } = false;
-    public bool IsRecommend { get; set; } = false;
-    public bool IsOwn { get; set; } = true;
-    public bool IsId { get; set; } = false;
-    public Switches()
-    {
-        IsSearch = false;
-        IsHot = false;
-        IsRecommend = false;
-        IsOwn = true;
-        IsId = false;
-    }
+    public static bool IsSearch { get; set; } = false;
+    public static bool IsHot { get; set; } = false;
+    public static bool IsRecommend { get; set; } = false;
+    public static bool IsOwn { get; set; } = true;
+    public static bool IsId { get; set; } = false;
 }
 
-public class VkDatas
-{
-    public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
-    public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> Audio { get; set; }
-    public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
-    public VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> IdAudios { get; set; }
-    public IEnumerable<VkNet.Model.Attachments.Audio> HotAudios { get; set; }
-    public SaveAudios Cache;
-    public ServiceCollection service { get; set; }
-    public int OffsetOwn = 0;
-    public int OffsetSearch = 0;
-    public int OffsetHot = -1;
-    public int OffsetRecom = 0;
-    public int OffsetSave = 0;
-    public uVK.UserDatas datas;
-    public VkDatas()
-    {
-        datas = new uVK.UserDatas();
-        Cache = new SaveAudios();
-    }
-}
 public static class Des_Ser
 {
-    public static void Serialize(uVK.UserDatas datas)
+    public static void Serialize(uVK.UserDatasToSerialize datas)
     {
         IFormatter formatter = new BinaryFormatter();
         Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\");
@@ -87,12 +58,12 @@ public static class Des_Ser
             formatter.Serialize(stream, datas);
         }
     }
-    static public void Deserialize(ref uVK.UserDatas datas)
+    static public void Deserialize(ref uVK.UserDatasToSerialize datas)
     {
         IFormatter formatter = new BinaryFormatter();
         using (Stream stream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin", FileMode.Open))
         {
-            datas = (uVK.UserDatas)formatter.Deserialize(stream);
+            datas = (uVK.UserDatasToSerialize)formatter.Deserialize(stream);
         }
     }
 }
