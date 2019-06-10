@@ -49,7 +49,7 @@ public interface IState
 
 //    public void SetAudioInfo(uVK.MainWindow main, bool isback = false)
 //    {
-//        if (main.MusicList.SelectedIndex == -1)
+//        if (main.SelectedIndex == -1)
 //            main.MusicList.SelectedItem = 0;
 //        foreach (var audio in PlayerModel.IdAudios)
 //            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
@@ -64,12 +64,12 @@ public interface IState
 //                }
 //                else if (isback)
 //                {
-//                    main.MusicList.SelectedIndex -= 1;
+//                    main.SelectedIndex -= 1;
 //                    SetAudioInfo(main, true);
 //                }
 //                else
 //                {
-//                    main.MusicList.SelectedIndex += 1;
+//                    main.SelectedIndex += 1;
 //                    SetAudioInfo(main, false);
 //                }
 //            }
@@ -89,7 +89,7 @@ public interface IState
 //            if (rnd_max > 1800)
 //                rnd_max = 1800;
 //            int value = rnds.Next(0, rnd_max - 1);
-//            main.MusicList.SelectedIndex = value;
+//            main.SelectedIndex = value;
 //            Thread.Sleep(270);
 //            SetAudioInfo(main);
 //        }
@@ -97,12 +97,12 @@ public interface IState
 //        {
 //            try
 //            {
-//                main.MusicList.SelectedIndex += 1;
+//                main.SelectedIndex += 1;
 //                SetAudioInfo(main);
 //            }
 //            catch
 //            {
-//                main.MusicList.SelectedIndex = 0;
+//                main.SelectedIndex = 0;
 //                SetAudioInfo(main);
 //            }
 //        }
@@ -114,17 +114,17 @@ public interface IState
 //        {
 
 
-//            if (main.MusicList.SelectedIndex <= -1)
+//            if (main.SelectedIndex <= -1)
 //            {
-//                main.MusicList.SelectedIndex = main.MusicList.Items.Count;
+//                main.SelectedIndex = main.MusicList.Items.Count;
 //            }
 //            else
-//                main.MusicList.SelectedIndex -= 1;
+//                main.SelectedIndex -= 1;
 //            SetAudioInfo(main, true);
 //        }
 //        catch (Exception ex)
 //        {
-//            main.MusicList.SelectedIndex = 4998;
+//            main.SelectedIndex = 4998;
 //            SetAudioInfo(main, true);
 //        }
 //    }
@@ -222,7 +222,7 @@ public class OwnAudios : IState
             {
                 if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
                 {
-                    PlayerModel.OffsetOwn = main.MusicList.SelectedIndex;
+                    PlayerModel.OffsetOwn = main.SelectedIndex;
                     break;
                 }
             }
@@ -238,11 +238,13 @@ public class OwnAudios : IState
         PlayerModel.Player.URL = url.Scheme + "://" + url.Authority + url.AbsolutePath;
         main.Artist = PlayerModel.Audio[PlayerModel.OffsetOwn].Artist;
         main.Title = PlayerModel.Audio[PlayerModel.OffsetOwn].Title;
+        main.MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
+        main.DurrationMaximum = PlayerModel.Player.currentMedia.duration;
         for (int i = 0; i < main.MusicList.Items.Count; i++)
             if (main.MusicList.Items[i].ToString() == PlayerModel.Audio[PlayerModel.OffsetOwn].Artist + " - " + PlayerModel.Audio[PlayerModel.OffsetOwn].Title)
             {
                 string str = main.MusicList.Items[i].ToString();
-                main.MusicList.SelectedIndex = i;
+                main.SelectedIndex = i;
                 break;
             }
         PlayerModel.Player.controls.play();
@@ -352,7 +354,7 @@ public class OwnAudios : IState
 //            {
 //                if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
 //                {
-//                    PlayerModel.OffsetSearch = main.MusicList.SelectedIndex;
+//                    PlayerModel.OffsetSearch = main.SelectedIndex;
 //                }
 //            }
 
@@ -374,7 +376,7 @@ public class OwnAudios : IState
 //            if (main.MusicList.Items[i].ToString() == PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist
 //                + " - " + PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title)
 //            {
-//                main.MusicList.SelectedIndex = i;
+//                main.SelectedIndex = i;
 //                break;
 //            }
 //        }
@@ -488,12 +490,12 @@ public class OwnAudios : IState
 //        try
 //        {
 
-//            main.MusicList.SelectedIndex -= 1;
+//            main.SelectedIndex -= 1;
 //            SetAudioInfo(main, true);
 //        }
 //        catch
 //        {
-//            main.MusicList.SelectedIndex = main.MusicList.Items.Count - 1;
+//            main.SelectedIndex = main.MusicList.Items.Count - 1;
 //            SetAudioInfo(main, true);
 //        }
 //    }
@@ -504,19 +506,19 @@ public class OwnAudios : IState
 //        {
 //            Random rnds = new Random();
 //            int value = rnds.Next(0, main.MusicList.Items.Count);
-//            main.MusicList.SelectedIndex = value;
+//            main.SelectedIndex = value;
 //            SetAudioInfo(main);
 //        }
 //        else
 //        {
 //            try
 //            {
-//                main.MusicList.SelectedIndex += 1;
+//                main.SelectedIndex += 1;
 //                SetAudioInfo(main);
 //            }
 //            catch
 //            {
-//                main.MusicList.SelectedIndex = 0;
+//                main.SelectedIndex = 0;
 //                SetAudioInfo(main);
 //            }
 //        }
@@ -536,12 +538,12 @@ public class OwnAudios : IState
 //                }
 //                else if (isback)
 //                {
-//                    main.MusicList.SelectedIndex -= 1;
+//                    main.SelectedIndex -= 1;
 //                    SetAudioInfo(main, true);
 //                }
 //                else
 //                {
-//                    main.MusicList.SelectedIndex += 1;
+//                    main.SelectedIndex += 1;
 //                    SetAudioInfo(main, false);
 //                }
 //            }
