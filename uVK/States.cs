@@ -238,8 +238,6 @@ public class OwnAudios : IState
         PlayerModel.Player.URL = url.Scheme + "://" + url.Authority + url.AbsolutePath;
         main.Artist = PlayerModel.Audio[PlayerModel.OffsetOwn].Artist;
         main.Title = PlayerModel.Audio[PlayerModel.OffsetOwn].Title;
-        main.MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
-        main.DurrationMaximum = PlayerModel.Player.currentMedia.duration;
         for (int i = 0; i < main.MusicList.Items.Count; i++)
             if (main.MusicList.Items[i].ToString() == PlayerModel.Audio[PlayerModel.OffsetOwn].Artist + " - " + PlayerModel.Audio[PlayerModel.OffsetOwn].Title)
             {

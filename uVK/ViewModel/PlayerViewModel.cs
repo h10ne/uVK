@@ -21,22 +21,43 @@ namespace uVK.ViewModel
             PlayerModel.Playlist.SetAudioInfo(this);
             Volume = 30;
             PlayerModel.Player.controls.stop();
-            BidloEvent();
+            BidloEventForLoud();
+            DurrationTimer = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 400)
+            };
+            DurrationTimer.Tick += DurrationTimer_Tick;
+            
         }
-        private async void BidloEvent()
+
+        private void DurrationTimer_Tick(object sender, EventArgs e)
+        {
+            MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
+            DurrationMaximum = PlayerModel.Player.currentMedia.duration;
+            CurrentTimePosition = PlayerModel.Player.controls.currentPositionString;
+            CurrentTimePositionValue = PlayerModel.Player.controls.currentPosition;
+        }
+
+        private async void BidloEventForLoud()
         {
             await Task.Run(() =>
             {
                 while (true)
                 {
-                    int _volume = Volume;
-                    Thread.Sleep(100);
-                    if (_volume!=Volume)
+                    try
                     {
-                        PlayerModel.Player.settings.volume = Volume;
+                        MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
+                        DurrationMaximum = PlayerModel.Player.currentMedia.duration;
+                        CurrentTimePosition = PlayerModel.Player.controls.currentPositionString;
+                        CurrentTimePositionValue = PlayerModel.Player.controls.currentPosition;
+                        int _volume = Volume;
+                        Thread.Sleep(50);
+                        if (_volume != Volume)
+                        {
+                            PlayerModel.Player.settings.volume = Volume;
+                        }
                     }
-                    CurrentTimePosition = PlayerModel.Player.controls.currentPositionString;
-                    CurrentTimePositionValue = PlayerModel.Player.controls.currentPosition;
+                    catch { }
                 }
             });
         }
@@ -55,6 +76,7 @@ namespace uVK.ViewModel
         private double _currentTimePositionValue;
         private double _durrationMaximum;
         private string _selectedItem;
+        private System.Windows.Threading.DispatcherTimer DurrationTimer;
         #endregion
 
 
@@ -83,15 +105,15 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    if (IsPlay)
+                    if (!IsPlay)
                     {
-                        IsPlay = false;
+                        //IsPlay = false;
                         PlayerModel.Player.controls.stop();
                     }
                     else
                     {
                         PlayerModel.Player.controls.play();
-                        IsPlay = true;
+                        //IsPlay = true;
                     }
                 });
             }
@@ -122,6 +144,7 @@ namespace uVK.ViewModel
                 return new RelayCommand((obj) =>
                {
                    PlayerModel.Playlist.NextSong(this);
+                   IsPlay = true;
                });
             }
         }
@@ -131,6 +154,7 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
+                    IsPlay = true;
                     PlayerModel.Playlist.PrevSong(this);
                 });
             }
@@ -141,6 +165,7 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
+                    IsPlay = true;
                     PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
                 });
             }

@@ -36,6 +36,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <!--Кнопка "Пауза"-->
                                 <ToggleButton Command="{Binding PlayPauseCommand}"
+                                              IsChecked="{Binding IsPlay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           Width="35"
                                           Height="35"
                                           Foreground="#FFFFFF"                                          
@@ -103,7 +104,7 @@
                             <StackPanel>
                                 <!--Текст "Название аудиозаписи"-->
                                 <TextBlock
-                                    Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding CurrentTimePositionValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     MaxHeight="36"
                                     FontSize="14"
                                     FontWeight="Bold"
@@ -128,7 +129,7 @@
                                     Style="{StaticResource CommonSliderStyle}"/>
 
                                 <!--Текст "сколько прошло времени"-->
-                                <TextBlock Text="{Binding CurrentTimePosition}"
+                                <TextBlock Text="{Binding CurrentTimePosition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                            FontSize="10"
                                            Opacity="0.5" 
                                            Foreground="{DynamicResource SidebarForegroundBrush}"/>
@@ -136,7 +137,7 @@
                                 <!--Текст "Длительность аудиозаписи"-->
                                 <TextBlock 
                                         Margin="0 -10  0 0" 
-                                        Text="{Binding MaximumTimePosition}"
+                                        Text="{Binding MaximumTimePosition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="10" 
                                         Opacity="0.5" 
                                         HorizontalAlignment="Right" 
