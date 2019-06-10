@@ -9,21 +9,59 @@ using System.Windows.Controls;
 namespace uVK.Model
 {
     public static class PlayerModel
-    {
-        
-
-        //        #region Variables
+    {        
+        #region Variables
         public static  VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
         public static VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> Audio { get; set; }
         public static VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
         //        public SaveAudios Cache;
-        //        public ServiceCollection service { get; set; }
-        //        public int OffsetOwn = 0;
+        public static int OffsetOwn = 0;
         //        public int OffsetSearch = 0;
         //        public int OffsetHot = -1;
         //        public int OffsetRecom = 0;
         //        public int OffsetSave = 0;
-        //        #endregion
+        public static WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
+        public static Playlist Playlist;
+        public static string State { get; set; }
+        #endregion
+
+        public static void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios, ListBox MusicList)
+        {
+            MusicList.Items.Clear();
+            if (State == "SEARCH")
+            {
+                bool IncludeOwn = false;
+                int startValue = 0;
+                for (int i = 0; i < SearchAudios.Count; i++)
+                {
+                    foreach (var ownaudio in Audio)
+                    {
+                        if (ownaudio.AccessKey == SearchAudios[i].AccessKey)
+                        {
+                            if (!IncludeOwn)
+                            {
+                                IncludeOwn = true;
+                                MusicList.Items.Add("               Ваши аудиозаписи:");
+                            }
+                            MusicList.Items.Add(SearchAudios[i].Artist + " - " + SearchAudios[i].Title);
+                            startValue++;
+                        }
+                    }
+                }
+                if (startValue != 0)
+                    MusicList.Items.Add("               Все аудиозаписи:");
+                for (int j = startValue; j < SearchAudios.Count; j++)
+                {
+                    MusicList.Items.Add(SearchAudios[j].Artist + " - " + SearchAudios[j].Title);
+                }
+                return;
+            }
+            foreach (var audio in audios)
+            {
+                string title = $"{audio.Artist} - {audio.Title}";
+                MusicList.Items.Add(title);
+            }
+        }
     }
 }
 

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using uVK.Model;
 using uVK.View;
 
 namespace uVK
@@ -92,12 +93,7 @@ namespace uVK
 
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
             {
-                UserDatasToSerialize datas1 = new UserDatasToSerialize();
-                Des_Ser.Deserialize(ref datas1);
-                UserDatas.Name = datas1.Name;
-                UserDatas.Surname = datas1.Surname;
-                UserDatas.Token = datas1.Token;
-                UserDatas.User_id = datas1.User_id;
+                AuthModel.GetAuth();
                 SettingsPage = new SettingsView();
                 PlayerPage = new PlayerView();
                 CurrentPage = PlayerPage;
@@ -165,19 +161,7 @@ namespace uVK
 
 
         #endregion
-
-        #region Player Private properties
-        private string _title;
-        private string _artist;
-        private string _currentDurration;
-        private string _maxDurration;
-        #endregion
-
-        //#region Player public  properties
-        //public  string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
-        //public  string Artist { get { return _title; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
-
-        //#endregion
+               
         private Page _currentPage;
         public Page AuthPage = new AuthView();
         public Page SettingsPage;

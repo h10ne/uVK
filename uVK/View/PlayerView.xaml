@@ -101,7 +101,7 @@
                                 <StackPanel>
                                     <!--Текст "Название аудиозаписи"-->
                                     <TextBlock
-                                    Text="{Binding IsPlay, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
                                 MaxHeight="36"
                                 FontSize="14"
                                 FontWeight="Bold"
@@ -152,7 +152,7 @@
                                             Orientation="Horizontal" >
 
                                             <!--Кнопка "Перемешать аудио"-->
-                                            <ToggleButton x:Name="RandomAudioButton"
+                                            <ToggleButton IsChecked="{Binding Random}"
                                                   Width="32" Height="32"
                                                   Style="{StaticResource ShuffleButtonStyle}" 
                                                   RenderTransformOrigin="0.5,0.5" >
@@ -169,7 +169,7 @@
                                             </ToggleButton>
 
                                             <!--Кнопка "Повторять аудиозапись"-->
-                                            <ToggleButton x:Name="RepeatAudioButton" 
+                                            <ToggleButton IsChecked="{Binding Repeat}"
                                                   Width="32" Height="32" 
                                                   Style="{StaticResource RepeatButtonStyle}" >
 
@@ -262,7 +262,7 @@
                                          VerticalAlignment="Top"/>
 
                                         <!--Список аудиозаписей-->
-                                        <ListBox ItemsSource="{Binding MusicList}" Name="MusicList"                                           
+                                        <ListBox ItemsSource="{Binding MusicList.Items}" Name="MusicList"                                           
                                           ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" 
                                           Margin="0,50,5,10" BorderThickness="0" />
                                     </Grid>

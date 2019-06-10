@@ -18,19 +18,11 @@ namespace uVK
     {
         //public WMPLib.WindowsMediaPlayer player;
         //public DispatcherTimer DurrationTimer;
-        //public string Token = null;
-        //public VkApi api;
-        //Playlist playlist;
-        //public VkDatas vkDatas;
-        //public bool isAuth = false;
-        //string state;
         //private DispatcherTimer OnlineTimer;
-        //FrameworkElement pnlClient;
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = new WindowViewModel(this);
-        //    vkDatas = new VkDatas();
         //    
         //    OnlineTimer.Tick += OnlineTimer_Tick;
         //    pnlClient = this.Content as FrameworkElement;
@@ -65,8 +57,6 @@ namespace uVK
 
         //private void DoAfterLogin()
         //{
-        //    UserName.Text = api.Account.GetProfileInfo().FirstName;
-        //    LastUserName.Text = api.Account.GetProfileInfo().LastName;
         //    playlist = new Playlist(new OwnAudios());
         //    DownloadFriendList();
         //    DurrationTimer.Stop();
@@ -172,46 +162,6 @@ namespace uVK
         //    }
         //    RecommendationsList.SelectedItem = 0;
         //}
-
-        //public void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios)
-        //{
-        //    MusicList.Items.Clear();
-        //    if (state == "SEARCH")
-        //    {
-        //        bool IncludeOwn = false;
-        //        int startValue = 0;
-        //        for (int i = 0; i < vkDatas.SearchAudios.Count; i++)
-        //        {
-        //            foreach (var ownaudio in vkDatas.Audio)
-        //            {
-        //                if (ownaudio.AccessKey == vkDatas.SearchAudios[i].AccessKey)
-        //                {
-        //                    if (!IncludeOwn)
-        //                    {
-        //                        IncludeOwn = true;
-        //                        MusicList.Items.Add("               Ваши аудиозаписи:");
-        //                    }
-        //                    MusicList.Items.Add(vkDatas.SearchAudios[i].Artist + " - " + vkDatas.SearchAudios[i].Title);
-        //                    startValue++;
-        //                }
-        //            }
-        //        }
-        //        if (startValue != 0)
-        //            MusicList.Items.Add("               Все аудиозаписи:");
-        //        for (int j = startValue; j < vkDatas.SearchAudios.Count; j++)
-        //        {
-        //            MusicList.Items.Add(vkDatas.SearchAudios[j].Artist + " - " + vkDatas.SearchAudios[j].Title);
-        //        }
-        //        return;
-        //    }
-        //    foreach (var audio in audios)
-        //    {
-        //        Object title = new object();
-        //        title = $"{audio.Artist} - {audio.Title}";
-        //        MusicList.Items.Add(title);
-
-        //    }
-        //}             
 
         //private void TryToJoinGroup()
         //{

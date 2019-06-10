@@ -12,7 +12,7 @@ namespace uVK.ViewModel
         public string Firstname { get; private set; }
         public string Lastname { get; private set; }
         public SettingsViewModel()
-        {
+        {            
             Firstname = UserDatas.Name;
             Lastname = UserDatas.Surname;
         }

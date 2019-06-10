@@ -73,6 +73,15 @@ namespace uVK.Model
             service = new ServiceCollection();
             service.AddAudioBypass();
             ApiDatas.api = new VkApi(service);
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
+            {
+                UserDatasToSerialize datas1 = new UserDatasToSerialize();
+                Des_Ser.Deserialize(ref datas1);
+                UserDatas.Name = datas1.Name;
+                UserDatas.Surname = datas1.Surname;
+                UserDatas.Token = datas1.Token;
+                UserDatas.User_id = datas1.User_id;
+            }
             if (UserDatas.Token != null)
             {
                 AuthToken();
