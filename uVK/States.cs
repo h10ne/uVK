@@ -38,7 +38,7 @@ public interface IState
 /*
 //class IdAudios : IState
 //{
-//    public void AudioMenuClick(uVK.MainWindow main)
+//    public void AudioMenuClick(PlayerViewModel main)
 //    {
 //        foreach (var audio in PlayerModel.IdAudios)
 //            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
@@ -47,7 +47,7 @@ public interface IState
 //            }
 //    }
 
-//    public void SetAudioInfo(uVK.MainWindow main, bool isback = false)
+//    public void SetAudioInfo(PlayerViewModel main, bool isback = false)
 //    {
 //        if (main.SelectedIndex == -1)
 //            main.MusicList.SelectedItem = 0;
@@ -80,7 +80,7 @@ public interface IState
 //        //main.VkBools.isPlay = true;
 //    }
 
-//    public void NextSong(uVK.MainWindow main)
+//    public void NextSong(PlayerViewModel main)
 //    {
 //        if (main.VkBools.random)
 //        {
@@ -108,7 +108,7 @@ public interface IState
 //        }
 //    }
 
-//    public void PrevSong(uVK.MainWindow main)
+//    public void PrevSong(PlayerViewModel main)
 //    {
 //        try
 //        {
@@ -133,7 +133,7 @@ public interface IState
 
 //public class SavesAudios:IState
 //{
-//    public void NextSong(uVK.MainWindow main)
+//    public void NextSong(PlayerViewModel main)
 //    {
 //        if (main.RandomAudioButton.IsChecked.Value)
 //        {
@@ -158,7 +158,7 @@ public interface IState
 //            }
 //        }
 //    }
-//    public void PrevSong(uVK.MainWindow main)
+//    public void PrevSong(PlayerViewModel main)
 //    {
 //        try
 //        {
@@ -173,7 +173,7 @@ public interface IState
 //            SetAudioInfo(main, true);
 //        }
 //    }
-//    public void SetAudioInfo(uVK.MainWindow main, bool isback = false, bool fromClick = false)
+//    public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
 //    {
 //        if (fromClick)
 //            foreach (var audio in PlayerModel.Cache.Audio)
@@ -236,6 +236,21 @@ public class OwnAudios : IState
         var url = PlayerModel.Audio[PlayerModel.OffsetOwn].Url;
         string path = url.Scheme + "://" + url.Authority + url.AbsolutePath;
         PlayerModel.Player.URL = url.Scheme + "://" + url.Authority + url.AbsolutePath;
+        main.MaximumTimePosition = PlayerModel.Audio[PlayerModel.OffsetOwn].Duration.ToString();
+
+        int minutes = PlayerModel.Audio[PlayerModel.OffsetOwn].Duration;
+        int seconds = minutes % 60;
+        minutes /= 60;
+        string minutesStr = minutes.ToString(); ;
+        if (minutes < 10)
+            minutesStr = "0" + minutes.ToString();
+        string secondsStr = seconds.ToString(); ;
+        if (seconds < 10)
+            secondsStr = "0" + seconds.ToString();
+
+        main.CurrentTimePositionValue = 0;
+        main.MaximumTimePosition = minutesStr + ":" + secondsStr;
+        main.DurrationMaximum = PlayerModel.Audio[PlayerModel.OffsetOwn].Duration;
         main.Artist = PlayerModel.Audio[PlayerModel.OffsetOwn].Artist;
         main.Title = PlayerModel.Audio[PlayerModel.OffsetOwn].Title;
         for (int i = 0; i < main.MusicList.Items.Count; i++)
@@ -301,110 +316,110 @@ public class OwnAudios : IState
     }
 }
 
-//class SearchAudios : IState
-//{
-//    public void PrevSong(uVK.MainWindow main)
-//    {
-//        try
-//        {
+public class SearchAudios : IState
+{
+    public void PrevSong(PlayerViewModel main)
+    {
+        try
+        {
 
-//            PlayerModel.OffsetSearch -= 1;
-//            SetAudioInfo(main);
-//        }
-//        catch
-//        {
-//            PlayerModel.OffsetSearch = PlayerModel.SearchAudios.Count - 1;
-//            SetAudioInfo(main, true);
-//        }
-//    }
+            PlayerModel.OffsetSearch -= 1;
+            SetAudioInfo(main);
+        }
+        catch
+        {
+            PlayerModel.OffsetSearch = PlayerModel.SearchAudios.Count - 1;
+            SetAudioInfo(main, true);
+        }
+    }
 
-//    public void NextSong(uVK.MainWindow main)
-//    {
-//        if (PlayerModel.SearchAudios != null)
-//        {
-//            if (main.RandomAudioButton.IsChecked.Value)
-//            {
-//                Random rnds = new Random();
-//                int value;
-//                value = rnds.Next(0, PlayerModel.SearchAudios.Count);
-//                PlayerModel.OffsetSearch = value;
-//                SetAudioInfo(main);
-//            }
-//            else
-//            {
-//                try
-//                {
-//                    PlayerModel.OffsetSearch += 1;
-//                    SetAudioInfo(main);
-//                }
-//                catch
-//                {
-//                    PlayerModel.OffsetSearch = 0;
-//                    SetAudioInfo(main);
-//                }
-//            }
-//        }
-//    }
-//    public void SetAudioInfo(uVK.MainWindow main, bool isback = false, bool fromClick = false)
-//    {
-//        if (fromClick)
-//            foreach (var audio in PlayerModel.SearchAudios)
-//            {
-//                if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
-//                {
-//                    PlayerModel.OffsetSearch = main.SelectedIndex;
-//                }
-//            }
+    public void NextSong(PlayerViewModel main)
+    {
+        if (PlayerModel.SearchAudios != null)
+        {
+            if (main.Random)
+            {
+                Random rnds = new Random();
+                int value;
+                value = rnds.Next(0, PlayerModel.SearchAudios.Count);
+                PlayerModel.OffsetSearch = value;
+                SetAudioInfo(main);
+            }
+            else
+            {
+                try
+                {
+                    PlayerModel.OffsetSearch += 1;
+                    SetAudioInfo(main);
+                }
+                catch
+                {
+                    PlayerModel.OffsetSearch = 0;
+                    SetAudioInfo(main);
+                }
+            }
+        }
+    }
+    public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
+    {
+        if (fromClick)
+            foreach (var audio in PlayerModel.SearchAudios)
+            {
+                if (audio.Artist + " - " + audio.Title == main.SelectedItem)
+                {
+                    PlayerModel.OffsetSearch = main.SelectedIndex;
+                }
+            }
 
-//        while (PlayerModel.Audio[PlayerModel.OffsetSearch].Url == null)
-//        {
-//            if (isback)
-//                PlayerModel.OffsetSearch--;
-//            else
-//                PlayerModel.OffsetSearch++;
-//        }
-//        PlayerModel.Player.URL = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Url.ToString();
-//        main.MusicArtist.Text = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist;
-//        main.MusicName.Text = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title;
-//        for (int i = 0; i < main.MusicList.Items.Count; i++)
-//        {
-//            string str = main.MusicList.Items[i].ToString();
-//            string str2 = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist + " - " +
-//                PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title;
-//            if (main.MusicList.Items[i].ToString() == PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist
-//                + " - " + PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title)
-//            {
-//                main.SelectedIndex = i;
-//                break;
-//            }
-//        }
+        while (PlayerModel.Audio[PlayerModel.OffsetSearch].Url == null)
+        {
+            if (isback)
+                PlayerModel.OffsetSearch--;
+            else
+                PlayerModel.OffsetSearch++;
+        }
+        PlayerModel.Player.URL = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Url.ToString();
+        main.Artist = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist;
+        main.Title = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title;
+        for (int i = 0; i < main.MusicList.Items.Count; i++)
+        {
+            string str = main.MusicList.Items[i].ToString();
+            string str2 = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist + " - " +
+                PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title;
+            if (main.MusicList.Items[i].ToString() == PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist
+                + " - " + PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title)
+            {
+                main.SelectedIndex = i;
+                break;
+            }
+        }
 
-//        PlayerModel.Player.controls.play();
+        PlayerModel.Player.controls.play();
 
 
-//        try
-//        {
-//            var uriImageSource = new Uri(PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Album.Cover.Photo135, UriKind.RelativeOrAbsolute);
-//            main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
-//        }
-//        catch
-//        {
-//            var uriImageSource = new Uri("https://s8.hostingkartinok.com/uploads/images/2019/04/ba91888882438a65608f0f6c2906af44.png", UriKind.RelativeOrAbsolute);
-//            main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
-//        }
-//    }
-//}
+        //try
+        //{
+        //    var uriImageSource = new Uri(PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Album.Cover.Photo135, UriKind.RelativeOrAbsolute);
+        //    main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
+        //}
+        //catch
+        //{
+        //    var uriImageSource = new Uri("https://s8.hostingkartinok.com/uploads/images/2019/04/ba91888882438a65608f0f6c2906af44.png", UriKind.RelativeOrAbsolute);
+        //    main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
+        //}
+    }
+}
 
 //class RecommendedAudio : IState
 //{
-//    public void PrevSong(uVK.MainWindow main)
+//    public void PrevSong(PlayerViewModel main)
 //    {
 //        try
 //        {
 
 //            PlayerModel.OffsetRecom -= 1; ;
 //            if (PlayerModel.OffsetRecom == -1)
-//                PlayerModel.OffsetRecom = PlayerModel.RecommendedAudio.Count-1;
+//                PlayerModel.OffsetRecom = PlayerModel.RecommendedAudio.Count - 1;
 //            SetAudioInfo(main, true);
 //        }
 //        catch
@@ -413,7 +428,7 @@ public class OwnAudios : IState
 //        }
 //    }
 
-//    public void NextSong(uVK.MainWindow main)
+//    public void NextSong(PlayerViewModel main)
 //    {
 //        if (main.RandomAudioButton.IsChecked.Value)
 //        {
@@ -437,7 +452,7 @@ public class OwnAudios : IState
 //            }
 //        }
 //    }
-//    public void SetAudioInfo(uVK.MainWindow main, bool isback = false, bool fromClick = false)
+//    public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
 //    {
 //        if (fromClick)
 //            foreach (var audio in PlayerModel.RecommendedAudio)
@@ -483,7 +498,7 @@ public class OwnAudios : IState
 //}
 //class HotAudio : IState
 //{
-//    public void PrevSong(uVK.MainWindow main)
+//    public void PrevSong(PlayerViewModel main)
 //    {
 //        try
 //        {
@@ -498,7 +513,7 @@ public class OwnAudios : IState
 //        }
 //    }
 
-//    public void NextSong(uVK.MainWindow main)
+//    public void NextSong(PlayerViewModel main)
 //    {
 //        if (main.RandomAudioButton.IsChecked.Value)
 //        {
@@ -521,7 +536,7 @@ public class OwnAudios : IState
 //            }
 //        }
 //    }
-//    public void SetAudioInfo(uVK.MainWindow main, bool isback = false, bool fromClick = false)
+//    public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
 //    {
 //        foreach (var audio in PlayerModel.HotAudios)
 //            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())

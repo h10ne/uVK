@@ -16,22 +16,10 @@ namespace uVK
 {
     public partial class MainWindow : Window
     {
-        //public WMPLib.WindowsMediaPlayer player;
-        //public DispatcherTimer DurrationTimer;
-        //private DispatcherTimer OnlineTimer;
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = new WindowViewModel(this);
-        //    
-        //    OnlineTimer.Tick += OnlineTimer_Tick;
-        //    pnlClient = this.Content as FrameworkElement;
-        //    player = new WindowsMediaPlayer();
-        //    AddCacheToList();
-        //    DurrationTimer = new DispatcherTimer
-        //    {
-        //        Interval = new TimeSpan(0, 0, 0, 0, 400)
-        //    };   
         }
 
         //private void DoAfterNoConnection()

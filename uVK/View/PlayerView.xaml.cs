@@ -26,5 +26,10 @@ namespace uVK.View
             InitializeComponent();
             DataContext = new PlayerViewModel();
         }
+
+        private void MusicSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

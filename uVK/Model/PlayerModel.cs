@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using VkNet.Model.RequestParams;
 
 namespace uVK.Model
 {
@@ -16,19 +17,43 @@ namespace uVK.Model
         public static VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
         //        public SaveAudios Cache;
         public static int OffsetOwn = 0;
-        //        public int OffsetSearch = 0;
-        //        public int OffsetHot = -1;
-        //        public int OffsetRecom = 0;
-        //        public int OffsetSave = 0;
+        public static int OffsetSearch = 0;
+        //        public static int OffsetHot = -1;
+        public static int OffsetRecom = 0;
+        public static int OffsetSave = 0;
         public static WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
         public static Playlist Playlist;
-        public static string State { get; set; }
+        public static State state { get; set; }
         #endregion
+        public enum State
+        {
+            own,
+            save,
+            recommend,
+            search
+        }
+        public static void Search(string SearchRequest, ListBox MusicList)
+        {
+            //Task.Run(() =>
+            //{
+                PlayerModel.SearchAudios = PlayerModel.SearchAudios = ApiDatas.api.Audio.Search(new AudioSearchParams
+                {
+                    Query = SearchRequest,
+                    Autocomplete = true,
+                    SearchOwn = true,
+                    Count = 50,
+                    PerformerOnly = false
+                });
+                PlayerModel.state = PlayerModel.State.search;
+                PlayerModel.AddAudioToList(PlayerModel.SearchAudios, MusicList);
+                PlayerModel.Playlist = new Playlist(new SearchAudios());
 
+            //});
+        }
         public static void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios, ListBox MusicList)
         {
             MusicList.Items.Clear();
-            if (State == "SEARCH")
+            if (state == State.search)
             {
                 bool IncludeOwn = false;
                 int startValue = 0;
