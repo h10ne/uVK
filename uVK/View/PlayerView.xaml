@@ -200,7 +200,8 @@
                                         </ToggleButton>
 
                                         <!--  Кнопка "Добавить аудиозапись"-->
-                                        <Button x:Name="SaveAudioBtn"
+                                        <Button 
+                                            Command="{Binding SaveAudio, UpdateSourceTrigger=PropertyChanged}"
                                             Width="32"
                                             Height="32"
                                             Style="{StaticResource SaveMusic}" >
@@ -293,16 +294,15 @@
 
                                     <!--Список аудиозаписей-->
                                     <ListBox 
-                                        SelectedItem="{Binding SelectedItem}"
-                                        ItemsSource="{Binding MusicList.Items}"   
+                                        ItemsSource="{Binding MusicList.Items}"
+                                        SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   
                                         ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}" 
                                         SelectedIndex="{Binding SelectedIndex}"
                                         Margin="0,50,5,0" BorderThickness="0" >
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseDoubleClick">
                                                 <i:InvokeCommandAction 
-                                                    Command="{Binding SetAudioFromClick}"
-                                                    CommandParameter="{Binding SelectedItem}" />
+                                                    Command="{Binding SetAudioFromClick}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </ListBox>
@@ -337,6 +337,26 @@
                             </TabItem>
                         </TabControl>
 
+                        <WrapPanel Margin="{Binding MarginNotification, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                   Height="20" 
+                                   Width="100" 
+                                   Orientation="Horizontal"
+                                   IsEnabled="False">
+                            <Border BorderBrush="WhiteSmoke" 
+                                    BorderThickness="2" 
+                                    CornerRadius="5" 
+                                    Background="WhiteSmoke">
+                                <Grid Width="100">
+                                <TextBlock Text="{Binding NotificationText}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="15" 
+                                           Height="17"
+                                           Foreground="Gray"
+                                           FontWeight="DemiBold"/>
+                                </Grid>
+                            </Border>
+                        </WrapPanel>
                     </Grid>
                 </Border>
 
@@ -356,7 +376,8 @@
                     <ListBox Name="FrendList"
                          ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
                          BorderThickness="0"
-                         Margin="10" />
+                         Margin="10" >
+                    </ListBox>
 
                 </Grid>
             </Grid>

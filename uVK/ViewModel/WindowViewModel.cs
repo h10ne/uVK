@@ -115,10 +115,11 @@ namespace uVK
                 else
                 {
                     mWindow.Width = 900;
-                    mWindow.Height = 600;
+                    mWindow.Height = 550;
                 }
-            }, (obj) => PlayerPage != null);
+            }, (obj) => PlayerPage != null && CurrentPage==PlayerPage);
             CloseCommand = new RelayCommand((obj) => mWindow.Close());
+
             SettingCommand = new RelayCommand((obj) =>
             {
                 if (CurrentPage == SettingsPage)

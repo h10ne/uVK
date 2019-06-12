@@ -45,15 +45,14 @@ namespace uVK.Model
                     PerformerOnly = false
                 });
                 PlayerModel.state = PlayerModel.State.search;
-                PlayerModel.AddAudioToList(PlayerModel.SearchAudios, MusicList);
-                PlayerModel.Playlist = new Playlist(new SearchAudios());
+                PlayerModel.AddAudioToList(PlayerModel.SearchAudios, MusicList, true);
 
             //});
         }
-        public static void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios, ListBox MusicList)
+        public static void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios, ListBox MusicList, bool fromSearch = false)
         {
             MusicList.Items.Clear();
-            if (state == State.search)
+            if (fromSearch)
             {
                 bool IncludeOwn = false;
                 int startValue = 0;

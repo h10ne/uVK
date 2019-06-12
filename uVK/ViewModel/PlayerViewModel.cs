@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,10 +13,10 @@ using VkNet.Model.RequestParams;
 
 namespace uVK.ViewModel
 {
-    public class PlayerViewModel:BaseViewModel
+    public class PlayerViewModel : BaseViewModel
     {
         public PlayerViewModel()
-        {            
+        {
             PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) });
             MusicList = new ListBox();
             PlayerModel.state = PlayerModel.State.own;
@@ -58,15 +60,18 @@ namespace uVK.ViewModel
         private string _selectedItem;
         private System.Windows.Threading.DispatcherTimer DurrationTimer;
         private string _searchRequest = "";
+        private bool isDownloading = false;
         #endregion
 
 
         #region Public properties
         public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
-        public  string Artist { get { return _artist; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
+        public string Artist { get { return _artist; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
         public ListBox MusicList { get { return _musicList; } set { _musicList = value; OnPropertyChanged(nameof(MusicList)); } }
         public int Volume { get { return _volume; } set { _volume = value; PlayerModel.Player.settings.volume = Volume; OnPropertyChanged(nameof(Volume)); } }
-        public bool IsPlay { get { return _isPlay; }
+        public bool IsPlay
+        {
+            get { return _isPlay; }
             set
             {
                 _isPlay = value;
@@ -91,13 +96,16 @@ namespace uVK.ViewModel
         public string MaximumTimePosition { get { return _maximumTimePosition; } set { _maximumTimePosition = value; OnPropertyChanged(nameof(MaximumTimePosition)); } }
         public double DurrationMaximum { get { return _durrationMaximum; } set { _durrationMaximum = value; OnPropertyChanged(nameof(DurrationMaximum)); } }
         public string SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
-        public string SearchRequest { get { return _searchRequest; }
+        public string SearchRequest
+        {
+            get { return _searchRequest; }
             set
             {
                 _searchRequest = value;
-                if (SearchRequest == "" && PlayerModel.state == PlayerModel.State.search)
+
+                if (SearchRequest == "")
                 {
-                    PlayerModel.state = PlayerModel.State.own;
+                    //PlayerModel.state = PlayerModel.State.own;
                     PlayerModel.AddAudioToList(PlayerModel.Audio, MusicList);
                 }
                 OnPropertyChanged(nameof(SearchRequest));
@@ -105,6 +113,32 @@ namespace uVK.ViewModel
         }
         #endregion
 
+        #region Notification
+        private string _marginNotification = "0,430,0,0";
+        public string MarginNotification { get { return _marginNotification; } set { _marginNotification = value; OnPropertyChanged(nameof(MarginNotification)); } }
+
+        private string _notificationText = "Downloading";
+        public string NotificationText { get { return _notificationText; } set { _notificationText = value; OnPropertyChanged(nameof(NotificationText)); GetAnimation(); } }
+
+        private async void GetAnimation()
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                for (int i = 430; i > 270; i -= 10)
+                {
+                    MarginNotification = $"0,{i},0,0";
+                    Thread.Sleep(15);
+                }
+                Thread.Sleep(1000);
+                for (int i = 270; i < 430; i += 10)
+                {
+                    MarginNotification = $"0,{i},0,0";
+                    Thread.Sleep(10);
+                }
+            });
+        }
+
+        #endregion
 
         #region Commands
         public RelayCommand MouseDown
@@ -136,7 +170,7 @@ namespace uVK.ViewModel
                 return new RelayCommand((obj) =>
                 {
                     PlayerModel.Search(SearchRequest, MusicList);
-               });
+                });
             }
         }
         public RelayCommand MuteCommand
@@ -146,7 +180,7 @@ namespace uVK.ViewModel
                 return new RelayCommand((obj) =>
                 {
                     Volume = 0;
-                }, (obj)=> Volume>0);
+                }, (obj) => Volume > 0);
             }
         }
         public RelayCommand FullLoudCommand
@@ -161,7 +195,8 @@ namespace uVK.ViewModel
         }
         public RelayCommand NextSong
         {
-            get {
+            get
+            {
                 return new RelayCommand((obj) =>
                {
                    PlayerModel.Playlist.NextSong(this);
@@ -186,10 +221,42 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    IsPlay = true;
+                    if (SearchRequest != "")
+                    {
+                        PlayerModel.Playlist = new Playlist(new SearchAudios());
+                    }
+                    if (PlayerModel.state != PlayerModel.State.own && SearchRequest == "")
+                    {
+                        PlayerModel.Playlist = new Playlist(new OwnAudios());
+                        PlayerModel.OffsetOwn = 0;
+                        PlayerModel.OffsetSearch = 0;
+                    }
                     PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
+                    IsPlay = true;
                 });
             }
+        }
+        public RelayCommand SaveAudio
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    isDownloading = true;
+                    NotificationText = "Загрузка";
+                    //GetAnimation();
+                    WebClient webClient = new WebClient();
+                    webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
+                    webClient.DownloadFileAsync(new Uri(PlayerModel.Player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\" + Artist + "↨" + Title);
+                }, (obj) => !isDownloading);
+            }
+        }
+
+        private void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            //GetAnimation();
+            NotificationText = "Завершено";
+            isDownloading = false;
         }
         #endregion
 
