@@ -84,14 +84,16 @@
 
             <!--Текст (ошибка авторизации)-->
             <TextBlock Margin="0 100 0 0"
+                       Visibility="{Binding ErrorVisibility}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center" 
-                           Text="" 
+                           Text="Неверный логин или пароль!" 
                            Name="Error"
                            FontFamily="{StaticResource LatoRegular}"
                            Foreground="{StaticResource Dr0bRedBrush}" />
 
             <Button Margin="100,165,0,0"
+                    Command="{Binding Restore}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Content="Забыли пароль?"

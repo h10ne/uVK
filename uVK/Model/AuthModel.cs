@@ -26,6 +26,11 @@ namespace uVK.Model
             });
         }
 
+        public static void Restore()
+        {
+            System.Diagnostics.Process.Start("https://vk.com/restore");
+        }
+
         private static void Auth2Fact(string login, string password)
         {
             string trueCode;
@@ -67,7 +72,7 @@ namespace uVK.Model
             }
 
         }
-        public static void GetAuth(string login = null, string password = null)
+        public static bool GetAuth(string login = null, string password = null)
         {
 
             service = new ServiceCollection();
@@ -99,12 +104,13 @@ namespace uVK.Model
                         datas.Name = ApiDatas.api.Account.GetProfileInfo().FirstName;
                         datas.Surname = ApiDatas.api.Account.GetProfileInfo().LastName;
                         Des_Ser.Serialize(datas);
+
+                        System.Windows.Forms.Application.Restart();
+                        System.Environment.Exit(1);
                     }
                 }
-
-                System.Windows.Forms.Application.Restart();
-                System.Environment.Exit(1);
             }
+            return false;
         }
     }
 }

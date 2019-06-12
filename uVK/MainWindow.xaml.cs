@@ -66,46 +66,6 @@ namespace uVK
         //        this.FrendList.Items.Add($"{friend.FirstName} {friend.LastName}");
         //}
 
-        //private void SwitchStatesOff()
-        //{
-        //    Switches.IsOwn = false;
-        //    Switches.IsSearch = false;
-        //}
-
-        //private void SetAndDownloadState(string State)
-        //{
-        //    this.state = State.ToUpper();
-        //    switch (state)
-        //    {
-        //        case "OWN":
-        //            SwitchStatesOff();
-        //            MusicList.Items.Clear();
-        //            Switches.IsOwn = true;
-        //            AddAudioToList(vkDatas.Audio);
-        //            break;               
-        //        case "SEARCH":
-        //            SwitchStatesOff();
-        //            MusicList.Items.Clear();
-        //            Switches.IsSearch = true;
-        //            vkDatas.OffsetSearch = -1;
-        //            MusicList.Items.Clear();
-        //            try
-        //            {
-        //                vkDatas.SearchAudios = api.Audio.Search(new AudioSearchParams
-        //                {
-        //                    Query = MusicSearch.Text,
-        //                    Autocomplete = true,
-        //                    SearchOwn = true,
-        //                    Count = 50,
-        //                    PerformerOnly = false
-        //                });
-        //                AddAudioToList(vkDatas.SearchAudios);
-        //            }
-        //            catch { }
-        //            break;
-
-        //    }
-        //}
 
 
 
@@ -185,11 +145,6 @@ namespace uVK
         //    {
         //        SetAndDownloadState("own");
         //    }
-        //}
-
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    System.Diagnostics.Process.Start("https://vk.com/restore");
         //}
 
         //private void ExitVK_Click(object sender, RoutedEventArgs e)
@@ -284,12 +239,6 @@ namespace uVK
         //        api.Account.SetOffline();
         //        OnlineSwitch.Text = "Вы не будете отображаться в сети.";
         //    }
-        //}
-
-
-        //private void DurrationSlider_MouseUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    player.controls.currentPosition = DurrationSlider.Value;
         //}
     }
 }

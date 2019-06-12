@@ -37,7 +37,7 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <!--Кнопка "Пауза"-->
-                                <ToggleButton Command="{Binding PlayPauseCommand}"
+                                <ToggleButton
                                               IsChecked="{Binding IsPlay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           Width="35"
                                           Height="35"
@@ -128,7 +128,18 @@
                                     Maximum="{Binding DurrationMaximum}"
                                     Background="{DynamicResource SidebarSliderBackgroundBrush}"
                                     IsMoveToPointEnabled="True"
-                                    Style="{StaticResource CommonSliderStyle}"/>
+                                    Style="{StaticResource CommonSliderStyle}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseDown">
+                                            <i:InvokeCommandAction 
+                                                    Command="{Binding MouseDown}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="PreviewMouseUp">
+                                            <i:InvokeCommandAction 
+                                                    Command="{Binding MouseUp}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Slider>
 
                                 <!--Текст "сколько прошло времени"-->
                                 <TextBlock Text="{Binding CurrentTimePosition, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"

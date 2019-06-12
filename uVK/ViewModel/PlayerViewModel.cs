@@ -23,40 +23,23 @@ namespace uVK.ViewModel
             PlayerModel.Playlist.SetAudioInfo(this);
             Volume = 30;
             PlayerModel.Player.controls.stop();
-            BidloEventForLoud();
             DurrationTimer = new System.Windows.Threading.DispatcherTimer
             {
-                Interval = new TimeSpan(0, 0, 0, 0, 800)
+                Interval = new TimeSpan(0, 0, 0, 0, 20)
             };
             DurrationTimer.Tick += DurrationTimer_Tick;
-            DurrationTimer.Start();
-            
         }
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
         {
             CurrentTimePosition = PlayerModel.Player.controls.currentPositionString;
             CurrentTimePositionValue = PlayerModel.Player.controls.currentPosition;
-        }
-
-        private async void BidloEventForLoud()
-        {
-            await Task.Run(() =>
+            if (PlayerModel.Player.status == "Остановлено")
             {
-                while (true)
-                {
-                    try
-                    {
-                        int _volume = Volume;
-                        Thread.Sleep(50);
-                        if (_volume != Volume)
-                        {
-                            PlayerModel.Player.settings.volume = Volume;
-                        }
-                    }
-                    catch { }
-                }
-            });
+                if (!Repeat)
+                    PlayerModel.Playlist.NextSong(this);
+                PlayerModel.Player.controls.play();
+            }
         }
 
         #region Private members
@@ -82,8 +65,24 @@ namespace uVK.ViewModel
         public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
         public  string Artist { get { return _artist; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
         public ListBox MusicList { get { return _musicList; } set { _musicList = value; OnPropertyChanged(nameof(MusicList)); } }
-        public int Volume { get { return _volume; } set { _volume = value; OnPropertyChanged(nameof(Volume)); } }
-        public bool IsPlay { get { return _isPlay; } set { _isPlay = value; OnPropertyChanged(nameof(IsPlay)); } }
+        public int Volume { get { return _volume; } set { _volume = value; PlayerModel.Player.settings.volume = Volume; OnPropertyChanged(nameof(Volume)); } }
+        public bool IsPlay { get { return _isPlay; }
+            set
+            {
+                _isPlay = value;
+                if (!_isPlay)
+                {
+                    DurrationTimer.Stop();
+                    PlayerModel.Player.controls.pause();
+                }
+                else
+                {
+                    DurrationTimer.Start();
+                    PlayerModel.Player.controls.play();
+                }
+                OnPropertyChanged(nameof(IsPlay));
+            }
+        }
         public bool Random { get { return _random; } set { _random = value; OnPropertyChanged(nameof(Random)); } }
         public bool Repeat { get { return _repeat; } set { _repeat = value; OnPropertyChanged(nameof(Repeat)); } }
         public int SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value; OnPropertyChanged(nameof(SelectedIndex)); } }
@@ -108,28 +107,28 @@ namespace uVK.ViewModel
 
 
         #region Commands
-
-        public RelayCommand PlayPauseCommand
+        public RelayCommand MouseDown
         {
             get
             {
                 return new RelayCommand((obj) =>
                 {
-                    if (!IsPlay)
-                    {
-                        //IsPlay = false;
-                        DurrationTimer.Stop();
-                        PlayerModel.Player.controls.pause();
-                    }
-                    else
-                    {
-                        DurrationTimer.Start();
-                        PlayerModel.Player.controls.play();
-                        //IsPlay = true;
-                    }
+                    DurrationTimer.Stop();
                 });
             }
-        }   
+        }
+        public RelayCommand MouseUp
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    PlayerModel.Player.controls.currentPosition = CurrentTimePositionValue;
+                    CurrentTimePosition = PlayerModel.Player.controls.currentPositionString;
+                    DurrationTimer.Start();
+                });
+            }
+        }
         public RelayCommand SearchCommand
         {
             get
