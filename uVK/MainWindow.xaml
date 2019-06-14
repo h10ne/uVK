@@ -21,7 +21,8 @@
     TextOptions.TextRenderingMode="Auto"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
-    mc:Ignorable="d" ResizeMode="CanMinimize">
+    mc:Ignorable="d" ResizeMode="CanMinimize"
+    Opacity="{Binding Opacity}">
 
     <!--  Стиль окна  -->
     <Window.Resources>

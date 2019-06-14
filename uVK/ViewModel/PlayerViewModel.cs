@@ -114,6 +114,7 @@ namespace uVK.ViewModel
         #endregion
 
         #region Notification
+
         private string _marginNotification = "0,430,0,0";
         public string MarginNotification { get { return _marginNotification; } set { _marginNotification = value; OnPropertyChanged(nameof(MarginNotification)); } }
 
@@ -244,7 +245,6 @@ namespace uVK.ViewModel
                 {
                     isDownloading = true;
                     NotificationText = "Загрузка";
-                    //GetAnimation();
                     WebClient webClient = new WebClient();
                     webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
                     webClient.DownloadFileAsync(new Uri(PlayerModel.Player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\" + Artist + "↨" + Title);

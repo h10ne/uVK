@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -104,7 +106,12 @@ namespace uVK
                 WindowResized();
             };
 
-            MinimizeCommand = new RelayCommand((obj) => mWindow.WindowState = WindowState.Minimized);
+            MinimizeCommand = new RelayCommand((obj) => 
+            {
+                //Minimize();
+                //Thread.Sleep(500);
+                mWindow.WindowState = WindowState.Minimized;
+            });
             MaximizeCommand = new RelayCommand((obj) =>
             {
                 if (mWindow.Width == 900)
@@ -117,7 +124,7 @@ namespace uVK
                     mWindow.Width = 900;
                     mWindow.Height = 550;
                 }
-            }, (obj) => PlayerPage != null && CurrentPage==PlayerPage);
+            }, (obj) => PlayerPage != null && CurrentPage == PlayerPage);
             CloseCommand = new RelayCommand((obj) => mWindow.Close());
 
             SettingCommand = new RelayCommand((obj) =>
@@ -127,7 +134,7 @@ namespace uVK
                 else
                     CurrentPage = SettingsPage;
 
-            },(obj) => SettingsPage != null);
+            }, (obj) => SettingsPage != null);
 
             var resizer = new WindowResizer(mWindow);
 
@@ -162,7 +169,7 @@ namespace uVK
 
 
         #endregion
-               
+        private double _opacity = 1;
         private Page _currentPage;
         public Page AuthPage = new AuthView();
         public Page SettingsPage;
@@ -171,6 +178,29 @@ namespace uVK
         {
             get { return _currentPage; }
             set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }
+        }
+        public double Opacity { get { return _opacity; } set { _opacity = value; OnPropertyChanged(nameof(Opacity)); } }
+
+        private async void Minimize()
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                for (double i = 1; i > 0; i-=0.1)
+                {
+                    Opacity = i;
+                    Thread.Sleep(50);
+                }
+            });
+        }
+        private async void Maxiize()
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                for (double i = 0; i < 1; i += 0.1)
+                {
+                    Opacity = i;
+                }
+            });
         }
     }
 }
