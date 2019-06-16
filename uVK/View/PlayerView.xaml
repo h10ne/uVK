@@ -317,7 +317,7 @@
                                      BorderThickness="0" Margin="5"/>
                             </TabItem>
 
-                            <TabItem x:Name="SaveAudioTabItem" Header="Сохранённые аудиозаписи" Margin="0,0,0,0">
+                            <TabItem Header="Сохранённые аудиозаписи" Margin="0,0,0,0">
                                 <Grid>
                                     <!--Сохранённая музыка-->
                                     <ListBox ItemsSource="{Binding SaveAudiosList.Items}"

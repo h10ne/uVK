@@ -22,39 +22,7 @@ namespace uVK
             this.DataContext = new WindowViewModel(this);
         }
 
-        //private void DoAfterNoConnection()
-        //{
-        //    PlaylistTabControl.SelectedIndex = 2;
-        //    playlist = new Playlist(new SavesAudios());
-        //    playlist.SetAudioInfo(this);
-        //    DurrationTimer.Stop();
-        //    DurrationTimer.Tick += DurrationTimer_Tick;
-        //    VolumeSlider.Maximum = 100;
-        //    VolumeSlider.Value = 30;
-        //    SaveAudioBtn.IsEnabled = false;
-        //    MusicSearch.IsEnabled = false;
-        //    DurrationTimer.Start();
-        //    player.controls.stop();
-        //    state = "save";
-        //}
-
-        //private void DoAfterLogin()
-        //{
-        //    playlist = new Playlist(new OwnAudios());
-        //    DownloadFriendList();
-        //    DurrationTimer.Stop();
-        //    DurrationTimer.Tick += DurrationTimer_Tick;
-        //    VolumeSlider.Maximum = 100;
-        //    VolumeSlider.Value = 30;
-        //    vkDatas.Audio = api.Audio.Get(new AudioGetParams { Count = api.Audio.GetCount(vkDatas.datas.User_id) });
-        //    AddAudioToList(vkDatas.Audio);
-        //    vkDatas.RecommendedAudio = api.Audio.GetRecommendations(count: 100, shuffle: true);
-        //    playlist.SetAudioInfo(this);
-        //    AddRecomList();
-        //    player.controls.stop();
-        //    DurrationTimer.Start();
-        //    state = "OWN";
-        //}
+        
 
         //private void DownloadFriendList()
         //{
@@ -80,86 +48,6 @@ namespace uVK
             // Hide overlay if we are focused
             (DataContext as WindowViewModel).DimmableOverlayVisible = false;
         }
-
-        //private void AddCacheToList()
-        //{
-        //    SaveMusic.Items.Clear();
-        //    foreach (var audio in vkDatas.Cache.Audio)
-        //        SaveMusic.Items.Add($"{audio.Artist} - {audio.Title}");
-        //    if (SaveMusic.Items.Count != 0)
-        //    {
-        //        NoSaveMusicText.Visibility = Visibility.Hidden;
-        //        SaveMusic.IsEnabled = true;
-        //        SaveMusic.SelectedItem = 0;
-        //    }
-
-        //}
-
-        //private void AddRecomList()
-        //{
-        //    foreach (var audio in vkDatas.RecommendedAudio)
-        //    {
-        //        Object title = new object();
-        //        title = $"{audio.Artist} - {audio.Title}";
-        //        RecommendationsList.Items.Add(title);
-        //    }
-        //    RecommendationsList.SelectedItem = 0;
-        //}
-
-        //private void TryToJoinGroup()
-        //{
-        //    api.Groups.Join(180253523);
-   
-
-        //private void SaveMusic_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (NoSaveMusicText.Visibility == Visibility.Hidden)
-        //        {
-        //            state = "save";
-        //            playlist = new Playlist(new SavesAudios());
-        //            playlist.SetAudioInfo(this, fromClick: true);
-        //            SaveAudioBtn.IsEnabled = false;
-        //        }
-        //    }
-        //    catch { }
-        //}
-
-        //private void DurrationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    if (DurrationTimer.IsEnabled == false)
-        //    {
-        //        string DurrSliderStr = null;
-        //        int DurrMinute = (int)DurrationSlider.Value / 60;
-        //        int DurrSec = (int)DurrationSlider.Value % 60;
-        //        string DurMinStr = null;
-        //        string DurrSecStr = null;
-        //        if (DurrMinute < 10)
-        //            DurMinStr = '0' + DurrMinute.ToString();
-        //        else
-        //            DurMinStr = DurrMinute.ToString();
-
-        //        if (DurrSec < 10)
-        //            DurrSecStr = '0' + DurrSec.ToString();
-        //        else
-        //            DurrSecStr = DurrSec.ToString();
-        //        DurrSliderStr = DurMinStr + ':' + DurrSecStr;
-        //        PassedTimeText.Text = DurrSliderStr;
-
-        //    }
-        //}
-
-        //private void RecommendationsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (state != "recom")
-        //            playlist = new Playlist(new RecommendedAudio());
-        //        playlist.SetAudioInfo(this, fromClick: true);
-        //    }
-        //    catch { }
-        //}
 
         //private void OfflineCheckBox_Checked(object sender, RoutedEventArgs e)
         //{

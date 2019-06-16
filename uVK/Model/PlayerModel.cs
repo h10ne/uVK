@@ -17,10 +17,8 @@ namespace uVK.Model
         public static  VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
         public static VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> Audio { get; set; }
         public static VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
-        //        public SaveAudios Cache;
         public static int OffsetOwn = 0;
         public static int OffsetSearch = 0;
-        //        public static int OffsetHot = -1;
         public static int OffsetRecom = 0;
         public static int OffsetSave = 0;
         public static WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();

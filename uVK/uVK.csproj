@@ -164,7 +164,7 @@
     <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Helpers\Des_Ser.cs" />
     <Compile Include="Helpers\SaveAudios.cs" />
-    <Compile Include="InputBoxWindow.xaml.cs">
+    <Compile Include="PassBox\InputBoxWindow.xaml.cs">
       <DependentUpon>InputBoxWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ApiDatas.cs" />
@@ -193,7 +193,7 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\WindowResizer.cs" />
-    <Page Include="InputBoxWindow.xaml">
+    <Page Include="PassBox\InputBoxWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
