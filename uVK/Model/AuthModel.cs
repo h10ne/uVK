@@ -1,16 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VkNet.Model.RequestParams;
 using VkNet.Model;
 using VkNet.Enums.Filters;
 using VkNet;
 using VkNet.AudioBypassService.Extensions;
 using System.IO;
-using uVK;
+using uVK.Helpers;
+
 namespace uVK.Model
 {
     public static class AuthModel

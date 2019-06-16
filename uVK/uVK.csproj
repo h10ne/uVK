@@ -162,17 +162,18 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
     <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
-    <Compile Include="Classes.cs" />
+    <Compile Include="Helpers\Des_Ser.cs" />
+    <Compile Include="Helpers\SaveAudios.cs" />
     <Compile Include="InputBoxWindow.xaml.cs">
       <DependentUpon>InputBoxWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\ApiDatas.cs" />
+    <Compile Include="Helpers\ApiDatas.cs" />
     <Compile Include="Model\AuthModel.cs" />
     <Compile Include="Model\PlayerModel.cs" />
     <Compile Include="MainWindow.xaml.cs" />
     <Compile Include="Model\SettingsModel.cs" />
-    <Compile Include="States.cs" />
-    <Compile Include="UserDatas.cs" />
+    <Compile Include="Helpers\States.cs" />
+    <Compile Include="Helpers\UserDatas.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\StringRGBToBrushConverter.cs" />

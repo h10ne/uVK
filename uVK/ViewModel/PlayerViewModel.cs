@@ -6,8 +6,10 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using uVK.Helpers;
 using uVK.Model;
 using VkNet.Model.RequestParams;
 
@@ -17,8 +19,14 @@ namespace uVK.ViewModel
     {
         public PlayerViewModel()
         {
-            PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) });
             MusicList = new ListBox();
+            SaveAudiosList = new ListBox();
+            SaveAudios.AddCache();
+            PlayerModel.AddCacheToList(SaveAudiosList);
+            if (SaveAudiosList.Items.Count != 0)
+                NoSaveMusic = Visibility.Hidden;
+
+            PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) });
             PlayerModel.state = PlayerModel.State.own;
             PlayerModel.AddAudioToList(PlayerModel.Audio, MusicList);
             PlayerModel.Playlist = new Playlist(new OwnAudios());
@@ -45,8 +53,11 @@ namespace uVK.ViewModel
         }
 
         #region Private members
+        public Visibility _noSaveMusic = Visibility.Visible;
+        private ListBox _saveAudiosList;
         private ListBox _musicList;
         private int _volume;
+        private string _imageSource = @"/Images/ImageMusic.png";
         private bool _isPlay = false;
         private bool _random = false;
         private bool _repeat;
@@ -61,13 +72,17 @@ namespace uVK.ViewModel
         private System.Windows.Threading.DispatcherTimer DurrationTimer;
         private string _searchRequest = "";
         private bool isDownloading = false;
+        private string _selectedSaveItem;
+        private int _selectedSaveIndex;
         #endregion
 
-
         #region Public properties
+        public Visibility NoSaveMusic { get { return _noSaveMusic; } set { _noSaveMusic = value; OnPropertyChanged(nameof(NoSaveMusic)); } }
+        public string ImageSource { get { return _imageSource; } set { _imageSource = value; OnPropertyChanged(nameof(ImageSource)); } }
         public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
         public string Artist { get { return _artist; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
         public ListBox MusicList { get { return _musicList; } set { _musicList = value; OnPropertyChanged(nameof(MusicList)); } }
+        public ListBox SaveAudiosList { get { return _saveAudiosList; } set { _saveAudiosList = value; OnPropertyChanged(nameof(SaveAudiosList)); } }
         public int Volume { get { return _volume; } set { _volume = value; PlayerModel.Player.settings.volume = Volume; OnPropertyChanged(nameof(Volume)); } }
         public bool IsPlay
         {
@@ -111,6 +126,8 @@ namespace uVK.ViewModel
                 OnPropertyChanged(nameof(SearchRequest));
             }
         }
+        public int SelectedSaveIndex { get { return _selectedSaveIndex; } set { _selectedSaveIndex = value; OnPropertyChanged(nameof(SelectedSaveIndex)); } }
+        public string SelectedSaveItem { get { return _selectedSaveItem; } set { _selectedSaveItem = value; OnPropertyChanged(nameof(SelectedSaveItem)); } }
         #endregion
 
         #region Notification
@@ -237,6 +254,21 @@ namespace uVK.ViewModel
                 });
             }
         }
+        public RelayCommand SetSaveAudioFromClick
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    if (PlayerModel.state != PlayerModel.State.save)
+                        PlayerModel.state = PlayerModel.State.save;
+                    PlayerModel.Playlist = new Playlist(new SavesAudios());
+                    PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
+                    IsPlay = true;
+                });
+            }
+        }
+        
         public RelayCommand SaveAudio
         {
             get
@@ -257,6 +289,8 @@ namespace uVK.ViewModel
             //GetAnimation();
             NotificationText = "Завершено";
             isDownloading = false;
+            SaveAudios.AddCache();
+            PlayerModel.AddCacheToList(SaveAudiosList);
         }
         #endregion
 

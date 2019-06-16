@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using VkNet.Model.RequestParams;
+using uVK.Helpers;
+using System.Windows;
 
 namespace uVK.Model
 {
@@ -84,6 +86,14 @@ namespace uVK.Model
             {
                 string title = $"{audio.Artist} - {audio.Title}";
                 MusicList.Items.Add(title);
+            }
+        }
+        public static void AddCacheToList(ListBox MusicList)
+        {
+            MusicList.Items.Clear();
+            foreach(var audio in SaveAudios.Audio)
+            {
+                MusicList.Items.Add(audio.Artist + " - " + audio.Title);                
             }
         }
     }

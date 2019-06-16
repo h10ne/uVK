@@ -91,7 +91,7 @@
 
                                         <Rectangle.Fill>
                                             <ImageBrush x:Name="MusicImage"
-                                                 ImageSource="/Images/ImageMusic.png"
+                                                 ImageSource="{Binding ImageSource}"
                                                  Stretch="UniformToFill" />
                                         </Rectangle.Fill>
 
@@ -320,17 +320,25 @@
                             <TabItem x:Name="SaveAudioTabItem" Header="Сохранённые аудиозаписи" Margin="0,0,0,0">
                                 <Grid>
                                     <!--Сохранённая музыка-->
-                                    <ListBox Name="SaveMusic"
+                                    <ListBox ItemsSource="{Binding SaveAudiosList.Items}"
                                      Visibility="Visible"
                                      ItemContainerStyle="{DynamicResource MetroListBoxItemStyle}"
-                                     BorderThickness="0" Margin="5"/>
+                                     BorderThickness="0" Margin="5"
+                                     SelectedIndex="{Binding SelectedSaveIndex}"
+                                     SelectedItem="{Binding SelectedSaveItem}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDoubleClick">
+                                                <i:InvokeCommandAction 
+                                                    Command="{Binding SetSaveAudioFromClick}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ListBox>
 
                                     <!--Информирование о том что нету сохранённой музыки-->
-                                    <TextBlock Name="NoSaveMusicText" 
+                                    <TextBlock Visibility="{Binding NoSaveMusic, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                            Text="У вас пока нет сохранённых аудиозаписей"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           Visibility="Visible"
                                            Foreground="#7E8FA5"
                                            FontSize="18"/>
                                 </Grid>

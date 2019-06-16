@@ -109,58 +109,7 @@ namespace uVK
         //private void TryToJoinGroup()
         //{
         //    api.Groups.Join(180253523);
-        //}
-
-        //private void MusicList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    SaveAudioBtn.IsEnabled = true;
-        //    switch (state)
-        //    {
-        //        case "SEARCH":
-        //            playlist = new Playlist(new SearchAudios());
-        //            break;
-        //        default:
-        //            playlist = new Playlist(new OwnAudios());
-        //            break;
-        //    }
-        //    try
-        //    {
-        //        playlist.SetAudioInfo(this, fromClick: true);
-        //        PauseButton.IsChecked = true;
-        //    }
-        //    catch { }
-        //}
-
-        //private void MusicSearch_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        SetAndDownloadState("search");
-        //    }
-        //}
-
-        //private void MusicSearch_KeyUp(object sender, KeyEventArgs e)
-        //{
-        //    if (String.IsNullOrWhiteSpace(MusicSearch.Text))
-        //    {
-        //        SetAndDownloadState("own");
-        //    }
-        //}
-
-        //private void ExitVK_Click(object sender, RoutedEventArgs e)
-        //{
-        //    SaveAudioBtn.IsEnabled = false;
-        //    WebClient webClient = new WebClient();
-        //    webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
-        //    webClient.DownloadFileAsync(new Uri(player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\" + MusicArtist.Text + "↨" + MusicName.Text);
-        //}
-
-        //private void WebClient_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        //{
-        //    vkDatas.Cache = new SaveAudios();
-        //    AddCacheToList();
-        //    SaveAudioBtn.IsEnabled = true;
-        //}
+   
 
         //private void SaveMusic_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         //{
@@ -200,19 +149,6 @@ namespace uVK
 
         //    }
         //}
-
-        //private void DurrationSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        //{
-
-        //    DurrationTimer.Stop();
-        //}
-
-        //private void DurrationSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    player.controls.currentPosition = DurrationSlider.Value;
-        //    DurrationTimer.Start();
-        //}
-        //#endregion
 
         //private void RecommendationsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         //{

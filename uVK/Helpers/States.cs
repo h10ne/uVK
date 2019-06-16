@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using uVK.Model;
 using uVK.ViewModel;
-
+using uVK.Helpers;
 public class Playlist
 {
     public IState State { get; set; }
@@ -131,87 +131,87 @@ public interface IState
 //}
 //*/
 
-//public class SavesAudios:IState
-//{
-//    public void NextSong(PlayerViewModel main)
-//    {
-//        if (main.RandomAudioButton.IsChecked.Value)
-//        {
-//            Random rnds = new Random();
-//            int value = rnds.Next(0, PlayerModel.Cache.Audio.Count);
-//            Thread.Sleep(270);
-//            Debug.Print(value.ToString());
-//            PlayerModel.OffsetSave = value;
-//            SetAudioInfo(main);
-//        }
-//        else
-//        {
-//            try
-//            {
-//                PlayerModel.OffsetSave += 1;
-//                SetAudioInfo(main);
-//            }
-//            catch
-//            {
-//                PlayerModel.OffsetSave = 1;
-//                SetAudioInfo(main);
-//            }
-//        }
-//    }
-//    public void PrevSong(PlayerViewModel main)
-//    {
-//        try
-//        {
+public class SavesAudios : IState
+{
+    public void NextSong(PlayerViewModel main)
+    {
+        if (main.Random)
+        {
+            Random rnds = new Random();
+            int value = rnds.Next(0, uVK.Helpers.SaveAudios.Audio.Count);
+            Thread.Sleep(270);
+            Debug.Print(value.ToString());
+            PlayerModel.OffsetSave = value;
+            SetAudioInfo(main);
+        }
+        else
+        {
+            try
+            {
+                PlayerModel.OffsetSave += 1;
+                SetAudioInfo(main);
+            }
+            catch
+            {
+                PlayerModel.OffsetSave = 0;
+                SetAudioInfo(main);
+            }
+        }
+        main.SelectedSaveIndex = PlayerModel.OffsetSave;
+    }
+    public void PrevSong(PlayerViewModel main)
+    {
+        try
+        {
 
-//            PlayerModel.OffsetSave -= 1; ;
-//            if (PlayerModel.OffsetSave == -1)
-//                PlayerModel.OffsetSave = PlayerModel.Cache.Audio.Count - 1;
-//            SetAudioInfo(main, true);
-//        }
-//        catch
-//        {
-//            SetAudioInfo(main, true);
-//        }
-//    }
-//    public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
-//    {
-//        if (fromClick)
-//            foreach (var audio in PlayerModel.Cache.Audio)
-//            {
-//                if (audio.Artist + " - " + audio.Title == main.SaveMusic.SelectedItem.ToString())
-//                {
-//                    PlayerModel.OffsetSave = main.SaveMusic.SelectedIndex;
-//                    PlayerModel.Player.URL = audio.Url.ToString();
-//                    main.MusicArtist.Text = audio.Artist;
-//                    main.MusicName.Text = audio.Title;
-//                    PlayerModel.Player.controls.play();
-//                    break;
-//                }
-//            }
-//        else
-//        {
-//            PlayerModel.Player.URL = PlayerModel.Cache.Audio[PlayerModel.OffsetSave].Url.ToString();
-//            main.MusicArtist.Text = PlayerModel.Cache.Audio[PlayerModel.OffsetSave].Artist;
-//            main.MusicName.Text = PlayerModel.Cache.Audio[PlayerModel.OffsetSave].Title;
-//            for (int i = 0; i < main.SaveMusic.Items.Count; i++)
-//            {
-//                string saveitem = main.SaveMusic.Items[i].ToString();
-//                if (main.SaveMusic.Items[i].ToString() == PlayerModel.Cache.Audio[PlayerModel.OffsetSave].Artist + " - " + PlayerModel.Cache.Audio[PlayerModel.OffsetSave].Title)
-//                {
-//                    string str = main.SaveMusic.Items[i].ToString();
-//                    main.SaveMusic.SelectedIndex = i;
-//                    break;
-//                }
-//            }
-//            PlayerModel.Player.controls.play();
+            PlayerModel.OffsetSave -= 1; ;
+            if (PlayerModel.OffsetSave == -1)
+                PlayerModel.OffsetSave =  uVK.Helpers.SaveAudios.Audio.Count - 1;
+            main.SelectedSaveIndex = PlayerModel.OffsetSave;
+            SetAudioInfo(main, true);
+        }
+        catch
+        {
+            SetAudioInfo(main, true);
+        }
+    }
+    public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
+    {
+        if (fromClick)
+            foreach (var audio in uVK.Helpers.SaveAudios.Audio)
+            {
+                if (audio.Artist + " - " + audio.Title == main.SelectedSaveItem)
+                {
+                    PlayerModel.OffsetSave = main.SelectedSaveIndex;
+                    PlayerModel.Player.URL = audio.Url.ToString();
+                    main.Artist = audio.Artist;
+                    main.Title = audio.Title;
+                    PlayerModel.Player.controls.play();
+                    break;
+                }
+            }
+        else
+        {
+            PlayerModel.Player.URL = uVK.Helpers.SaveAudios.Audio[PlayerModel.OffsetSave].Url.ToString();
+            main.Artist = uVK.Helpers.SaveAudios.Audio[PlayerModel.OffsetSave].Artist;
+            main.Title =  uVK.Helpers.SaveAudios.Audio[PlayerModel.OffsetSave].Title;
+            for (int i = 0; i < main.SaveAudiosList.Items.Count; i++)
+            {
+                string saveitem = main.SaveAudiosList.Items[i].ToString();
+                if (main.SaveAudiosList.Items[i].ToString() ==  uVK.Helpers.SaveAudios.Audio[PlayerModel.OffsetSave].Artist + " - " +  uVK.Helpers.SaveAudios.Audio[PlayerModel.OffsetSave].Title)
+                {
+                    string str = main.SaveAudiosList.Items[i].ToString();
+                    main.SaveAudiosList.SelectedIndex = i;
+                    break;
+                }
+            }
+            PlayerModel.Player.controls.play();
 
-//        }
+            main.ImageSource = @"/Images/ImageMusic.png";
+        }
 
-//        var uriImageSource = new Uri("https://s8.hostingkartinok.com/uploads/images/2019/04/ba91888882438a65608f0f6c2906af44.png", UriKind.RelativeOrAbsolute);
-//        main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
-
-//    }
-//}
+    }
+}
 public class OwnAudios : IState
 {
 
@@ -473,8 +473,8 @@ public class SearchAudios : IState
 //        var url = PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Url;
 //        string path = url.Scheme + "://" + url.Authority + url.AbsolutePath;
 //        PlayerModel.Player.URL = url.Scheme + "://" + url.Authority + url.AbsolutePath;
-//        main.MusicArtist.Text = PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Artist;
-//        main.MusicName.Text = PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Title;
+//        main.Artist = PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Artist;
+//        main.Title = PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Title;
 //        for (int i = 0; i < main.MusicList.Items.Count; i++)
 //            if (main.RecommendationsList.Items[i].ToString() == PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Artist + " - " + PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Title)
 //            {
@@ -544,8 +544,8 @@ public class SearchAudios : IState
 //                if (audio.Url != null)
 //                {
 //                    PlayerModel.Player.URL = audio.Url.ToString();
-//                    main.MusicArtist.Text = audio.Artist;
-//                    main.MusicName.Text = audio.Title;
+//                    main.Artist = audio.Artist;
+//                    main.Title = audio.Title;
 //                    PlayerModel.Player.controls.play();
 //                    break;
 //                }
