@@ -1,134 +1,119 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using uVK.Model;
+using uVK.Pages;
 
 namespace uVK
 {
     public class WindowViewModel : BaseViewModel
     {
-        #region Private Member
-        private Window mWindow;
-        private int mOuterMarginSize = 5;
-        private int mWindowRadius = 5;
-        private WindowDockPosition mDockPosition = WindowDockPosition.Undocked;
+        #region Private window Member
+        static private Window mWindow;
         #endregion
 
-        #region Public Properties
+        #region Window public  Properties
 
-        public double WindowMinimumWidth { get; set; } = 800;
+        public double WindowMinimumWidth { get; set; } = 500;
 
-        public double WindowMinimumHeight { get; set; } = 500;
-
-        public bool Borderless {  get { return (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked); } }
-
-        public int ResizeBorder { get { return Borderless ? 0 : 3; } }
-
-        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
-
-        public Thickness InnerContentPadding { get; set; } = new Thickness(0);
-
-        public int OuterMarginSize
-        {
-            get
-            {
-                return Borderless ? 0 : mOuterMarginSize;
-            }
-            set
-            {
-                mOuterMarginSize = value;
-            }
-        }
-
-        public Thickness OuterMarginSizeThickness { get { return new Thickness(OuterMarginSize); } }
-
-        public int WindowRadius
-        {
-            get
-            {
-                return Borderless ? 0 : mWindowRadius;
-            }
-            set
-            {
-                mWindowRadius = value;
-            }
-        }
-
-        public CornerRadius WindowCornerRadius { get { return new CornerRadius(WindowRadius); } }
-
-
-        public int TitleHeight { get; set; } = 30;
-
-        /// <summary>
-        /// True if we should have a dimmed overlay on the window
-        /// such as when a popup is visible or the window is not focused
-        /// </summary>
-        public bool DimmableOverlayVisible { get; set; }
-
-        public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
-
+        public double WindowMinimumHeight { get; set; } = 135;
         #endregion
 
         #region Commands
 
         public ICommand MinimizeCommand { get; set; }
-
         public ICommand MaximizeCommand { get; set; }
-
         public ICommand CloseCommand { get; set; }
-
         public ICommand MenuCommand { get; set; }
+        public ICommand SettingCommand { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public WindowViewModel(Window window)
+        public WindowViewModel()
         {
-            mWindow = window;
+            CurrentPage = AuthPage;
 
-            mWindow.StateChanged += (sender, e) =>
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
             {
-                WindowResized();
-            };
+                AuthModel.GetAuth();
+                //SettingsPage = new SettingsView();
+                PlayerPage = new MusicPage();
+                CurrentPage = PlayerPage;
+            }
 
-            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
-            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
-            CloseCommand = new RelayCommand(() => mWindow.Close());
-            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
-
-            var resizer = new WindowResizer(mWindow);
-
-            resizer.WindowDockChanged += (dock) =>
+            MinimizeCommand = new RelayCommand((obj) => 
             {
-                mDockPosition = dock;
+                //Minimize();
+                //Thread.Sleep(500);
+                mWindow.WindowState = WindowState.Minimized;
+            });
+            MaximizeCommand = new RelayCommand((obj) =>
+            {
+                if (mWindow.Width == 900)
+                {
+                    mWindow.Width = 500;
+                    mWindow.Height = 135;
+                }
+                else
+                {
+                    mWindow.Width = 900;
+                    mWindow.Height = 550;
+                }
+            }, (obj) => PlayerPage != null && CurrentPage == PlayerPage);
+            CloseCommand = new RelayCommand((obj) => mWindow.Close());
 
-                WindowResized();
-            };
+            SettingCommand = new RelayCommand((obj) =>
+            {
+                if (CurrentPage == SettingsPage)
+                    CurrentPage = PlayerPage;
+                else
+                    CurrentPage = SettingsPage;
+
+            }, (obj) => SettingsPage != null);
         }
 
         #endregion
 
-        #region Private Helpers
-
-        private Point GetMousePosition()
+        private double _opacity = 1;
+        private Page _currentPage;
+        public Page AuthPage = new LoginPage();
+        public Page SettingsPage;
+        public Page PlayerPage;
+        public Page CurrentPage
         {
-            var position = Mouse.GetPosition(mWindow);
-
-            return new Point(position.X + mWindow.Left, position.Y + mWindow.Top);
+            get { return _currentPage; }
+            set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }
         }
+        public double Opacity { get { return _opacity; } set { _opacity = value; OnPropertyChanged(nameof(Opacity)); } }
+        
 
-        private void WindowResized()
+        private async void Minimize()
         {
-            OnPropertyChanged(nameof(Borderless));
-            OnPropertyChanged(nameof(ResizeBorderThickness));
-            OnPropertyChanged(nameof(OuterMarginSize));
-            OnPropertyChanged(nameof(OuterMarginSizeThickness));
-            OnPropertyChanged(nameof(WindowRadius));
-            OnPropertyChanged(nameof(WindowCornerRadius));
+            await Task.Factory.StartNew(() =>
+            {
+                for (double i = 1; i > 0; i-=0.1)
+                {
+                    Opacity = i;
+                    Thread.Sleep(50);
+                }
+            });
         }
-
-
-        #endregion
+        private async void Maxiize()
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                for (double i = 0; i < 1; i += 0.1)
+                {
+                    Opacity = i;
+                }
+            });
+        }
     }
 }

@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!-- (RU) Важен порядок / (EN) Order is important  -->
+        <ResourceDictionary Source="Window.xaml" />
+        <ResourceDictionary Source="Label.xaml" />
+        <ResourceDictionary Source="Panel.xaml" />
+        <ResourceDictionary Source="Buttons.xaml" />
+        <ResourceDictionary Source="DataGrid.xaml" />
+        <ResourceDictionary Source="ProgressBar.xaml" />
+        <ResourceDictionary Source="FormControl.xaml" />
+        <ResourceDictionary Source="InputGroup.xaml" />
+        <ResourceDictionary Source="Path.xaml" />
+        <ResourceDictionary Source="Panel.xaml" />
+        <ResourceDictionary Source="Panel.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
