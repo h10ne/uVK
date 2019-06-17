@@ -262,16 +262,15 @@ public class OwnAudios : IState
             }
         PlayerModel.Player.controls.play();
 
-        //try
-        //{
-        //    var uriImageSource = new Uri(PlayerModel.Audio[PlayerModel.OffsetOwn].Album.Cover.Photo135, UriKind.RelativeOrAbsolute);
-        //    main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
-        //}
-        //catch
-        //{
-        //    var uriImageSource = new Uri("https://s8.hostingkartinok.com/uploads/images/2019/04/ba91888882438a65608f0f6c2906af44.png", UriKind.RelativeOrAbsolute);
-        //    main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
-        //}
+        try
+        {
+            string source = PlayerModel.Audio[PlayerModel.OffsetOwn].Album.Cover.Photo135;
+            main.ImageSource = source;
+        }
+        catch
+        {
+            main.ImageSource = @"/Images/ImageMusic.png";
+        }
     }
 
     public void NextSong(PlayerViewModel main)
@@ -397,16 +396,14 @@ public class SearchAudios : IState
         PlayerModel.Player.controls.play();
 
 
-        //try
-        //{
-        //    var uriImageSource = new Uri(PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Album.Cover.Photo135, UriKind.RelativeOrAbsolute);
-        //    main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
-        //}
-        //catch
-        //{
-        //    var uriImageSource = new Uri("https://s8.hostingkartinok.com/uploads/images/2019/04/ba91888882438a65608f0f6c2906af44.png", UriKind.RelativeOrAbsolute);
-        //    main.MusicImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
-        //}
+        try
+        {
+            main.ImageSource = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Album.Cover.Photo135;
+        }
+        catch
+        {
+            main.ImageSource = @"/Images/ImageMusic.png";
+        }
     }
 }
 

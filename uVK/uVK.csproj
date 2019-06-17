@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD17A0C2-E45B-4FE6-920C-89B047EC532D}</ProjectGuid>
+    <ProjectGuid>{5AD07E53-06E8-4723-9EE4-8E13521725C9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>uVK</RootNamespace>
     <AssemblyName>uVK</AssemblyName>
@@ -35,26 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Flurl, Version=2.8.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Flurl.2.8.1\lib\net40\Flurl.dll</HintPath>
-    </Reference>
-    <Reference Include="Flurl.Http, Version=2.4.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Flurl.Http.2.4.1\lib\net46\Flurl.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.0\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.8.11.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.11\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=8df3f1eee85cc956, processorArchitecture=MSIL">
       <HintPath>..\packages\NetFx.Extensions.DependencyInjection.2.2.0\lib\net451\Microsoft.Extensions.DependencyInjection.dll</HintPath>
@@ -62,76 +47,36 @@
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=8df3f1eee85cc956, processorArchitecture=MSIL">
       <HintPath>..\packages\NetFx.Extensions.DependencyInjection.Abstractions.2.2.0\lib\net451\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Http, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Http.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Logging, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=8df3f1eee85cc956, processorArchitecture=MSIL">
       <HintPath>..\packages\NetFx.Extensions.Logging.Abstractions.2.2.0\lib\net451\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>..\packages\protobuf-net.2.4.0\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -143,7 +88,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="UIAutomationProvider" />
     <Reference Include="VkNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VkNet.1.41.0\lib\net45\VkNet.dll</HintPath>
     </Reference>
@@ -153,59 +97,77 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
-    <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
-    <Compile Include="Helpers\Des_Ser.cs" />
-    <Compile Include="Helpers\SaveAudios.cs" />
+    <Compile Include="Helpers\BaseViewModel.cs" />
+    <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="PassBox\InputBoxWindow.xaml.cs">
       <DependentUpon>InputBoxWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ApiDatas.cs" />
-    <Compile Include="Model\AuthModel.cs" />
-    <Compile Include="Model\PlayerModel.cs" />
-    <Compile Include="MainWindow.xaml.cs" />
-    <Compile Include="Model\SettingsModel.cs" />
-    <Compile Include="Helpers\States.cs" />
-    <Compile Include="Helpers\UserDatas.cs" />
-    <Compile Include="ValueConverters\BaseValueConverter.cs" />
-    <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="ValueConverters\StringRGBToBrushConverter.cs" />
     <Compile Include="ViewModel\AuthVeiwModel.cs" />
-    <Compile Include="ViewModel\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModel\Base\RelayCommand.cs" />
+    <Compile Include="Model\AuthModel.cs" />
+    <Compile Include="Helpers\ApiDatas.cs" />
+    <Compile Include="Helpers\Des_Ser.cs" />
+    <Compile Include="View\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MusicPage.xaml.cs">
+      <DependentUpon>MusicPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\SaveAudios.cs" />
+    <Compile Include="Helpers\States.cs" />
+    <Compile Include="Model\PlayerModel.cs" />
+    <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="Styles\Window\Dr0bWindow.cs" />
+    <Compile Include="Helpers\UserDatas.cs" />
     <Compile Include="ViewModel\WindowViewModel.cs" />
-    <Compile Include="View\AuthView.xaml.cs">
-      <DependentUpon>AuthView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PlayerView.xaml.cs">
-      <DependentUpon>PlayerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Window\WindowResizer.cs" />
-    <Page Include="PassBox\InputBoxWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="PassBox\InputBoxWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\ListBox.xaml">
+    <Page Include="View\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MusicPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\AudioStyles\AudioColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\AudioStyles\AudioControlStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\AudioStyles\AudioSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\BaseStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Bootstrap.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -217,7 +179,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Controls\AudioControlStyles.xaml">
+    <Page Include="Styles\DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -225,33 +187,45 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Icons.xaml">
+    <Page Include="Styles\FormControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Scroll.xaml">
+    <Page Include="Styles\InputGroup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\SliderStyles.xaml">
+    <Page Include="Styles\Label.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Texts.xaml">
+    <Page Include="Styles\Panel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\AuthView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Styles\Path.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\PlayerView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Styles\PathGeometries\Glyphicons.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\SettingsView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Styles\ProgressBar.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Sizes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Window\Dr0bWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -282,19 +256,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\icon.ico" />
+    <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\logo-small.png" />
-    <Resource Include="Images\logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\next_thumb.png" />
-    <Resource Include="Images\pause_thumb.png" />
-    <Resource Include="Images\play_thumb.png" />
-    <Resource Include="Images\prev_thumb.png" />
-    <Resource Include="Images\volume.png" />
-    <Resource Include="Images\volume_mute.png" />
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="WMPLib">

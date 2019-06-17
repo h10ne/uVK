@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!-- (RU) Важен порядок / (EN) Order is important  -->
+        <ResourceDictionary Source="Colors.xaml" />
+        <ResourceDictionary Source="Fonts.xaml" />
+        <ResourceDictionary Source="Sizes.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- (RU) Стандартный стиль / (EN) Base style  -->
+    <Style
+        x:Key="BaseStyle"
+        BasedOn="{x:Null}"
+        TargetType="{x:Type Control}">
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource DefaultForeground}" />
+    </Style>
+
+</ResourceDictionary>

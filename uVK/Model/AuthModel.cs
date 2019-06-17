@@ -101,8 +101,8 @@ namespace uVK.Model
                         datas.Surname = ApiDatas.api.Account.GetProfileInfo().LastName;
                         Des_Ser.Serialize(datas);
 
-                        System.Windows.Forms.Application.Restart();
-                        System.Environment.Exit(1);
+                        System.Diagnostics.Process.Start(System.Windows.Application.ResourceAssembly.Location);
+                        System.Windows.Application.Current.Shutdown();
                     }
                 }
             }

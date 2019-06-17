@@ -1,113 +1,85 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:uVK">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-        <ResourceDictionary.MergedDictionaries>
-            <!-- Важен порядок -->
-            <ResourceDictionary Source="Colors.xaml" />
-            <ResourceDictionary Source="Fonts.xaml" />
-            <ResourceDictionary Source="Icons.xaml" />
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="BaseStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type Button}" x:Key="Hoverless">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
+    <!-- (RU) Параметры кнопки / (EN) Parameters buttons  -->
+    <Style
+        x:Key="ButtonBaseBaseStyle"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type ButtonBase}">
+        <Setter Property="Height" Value="{DynamicResource DefaultControlHeight}" />
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
+        <Setter Property="Padding" Value="{DynamicResource DefaultControlPadding}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
 
+    <!-- (RU) Стиль кнопки / (EN) Button style  -->
+    <Style
+        x:Key="ButtonBaseStyle"
+        BasedOn="{StaticResource ButtonBaseBaseStyle}"
+        TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!--Меню окна-->
-    <Style TargetType="{x:Type Button}" x:Key="SystemIconButton" BasedOn="{StaticResource Hoverless}">
-
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-        <Setter Property="Padding" Value="8" />
-
-    </Style>
-
-    <!-- Кнопки управления окном -->
-    <Style TargetType="{x:Type Button}" x:Key="WindowControlButton" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="8" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="Foreground" Value="#000000" />
-
-        <Setter Property="LayoutTransform">
-            <Setter.Value>
-                <ScaleTransform ScaleX="1.5" />
-            </Setter.Value>
-        </Setter>
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding Content}" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#E5E5E5" />
-                <Setter Property="Foreground" Value="Black" />
-            </Trigger>
-        </Style.Triggers>
-
-    </Style>
-
-    <!-- Кнопка закрытия окна -->
-    <Style TargetType="{x:Type Button}" x:Key="WindowCloseButton" BasedOn="{StaticResource WindowControlButton}">
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="Red" />
-                <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
-            </Trigger>
-        </Style.Triggers>
-
-    </Style>
-
-    <!-- Кнопки управления и настройки -->
-    <Style x:Key="SettingsButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="4" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="Foreground" Value="#000000" />
-
-        <Setter Property="LayoutTransform">
-            <Setter.Value>
-                <ScaleTransform ScaleX="1.0" />
-            </Setter.Value>
-        </Setter>
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Border x:Name="border" CornerRadius="5"  Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
-                        <Grid>
-                            <Border x:Name="Circle" CornerRadius="5">
-                                <Viewbox>
-                                    <Grid x:Name="RootGrid" Background="Transparent">
-                                        <Path x:Name="Icon" Fill="{TemplateBinding Foreground}" Stretch="Uniform" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" Data="{StaticResource SettingsIcon}"/>
-                                    </Grid>
-                                </Viewbox>
-                            </Border>
-                        </Grid>
-                    </Border>
+                    <Grid>
+                        <Border
+                            x:Name="border"
+                            Padding="0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="true">
+                            <Grid x:Name="PressedLayer" Visibility="Collapsed">
+                                <Rectangle
+                                    Height="3"
+                                    VerticalAlignment="Top"
+                                    Fill="#1F000000"
+                                    RadiusX="4"
+                                    RadiusY="4">
+                                    <Rectangle.Effect>
+                                        <BlurEffect Radius="5" />
+                                    </Rectangle.Effect>
+                                </Rectangle>
+                                <Border
+                                    BorderBrush="#1F000000"
+                                    BorderThickness="1,0"
+                                    CornerRadius="4">
+                                    <Border.Effect>
+                                        <BlurEffect Radius="3" />
+                                    </Border.Effect>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <Rectangle
+                            x:Name="EnabledLayer"
+                            Fill="#4CFFFFFF"
+                            RadiusX="4"
+                            RadiusY="4"
+                            Visibility="Collapsed" />
+                    </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#E5E5E5" />
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="PressedLayer" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="#80cccccc" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="EnabledLayer" Property="Visibility" Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -115,40 +87,276 @@
         </Setter>
     </Style>
 
-    <!--Текст кнопка-->
-    <Style x:Key="TextButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
+    <!-- (RU) Стиль ToggleButton / (EN) Style ToggleButton  -->
+    <Style
+        x:Key="ToggleButtonBaseStyle"
+        BasedOn="{StaticResource ButtonBaseBaseStyle}"
+        TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid>
+                        <Border
+                            x:Name="border"
+                            Padding="0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="true">
+                            <Grid x:Name="CheckedLayer" Visibility="Collapsed">
+                                <Rectangle
+                                    Height="3"
+                                    VerticalAlignment="Top"
+                                    Fill="#1F000000"
+                                    RadiusX="4"
+                                    RadiusY="4">
+                                    <Rectangle.Effect>
+                                        <BlurEffect Radius="5" />
+                                    </Rectangle.Effect>
+                                </Rectangle>
+                                <Border
+                                    BorderBrush="#1F000000"
+                                    BorderThickness="1,0"
+                                    CornerRadius="4">
+                                    <Border.Effect>
+                                        <BlurEffect Radius="3" />
+                                    </Border.Effect>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <Rectangle
+                            x:Name="EnabledLayer"
+                            Fill="#4CFFFFFF"
+                            RadiusX="4"
+                            RadiusY="4"
+                            Visibility="Collapsed" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="CheckedLayer" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="#80cccccc" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="EnabledLayer" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- (RU) Стандартный стиль кнопки / (EN) Regular button Style  -->
+    <Style BasedOn="{StaticResource ButtonBaseStyle}" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Default1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Default1}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Default}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#e6e6e6" />
+                <Setter Property="BorderBrush" Value="#adadad" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Синяя кнопка / (EN) Blue button  -->
+    <Style
+        x:Key="btn-blue"
+        BasedOn="{StaticResource ButtonBaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Primary1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Primary1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#3071a9" />
+                <Setter Property="BorderBrush" Value="#285e8e" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Зелёная кнопка / (EN) Green button  -->
+    <Style
+        x:Key="btn-green"
+        BasedOn="{StaticResource ButtonBaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Success1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Success1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#449d44" />
+                <Setter Property="BorderBrush" Value="#398439" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Светло-голубая кнопка / (EN) Light blue button  -->
+    <Style
+        x:Key="btn-lightblue"
+        BasedOn="{StaticResource ButtonBaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Info1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Info1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#31b0d5" />
+                <Setter Property="BorderBrush" Value="#269abc" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Оранжевая кнопка / (EN) Orange button  -->
+    <Style
+        x:Key="btn-orange"
+        BasedOn="{StaticResource ButtonBaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Warning1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Warning1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#ec971f" />
+                <Setter Property="BorderBrush" Value="#d58512" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Красная кнопка / (EN) Red button  -->
+    <Style
+        x:Key="btn-red"
+        BasedOn="{StaticResource ButtonBaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Danger1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Danger1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#c9302c" />
+                <Setter Property="BorderBrush" Value="#ac2925" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- (RU) Стандартный стиль ToggleButton / (EN) Regular style ToggleButton  -->
+    <Style BasedOn="{StaticResource ToggleButtonBaseStyle}" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Default1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Default1}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Default}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#e6e6e6" />
+                <Setter Property="BorderBrush" Value="#adadad" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Синий ToggleButton / (EN) Blue ToggleButton  -->
+    <Style
+        x:Key="tbtn-blue"
+        BasedOn="{StaticResource ToggleButtonBaseStyle}"
+        TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Primary1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Primary1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#3071a9" />
+                <Setter Property="BorderBrush" Value="#285e8e" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Зелёный ToggleButton / (EN) Green ToggleButton  -->
+    <Style
+        x:Key="tbtn-green"
+        BasedOn="{StaticResource ToggleButtonBaseStyle}"
+        TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Success1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Success1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#449d44" />
+                <Setter Property="BorderBrush" Value="#398439" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Светло-голубой ToggleButton / (EN) Light blue ToggleButton  -->
+    <Style
+        x:Key="tbtn-lightblue"
+        BasedOn="{StaticResource ToggleButtonBaseStyle}"
+        TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Info1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Info1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#31b0d5" />
+                <Setter Property="BorderBrush" Value="#269abc" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Оранжевый ToggleButton / (EN) Orange ToggleButton  -->
+    <Style
+        x:Key="tbtn-orange"
+        BasedOn="{StaticResource ToggleButtonBaseStyle}"
+        TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Warning1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Warning1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#ec971f" />
+                <Setter Property="BorderBrush" Value="#d58512" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- (RU) Красный ToggleButton / (EN) Red ToggleButton  -->
+    <Style
+        x:Key="tbtn-red"
+        BasedOn="{StaticResource ToggleButtonBaseStyle}"
+        TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Danger1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Danger1}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#c9302c" />
+                <Setter Property="BorderBrush" Value="#ac2925" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- (RU) Текст кнопка / (EN) Text button  -->
+    <Style
+        x:Key="TextButton"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
 
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#7E8FA5" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
-        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
-        <Setter Property="Padding" Value="7 7" />
-        <Setter Property="Margin" Value="0 10" />
+        <Setter Property="Padding" Value="7,7" />
+        <Setter Property="Margin" Value="0,10" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Border x:Name="border"
-                            CornerRadius="10"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}" 
-                            SnapsToDevicePixels="True">
-                        <TextBlock Text="{TemplateBinding Content}" 
-                                   Focusable="False" 
-                                   FontFamily="{TemplateBinding FontFamily}"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                   Margin="{TemplateBinding Padding}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="10"
+                        SnapsToDevicePixels="True">
+                        <TextBlock
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Focusable="False"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Text="{TemplateBinding Content}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="#FF6BA1FF"/>
+                            <Setter Property="Foreground" Value="#FF6BA1FF" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{StaticResource ForegroundDarkBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ForegroundDarkBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -156,125 +364,14 @@
         </Setter>
     </Style>
 
-    <!-- Обычная кнопка-->
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
-
-        <Setter Property="Background" Value="{StaticResource Dr0bOrangeBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
-        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
-        <Setter Property="Padding" Value="0 0" />
-        <Setter Property="Margin" Value="0 10" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Border x:Name="border"
-                            CornerRadius="5"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}" 
-                            SnapsToDevicePixels="True">
-                        <TextBlock Text="{TemplateBinding Content}" 
-                                   Focusable="False" 
-                                   FontFamily="{TemplateBinding FontFamily}"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                   Margin="{TemplateBinding Padding}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource Dr0bBlueBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ForegroundDarkBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <!--TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-->
+    <Style
+        x:Key="Card"
+        TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="3" />
+        <Setter Property="BorderBrush" Value="{StaticResource ForegroundDarkBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
     </Style>
-
-
-    <Style TargetType="TabItem">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TabItem">
-                    <Border Name="Border" BorderThickness="1,1,1,1" BorderBrush="Gainsboro" CornerRadius="4,4,4,4" Margin="4,0">
-                        <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        ContentSource="Header"
-                                        Margin="10,2"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="#FFFFFF" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="False">
-                            <Setter TargetName="Border" Property="Background" Value="#FAFBFC" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
-    <Style TargetType="CheckBox" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Cursor" Value="Hand"></Setter>
-        <Setter Property="Content" Value=""></Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate >
-                    <Border Name="BorderCB" CornerRadius="10" BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Background="Gray"
-                    Height="{TemplateBinding Height}"
-                    Width="{TemplateBinding Width}" MinWidth="40" MinHeight="20">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="9*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="9*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" TextAlignment="Center" FontSize="12" Foreground="White" VerticalAlignment="Center">✓</TextBlock>
-                            <TextBlock Grid.Column="2" TextAlignment="Center" FontSize="12" Foreground="Black" VerticalAlignment="Center">✘</TextBlock>
-                            <Ellipse Name="SliderCB" Grid.Column="0" Height="{TemplateBinding Height}" Fill="White" Margin="0 0 20 0" Grid.ColumnSpan="3"></Ellipse>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="CheckBox.Checked">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard >
-                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="SliderCB" Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
-                                            <SplineThicknessKeyFrame KeyTime="00:00:00" Value="0, 0,20,0" />
-                                            <SplineThicknessKeyFrame KeyTime="00:00:00.4" Value="0, 0,5,0" />
-                                            <SplineThicknessKeyFrame KeyTime="00:00:00.6" Value="20, 0,0,0" />
-                                        </ThicknessAnimationUsingKeyFrames>
-                                        <ColorAnimation Storyboard.TargetName="BorderCB" Storyboard.TargetProperty="Background.Color" To="#FF6BA1FF" Duration="0:0:0.6"></ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="CheckBox.Unchecked">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="SliderCB" Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
-                                        <SplineThicknessKeyFrame KeyTime="00:00:00" Value="20, 0,0,0" />
-                                        <SplineThicknessKeyFrame KeyTime="00:00:00.4" Value="0, 0,5,0" />
-                                        <SplineThicknessKeyFrame KeyTime="00:00:00.6" Value="0, 0,20,0" />
-                                    </ThicknessAnimationUsingKeyFrames>
-                                    <ColorAnimation Storyboard.TargetName="BorderCB" Storyboard.TargetProperty="Background.Color" Duration="0:0:0.6"></ColorAnimation>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <!--TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-->
+    
 </ResourceDictionary>
