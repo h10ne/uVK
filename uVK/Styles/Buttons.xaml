@@ -373,5 +373,418 @@
         <Setter Property="BorderThickness" Value="1" />
     </Style>
     <!--TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST-->
-    
+
+    <Style x:Key="MenuButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="#00000000" />
+        <Setter Property="Foreground" Value="#fff" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                        <Path
+                            Opacity="1"
+                            Name="Icon"
+                            Margin="7"
+                            Data="{StaticResource Menu}"
+                            Stretch="Uniform"
+                            Stroke="{TemplateBinding Foreground}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Icon" Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="BackButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="22" />
+        <Setter Property="Height" Value="22" />
+        <Setter Property="Background" Value="#00000000" />
+        <Setter Property="Foreground" Value="#fff" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Opacity="1" CornerRadius="20" x:Name="RootBorder" Background="{TemplateBinding Background}">
+                        <Path
+                            Name="Icon"
+                            Margin="7"
+                            Data="{StaticResource CloseIcon}"
+                            Stretch="Uniform"
+                            Stroke="{TemplateBinding Foreground}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="RootBorder" Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="SettingsButton"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#000000" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        x:Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="5"
+                        Opacity="0.5">
+                        <Grid>
+                            <Border x:Name="Circle" CornerRadius="5">
+                                <Viewbox>
+                                    <Grid
+                                        x:Name="RootGrid"
+                                        Width="25"
+                                        Height="25"
+                                        Background="Transparent">
+                                        <Path
+                                            x:Name="Icon"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Center"
+                                            Data="{StaticResource SettingsIcon}"
+                                            Fill="{TemplateBinding Foreground}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="MassageButton"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#7D9CB8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        x:Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        Opacity="0.7">
+                        <Grid>
+                            <Border x:Name="Circle">
+                                <Viewbox>
+                                    <Grid
+                                        x:Name="RootGrid"
+                                        Width="25"
+                                        Height="25"
+                                        Background="Transparent">
+                                        <Path
+                                            x:Name="Icon"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Center"
+                                            Data="{StaticResource msgIcon}"
+                                            Fill="{TemplateBinding Foreground}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="MusicButton"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#7D9CB8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        x:Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        Opacity="0.7">
+                        <Grid>
+                            <Border x:Name="Circle">
+                                <Viewbox>
+                                    <Grid
+                                        x:Name="RootGrid"
+                                        Width="25"
+                                        Height="25"
+                                        Background="Transparent">
+                                        <Path
+                                            x:Name="Icon"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Center"
+                                            Data="{StaticResource music}"
+                                            Fill="{TemplateBinding Foreground}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="emojibutton"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#ADB3BD" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        x:Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border x:Name="Circle">
+                                <Viewbox>
+                                    <Grid
+                                        x:Name="RootGrid"
+                                        Width="25"
+                                        Height="25"
+                                        Background="Transparent">
+                                        <Path
+                                            x:Name="Icon"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Center"
+                                            Data="{StaticResource emojiicon}"
+                                            Fill="{TemplateBinding Foreground}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#828A99" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="photobutton"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#ADB3BD" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        x:Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border x:Name="Circle">
+                                <Viewbox>
+                                    <Grid
+                                        x:Name="RootGrid"
+                                        Width="25"
+                                        Height="25"
+                                        Background="Transparent">
+                                        <Path
+                                            x:Name="Icon"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Center"
+                                            Data="{StaticResource camera}"
+                                            Fill="{TemplateBinding Foreground}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#828A99" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="ImportantMessage"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#ADB3BD" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        x:Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border x:Name="Circle">
+                                <Viewbox>
+                                    <Grid
+                                        x:Name="RootGrid"
+                                        Width="25"
+                                        Height="25"
+                                        Background="Transparent">
+                                        <Path
+                                            x:Name="Icon"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Center"
+                                            Data="{StaticResource star}"
+                                            Fill="{TemplateBinding Foreground}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#828A99" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="InfoDialog"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#ADB3BD" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        x:Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border x:Name="Circle">
+                                <Viewbox>
+                                    <Grid
+                                        x:Name="RootGrid"
+                                        Width="25"
+                                        Height="25"
+                                        Background="Transparent">
+                                        <Path
+                                            x:Name="Icon"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Center"
+                                            Data="{StaticResource info-sign}"
+                                            Fill="{TemplateBinding Foreground}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#828A99" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="AttachmentsButton"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#ADB3BD" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        x:Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border x:Name="Circle">
+                                <Viewbox>
+                                    <Grid
+                                        x:Name="RootGrid"
+                                        Width="25"
+                                        Height="25"
+                                        Background="Transparent">
+                                        <Path
+                                            x:Name="Icon"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Center"
+                                            Data="{StaticResource Attachments}"
+                                            Fill="{TemplateBinding Foreground}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#828A99" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -8,7 +8,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    
+
     <Border Background="#FFF">
         <Grid>
             <!--  (RU) Прокрутка основного контента / (EN) Main content scroll  -->
@@ -43,11 +43,12 @@
                                 Margin="0,15"
                                 Fill="#DEE2E8" />
                             <!--  (RU) Логин / (EN) Login  -->
-                            <TextBox Tag="Номер телефона или email"
-                                     Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Tag="Номер телефона или email" Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <!--  (RU) Пароль / (EN) Password  -->
-                            <TextBox Margin="0,5,0,15" Tag="Пароль" 
-                                     Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox
+                                Margin="0,5,0,15"
+                                Tag="Пароль"
+                                Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <!--  (RU) Текст (ошибка авторизации) / (EN) Text (authorization error)  -->
                             <TextBlock
                                 Name="AuthorizationError"
@@ -56,20 +57,20 @@
                                 VerticalAlignment="Bottom"
                                 Foreground="{StaticResource Dr0bRedBrush}"
                                 Text="Ошибка авторизации"
-                                Visibility="{Binding ErrorVisibility,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                Visibility="{Binding ErrorVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <!--  (RU) Кнопки авторизации (EN) Authorization buttons  -->
                             <StackPanel Orientation="Horizontal">
                                 <!--  (RU) Авторизаваться / (EN) Login  -->
                                 <Button
-                                    Command="{Binding Authorize}"
                                     Width="100"
                                     HorizontalAlignment="Left"
+                                    Command="{Binding Authorize}"
                                     Content="Войти"
                                     Style="{StaticResource btn-blue}" />
                                 <!--  (RU) Восстановить пароль / (EN) Restore password  -->
                                 <Button
-                                    Command="{Binding Restore}"
                                     Margin="0,0"
+                                    Command="{Binding Restore}"
                                     Content="Забыли пароль?"
                                     Style="{StaticResource TextButton}" />
                             </StackPanel>

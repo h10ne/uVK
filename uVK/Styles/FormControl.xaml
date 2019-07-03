@@ -6,7 +6,7 @@
         <ResourceDictionary Source="BaseStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!--  (RU) Стиль: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam/ (EN) Style: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam  -->
+    <!--  (RU) Стиль: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam,ListBox/ (EN) Style: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam, ListBox  -->
     <!--  (RU) Базовый стиль / (EN) Base Style  -->
     <Style
         x:Key="FormControlBaseStyle"
@@ -1066,11 +1066,11 @@
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <Grid SnapsToDevicePixels="true">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="14" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="14" />
                         </Grid.ColumnDefinitions>
                         <Border
-                            Grid.Column="0"
+                            Grid.Column="1"
                             Width="14"
                             Height="14"
                             Background="{TemplateBinding Background}"
@@ -1095,8 +1095,8 @@
                             </Grid>
                         </Border>
                         <ContentPresenter
-                            Grid.Column="1"
-                            Margin="{TemplateBinding Padding}"
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             RecognizesAccessKey="True"
@@ -1401,17 +1401,22 @@
         </Setter>
     </Style>
 
-    <!--TabIteam-->
+    <!--  TabIteam  -->
     <Style TargetType="TabItem">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
-                    <Border Name="Border" BorderThickness="0,0,0,1" BorderBrush="Gainsboro" Margin="4,0">
-                        <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        ContentSource="Header"
-                                        Margin="10,2"/>
+                    <Border
+                        Name="Border"
+                        Margin="4,0"
+                        BorderBrush="Gainsboro"
+                        BorderThickness="0,0,0,1">
+                        <ContentPresenter
+                            x:Name="ContentSite"
+                            Margin="10,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ContentSource="Header" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
@@ -1419,6 +1424,111 @@
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
                             <Setter TargetName="Border" Property="BorderBrush" Value="#CAD2DB" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ListBox  -->
+    <DataTemplate x:Key="ListBoxItemTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="220" />
+            </Grid.ColumnDefinitions>
+            <Path
+                Width="28"
+                Height="28"
+                Data="{Binding Image}"
+                Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}, Path=Foreground}"
+                Stretch="Uniform" />
+            <StackPanel Grid.Column="1" Margin="5">
+                <TextBlock
+                    FontFamily="Segoe UI Light"
+                    FontSize="23"
+                    Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}, Path=Foreground}"
+                    Text="{Binding Path=Title, FallbackValue=Title}" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+    <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Padding" Value="4,1" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border
+                        x:Name="Bd"
+                        Height="27"
+                        Margin="5,0,20,5"
+                        Padding="{TemplateBinding Padding}"
+                        Background="#FF6BA1FF"
+                        BorderBrush="#FF6BA1FF"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="3"
+                        SnapsToDevicePixels="True">
+                        <ContentPresenter
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="#E9EDF1" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{x:Null}" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="False" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="{x:Null}" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{x:Null}" />
+                            <Setter Property="Foreground" Value="#000" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="#E9EDF1" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{x:Null}" />
+                            <Setter Property="Foreground" Value="#000" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
