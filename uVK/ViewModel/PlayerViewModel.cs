@@ -12,7 +12,7 @@ using System.Windows.Input;
 using uVK.Helpers;
 using uVK.Model;
 using VkNet.Model.RequestParams;
-
+using uVK.States;
 namespace uVK.ViewModel
 {
     public class PlayerViewModel : BaseViewModel
@@ -151,7 +151,7 @@ namespace uVK.ViewModel
 
         #region Notification
 
-        private string _marginNotification = "0,430,0,0";
+        private string _marginNotification = "0,10,0,0";
         public string MarginNotification { get { return _marginNotification; } set { _marginNotification = value; OnPropertyChanged(nameof(MarginNotification)); } }
 
         private string _notificationText = "Downloading";
@@ -161,13 +161,13 @@ namespace uVK.ViewModel
         {
             await Task.Factory.StartNew(() =>
             {
-                for (int i = 430; i > 270; i -= 10)
+                for (int i = 10; i > -120; i -= 10)
                 {
                     MarginNotification = $"0,{i},0,0";
                     Thread.Sleep(15);
                 }
                 Thread.Sleep(1000);
-                for (int i = 270; i < 430; i += 10)
+                for (int i = -120; i < 10; i += 10)
                 {
                     MarginNotification = $"0,{i},0,0";
                     Thread.Sleep(10);

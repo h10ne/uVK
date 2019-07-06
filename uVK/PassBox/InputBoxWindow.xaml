@@ -49,15 +49,12 @@
 
                     </Grid.ColumnDefinitions>
 
-                    <Button Style="{StaticResource SystemIconButton}" Command="{Binding MenuCommand}">
-                        <Image Source="/Images/logo-small.png" />
-                    </Button>
 
                     <Grid Margin="0" HorizontalAlignment="Center" Grid.ColumnSpan="3" Grid.Column="0">
 
                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="5">
                             <StackPanel Height="27">
-                                <TextBlock HorizontalAlignment="Center" FontFamily="{StaticResource LatoBold}" FontSize="{StaticResource FontSizeRegular}" Margin="0,0,0,-5">
+                                <TextBlock HorizontalAlignment="Center"  Margin="0,0,0,-5">
                                            <Run Text="u" Foreground="{StaticResource Dr0bOrangeBrush}" /><Run Text="VK" Foreground="{StaticResource Dr0bBlueBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -66,7 +63,7 @@
                     </Grid>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <Button Command="{Binding CloseCommand}" Style="{StaticResource WindowCloseButton}" Content="X" Click="Button_Click" Foreground="{DynamicResource Dr0bBlackBrush}" />
+                        <Button Command="{Binding CloseCommand}" Content="X" Click="Button_Click" Foreground="{DynamicResource Dr0bBlackBrush}" />
                     </StackPanel>
 
                 </Grid>

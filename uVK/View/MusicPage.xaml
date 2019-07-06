@@ -17,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="80" />
                 <RowDefinition Height="180*" />
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <!--  (RU) Аудиоплеер / (EN) Audio player  -->
             <Border
@@ -231,7 +232,8 @@
                 </Grid>
             </Border>
             <!--  (RU) Список аудиозаписей / (EN) Audio list  -->
-            <Border Grid.Row="1">
+            <Border Grid.Row="1"
+                    Grid.RowSpan="2">
                 <TabControl
                     x:Name="PlaylistTabControl"
                     Margin="5"
@@ -300,6 +302,27 @@
                     </TabItem>
                 </TabControl>
             </Border>
+            <WrapPanel Grid.Row="2"
+                Margin="{Binding MarginNotification, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                   Height="20" 
+                                   Width="100" 
+                                   Orientation="Horizontal"
+                                   IsEnabled="False">
+                <Border BorderBrush="WhiteSmoke" 
+                                    BorderThickness="2" 
+                                    CornerRadius="5" 
+                                    Background="WhiteSmoke">
+                    <Grid Width="100">
+                        <TextBlock Text="{Binding NotificationText}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="15" 
+                                           Height="17"
+                                           Foreground="Gray"
+                                           FontWeight="DemiBold"/>
+                    </Grid>
+                </Border>
+            </WrapPanel>
         </Grid>
     </Border>
 </Page>

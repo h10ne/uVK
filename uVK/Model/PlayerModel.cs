@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using VkNet.Model.RequestParams;
 using uVK.Helpers;
 using System.Windows;
-
+using uVK.States;
 namespace uVK.Model
 {
     public static class PlayerModel
