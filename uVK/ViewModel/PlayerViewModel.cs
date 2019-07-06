@@ -107,7 +107,26 @@ namespace uVK.ViewModel
         public bool Repeat { get { return _repeat; } set { _repeat = value; OnPropertyChanged(nameof(Repeat)); } }
         public int SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value; OnPropertyChanged(nameof(SelectedIndex)); } }
         public string CurrentTimePosition { get { return _currentTimePosition; } set { _currentTimePosition = value; OnPropertyChanged(nameof(CurrentTimePosition)); } }
-        public double CurrentTimePositionValue { get { return _currentTimePositionValue; } set { _currentTimePositionValue = value; OnPropertyChanged(nameof(CurrentTimePositionValue)); } }
+        public double CurrentTimePositionValue { get { return _currentTimePositionValue; }
+            set
+            {
+                _currentTimePositionValue = value;
+                int sec = (int) _currentTimePositionValue % 60;
+                int min = (int)_currentTimePositionValue / 60;
+                string secStr;
+                string minStr;
+                if (sec > 9)
+                    secStr = sec.ToString();
+                else
+                    secStr = "0" + sec.ToString();
+
+                if (min > 9)
+                    minStr = min.ToString();
+                else
+                    minStr = "0" + min.ToString();
+                CurrentTimePosition = $"{minStr}:{secStr}";
+                OnPropertyChanged(nameof(CurrentTimePositionValue));
+            } }
         public string MaximumTimePosition { get { return _maximumTimePosition; } set { _maximumTimePosition = value; OnPropertyChanged(nameof(MaximumTimePosition)); } }
         public double DurrationMaximum { get { return _durrationMaximum; } set { _durrationMaximum = value; OnPropertyChanged(nameof(DurrationMaximum)); } }
         public string SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
