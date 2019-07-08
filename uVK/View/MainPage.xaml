@@ -47,7 +47,7 @@
                 BorderBrush="#DEE2E8"
                 BorderThickness="0,0,1,0">
                 <Grid>
-                    <!--  (RU) Разметка списка диологов / (EN) Markup dialog list  -->
+                    <!--  (RU) Разметка списка диалогов / (EN) Markup dialog list  -->
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
@@ -57,12 +57,13 @@
                         <!--  (RU) Кнопка открыть меню / (EN) Open menu button  -->
                         <Button
                             x:Name="ButtonOpenMenu"
+                            Visibility="{Binding BtnOpenMenuVisibility}"
                             Width="40"
                             Height="40"
                             HorizontalAlignment="Left"
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"
-                            Click="ButtonOpenMenu_Click"
+                            Command="{Binding OpenMenuCommand}"
                             Foreground="#FF31577E"
                             Style="{StaticResource MenuButton}" />
                         <!--  (RU) Поиск по сообщениям / (EN) Search by posts  -->
@@ -70,6 +71,9 @@
                     </Grid>
                 </Grid>
             </Border>
+            <Grid Grid.Column="1">
+                <Frame Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden" />
+            </Grid>
         </Grid>
         <!--  (RU) Меню / (EN) Menu  -->
         <Grid
@@ -107,12 +111,13 @@
                         <Label
                             Margin="0,10"
                             VerticalAlignment="Bottom"
-                            Content="Имя/Фамилия"
+                            Content="{Binding Username}"
                             Foreground="#FFF" />
                     </StackPanel>
                     <!--  (RU) Кнопка закрыть меню / (EN) Close menu button  -->
                     <Button
                         x:Name="ButtonCloseMenu"
+                        Visibility="{Binding BtnCloseMenuVisibility}"
                         Width="30"
                         Height="30"
                         Margin="10"
@@ -120,7 +125,7 @@
                         VerticalAlignment="Top"
                         Background="#2785BF"
                         BorderBrush="{x:Null}"
-                        Click="ButtonCloseMenu_Click"
+                        Command="{Binding CloseMenuCommand}"
                         Style="{StaticResource BackButton}" />
                 </Grid>
                 <!--  (RU) Кнопки меню / (EN) Menu buttons  -->

@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using uVK.Model;
 using uVK.Pages;
+using uVK.View;
 
 namespace uVK
 {
@@ -18,10 +19,16 @@ namespace uVK
         #endregion
 
         #region Window public  Properties
-
         public double WindowMinimumWidth { get; set; } = 500;
-
         public double WindowMinimumHeight { get; set; } = 135;
+        public Page AuthPage = new LoginPage();
+        public Page MainPage { get; set; }
+        public Page CurrentPage
+        {
+            get { return _currentPage; }
+            set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }
+        }
+        public double Opacity { get { return _opacity; } set { _opacity = value; OnPropertyChanged(nameof(Opacity)); } }
         #endregion
 
         #region Commands
@@ -39,13 +46,11 @@ namespace uVK
         public WindowViewModel()
         {
             CurrentPage = AuthPage;
-
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
             {
                 AuthModel.GetAuth();
-                //SettingsPage = new SettingsView();
-                PlayerPage = new MusicPage();
-                CurrentPage = PlayerPage;
+                MainPage = new MainPage();
+                CurrentPage = MainPage;
             }
 
             MinimizeCommand = new RelayCommand((obj) => 
@@ -66,32 +71,15 @@ namespace uVK
                     mWindow.Width = 900;
                     mWindow.Height = 550;
                 }
-            }, (obj) => PlayerPage != null && CurrentPage == PlayerPage);
+            }, (obj) => CurrentPage == MainPage);
             CloseCommand = new RelayCommand((obj) => mWindow.Close());
 
-            SettingCommand = new RelayCommand((obj) =>
-            {
-                if (CurrentPage == SettingsPage)
-                    CurrentPage = PlayerPage;
-                else
-                    CurrentPage = SettingsPage;
-
-            }, (obj) => SettingsPage != null);
         }
 
         #endregion
 
         private double _opacity = 1;
         private Page _currentPage;
-        public Page AuthPage = new LoginPage();
-        public Page SettingsPage;
-        public Page PlayerPage;
-        public Page CurrentPage
-        {
-            get { return _currentPage; }
-            set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }
-        }
-        public double Opacity { get { return _opacity; } set { _opacity = value; OnPropertyChanged(nameof(Opacity)); } }
         
 
         private async void Minimize()

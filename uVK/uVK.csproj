@@ -119,6 +119,7 @@
     <Compile Include="Model\AuthModel.cs" />
     <Compile Include="Helpers\ApiDatas.cs" />
     <Compile Include="Helpers\Des_Ser.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>

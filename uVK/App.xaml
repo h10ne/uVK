@@ -7,8 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!--  (RU) Важен порядок / (EN) Order is important  -->
-                <ResourceDictionary Source="Styles/Bootstrap.xaml" />
                 <ResourceDictionary Source="Styles/PathGeometries/Glyphicons.xaml" />
+                <ResourceDictionary Source="Styles/Bootstrap.xaml" />
                 <ResourceDictionary Source="Styles/Window/Dr0bWindow.xaml" />
                 <ResourceDictionary Source="Styles/AudioStyles/AudioControlStyles.xaml" />
                 <ResourceDictionary Source="Styles/AudioStyles/AudioSlider.xaml" />
