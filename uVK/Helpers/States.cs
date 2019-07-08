@@ -230,7 +230,7 @@ namespace uVK.States
 
             try
             {
-                main.ImageSource = PlayerModel.Audio[PlayerModel.OffsetOwn].Album.Cover.Photo135; ;
+                main.ImageSource = PlayerModel.Audio[PlayerModel.OffsetOwn].Album.Cover.Photo135;
             }
             catch
             {

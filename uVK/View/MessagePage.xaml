@@ -1,0 +1,36 @@
+﻿<Page x:Class="uVK.View.MessagePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:uVK.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MessagePage">
+
+    <Grid Background="#FFDEDEDE">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--  (RU) Диaлоги / (EN) Dialogues and menus  -->
+        <Border
+                Background="#FFF"
+                BorderBrush="#DEE2E8"
+                BorderThickness="0,0,1,0">
+            <Grid>
+                <!--  (RU) Разметка списка диалогов / (EN) Markup dialog list  -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <!--  (RU) Меню и поиск по сообщениям / (EN) Menu and Message Search  -->
+                <Grid Margin="10">
+                    <!--  (RU) Поиск по сообщениям / (EN) Search by posts  -->
+                    <TextBox Margin="25,10,10,10" Tag="Найти..." />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

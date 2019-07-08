@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using uVK.Model;
 using uVK.ViewModel;
 
 namespace uVK.View

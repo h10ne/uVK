@@ -4,11 +4,11 @@ using uVK.ViewModel;
 namespace uVK.View
 {
     /// <summary>
-    /// Логика взаимодействия для SettingsPage.xaml
+    /// Логика взаимодействия для MessagePage.xaml
     /// </summary>
-    public partial class SettingsPage : Page
+    public partial class MessagePage : Page
     {
-        public SettingsPage()
+        public MessagePage()
         {
             InitializeComponent();
             this.DataContext = new MessageViewModel();

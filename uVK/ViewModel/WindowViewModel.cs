@@ -52,7 +52,6 @@ namespace uVK
                 MainPage = new MainPage();
                 CurrentPage = MainPage;
             }
-
             MinimizeCommand = new RelayCommand((obj) => 
             {
                 //Minimize();
