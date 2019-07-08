@@ -41,14 +41,12 @@
                 <ColumnDefinition Width="210" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
-
             <Grid Grid.ColumnSpan="2">
-                <Frame Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden">
-                    <Frame.Effect>
-                        <BlurEffect Radius="0"/>
-                    </Frame.Effect>
-                </Frame>
+                <Frame Content="{Binding CurrentPage}" 
+                       NavigationUIVisibility="Hidden"/>
+                <Grid Background="Black" 
+                      Opacity="{Binding FillOpacity}" 
+                      Visibility="{Binding FillVisibility}"/>
             </Grid>
         </Grid>
         <!--  (RU) Меню / (EN) Menu  -->

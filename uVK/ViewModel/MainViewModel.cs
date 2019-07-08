@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,6 +35,8 @@ namespace uVK.ViewModel
         private Page _settingsPage;
         private Page _playerPage;
         private string _userPhoto;
+        private double _fillOpacity = 0;
+        private Visibility _fillVisibility = Visibility.Hidden;
         #endregion
 
         #region public properties
@@ -42,6 +45,8 @@ namespace uVK.ViewModel
         public Page CurrentPage { get { return _currentPage; } set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }}
         public string Username { get; set; }
         public string UserPhoto { get { return _userPhoto; } set { _userPhoto = value; OnPropertyChanged(nameof(UserPhoto)); } }
+        public double FillOpacity { get { return _fillOpacity; } set { _fillOpacity = value; OnPropertyChanged(nameof(FillOpacity)); } }
+        public Visibility FillVisibility { get { return _fillVisibility; } set { _fillVisibility = value;OnPropertyChanged(nameof(FillVisibility)); } }
         #endregion
 
         #region commands
@@ -84,6 +89,8 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
+                    FillOpacity = 0;
+                    //GetAnimation(0.8, 0);
                     BtnCloseMenuVisibility = Visibility.Collapsed;
                     BtnOpenMenuVisibility = Visibility.Visible;
                 });
@@ -97,10 +104,35 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
+                    GetAnimation(0, 0.8);
                     BtnCloseMenuVisibility = Visibility.Visible;
                     BtnOpenMenuVisibility = Visibility.Collapsed;
                 });
             }
+        }
+        #endregion
+
+        #region Animation
+        private async void GetAnimation(double from, double to)
+        {
+            
+            await Task.Factory.StartNew(() =>
+            {      
+                if (from<to)
+                {
+                    for (double i = from; i < to; i += 0.1)
+                    {
+                        FillOpacity = i;
+                        Thread.Sleep(20);
+                    }
+                    return;
+                }
+                for (double i = to; i > from; i -= 0.1)
+                {
+                    FillOpacity = i;
+                    Thread.Sleep(15);
+                }
+            });
         }
         #endregion
     }
