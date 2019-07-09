@@ -7,6 +7,8 @@
         <ResourceDictionary Source="BaseStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+
+
     <!--  Стиль DataGrid / Style DataGrid  -->
     <Style TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="#fff" />

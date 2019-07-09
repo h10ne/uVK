@@ -8,6 +8,8 @@
 
     <!--  (RU) Стиль: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam,ListBox/ (EN) Style: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam, ListBox  -->
     <!--  (RU) Базовый стиль / (EN) Base Style  -->
+
+
     <Style
         x:Key="FormControlBaseStyle"
         BasedOn="{StaticResource BaseStyle}"

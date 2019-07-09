@@ -79,10 +79,12 @@ namespace uVK.ViewModel
                 return new RelayCommand((obj) =>
                 {
                     CurrentPage = _settingsPage;
+                    FillOpacity = 0;
+                    //GetAnimation(0.8, 0);
                 });
             }
         }
-        //Команда октрытия меню
+        //Команда скрытия меню
         public RelayCommand CloseMenuCommand
         {
             get
@@ -93,11 +95,12 @@ namespace uVK.ViewModel
                     //GetAnimation(0.8, 0);
                     BtnCloseMenuVisibility = Visibility.Collapsed;
                     BtnOpenMenuVisibility = Visibility.Visible;
+                    FillVisibility = Visibility.Hidden;
                 });
             }
         }
 
-        // Команда скрытия меню
+        // Команда открытия меню
         public RelayCommand OpenMenuCommand
         {
             get
@@ -124,6 +127,7 @@ namespace uVK.ViewModel
                     {
                         FillOpacity = i;
                         Thread.Sleep(20);
+                        FillVisibility = Visibility.Visible;
                     }
                     return;
                 }

@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:uVK.ViewModel"
     Title="MainWindow"
     Width="900"
-    Height="600"
+    Height="550"
     Style="{StaticResource Dr0bWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
