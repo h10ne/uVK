@@ -37,6 +37,7 @@ namespace uVK.ViewModel
         private string _userPhoto;
         private double _fillOpacity = 0;
         private Visibility _fillVisibility = Visibility.Hidden;
+        private double _width = 45;
         #endregion
 
         #region public properties
@@ -47,6 +48,7 @@ namespace uVK.ViewModel
         public string UserPhoto { get { return _userPhoto; } set { _userPhoto = value; OnPropertyChanged(nameof(UserPhoto)); } }
         public double FillOpacity { get { return _fillOpacity; } set { _fillOpacity = value; OnPropertyChanged(nameof(FillOpacity)); } }
         public Visibility FillVisibility { get { return _fillVisibility; } set { _fillVisibility = value;OnPropertyChanged(nameof(FillVisibility)); } }
+        public double Width { get { return _width; } set { _width = value; OnPropertyChanged(nameof(Width)); } }
         #endregion
 
         #region commands
@@ -57,6 +59,7 @@ namespace uVK.ViewModel
                 return new RelayCommand((obj)=>
                 {
                     CurrentPage = _messagePage;
+                    CloseMenu();
                 });
             }
         }
@@ -68,6 +71,7 @@ namespace uVK.ViewModel
                 return new RelayCommand((obj) =>
                 {
                     CurrentPage = _playerPage;
+                    CloseMenu();
                 });
             }
         }
@@ -79,8 +83,7 @@ namespace uVK.ViewModel
                 return new RelayCommand((obj) =>
                 {
                     CurrentPage = _settingsPage;
-                    FillOpacity = 0;
-                    //GetAnimation(0.8, 0);
+                    CloseMenu();
                 });
             }
         }
@@ -91,11 +94,8 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    FillOpacity = 0;
-                    //GetAnimation(0.8, 0);
-                    BtnCloseMenuVisibility = Visibility.Collapsed;
-                    BtnOpenMenuVisibility = Visibility.Visible;
-                    FillVisibility = Visibility.Hidden;
+                    GetBlackoutAnimation(0.8, 0);
+                    CloseMenu();
                 });
             }
         }
@@ -107,16 +107,27 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    GetAnimation(0, 0.8);
+                    GetBlackoutAnimation(0, 0.8);
+                    GetOpenMenuAnimation();
                     BtnCloseMenuVisibility = Visibility.Visible;
                     BtnOpenMenuVisibility = Visibility.Collapsed;
+                });
+            }
+        }
+        public RelayCommand LogoutCommand
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    SettingsModel.Logout();
                 });
             }
         }
         #endregion
 
         #region Animation
-        private async void GetAnimation(double from, double to)
+        private async void GetBlackoutAnimation(double from, double to)
         {
             
             await Task.Factory.StartNew(() =>
@@ -137,6 +148,38 @@ namespace uVK.ViewModel
                     Thread.Sleep(15);
                 }
             });
+        }
+        private async void GetCloseMenuAnimation()
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                for (double i = Width; i >= 45; i-=5)
+                {
+                    Width = i;
+                    Thread.Sleep(4);
+                }
+            });
+        }
+        private async void GetOpenMenuAnimation()
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                for (double i = Width; i <= 255; i+=5)
+                {
+                    Width = i;
+                    Thread.Sleep(4);
+                }
+            });
+        }
+        #endregion
+
+        #region Methods
+        private void CloseMenu()
+        {
+            BtnCloseMenuVisibility = Visibility.Collapsed;
+            BtnOpenMenuVisibility = Visibility.Visible;
+            FillVisibility = Visibility.Hidden;
+            GetCloseMenuAnimation();
         }
         #endregion
     }

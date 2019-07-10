@@ -10,29 +10,6 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <!--#region (RU) Ресурсы меню / (EN) Menu resources-->
-    <Page.Resources>
-        <Storyboard x:Key="OpenMenu">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(FrameworkElement.Width)">
-                <EasingDoubleKeyFrame KeyTime="0" Value="45" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="250" />
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="CloseMenu">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(FrameworkElement.Width)">
-                <EasingDoubleKeyFrame KeyTime="0" Value="250" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="45" />
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-    </Page.Resources>
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
-            <BeginStoryboard Storyboard="{StaticResource OpenMenu}" />
-        </EventTrigger>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
-            <BeginStoryboard Storyboard="{StaticResource CloseMenu}" />
-        </EventTrigger>
-    </Page.Triggers>
     <Grid Background="#FFDEDEDE">
         <!--  (RU) Grid в котором содержиться основной контент / (EN) Grid which contains the main content  -->
         <Grid x:Name="Content">
@@ -53,7 +30,7 @@
         <!--  (RU) Меню / (EN) Menu  -->
         <Grid
             x:Name="GridMenu"
-            Width="45"
+            Width="{Binding Path=Width}"
             HorizontalAlignment="Left"
             Background="#FFF">
             <Border BorderBrush="#E0E0E0" BorderThickness="0,0,1,0">
@@ -86,6 +63,7 @@
                                 Margin="0,10"
                                 VerticalAlignment="Bottom"
                                 Content="{Binding Username}"
+                                Visibility="{Binding BtnCloseMenuVisibility}"
                                 Foreground="#FFF" />
                         </StackPanel>
                         <!--  (RU) Кнопка закрыть меню / (EN) Close menu button  -->
