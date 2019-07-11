@@ -308,7 +308,19 @@
                                 <Border BorderBrush="#E0E0E0" BorderThickness="1,0,0,0"  Grid.Column="1" Margin="0,10,0,0">
                                     <Grid>
                                         <!--  (RU) Список аудиозаписей / (EN) List of audio  -->
-                                        <ListBox BorderThickness="0" Visibility="Hidden" />
+                                        <ListBox BorderThickness="0" 
+                                                 Visibility="Hidden"
+                                                 ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
+                                                 ItemsSource="{Binding AlbumAudiosList.Items}"
+                                                 SelectedIndex="{Binding SelectedAlbumAudiosIndex}"
+                                                 SelectedItem="{Binding SelectedAlbumAudiosItem}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseDoubleClick">
+                                                    <i:InvokeCommandAction Command="{Binding SetAudioFromClick}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+
+                                        </ListBox>
                                         <!--  (RU) Информирование о том что нужно выбрать плейлист / (EN) Informing about the need to choose a playlist  -->
                                         <TextBlock
                                             HorizontalAlignment="Center"

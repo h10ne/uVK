@@ -30,7 +30,7 @@ namespace uVK.ViewModel
             if (SaveAudiosList.Items.Count != 0)
                 NoSaveMusic = Visibility.Hidden;
 
-            PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) });
+            PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) }).ToList();
             PlayerModel.state = PlayerModel.State.own;
             PlayerModel.AddAudioToList(PlayerModel.Audio, MusicList);
             PlayerModel.Playlist = new Playlist(new OwnAudios());
@@ -44,10 +44,6 @@ namespace uVK.ViewModel
             DurrationTimer.Tick += DurrationTimer_Tick;
 
             var playlists = ApiDatas.api.Audio.GetPlaylists(UserDatas.User_id).ToList();
-            //var playlistinfo = ApiDatas.api.Audio.Get(new VkNet.Model.RequestParams.AudioGetParams
-            //{
-            //    PlaylistId = playlists[0].Id
-            //}).ToList();
             foreach(var pl in playlists)
             {
                 PlayList playList = new PlayList(pl);
@@ -71,6 +67,7 @@ namespace uVK.ViewModel
         public Visibility _noSaveMusic = Visibility.Visible;
         private ListBox _saveAudiosList;
         private ListBox _musicList;
+        private ListBox _albumAudiosList;
         private int _volume;
         private string _imageSource = @"/Images/ImageMusic.png";
         private bool _isPlay = false;
@@ -89,6 +86,8 @@ namespace uVK.ViewModel
         private bool isDownloading = false;
         private string _selectedSaveItem;
         private int _selectedSaveIndex;
+        private string _selectedAlbumAudiosItem;
+        private int _selectedAlbumAudiosIndex;
         private ObservableCollection<PlayList> _playLists;
         #endregion
 
@@ -98,7 +97,9 @@ namespace uVK.ViewModel
         public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
         public string Artist { get { return _artist; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
         public ListBox MusicList { get { return _musicList; } set { _musicList = value; OnPropertyChanged(nameof(MusicList)); } }
+        public ListBox AlbumAudiosList { get { return _albumAudiosList; } set { _albumAudiosList = value; OnPropertyChanged(nameof(AlbumAudiosList)); } }
         public ListBox SaveAudiosList { get { return _saveAudiosList; } set { _saveAudiosList = value; OnPropertyChanged(nameof(SaveAudiosList)); } }
+        //Кнопки
         public int Volume { get { return _volume; } set { _volume = value; PlayerModel.Player.settings.volume = Volume; OnPropertyChanged(nameof(Volume)); } }
         public bool IsPlay
         {
@@ -122,6 +123,7 @@ namespace uVK.ViewModel
         public bool Random { get { return _random; } set { _random = value; OnPropertyChanged(nameof(Random)); } }
         public bool Repeat { get { return _repeat; } set { _repeat = value; OnPropertyChanged(nameof(Repeat)); } }
         public int SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value; OnPropertyChanged(nameof(SelectedIndex)); } }
+        //Время
         public string CurrentTimePosition { get { return _currentTimePosition; } set { _currentTimePosition = value; OnPropertyChanged(nameof(CurrentTimePosition)); } }
         public double CurrentTimePositionValue { get { return _currentTimePositionValue; }
             set
@@ -145,6 +147,7 @@ namespace uVK.ViewModel
             } }
         public string MaximumTimePosition { get { return _maximumTimePosition; } set { _maximumTimePosition = value; OnPropertyChanged(nameof(MaximumTimePosition)); } }
         public double DurrationMaximum { get { return _durrationMaximum; } set { _durrationMaximum = value; OnPropertyChanged(nameof(DurrationMaximum)); } }
+        //Выбранное
         public string SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
         public string SearchRequest
         {
@@ -163,6 +166,9 @@ namespace uVK.ViewModel
         }
         public int SelectedSaveIndex { get { return _selectedSaveIndex; } set { _selectedSaveIndex = value; OnPropertyChanged(nameof(SelectedSaveIndex)); } }
         public string SelectedSaveItem { get { return _selectedSaveItem; } set { _selectedSaveItem = value; OnPropertyChanged(nameof(SelectedSaveItem)); } }
+        public int SelectedAlbumAudiosIndex { get { return _selectedAlbumAudiosIndex; } set { _selectedAlbumAudiosIndex = value; OnPropertyChanged(nameof(SelectedAlbumAudiosIndex)); } }
+        public string SelectedAlbumAudiosItem { get { return _selectedAlbumAudiosItem; } set { _selectedAlbumAudiosItem = value; OnPropertyChanged(nameof(SelectedAlbumAudiosItem)); } }
+
         public ObservableCollection<PlayList> PlayLists { get { return _playLists; } set { _playLists = value; OnPropertyChanged(nameof(PlayLists)); } }
         #endregion
 

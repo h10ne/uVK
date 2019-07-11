@@ -5,6 +5,7 @@ using uVK.Model;
 using uVK.ViewModel;
 using uVK.Helpers;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace uVK.States
 {
@@ -29,6 +30,7 @@ namespace uVK.States
         {
             State.SetAudioInfo(main, isback, fromClick);
         }
+
 
     }
 
@@ -135,6 +137,99 @@ namespace uVK.States
     //}
     //*/
 
+    public class AlbumAudios : IState
+    {
+        private List<VkNet.Model.Attachments.Audio> audios;
+        private int offset = 0;
+        public AlbumAudios(List<VkNet.Model.Attachments.Audio> _audios, PlayerViewModel main)
+        {
+            audios = _audios;
+            PlayerModel.AddAudioToList(audios, main.AlbumAudiosList);
+        }
+        public void NextSong(PlayerViewModel main)
+        {
+            if (main.Random)
+            {
+                Random rnds = new Random();
+                int value = rnds.Next(0, PlayerModel.Audio.Count - 1);
+                Thread.Sleep(270);
+                offset = value;
+                SetAudioInfo(main);
+            }
+            else
+            {
+                try
+                {
+                    offset += 1;
+                    SetAudioInfo(main);
+                }
+                catch
+                {
+                    offset = 0;
+                    SetAudioInfo(main);
+                }
+            }
+        }
+
+        public void PrevSong(PlayerViewModel main)
+        {
+            try
+            {
+
+                offset -= 1;
+                if (offset == -1)
+                    offset = audios.Count - 1;
+                SetAudioInfo(main, true);
+            }
+            catch
+            {
+                SetAudioInfo(main, true);
+            }
+        }
+
+        public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
+        {
+            if (fromClick)
+                offset = main.SelectedAlbumAudiosIndex;
+            while (audios[offset].Url == null)
+            {
+                if (isback)
+                    offset--;
+                else
+                    offset++;
+            }
+            PlayerModel.Player.URL = Decoder.DecodeAudioUrl(audios[offset].Url).ToString();
+            main.MaximumTimePosition = audios[offset].Duration.ToString();
+
+            main.CurrentTimePositionValue = 0;
+            main.MaximumTimePosition = Decoder.ConvertTimeToString(audios[offset].Duration);
+            main.DurrationMaximum = audios[offset].Duration;
+            main.Artist = audios[offset].Artist;
+            main.Title = audios[offset].Title;
+
+            /*
+             * Делает выделение текущей композиции на моделе, если найдено
+             */
+            for (int i = 0; i < main.MusicList.Items.Count; i++)
+                if (main.AlbumAudiosList.Items[i].ToString() == audios[offset].Artist + " - " + audios[offset].Title)
+                {
+                    string str = main.AlbumAudiosList.Items[i].ToString();
+                    main.SelectedAlbumAudiosIndex = i;
+                    break;
+                }
+            PlayerModel.Player.controls.play();
+
+            try
+            {
+                main.ImageSource = audios[offset].Album.Cover.Photo135;
+            }
+            catch
+            {
+                main.ImageSource = @"/Images/ImageMusic.png";
+            }
+        }
+    }
+
     public class SavesAudios : IState
     {
         public void NextSong(PlayerViewModel main)
@@ -190,6 +285,8 @@ namespace uVK.States
             PlayerModel.Player.URL = SaveAudios.Audio[PlayerModel.OffsetSave].Url.ToString();
             main.Artist = SaveAudios.Audio[PlayerModel.OffsetSave].Artist;
             main.Title = SaveAudios.Audio[PlayerModel.OffsetSave].Title;
+            main.DurrationMaximum = PlayerModel.Player.currentMedia.duration;
+            main.MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
             PlayerModel.Player.controls.play();                       
         }
     }

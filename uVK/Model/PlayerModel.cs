@@ -14,9 +14,9 @@ namespace uVK.Model
     public static class PlayerModel
     {        
         #region Variables
-        public static  VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
-        public static VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> Audio { get; set; }
-        public static VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
+        public static  List<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
+        public static List<VkNet.Model.Attachments.Audio> Audio { get; set; }
+        public static List<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
         public static int OffsetOwn = 0;
         public static int OffsetSearch = 0;
         public static int OffsetRecom = 0;
@@ -30,7 +30,8 @@ namespace uVK.Model
             own,
             save,
             recommend,
-            search
+            search,
+            album
         }
         public static void Search(string SearchRequest, ListBox MusicList)
         {
@@ -43,13 +44,13 @@ namespace uVK.Model
                     SearchOwn = true,
                     Count = 50,
                     PerformerOnly = false
-                });
+                }).ToList();
                 PlayerModel.state = PlayerModel.State.search;
                 PlayerModel.AddAudioToList(PlayerModel.SearchAudios, MusicList, true);
 
             //});
         }
-        public static void AddAudioToList(VkNet.Utils.VkCollection<VkNet.Model.Attachments.Audio> audios, ListBox MusicList, bool fromSearch = false)
+        public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ListBox MusicList, bool fromSearch = false)
         {
             MusicList.Items.Clear();
             if (fromSearch)
