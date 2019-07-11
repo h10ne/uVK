@@ -111,10 +111,9 @@
             Margin="5"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Background="AliceBlue"
             BorderBrush="{x:Null}"
             Command="{Binding OpenMenuCommand}"
-            Foreground="#FF31577E"
+            Foreground="#FFF"
             Style="{StaticResource MenuButton}"
             Visibility="{Binding BtnOpenMenuVisibility}" />
     </Grid>

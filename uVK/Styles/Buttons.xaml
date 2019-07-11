@@ -384,7 +384,7 @@
                         CornerRadius="3">
                         <Path
                             Name="Icon"
-                            Margin="7"
+                            Margin="5"
                             Data="{StaticResource Menu}"
                             Opacity="1"
                             Stretch="Uniform"
@@ -467,6 +467,7 @@
                             </Grid>
                         </Border>
                         <TextBlock
+                            FontSize="13"
                             x:Name="Text"
                             Width="205"
                             VerticalAlignment="Center"
@@ -527,6 +528,7 @@
                         </Border>
                         <TextBlock
                             x:Name="Text"
+                            FontSize="13"
                             Width="205"
                             VerticalAlignment="Center"
                             Foreground="#000"
@@ -586,6 +588,7 @@
                         </Border>
                         <TextBlock
                             x:Name="Text"
+                            FontSize="13"
                             Width="205"
                             VerticalAlignment="Center"
                             Foreground="#000"
@@ -645,6 +648,7 @@
                         </Border>
                         <TextBlock
                             x:Name="Text"
+                            FontSize="13"
                             Width="205"
                             VerticalAlignment="Center"
                             Foreground="#000"

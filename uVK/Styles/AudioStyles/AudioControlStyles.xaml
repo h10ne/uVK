@@ -54,7 +54,56 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="PlayPausePlayListStyle" TargetType="ToggleButton">
+        <Setter Property="Width" Value="56" />
+        <Setter Property="Height" Value="56" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border
+                        x:Name="Circle">
+                        <Grid Name="RootGrid" Background="Transparent">
+                            <Viewbox>
+                                <Path
+                                    x:Name="Icon"
+                                    Margin="10"
+                                    HorizontalAlignment="Center"
+                                    Data="{StaticResource PlayIcon}"
+                                    Fill="{TemplateBinding Foreground}"
+                                    Stretch="Uniform" />
+                            </Viewbox>
+                        </Grid>
+                    </Border>
 
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Icon" Property="Data" Value="{StaticResource PauseIcon}" />
+                            <Setter TargetName="Icon" Property="Margin" Value="15" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Icon" Property="Opacity" Value="0.7" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsPressed" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Icon" Property="Opacity" Value="1" />
+                            <Setter TargetName="Icon" Property="Fill" Value="#FFFFFF" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="RootGrid" Property="Opacity" Value="0.2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="PrevButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="Width" Value="56" />

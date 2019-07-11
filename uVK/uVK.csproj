@@ -115,6 +115,9 @@
     <Compile Include="PassBox\InputBoxWindow.xaml.cs">
       <DependentUpon>InputBoxWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Styles\AudioStyles\PlayList.xaml.cs">
+      <DependentUpon>PlayList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AuthVeiwModel.cs" />
     <Compile Include="Model\AuthModel.cs" />
     <Compile Include="Helpers\ApiDatas.cs" />
@@ -160,6 +163,10 @@
     <Page Include="PassBox\InputBoxWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\AudioStyles\PlayList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoginPage.xaml">
       <SubType>Designer</SubType>

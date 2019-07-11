@@ -9,6 +9,7 @@
     Title="MainWindow"
     Width="900"
     Height="550"
+    MinWidth="900"
     Style="{StaticResource Dr0bWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">

@@ -2,6 +2,7 @@
     x:Class="uVK.Pages.MusicPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:uVK.Styles.AudioStyles"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:local="clr-namespace:uVK.Pages"
@@ -17,7 +18,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="80" />
                 <RowDefinition Height="180*" />
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <!--  (RU) Аудиоплеер / (EN) Audio player  -->
             <Border
@@ -232,8 +233,7 @@
                 </Grid>
             </Border>
             <!--  (RU) Список аудиозаписей / (EN) Audio list  -->
-            <Border Grid.Row="1"
-                    Grid.RowSpan="2">
+            <Border Grid.Row="1" Grid.RowSpan="2">
                 <TabControl
                     x:Name="PlaylistTabControl"
                     Margin="5"
@@ -269,6 +269,58 @@
                             </ListBox>
                         </Grid>
                     </TabItem>
+                    <!--  (RU) Плейлисты / (EN) PlayLists  -->
+                    <TabItem Header="Плейлисты">
+                        <Grid>
+                            <Grid>
+                                <!--  (RU) Разметка / (EN)  -->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!--  (RU) Прокрутка списка плейлистов / (EN) Scroll through playlists  -->
+                                <ScrollViewer
+                                    Grid.Column="0"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    VerticalScrollBarVisibility="Auto">
+                                    <Grid>
+                                        <!--  (RU) Количество плейлистов у пользователя / (EN) Number of user playlists  -->
+
+                                        <WrapPanel
+                                            
+                                            Background="AliceBlue"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"    
+                                            MaxWidth="500">
+                                        </WrapPanel>
+
+                                        <ItemsControl ItemsSource="{Binding PlayLists}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </Grid>
+                                </ScrollViewer>
+                                <!--  (RU) Список аудиозаписей плейлиста / (EN) List of playlists audio  -->
+                                <Border BorderBrush="#E0E0E0" BorderThickness="1,0,0,0"  Grid.Column="1" Margin="0,10,0,0">
+                                    <Grid>
+                                        <!--  (RU) Список аудиозаписей / (EN) List of audio  -->
+                                        <ListBox BorderThickness="0" Visibility="Hidden" />
+                                        <!--  (RU) Информирование о том что нужно выбрать плейлист / (EN) Informing about the need to choose a playlist  -->
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontSize="18"
+                                            Foreground="#7E8FA5"
+                                            Text="Выберите пожалуйста плейлист" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
                     <!--  Свои аудизаписи  -->
                     <TabItem
                         x:Name="SaveAudioTabItem"
@@ -302,24 +354,27 @@
                     </TabItem>
                 </TabControl>
             </Border>
-            <WrapPanel Grid.Row="2"
-                Margin="{Binding MarginNotification, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                   Height="20" 
-                                   Width="100" 
-                                   Orientation="Horizontal"
-                                   IsEnabled="False">
-                <Border BorderBrush="WhiteSmoke" 
-                                    BorderThickness="2" 
-                                    CornerRadius="5" 
-                                    Background="WhiteSmoke">
+            <WrapPanel
+                Grid.Row="2"
+                Width="100"
+                Height="20"
+                Margin="{Binding MarginNotification, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="False"
+                Orientation="Horizontal">
+                <Border
+                    Background="WhiteSmoke"
+                    BorderBrush="WhiteSmoke"
+                    BorderThickness="2"
+                    CornerRadius="5">
                     <Grid Width="100">
-                        <TextBlock Text="{Binding NotificationText}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontSize="15" 
-                                           Height="17"
-                                           Foreground="Gray"
-                                           FontWeight="DemiBold"/>
+                        <TextBlock
+                            Height="17"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="15"
+                            FontWeight="DemiBold"
+                            Foreground="Gray"
+                            Text="{Binding NotificationText}" />
                     </Grid>
                 </Border>
             </WrapPanel>

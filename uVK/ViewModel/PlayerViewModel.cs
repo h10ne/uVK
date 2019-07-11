@@ -13,6 +13,9 @@ using uVK.Helpers;
 using uVK.Model;
 using VkNet.Model.RequestParams;
 using uVK.States;
+using uVK.Styles.AudioStyles;
+using System.Collections.ObjectModel;
+
 namespace uVK.ViewModel
 {
     public class PlayerViewModel : BaseViewModel
@@ -21,6 +24,7 @@ namespace uVK.ViewModel
         {
             MusicList = new ListBox();
             SaveAudiosList = new ListBox();
+            PlayLists = new ObservableCollection<PlayList>();
             SaveAudios.AddCache();
             PlayerModel.AddCacheToList(SaveAudiosList);
             if (SaveAudiosList.Items.Count != 0)
@@ -38,6 +42,17 @@ namespace uVK.ViewModel
                 Interval = new TimeSpan(0, 0, 0, 0, 20)
             };
             DurrationTimer.Tick += DurrationTimer_Tick;
+
+            var playlists = ApiDatas.api.Audio.GetPlaylists(UserDatas.User_id).ToList();
+            //var playlistinfo = ApiDatas.api.Audio.Get(new VkNet.Model.RequestParams.AudioGetParams
+            //{
+            //    PlaylistId = playlists[0].Id
+            //}).ToList();
+            foreach(var pl in playlists)
+            {
+                PlayList playList = new PlayList(pl);
+                PlayLists.Add(playList);
+            }
         }
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
@@ -74,6 +89,7 @@ namespace uVK.ViewModel
         private bool isDownloading = false;
         private string _selectedSaveItem;
         private int _selectedSaveIndex;
+        private ObservableCollection<PlayList> _playLists;
         #endregion
 
         #region Public properties
@@ -147,6 +163,7 @@ namespace uVK.ViewModel
         }
         public int SelectedSaveIndex { get { return _selectedSaveIndex; } set { _selectedSaveIndex = value; OnPropertyChanged(nameof(SelectedSaveIndex)); } }
         public string SelectedSaveItem { get { return _selectedSaveItem; } set { _selectedSaveItem = value; OnPropertyChanged(nameof(SelectedSaveItem)); } }
+        public ObservableCollection<PlayList> PlayLists { get { return _playLists; } set { _playLists = value; OnPropertyChanged(nameof(PlayLists)); } }
         #endregion
 
         #region Notification

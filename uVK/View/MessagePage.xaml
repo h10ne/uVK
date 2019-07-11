@@ -28,7 +28,7 @@
                 <!--  (RU) Меню и поиск по сообщениям / (EN) Menu and Message Search  -->
                 <Grid Margin="10">
                     <!--  (RU) Поиск по сообщениям / (EN) Search by posts  -->
-                    <TextBox Margin="25,10,10,10" Tag="Найти..." />
+                    <TextBox Margin="5" Tag="Найти..." />
                 </Grid>
             </Grid>
         </Border>
