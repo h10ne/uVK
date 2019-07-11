@@ -4,20 +4,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:uVK.Styles.AudioStyles"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid>
+    <Grid> 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Rectangle
-            Margin="7,7,7,7"
+            Margin="3,3,3,3"
                 Width="120"
                 Height="120"
-                RadiusX="5"
-                RadiusY="5">
+                RadiusX="5">
                 <Rectangle.Fill>
                     <!--  (RU) Картинка плейлиста / (EN) PayList Picture  -->
                     <ImageBrush
@@ -26,18 +26,26 @@
                 </Rectangle.Fill>
             </Rectangle>
             <!--  (RU) Кнопка пауза / (EN) Pause button  -->
-            <ToggleButton
+                <ToggleButton
                 Width="55"
                 Height="55"
                 Foreground="#FFFFFF"
-                Style="{StaticResource PlayPausePlayListStyle}">
-                <ToggleButton.RenderTransform>
-                    <TranslateTransform />
-                </ToggleButton.RenderTransform>
-            </ToggleButton>
+                Style="{StaticResource PlayPausePlayListStyle}"
+                x:Name="isPlay">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ChoosePlaylist}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <ToggleButton.RenderTransform>
+                        <TranslateTransform />
+                    </ToggleButton.RenderTransform>
+                </ToggleButton>
         </Grid>
         <Grid Grid.Row="1"
-              Margin="7,0,7,0">
+              Margin="3,0,3,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>

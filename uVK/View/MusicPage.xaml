@@ -283,25 +283,20 @@
                                     Grid.Column="0"
                                     HorizontalScrollBarVisibility="Auto"
                                     VerticalScrollBarVisibility="Auto">
-                                    <Grid>
+                                    <Grid Grid.Column="0">
                                         <!--  (RU) Количество плейлистов у пользователя / (EN) Number of user playlists  -->
 
-                                        <WrapPanel
+                                        <ListView ItemsSource="{Binding PlayLists}"
+                                                  SelectedIndex="{Binding CurrentPlaylistIndex}"                                                  
+                                                  BorderBrush="{x:Null}">
                                             
-                                            Background="AliceBlue"
-                                            Orientation="Horizontal"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"    
-                                            MaxWidth="500">
-                                        </WrapPanel>
-
-                                        <ItemsControl ItemsSource="{Binding PlayLists}">
-                                            <ItemsControl.ItemsPanel>
+                                            <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <WrapPanel />
+                                                    <WrapPanel MaxWidth="410" Orientation="Horizontal"/>
                                                 </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                        </ItemsControl>
+                                            </ListView.ItemsPanel>
+
+                                        </ListView>
                                     </Grid>
                                 </ScrollViewer>
                                 <!--  (RU) Список аудиозаписей плейлиста / (EN) List of playlists audio  -->
@@ -309,7 +304,7 @@
                                     <Grid>
                                         <!--  (RU) Список аудиозаписей / (EN) List of audio  -->
                                         <ListBox BorderThickness="0" 
-                                                 Visibility="Hidden"
+                                                 Visibility="Visible"
                                                  ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
                                                  ItemsSource="{Binding AlbumAudiosList.Items}"
                                                  SelectedIndex="{Binding SelectedAlbumAudiosIndex}"
@@ -327,6 +322,7 @@
                                             VerticalAlignment="Center"
                                             FontSize="18"
                                             Foreground="#7E8FA5"
+                                            Visibility="{Binding TextChooseAlbumVisibility}"
                                             Text="Выберите пожалуйста плейлист" />
                                     </Grid>
                                 </Border>

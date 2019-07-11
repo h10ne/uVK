@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,7 +17,7 @@ namespace uVK.Styles.AudioStyles
     /// </summary>
     public partial class PlayList : UserControl
     {
-        List<VkNet.Model.Attachments.Audio> Audios = new List<VkNet.Model.Attachments.Audio>();
+        public List<VkNet.Model.Attachments.Audio> Audios = new List<VkNet.Model.Attachments.Audio>();
         public PlayList(VkNet.Model.Attachments.AudioPlaylist playlist)
         {
             InitializeComponent();

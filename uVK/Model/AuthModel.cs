@@ -6,6 +6,7 @@ using VkNet;
 using VkNet.AudioBypassService.Extensions;
 using System.IO;
 using uVK.Helpers;
+using System.Windows.Controls;
 
 namespace uVK.Model
 {

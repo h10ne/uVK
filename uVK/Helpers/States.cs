@@ -200,7 +200,7 @@ namespace uVK.States
             }
             PlayerModel.Player.URL = Decoder.DecodeAudioUrl(audios[offset].Url).ToString();
             main.MaximumTimePosition = audios[offset].Duration.ToString();
-
+            main.IsPlay = true;
             main.CurrentTimePositionValue = 0;
             main.MaximumTimePosition = Decoder.ConvertTimeToString(audios[offset].Duration);
             main.DurrationMaximum = audios[offset].Duration;

@@ -25,6 +25,7 @@ namespace uVK.ViewModel
             MusicList = new ListBox();
             SaveAudiosList = new ListBox();
             PlayLists = new ObservableCollection<PlayList>();
+            AlbumAudiosList = new ListBox();
             SaveAudios.AddCache();
             PlayerModel.AddCacheToList(SaveAudiosList);
             if (SaveAudiosList.Items.Count != 0)
@@ -49,6 +50,7 @@ namespace uVK.ViewModel
                 PlayList playList = new PlayList(pl);
                 PlayLists.Add(playList);
             }
+
         }
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
@@ -63,8 +65,11 @@ namespace uVK.ViewModel
             }
         }
 
+        
+
         #region Private members
         public Visibility _noSaveMusic = Visibility.Visible;
+        private int currentPlayList;
         private ListBox _saveAudiosList;
         private ListBox _musicList;
         private ListBox _albumAudiosList;
@@ -89,6 +94,8 @@ namespace uVK.ViewModel
         private string _selectedAlbumAudiosItem;
         private int _selectedAlbumAudiosIndex;
         private ObservableCollection<PlayList> _playLists;
+        private int _currentPlaylist = -1;
+        private Visibility _textChooseAlbumVisibility = Visibility.Visible;
         #endregion
 
         #region Public properties
@@ -99,6 +106,28 @@ namespace uVK.ViewModel
         public ListBox MusicList { get { return _musicList; } set { _musicList = value; OnPropertyChanged(nameof(MusicList)); } }
         public ListBox AlbumAudiosList { get { return _albumAudiosList; } set { _albumAudiosList = value; OnPropertyChanged(nameof(AlbumAudiosList)); } }
         public ListBox SaveAudiosList { get { return _saveAudiosList; } set { _saveAudiosList = value; OnPropertyChanged(nameof(SaveAudiosList)); } }
+        public Visibility TextChooseAlbumVisibility { get { return _textChooseAlbumVisibility; } set { _textChooseAlbumVisibility = value; OnPropertyChanged(nameof(TextChooseAlbumVisibility)); } }
+        public int CurrentPlaylistIndex { get { return _currentPlaylist; }
+            set
+            {
+                int beforeValue = _currentPlaylist;
+                _currentPlaylist = value;
+
+                if (PlayerModel.state != PlayerModel.State.album)
+                {
+                    PlayerModel.state = PlayerModel.State.album;
+                }
+                foreach (var pl in PlayLists)
+                {
+                    pl.isPlay.IsChecked = false;
+                }
+                TextChooseAlbumVisibility = Visibility.Hidden;
+                PlayerModel.Playlist = new Playlist(new AlbumAudios(PlayLists[_currentPlaylist].Audios, this));
+                PlayLists[_currentPlaylist].isPlay.IsChecked = true;
+                PlayerModel.Playlist.SetAudioInfo(this);
+                OnPropertyChanged(nameof(CurrentPlaylistIndex));
+            }
+        }
         //Кнопки
         public int Volume { get { return _volume; } set { _volume = value; PlayerModel.Player.settings.volume = Volume; OnPropertyChanged(nameof(Volume)); } }
         public bool IsPlay
@@ -285,7 +314,7 @@ namespace uVK.ViewModel
                     {
                         PlayerModel.Playlist = new Playlist(new SearchAudios());
                     }
-                    if (PlayerModel.state != PlayerModel.State.own && SearchRequest == "")
+                    if (PlayerModel.state != PlayerModel.State.own && PlayerModel.state != PlayerModel.State.album && SearchRequest == "")
                     {
                         PlayerModel.Playlist = new Playlist(new OwnAudios());
                         PlayerModel.OffsetOwn = 0;

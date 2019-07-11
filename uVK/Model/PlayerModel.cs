@@ -9,6 +9,9 @@ using VkNet.Model.RequestParams;
 using uVK.Helpers;
 using System.Windows;
 using uVK.States;
+using System.Collections.ObjectModel;
+using uVK.Styles.AudioStyles;
+
 namespace uVK.Model
 {
     public static class PlayerModel
@@ -33,6 +36,7 @@ namespace uVK.Model
             search,
             album
         }
+
         public static void Search(string SearchRequest, ListBox MusicList)
         {
             //Task.Run(() =>
