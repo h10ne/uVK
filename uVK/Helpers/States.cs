@@ -6,6 +6,7 @@ using uVK.ViewModel;
 using uVK.Helpers;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace uVK.States
 {
@@ -281,13 +282,21 @@ namespace uVK.States
             {
                 PlayerModel.OffsetSave = main.SelectedSaveIndex;
             }
-
             PlayerModel.Player.URL = SaveAudios.Audio[PlayerModel.OffsetSave].Url.ToString();
             main.Artist = SaveAudios.Audio[PlayerModel.OffsetSave].Artist;
             main.Title = SaveAudios.Audio[PlayerModel.OffsetSave].Title;
-            main.DurrationMaximum = PlayerModel.Player.currentMedia.duration;
-            main.MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
-            PlayerModel.Player.controls.play();                       
+            PlayerModel.Player.controls.play();
+            SetDurration(main);
+        }
+
+        private async void SetDurration(PlayerViewModel main)
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                Thread.Sleep(100);
+                main.DurrationMaximum = PlayerModel.Player.currentMedia.duration;
+                main.MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
+            });
         }
     }
     public class OwnAudios : IState
@@ -440,6 +449,8 @@ namespace uVK.States
             PlayerModel.Player.URL = Decoder.DecodeAudioUrl(PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Url).ToString();
             main.Artist = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist;
             main.Title = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title;
+            main.MaximumTimePosition = Decoder.ConvertTimeToString(PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Duration);
+            main.DurrationMaximum = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Duration;
             for (int i = 0; i < main.MusicList.Items.Count; i++)
             {
                 string str = main.MusicList.Items[i].ToString();

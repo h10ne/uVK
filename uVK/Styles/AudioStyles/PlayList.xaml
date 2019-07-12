@@ -26,20 +26,14 @@
                 </Rectangle.Fill>
             </Rectangle>
             <!--  (RU) Кнопка пауза / (EN) Pause button  -->
-                <ToggleButton
+            <ToggleButton
                 Width="55"
                 Height="55"
                 Foreground="#FFFFFF"
                 Style="{StaticResource PlayPausePlayListStyle}"
                 x:Name="isPlay">
 
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding ChoosePlaylist}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-
-                    <ToggleButton.RenderTransform>
+                <ToggleButton.RenderTransform>
                         <TranslateTransform />
                     </ToggleButton.RenderTransform>
                 </ToggleButton>
@@ -50,12 +44,12 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" 
-                       Width="120"
+            <TextBlock Grid.Row="0"                        
+                       MaxWidth="120"
                        x:Name="Title" 
                        Text="Title" 
                        FontSize="11"
-                       TextWrapping="Wrap"/>
+                       TextWrapping="WrapWithOverflow"/>
             <TextBlock Grid.Row="1" 
                        x:Name="Author" 
                        Text="author" 
