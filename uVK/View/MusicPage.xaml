@@ -286,32 +286,58 @@
                                     <Grid Grid.Column="0">
                                         <!--  (RU) Количество плейлистов у пользователя / (EN) Number of user playlists  -->
 
-                                        <ListView ItemsSource="{Binding PlayLists}"
-                                                  SelectedIndex="{Binding CurrentPlaylistIndex}"                                                  
-                                                  BorderBrush="{x:Null}">
-                                            
+                                        <ListView
+                                            BorderBrush="{x:Null}"
+                                            ItemsSource="{Binding PlayLists}"
+                                            SelectedIndex="{Binding CurrentPlaylistIndex}">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate>
+                                                                <Border CornerRadius="3" Padding="1" BorderThickness="1" Background="{TemplateBinding Background}">
+                                                                    <ContentPresenter Content="{Binding}" />
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#E9EDF1" />
+                                                        </Trigger>
+                                                        <Trigger Property="IsSelected" Value="True" >
+                                                            <Setter Property="Background" Value="#E9EDF1" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <WrapPanel MaxWidth="410" Orientation="Horizontal"/>
+                                                    <WrapPanel MaxWidth="410" Orientation="Horizontal" />
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
-
                                         </ListView>
                                     </Grid>
                                 </ScrollViewer>
                                 <!--  (RU) Список аудиозаписей плейлиста / (EN) List of playlists audio  -->
-                                <Border BorderBrush="#E0E0E0" BorderThickness="1,0,0,0"  Grid.Column="1" Margin="0,10,0,0">
+                                <Border
+                                    Grid.Column="1"
+                                    Margin="0,10,0,0"
+                                    BorderBrush="#E0E0E0"
+                                    BorderThickness="1,0,0,0">
                                     <Grid>
                                         <!--  (RU) Список аудиозаписей / (EN) List of audio  -->
-                                        <ListBox BorderThickness="0" 
-                                                 Visibility="Visible"
-                                                 ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
-                                                 ItemsSource="{Binding AlbumAudiosList.Items}"
-                                                 SelectedIndex="{Binding SelectedAlbumAudiosIndex}"
-                                                 SelectedItem="{Binding SelectedAlbumAudiosItem}">
+                                        <ListBox
+                                            BorderThickness="0"
+                                            ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
+                                            ItemsSource="{Binding AlbumAudiosList.Items}"
+                                            SelectedIndex="{Binding SelectedAlbumAudiosIndex}"
+                                            SelectedItem="{Binding SelectedAlbumAudiosItem}"
+                                            Visibility="Visible">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDoubleClick">
-                                                    <i:InvokeCommandAction Command="{Binding SetAudioFromClick}" />
+                                                    <i:InvokeCommandAction Command="{Binding SetAlbumAudioFromClick}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
 
@@ -322,8 +348,8 @@
                                             VerticalAlignment="Center"
                                             FontSize="18"
                                             Foreground="#7E8FA5"
-                                            Visibility="{Binding TextChooseAlbumVisibility}"
-                                            Text="Выберите пожалуйста плейлист" />
+                                            Text="Выберите пожалуйста плейлист"
+                                            Visibility="{Binding TextChooseAlbumVisibility}" />
                                     </Grid>
                                 </Border>
                             </Grid>

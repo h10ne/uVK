@@ -291,12 +291,17 @@ namespace uVK.States
 
         private async void SetDurration(PlayerViewModel main)
         {
-            await Task.Factory.StartNew(() =>
+            try
             {
-                Thread.Sleep(100);
-                main.DurrationMaximum = PlayerModel.Player.currentMedia.duration;
-                main.MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
-            });
+                await Task.Factory.StartNew(() =>
+                {
+                    Thread.Sleep(100);
+                    main.DurrationMaximum = PlayerModel.Player.currentMedia.duration;
+                    main.MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
+                });
+            }
+            catch { }
+            
         }
     }
     public class OwnAudios : IState

@@ -314,12 +314,24 @@ namespace uVK.ViewModel
                     {
                         PlayerModel.Playlist = new Playlist(new SearchAudios());
                     }
-                    if (PlayerModel.state != PlayerModel.State.own && PlayerModel.state != PlayerModel.State.album && SearchRequest == "")
+                    if (PlayerModel.state != PlayerModel.State.own && SearchRequest == "")
                     {
                         PlayerModel.Playlist = new Playlist(new OwnAudios());
                         PlayerModel.OffsetOwn = 0;
                         PlayerModel.OffsetSearch = 0;
                     }
+                    PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
+                    IsPlay = true;
+                });
+            }
+        }
+
+        public RelayCommand SetAlbumAudioFromClick
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
                     PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
                     IsPlay = true;
                 });
