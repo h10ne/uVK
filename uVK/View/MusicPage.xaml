@@ -281,8 +281,8 @@
                                 </Grid.ColumnDefinitions>
                                 <!--  (RU) Прокрутка списка плейлистов / (EN) Scroll through playlists  -->
                                 <ScrollViewer
-                                    Grid.Column="0"           
-                                    <!--  (RU) Количество плейлистов у пользователя / (EN) Number of user playlists  -->                         
+                                    Grid.Column="0"
+                                    
                                     HorizontalScrollBarVisibility="Auto"
                                     VerticalScrollBarVisibility="Auto">
                                     

@@ -51,11 +51,7 @@ namespace uVK.ViewModel
                 PlayLists.Add(playList);
             }
 
-            PlayLists.Add(new PlayList(playlists[0]));
-            PlayLists.Add(new PlayList(playlists[0]));
-            PlayLists.Add(new PlayList(playlists[0]));
-            PlayLists.Add(new PlayList(playlists[0]));
-            PlayLists.Add(new PlayList(playlists[0]));
+
         }
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
@@ -330,6 +326,7 @@ namespace uVK.ViewModel
                 });
             }
         }
+
         public RelayCommand SetAlbumAudioFromClick
         {
             get
