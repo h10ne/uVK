@@ -25,6 +25,7 @@ namespace uVK.ViewModel
             MusicList = new ListBox();
             SaveAudiosList = new ListBox();
             PlayLists = new ObservableCollection<PlayList>();
+            UserAudios = new ObservableCollection<AudioList>();
             AlbumAudiosList = new ListBox();
             SaveAudios.AddCache();
             PlayerModel.AddCacheToList(SaveAudiosList);
@@ -33,7 +34,7 @@ namespace uVK.ViewModel
 
             PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) }).ToList();
             PlayerModel.state = PlayerModel.State.own;
-            PlayerModel.AddAudioToList(PlayerModel.Audio, MusicList);
+            PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
             PlayerModel.Playlist = new Playlist(new OwnAudios());
             PlayerModel.Playlist.SetAudioInfo(this);
             Volume = 30;
@@ -51,6 +52,10 @@ namespace uVK.ViewModel
                 PlayLists.Add(playList);
             }
 
+            //foreach(var au in PlayerModel.Audio)
+            //{
+            //    UserAudios.Add(new AudioList(au));
+            //}
 
         }
 
@@ -70,7 +75,6 @@ namespace uVK.ViewModel
 
         #region Private members
         public Visibility _noSaveMusic = Visibility.Visible;
-        private int currentPlayList;
         private ListBox _saveAudiosList;
         private ListBox _musicList;
         private ListBox _albumAudiosList;
@@ -95,11 +99,14 @@ namespace uVK.ViewModel
         private string _selectedAlbumAudiosItem;
         private int _selectedAlbumAudiosIndex;
         private ObservableCollection<PlayList> _playLists;
+        private ObservableCollection<AudioList> _userAudios;
         private int _currentPlaylist = -1;
         private Visibility _textChooseAlbumVisibility = Visibility.Visible;
         #endregion
 
         #region Public properties
+        public ObservableCollection<AudioList> UserAudios { get { return _userAudios; } set { _userAudios = value; OnPropertyChanged(nameof(UserAudios)); } }
+        public ObservableCollection<AudioList> AlbumAudios { get { return _userAudios; } set { _userAudios = value; OnPropertyChanged(nameof(UserAudios)); } }
         public Visibility NoSaveMusic { get { return _noSaveMusic; } set { _noSaveMusic = value; OnPropertyChanged(nameof(NoSaveMusic)); } }
         public string ImageSource { get { return _imageSource; } set { _imageSource = value; OnPropertyChanged(nameof(ImageSource)); } }
         public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
@@ -189,7 +196,7 @@ namespace uVK.ViewModel
                 if (SearchRequest == "")
                 {
                     //PlayerModel.state = PlayerModel.State.own;
-                    PlayerModel.AddAudioToList(PlayerModel.Audio, MusicList);
+                    PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
                 }
                 OnPropertyChanged(nameof(SearchRequest));
             }
@@ -259,7 +266,7 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    PlayerModel.Search(SearchRequest, MusicList);
+                    PlayerModel.Search(SearchRequest, UserAudios);
                 });
             }
         }

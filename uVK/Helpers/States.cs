@@ -146,7 +146,7 @@ namespace uVK.States
         {
             audios = _audios;
             PlayerModel.state = PlayerModel.State.album;
-            PlayerModel.AddAudioToList(audios, main.AlbumAudiosList);
+            PlayerModel.AddAudioToList(audios, main.AlbumAudios);
         }
         public void NextSong(PlayerViewModel main)
         {
@@ -451,7 +451,7 @@ namespace uVK.States
         {
             if (fromClick)
             {
-                PlayerModel.OffsetSearch = PlayerModel.SearchAudios.IndexOf(PlayerModel.SearchAudios.Where(a => a.Artist + " - " + a.Title == main.SelectedItem).FirstOrDefault());
+                PlayerModel.OffsetSearch = main.SelectedIndex; //PlayerModel.SearchAudios.IndexOf(PlayerModel.SearchAudios.Where(a => a.Artist + " - " + a.Title == main.SelectedItem).FirstOrDefault());
                 if (PlayerModel.OffsetSearch == -1)
                     return;
             }

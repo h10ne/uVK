@@ -125,6 +125,12 @@
     <Compile Include="PassBox\InputBoxWindow.xaml.cs">
       <DependentUpon>InputBoxWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Styles\AudioStyles\AudioList.xaml.cs">
+      <DependentUpon>AudioList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Styles\AudioStyles\FriendsMusic.xaml.cs">
+      <DependentUpon>FriendsMusic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Styles\AudioStyles\PlayList.xaml.cs">
       <DependentUpon>PlayList.xaml</DependentUpon>
     </Compile>
@@ -171,6 +177,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PassBox\InputBoxWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\AudioStyles\AudioList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\AudioStyles\FriendsMusic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -254,19 +254,23 @@
                                 </TextBox.InputBindings>
                             </TextBox>
                             <!--  (RU) Список своих аудио / (EN) List of your audio  -->
-                            <ListBox
+                            <ListView
                                 Margin="0,50,5,0"
                                 BorderThickness="0"
-                                ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
-                                ItemsSource="{Binding MusicList.Items}"
+                                ItemsSource="{Binding UserAudios}"
                                 SelectedIndex="{Binding SelectedIndex}"
                                 SelectedItem="{Binding SelectedItem}">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDoubleClick">
                                         <i:InvokeCommandAction Command="{Binding SetAudioFromClick}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                            </ListBox>
+                            </ListView>
                         </Grid>
                     </TabItem>
                     <!--  (RU) Плейлисты / (EN) PlayLists  -->
@@ -285,12 +289,16 @@
                                     
                                     HorizontalScrollBarVisibility="Auto"
                                     VerticalScrollBarVisibility="Auto">
-                                    
+
                                     <Grid Grid.Column="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="18*"/>
+                                            <ColumnDefinition Width="113*"/>
+                                        </Grid.ColumnDefinitions>
                                         <ListView
                                             BorderBrush="{x:Null}"
                                             ItemsSource="{Binding PlayLists}"
-                                            SelectedIndex="{Binding CurrentPlaylistIndex}">
+                                            SelectedIndex="{Binding CurrentPlaylistIndex}" Grid.ColumnSpan="2">
                                             <ListView.ItemContainerStyle>
                                                 <Style TargetType="ListViewItem">
                                                     <Setter Property="Template">
@@ -331,20 +339,25 @@
                                     BorderThickness="1,0,0,0">
                                     <Grid>
                                         <!--  (RU) Список аудиозаписей / (EN) List of audio  -->
-                                        <ListBox
+                                        <ListView
                                             BorderThickness="0"
-                                            ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
-                                            ItemsSource="{Binding AlbumAudiosList.Items}"
+                                            ItemsSource="{Binding AlbumAudios}"
                                             SelectedIndex="{Binding SelectedAlbumAudiosIndex}"
                                             SelectedItem="{Binding SelectedAlbumAudiosItem}"
                                             Visibility="Visible">
+                                            
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDoubleClick">
                                                     <i:InvokeCommandAction Command="{Binding SetAlbumAudioFromClick}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
 
-                                        </ListBox>
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Orientation="Vertical" />
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                        </ListView>
                                         <!--  (RU) Информирование о том что нужно выбрать плейлист / (EN) Informing about the need to choose a playlist  -->
                                         <TextBlock
                                             HorizontalAlignment="Center"

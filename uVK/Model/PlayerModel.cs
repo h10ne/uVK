@@ -38,7 +38,7 @@ namespace uVK.Model
             album
         }
 
-        public static void Search(string SearchRequest, ListBox MusicList)
+        public static void Search(string SearchRequest, ObservableCollection<AudioList> MusicList)
         {
             //Task.Run(() =>
             //{
@@ -55,41 +55,40 @@ namespace uVK.Model
 
             //});
         }
-        public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ListBox MusicList, bool fromSearch = false)
+        public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ObservableCollection<AudioList> MusicList, bool fromSearch = false)
         {
-            MusicList.Items.Clear();
-            if (fromSearch)
-            {
-                bool IncludeOwn = false;
-                int startValue = 0;
-                for (int i = 0; i < SearchAudios.Count; i++)
-                {
-                    foreach (var ownaudio in Audio)
-                    {
-                        if (ownaudio.AccessKey == SearchAudios[i].AccessKey)
-                        {
-                            if (!IncludeOwn)
-                            {
-                                IncludeOwn = true;
-                                MusicList.Items.Add("               Ваши аудиозаписи:");
-                            }
-                            MusicList.Items.Add(SearchAudios[i].Artist + " - " + SearchAudios[i].Title);
-                            startValue++;
-                        }
-                    }
-                }
-                if (startValue != 0)
-                    MusicList.Items.Add("               Все аудиозаписи:");
-                for (int j = startValue; j < SearchAudios.Count; j++)
-                {
-                    MusicList.Items.Add(SearchAudios[j].Artist + " - " + SearchAudios[j].Title);
-                }
-                return;
-            }
+            MusicList.Clear();
+            //if (fromSearch)
+            //{
+            //    bool IncludeOwn = false;
+            //    int startValue = 0;
+            //    for (int i = 0; i < SearchAudios.Count; i++)
+            //    {
+            //        foreach (var ownaudio in Audio)
+            //        {
+            //            if (ownaudio.AccessKey == SearchAudios[i].AccessKey)
+            //            {
+            //                if (!IncludeOwn)
+            //                {
+            //                    IncludeOwn = true;
+            //                    //MusicList.Add("               Ваши аудиозаписи:");
+            //                }
+            //                MusicList.Add(new AudioList(SearchAudios[i]));
+            //                startValue++;
+            //            }
+            //        }
+            //    }
+            //    //if (startValue != 0)
+            //    //    MusicList.Add("               Все аудиозаписи:");
+            //    for (int j = startValue; j < SearchAudios.Count; j++)
+            //    {
+            //        MusicList.Add(new AudioList(SearchAudios[j]));
+            //    }
+            //    return;
+            //}
             foreach (var audio in audios)
             {
-                string title = $"{audio.Artist} - {audio.Title}";
-                MusicList.Items.Add(title);
+                MusicList.Add(new AudioList(audio));
             }
         }
         public static void AddCacheToList(ListBox MusicList)
