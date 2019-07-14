@@ -330,7 +330,6 @@ namespace uVK.ViewModel
                 });
             }
         }
-
         public RelayCommand SetAlbumAudioFromClick
         {
             get
