@@ -272,7 +272,8 @@
                     <!--  (RU) Плейлисты / (EN) PlayLists  -->
                     <TabItem Header="Плейлисты">
                         <Grid>
-                            <Grid>
+                            <Grid
+                                  x:Name="AlbumsGrid">
                                 <!--  (RU) Разметка / (EN)  -->
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -280,12 +281,12 @@
                                 </Grid.ColumnDefinitions>
                                 <!--  (RU) Прокрутка списка плейлистов / (EN) Scroll through playlists  -->
                                 <ScrollViewer
-                                    Grid.Column="0"
+                                    Grid.Column="0"           
+                                    <!--  (RU) Количество плейлистов у пользователя / (EN) Number of user playlists  -->                         
                                     HorizontalScrollBarVisibility="Auto"
                                     VerticalScrollBarVisibility="Auto">
+                                    
                                     <Grid Grid.Column="0">
-                                        <!--  (RU) Количество плейлистов у пользователя / (EN) Number of user playlists  -->
-
                                         <ListView
                                             BorderBrush="{x:Null}"
                                             ItemsSource="{Binding PlayLists}"
@@ -314,7 +315,9 @@
 
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <WrapPanel MaxWidth="410" Orientation="Horizontal" />
+                                                    <WrapPanel
+                                                        MaxWidth="410"
+                                                               Orientation="Horizontal" />
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
                                         </ListView>
@@ -337,7 +340,7 @@
                                             Visibility="Visible">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDoubleClick">
-                                                    <i:InvokeCommandAction Command="{Binding SetAudioFromClick}" />
+                                                    <i:InvokeCommandAction Command="{Binding SetAlbumAudioFromClick}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
 
@@ -400,7 +403,8 @@
                     BorderBrush="WhiteSmoke"
                     BorderThickness="2"
                     CornerRadius="5">
-                    <Grid Width="100">
+                    <Grid Width="auto"
+                          Height="auto">
                         <TextBlock
                             Height="17"
                             HorizontalAlignment="Center"
