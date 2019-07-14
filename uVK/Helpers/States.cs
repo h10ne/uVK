@@ -12,7 +12,7 @@ namespace uVK.States
 {
     public class Playlist
     {
-        public IState State { get; set; }
+        public IState State { get; set; }        
         public Playlist(IState ws)
         {
             State = ws;
@@ -145,6 +145,7 @@ namespace uVK.States
         public AlbumAudios(List<VkNet.Model.Attachments.Audio> _audios, PlayerViewModel main)
         {
             audios = _audios;
+            PlayerModel.state = PlayerModel.State.album;
             PlayerModel.AddAudioToList(audios, main.AlbumAudiosList);
         }
         public void NextSong(PlayerViewModel main)
@@ -233,6 +234,10 @@ namespace uVK.States
 
     public class SavesAudios : IState
     {
+        public SavesAudios()
+        {
+            PlayerModel.state = PlayerModel.State.save;
+        }
         public void NextSong(PlayerViewModel main)
         {
             if (main.Random)
@@ -306,7 +311,10 @@ namespace uVK.States
     }
     public class OwnAudios : IState
     {
-
+        public OwnAudios()
+        {
+            PlayerModel.state = PlayerModel.State.own;
+        }
         public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
         {
             if (fromClick)
@@ -393,6 +401,10 @@ namespace uVK.States
 
     public class SearchAudios : IState
     {
+        public SearchAudios()
+        {
+            PlayerModel.state = PlayerModel.State.search;
+        }
         public void PrevSong(PlayerViewModel main)
         {
             try

@@ -12,6 +12,6 @@ namespace uVK.Pages
         {
             InitializeComponent();
             this.DataContext = new PlayerViewModel();
-        }
+        }        
     }
 }

@@ -51,6 +51,11 @@ namespace uVK.ViewModel
                 PlayLists.Add(playList);
             }
 
+            PlayLists.Add(new PlayList(playlists[0]));
+            PlayLists.Add(new PlayList(playlists[0]));
+            PlayLists.Add(new PlayList(playlists[0]));
+            PlayLists.Add(new PlayList(playlists[0]));
+            PlayLists.Add(new PlayList(playlists[0]));
         }
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
@@ -119,11 +124,11 @@ namespace uVK.ViewModel
                 }
                 foreach (var pl in PlayLists)
                 {
-                    pl.isPlay.IsChecked = false;
+                    //pl.isPlay.IsChecked = false;
                 }
                 TextChooseAlbumVisibility = Visibility.Hidden;
                 PlayerModel.Playlist = new Playlist(new AlbumAudios(PlayLists[_currentPlaylist].Audios, this));
-                PlayLists[_currentPlaylist].isPlay.IsChecked = true;
+                //PlayLists[_currentPlaylist].isPlay.IsChecked = true;
                 PlayerModel.Playlist.SetAudioInfo(this);
                 OnPropertyChanged(nameof(CurrentPlaylistIndex));
             }
@@ -332,8 +337,16 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
-                    IsPlay = true;
+                    if (PlayerModel.state == PlayerModel.State.album)
+                    {
+                        PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
+                        IsPlay = true;
+                    }
+                    else
+                    {
+                        AlbumAudiosList.Items.Clear();
+                        NotificationText = "Choose playlist";
+                    }
                 });
             }
         }

@@ -15,8 +15,9 @@ using uVK.Styles.AudioStyles;
 namespace uVK.Model
 {
     public static class PlayerModel
-    {        
+    {
         #region Variables
+        private static State _state;
         public static  List<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
         public static List<VkNet.Model.Attachments.Audio> Audio { get; set; }
         public static List<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
@@ -26,7 +27,7 @@ namespace uVK.Model
         public static int OffsetSave = 0;
         public static WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
         public static Playlist Playlist;
-        public static State state { get; set; }
+        public static State state { get { return _state; } set { _state = value; } }
         #endregion
         public enum State
         {

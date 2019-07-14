@@ -25,17 +25,17 @@
                 </Rectangle.Fill>
             </Rectangle>
             <!--  (RU) Кнопка пауза / (EN) Pause button  -->
-            <ToggleButton
+            <!-- <ToggleButton
                 x:Name="isPlay"
                 Width="55"
                 Height="55"
                 Foreground="#FFFFFF"
                 Style="{StaticResource PlayPausePlayListStyle}">
 
-                <ToggleButton.RenderTransform>
+                 <ToggleButton.RenderTransform>
                     <TranslateTransform />
                 </ToggleButton.RenderTransform>
-            </ToggleButton>
+            </ToggleButton> -->
         </Grid>
         <Grid Grid.Row="1" Margin="3,0,3,0">
             <Grid.RowDefinitions>
