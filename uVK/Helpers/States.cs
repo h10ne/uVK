@@ -212,10 +212,10 @@ namespace uVK.States
             /*
              * Делает выделение текущей композиции на моделе, если найдено
              */
-            for (int i = 0; i < main.MusicList.Items.Count; i++)
-                if (main.AlbumAudiosList.Items[i].ToString() == audios[offset].Artist + " - " + audios[offset].Title)
+            for (int i = 0; i < main.AlbumAudios.Count; i++)
+                if (main.AlbumAudios[i].ToString() == audios[offset].Artist + " - " + audios[offset].Title)
                 {
-                    string str = main.AlbumAudiosList.Items[i].ToString();
+                    string str = main.AlbumAudios[i].ToString();
                     main.SelectedAlbumAudiosIndex = i;
                     break;
                 }
@@ -338,10 +338,10 @@ namespace uVK.States
             /*
              * Делает выделение текущей композиции на моделе, если найдено
              */             
-            for (int i = 0; i < main.MusicList.Items.Count; i++)
-                if (main.MusicList.Items[i].ToString() == PlayerModel.Audio[PlayerModel.OffsetOwn].Artist + " - " + PlayerModel.Audio[PlayerModel.OffsetOwn].Title)
+            for (int i = 0; i < main.UserAudios.Count; i++)
+                if (main.UserAudios[i].ToString() == PlayerModel.Audio[PlayerModel.OffsetOwn].Artist + " - " + PlayerModel.Audio[PlayerModel.OffsetOwn].Title)
                 {
-                    string str = main.MusicList.Items[i].ToString();
+                    string str = main.UserAudios[i].ToString();
                     main.SelectedIndex = i;
                     break;
                 }
@@ -451,7 +451,7 @@ namespace uVK.States
         {
             if (fromClick)
             {
-                PlayerModel.OffsetSearch = main.SelectedIndex; //PlayerModel.SearchAudios.IndexOf(PlayerModel.SearchAudios.Where(a => a.Artist + " - " + a.Title == main.SelectedItem).FirstOrDefault());
+                PlayerModel.OffsetSearch = main.SelectedIndex;
                 if (PlayerModel.OffsetSearch == -1)
                     return;
             }
@@ -468,12 +468,12 @@ namespace uVK.States
             main.Title = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title;
             main.MaximumTimePosition = Decoder.ConvertTimeToString(PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Duration);
             main.DurrationMaximum = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Duration;
-            for (int i = 0; i < main.MusicList.Items.Count; i++)
+            for (int i = 0; i < main.UserAudios.Count; i++)
             {
-                string str = main.MusicList.Items[i].ToString();
+                string str = main.UserAudios[i].ToString();
                 string str2 = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist + " - " +
                     PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title;
-                if (main.MusicList.Items[i].ToString() == PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist
+                if (main.UserAudios[i].ToString() == PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist
                     + " - " + PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title)
                 {
                     main.SelectedIndex = i;

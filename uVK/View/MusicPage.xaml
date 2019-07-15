@@ -257,7 +257,7 @@
                             <ListView
                                 Margin="0,50,5,0"
                                 BorderThickness="0"
-                                ItemsSource="{Binding UserAudios}"
+                                ItemsSource="{Binding Path=UserAudios, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedIndex="{Binding SelectedIndex}"
                                 SelectedItem="{Binding SelectedItem}">
                                 <ListView.ItemsPanel>

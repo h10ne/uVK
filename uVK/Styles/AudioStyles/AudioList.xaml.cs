@@ -36,8 +36,10 @@ namespace uVK.Styles.AudioStyles
             {
                 //MusicImage.ImageSource = new BitmapImage(new Uri(@"/Images/ImageMusic.png"));
             }
-
-
+        }
+        public override string ToString()
+        {
+            return Artist.Text + " - " + Title.Text;
         }
     }
 }

@@ -57,6 +57,7 @@ namespace uVK.Model
         }
         public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ObservableCollection<AudioList> MusicList, bool fromSearch = false)
         {
+            //MusicList = new ObservableCollection<AudioList>();
             MusicList.Clear();
             //if (fromSearch)
             //{

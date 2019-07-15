@@ -22,11 +22,10 @@ namespace uVK.ViewModel
     {
         public PlayerViewModel()
         {
-            MusicList = new ListBox();
             SaveAudiosList = new ListBox();
             PlayLists = new ObservableCollection<PlayList>();
             UserAudios = new ObservableCollection<AudioList>();
-            AlbumAudiosList = new ListBox();
+            AlbumAudios = new ObservableCollection<AudioList>();
             SaveAudios.AddCache();
             PlayerModel.AddCacheToList(SaveAudiosList);
             if (SaveAudiosList.Items.Count != 0)
@@ -76,8 +75,6 @@ namespace uVK.ViewModel
         #region Private members
         public Visibility _noSaveMusic = Visibility.Visible;
         private ListBox _saveAudiosList;
-        private ListBox _musicList;
-        private ListBox _albumAudiosList;
         private int _volume;
         private string _imageSource = @"/Images/ImageMusic.png";
         private bool _isPlay = false;
@@ -90,7 +87,7 @@ namespace uVK.ViewModel
         private string _maximumTimePosition;
         private double _currentTimePositionValue;
         private double _durrationMaximum;
-        private string _selectedItem;
+        private VkNet.Model.Attachments.Audio _selectedItem;
         private System.Windows.Threading.DispatcherTimer DurrationTimer;
         private string _searchRequest = "";
         private bool isDownloading = false;
@@ -100,19 +97,18 @@ namespace uVK.ViewModel
         private int _selectedAlbumAudiosIndex;
         private ObservableCollection<PlayList> _playLists;
         private ObservableCollection<AudioList> _userAudios;
+        private ObservableCollection<AudioList> _albumAudios;
         private int _currentPlaylist = -1;
         private Visibility _textChooseAlbumVisibility = Visibility.Visible;
         #endregion
 
         #region Public properties
         public ObservableCollection<AudioList> UserAudios { get { return _userAudios; } set { _userAudios = value; OnPropertyChanged(nameof(UserAudios)); } }
-        public ObservableCollection<AudioList> AlbumAudios { get { return _userAudios; } set { _userAudios = value; OnPropertyChanged(nameof(UserAudios)); } }
+        public ObservableCollection<AudioList> AlbumAudios { get { return _albumAudios; } set { _albumAudios = value; OnPropertyChanged(nameof(UserAudios)); } }
         public Visibility NoSaveMusic { get { return _noSaveMusic; } set { _noSaveMusic = value; OnPropertyChanged(nameof(NoSaveMusic)); } }
         public string ImageSource { get { return _imageSource; } set { _imageSource = value; OnPropertyChanged(nameof(ImageSource)); } }
         public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
         public string Artist { get { return _artist; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
-        public ListBox MusicList { get { return _musicList; } set { _musicList = value; OnPropertyChanged(nameof(MusicList)); } }
-        public ListBox AlbumAudiosList { get { return _albumAudiosList; } set { _albumAudiosList = value; OnPropertyChanged(nameof(AlbumAudiosList)); } }
         public ListBox SaveAudiosList { get { return _saveAudiosList; } set { _saveAudiosList = value; OnPropertyChanged(nameof(SaveAudiosList)); } }
         public Visibility TextChooseAlbumVisibility { get { return _textChooseAlbumVisibility; } set { _textChooseAlbumVisibility = value; OnPropertyChanged(nameof(TextChooseAlbumVisibility)); } }
         public int CurrentPlaylistIndex { get { return _currentPlaylist; }
@@ -185,7 +181,7 @@ namespace uVK.ViewModel
         public string MaximumTimePosition { get { return _maximumTimePosition; } set { _maximumTimePosition = value; OnPropertyChanged(nameof(MaximumTimePosition)); } }
         public double DurrationMaximum { get { return _durrationMaximum; } set { _durrationMaximum = value; OnPropertyChanged(nameof(DurrationMaximum)); } }
         //Выбранное
-        public string SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
+        public VkNet.Model.Attachments.Audio SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
         public string SearchRequest
         {
             get { return _searchRequest; }
@@ -347,7 +343,7 @@ namespace uVK.ViewModel
                     }
                     else
                     {
-                        AlbumAudiosList.Items.Clear();
+                        AlbumAudios.Clear();
                         NotificationText = "Choose playlist";
                     }
                 });
