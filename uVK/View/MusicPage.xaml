@@ -254,7 +254,7 @@
                                 </TextBox.InputBindings>
                             </TextBox>
                             <!--  (RU) Список своих аудио / (EN) List of your audio  -->
-                            <ListView
+                            <ListView                                
                                 Margin="0,50,5,0"
                                 BorderThickness="0"
                                 ItemsSource="{Binding Path=UserAudios, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -265,11 +265,13 @@
                                         <WrapPanel Orientation="Vertical" />
                                     </ItemsPanelTemplate>
                                 </ListView.ItemsPanel>
+
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDoubleClick">
-                                        <i:InvokeCommandAction Command="{Binding SetAudioFromClick}" />
+                                        <i:InvokeCommandAction Command="{Binding Path=SetAudioFromClick}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                
                             </ListView>
                         </Grid>
                     </TabItem>

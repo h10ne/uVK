@@ -145,7 +145,7 @@ namespace uVK.States
         public AlbumAudios(List<VkNet.Model.Attachments.Audio> _audios, PlayerViewModel main)
         {
             audios = _audios;
-            PlayerModel.state = PlayerModel.State.album;
+            main.State = PlayerModel.PlaylistState.album;
             PlayerModel.AddAudioToList(audios, main.AlbumAudios);
         }
         public void NextSong(PlayerViewModel main)
@@ -234,9 +234,9 @@ namespace uVK.States
 
     public class SavesAudios : IState
     {
-        public SavesAudios()
+        public SavesAudios(PlayerViewModel main)
         {
-            PlayerModel.state = PlayerModel.State.save;
+            main.State = PlayerModel.PlaylistState.save;
         }
         public void NextSong(PlayerViewModel main)
         {
@@ -311,9 +311,9 @@ namespace uVK.States
     }
     public class OwnAudios : IState
     {
-        public OwnAudios()
+        public OwnAudios(PlayerViewModel main)
         {
-            PlayerModel.state = PlayerModel.State.own;
+            main.State = PlayerModel.PlaylistState.own;
         }
         public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
         {
@@ -401,9 +401,9 @@ namespace uVK.States
 
     public class SearchAudios : IState
     {
-        public SearchAudios()
+        public SearchAudios(PlayerViewModel main)
         {
-            PlayerModel.state = PlayerModel.State.search;
+            main.State = PlayerModel.PlaylistState.search;
         }
         public void PrevSong(PlayerViewModel main)
         {

@@ -16,8 +16,17 @@ namespace uVK.Model
 {
     public static class PlayerModel
     {
+
+        public enum PlaylistState
+        {
+            own,
+            save,
+            recommend,
+            search,
+            album
+        }
+
         #region Variables
-        private static State _state;
         public static  List<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
         public static List<VkNet.Model.Attachments.Audio> Audio { get; set; }
         public static List<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
@@ -27,16 +36,8 @@ namespace uVK.Model
         public static int OffsetSave = 0;
         public static WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
         public static Playlist Playlist;
-        public static State state { get { return _state; } set { _state = value; } }
         #endregion
-        public enum State
-        {
-            own,
-            save,
-            recommend,
-            search,
-            album
-        }
+        
 
         public static void Search(string SearchRequest, ObservableCollection<AudioList> MusicList)
         {
@@ -50,10 +51,18 @@ namespace uVK.Model
                     Count = 50,
                     PerformerOnly = false
                 }).ToList();
-                PlayerModel.state = PlayerModel.State.search;
                 PlayerModel.AddAudioToList(PlayerModel.SearchAudios, MusicList, true);
 
             //});
+        }
+        public static void Getplaylists(long userId, ObservableCollection<PlayList> PlaylistSourse)
+        {
+            var playlists = ApiDatas.api.Audio.GetPlaylists(userId).ToList();
+            foreach (var pl in playlists)
+            {
+                PlayList playList = new PlayList(pl);
+                PlaylistSourse.Add(playList);
+            }
         }
         public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ObservableCollection<AudioList> MusicList, bool fromSearch = false)
         {
