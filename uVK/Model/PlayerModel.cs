@@ -12,6 +12,8 @@ using uVK.States;
 using System.Collections.ObjectModel;
 using uVK.Styles.AudioStyles;
 using VkNet.Enums.Filters;
+using DynamicData.Binding;
+using DynamicData;
 
 namespace uVK.Model
 {
@@ -66,9 +68,9 @@ namespace uVK.Model
             }
         }
 
-        private static ObservableCollection<VkNet.Model.User> GetFriendsWithOpenAudio()
+        private static ObservableCollectionExtended<VkNet.Model.User> GetFriendsWithOpenAudio()
         {
-            ObservableCollection<VkNet.Model.User> FriendsWithOpenAudio = new ObservableCollection<VkNet.Model.User>();
+            ObservableCollectionExtended<VkNet.Model.User> FriendsWithOpenAudio = new ObservableCollectionExtended<VkNet.Model.User>();
             var friends = ApiDatas.api.Friends.Get(new FriendsGetParams
             {
                 Fields = ProfileFields.All,
@@ -84,7 +86,7 @@ namespace uVK.Model
             return FriendsWithOpenAudio;
         }
 
-        public static void DownloadFriendsWithOpenAudio(ObservableCollection<FriendsMusic> friendsMusics)
+        public static void DownloadFriendsWithOpenAudio(ObservableCollectionExtended<FriendsMusic> friendsMusics)
         {
             var friends = GetFriendsWithOpenAudio();
             foreach(var friend in friends)
