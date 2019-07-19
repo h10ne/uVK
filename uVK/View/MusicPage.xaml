@@ -241,6 +241,10 @@
                     <!--  (RU) Свои аудизаписи / (EN) Your audio  -->
                     <TabItem Margin="0,0,0,0" Header="Моя музыка">
                         <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="139*"/>
+                                <ColumnDefinition Width="254*"/>
+                            </Grid.ColumnDefinitions>
                             <!--  (RU) Поиск по музыке / (EN) Music search  -->
                             <TextBox
                                 Name="MusicSearch"
@@ -248,18 +252,20 @@
                                 Margin="5,10,5,0"
                                 VerticalAlignment="Top"
                                 Tag="Поиск по музыке"
-                                Text="{Binding SearchRequest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                Text="{Binding SearchRequest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
                                 <TextBox.InputBindings>
                                     <KeyBinding Key="Enter" Command="{Binding Path=SearchCommand}" />
                                 </TextBox.InputBindings>
                             </TextBox>
                             <!--  (RU) Список своих аудио / (EN) List of your audio  -->
-                            <ListView                                
+                            <ListView  
+                                x:Name="UserMusicList"
                                 Margin="0,50,5,0"
                                 BorderThickness="0"
+                                ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
                                 ItemsSource="{Binding Path=UserAudios, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedIndex="{Binding SelectedIndex}"
-                                SelectedItem="{Binding SelectedItem}">
+                                SelectedItem="{Binding SelectedItem}" Grid.ColumnSpan="2">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel Orientation="Vertical" />
@@ -271,7 +277,7 @@
                                         <i:InvokeCommandAction Command="{Binding Path=SetAudioFromClick}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                                
+
                             </ListView>
                         </Grid>
                     </TabItem>
@@ -292,15 +298,18 @@
                                     HorizontalScrollBarVisibility="Auto"
                                     VerticalScrollBarVisibility="Auto">
 
-                                    <Grid Grid.Column="0">
+                                    <Grid Grid.Column="0"
+                                          x:Name="GridAlbums">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="18*"/>
-                                            <ColumnDefinition Width="113*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <ListView
+                                        <ListView 
+                                            Width="auto"
                                             BorderBrush="{x:Null}"
                                             ItemsSource="{Binding PlayLists}"
-                                            SelectedIndex="{Binding CurrentPlaylistIndex}" Grid.ColumnSpan="2">
+                                            SelectedIndex="{Binding CurrentPlaylistIndex}" 
+                                            Grid.ColumnSpan="2">
                                             <ListView.ItemContainerStyle>
                                                 <Style TargetType="ListViewItem">
                                                     <Setter Property="Template">
@@ -322,12 +331,13 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </ListView.ItemContainerStyle>
-
+                                            
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <WrapPanel
-                                                        MaxWidth="410"
-                                                               Orientation="Horizontal" />
+                                                        MaxWidth="{Binding ElementName=GridAlbums, Path=ActualWidth}"
+                                                        HorizontalAlignment="Stretch"
+                                                        Orientation="Horizontal" />
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
                                         </ListView>
@@ -347,7 +357,7 @@
                                             SelectedIndex="{Binding SelectedAlbumAudiosIndex}"
                                             SelectedItem="{Binding SelectedAlbumAudiosItem}"
                                             Visibility="Visible">
-                                            
+
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDoubleClick">
                                                     <i:InvokeCommandAction Command="{Binding SetAlbumAudioFromClick}" />
@@ -373,7 +383,7 @@
                             </Grid>
                         </Grid>
                     </TabItem>
-                    <!--  Свои аудизаписи  -->
+                    <!--  Сохраненные аудизаписи  -->
                     <TabItem
                         x:Name="SaveAudioTabItem"
                         Margin="0,0,0,0"
@@ -402,6 +412,72 @@
                                 Foreground="#7E8FA5"
                                 Text="У вас пока нет сохранённых аудиозаписей"
                                 Visibility="{Binding NoSaveMusic, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        </Grid>
+                    </TabItem>
+                    <!-- Аудиозаписи друзей -->
+                    <TabItem Header="Друзья">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Список друзей с открытыми аудио-->
+                            <Border
+                                Grid.RowSpan="2"
+                                Grid.Column="1">
+                                <ListView
+                                    BorderThickness="0"
+                                    ItemsSource="{Binding FriendsMusic}"
+                                    Width="auto"
+                                    Margin="0,0,15,0">
+
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Vertical" />
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+
+                                </ListView>
+                            </Border>
+                            <!-- Альбомы друга-->
+                            <Border Grid.Row="0"
+                                  Grid.Column="0">
+                                <ListView
+                                    BorderThickness="0"
+                                    ItemsSource="{Binding FriendsMusicAlbums}"
+                                    Width="auto"
+                                    Margin="0,0,15,0">
+
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+
+                                </ListView>
+                            </Border>
+                            <!-- Аудиозаписи друга -->
+                            <Border Grid.Column="1"
+                                    Grid.Row="1">
+                                
+                                <ListView
+                                    BorderThickness="0"
+                                    ItemsSource="{Binding FriendsMusicAudios}"
+                                    Width="auto"
+                                    Margin="0,0,15,0">
+
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+
+                                </ListView>
+                            </Border>
                         </Grid>
                     </TabItem>
                 </TabControl>

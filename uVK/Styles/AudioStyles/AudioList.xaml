@@ -7,9 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Height="auto">
-    <Grid>
+    <Grid Width="800">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
@@ -28,13 +29,13 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <Border HorizontalAlignment="Center" Grid.Column="2">
+        <Border HorizontalAlignment="Left" Grid.Column="1">
             <StackPanel Margin="5,2">
                 <!--  (RU) Текст название аудиозаписи / (EN) Text audio title  -->
                 <TextBlock
                     MaxHeight="36"
                     FontSize="14"
-                    FontWeight="Bold"
+                    FontWeight="DemiBold"
                     Foreground="{DynamicResource SidebarForegroundBrush}"
                     Name="Artist"
                     Text="Artist"
@@ -48,6 +49,9 @@
                     Text="Title"
                     TextTrimming="CharacterEllipsis" />
             </StackPanel>
+        </Border>
+        <Border Grid.Column="2">
+            <TextBlock Name="Durration" FontSize="13" Foreground="Gray" VerticalAlignment="Center"/>
         </Border>
     </Grid>
 </UserControl>

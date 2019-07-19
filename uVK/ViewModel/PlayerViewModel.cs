@@ -15,6 +15,7 @@ using VkNet.Model.RequestParams;
 using uVK.States;
 using uVK.Styles.AudioStyles;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace uVK.ViewModel
 {
@@ -40,8 +41,9 @@ namespace uVK.ViewModel
             };
             DurrationTimer.Tick += DurrationTimer_Tick;
             PlayerModel.Getplaylists(UserDatas.User_id, PlayLists);
-            
 
+            //PlayerModel.DownloadFriendsWithOpenAudio(FriendsMusic);
+            
         }
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
@@ -60,7 +62,10 @@ namespace uVK.ViewModel
 
         #region Private members
         private PlayerModel.PlaylistState _state;
-        public Visibility _noSaveMusic = Visibility.Visible;
+        private ObservableCollection<FriendsMusic> _friendsMusics = new ObservableCollection<FriendsMusic>();
+        private ObservableCollection<PlayList> _friendsMusicAlbums = new ObservableCollection<PlayList>();
+        private ObservableCollection<AudioList> _friendsMusicAudios = new ObservableCollection<AudioList>();
+        private Visibility _noSaveMusic = Visibility.Visible;
         private ListBox _saveAudiosList = new ListBox();
         private int _volume;
         private string _imageSource = @"/Images/ImageMusic.png";
@@ -90,7 +95,10 @@ namespace uVK.ViewModel
         #endregion
 
         #region Public properties
-        public PlayerModel.PlaylistState State { get { return _state; } set { _state = value; if (value!=PlayerModel.PlaylistState.album) CurrentPlaylistIndex = -1; } }
+        private ObservableCollection<PlayList> FriendsMusicAlbums { get { return _friendsMusicAlbums; } set { _friendsMusicAlbums = value; OnPropertyChanged(nameof(FriendsMusicAlbums)); } }
+        public ObservableCollection<FriendsMusic> FriendsMusic { get { return _friendsMusics; } set { _friendsMusics = value; OnPropertyChanged(nameof(FriendsMusic)); } }
+        public ObservableCollection<AudioList> FriendsMusicAudios { get { return _friendsMusicAudios; } set { _friendsMusicAudios = value; OnPropertyChanged(nameof(FriendsMusicAudios)); } }
+        public PlayerModel.PlaylistState State { get { return _state; } set { _state = value; if (value != PlayerModel.PlaylistState.album) CurrentPlaylistIndex = -1; } }
         public ObservableCollection<AudioList> UserAudios { get { return _userAudios; } set { _userAudios = value; OnPropertyChanged(nameof(UserAudios)); } }
         public ObservableCollection<AudioList> AlbumAudios { get { return _albumAudios; } set { _albumAudios = value; OnPropertyChanged(nameof(UserAudios)); } }
         public Visibility NoSaveMusic { get { return _noSaveMusic; } set { _noSaveMusic = value; OnPropertyChanged(nameof(NoSaveMusic)); } }
@@ -99,11 +107,13 @@ namespace uVK.ViewModel
         public string Artist { get { return _artist; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
         public ListBox SaveAudiosList { get { return _saveAudiosList; } set { _saveAudiosList = value; OnPropertyChanged(nameof(SaveAudiosList)); } }
         public Visibility TextChooseAlbumVisibility { get { return _textChooseAlbumVisibility; } set { _textChooseAlbumVisibility = value; OnPropertyChanged(nameof(TextChooseAlbumVisibility)); } }
-        public int CurrentPlaylistIndex { get { return _currentPlaylist; }
+        public int CurrentPlaylistIndex
+        {
+            get { return _currentPlaylist; }
             set
             {
                 _currentPlaylist = value;
-                if(value == -1)
+                if (value == -1)
                 {
                     AlbumAudios.Clear();
                     return;
@@ -150,11 +160,13 @@ namespace uVK.ViewModel
         public int SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value; OnPropertyChanged(nameof(SelectedIndex)); } }
         //Время
         public string CurrentTimePosition { get { return _currentTimePosition; } set { _currentTimePosition = value; OnPropertyChanged(nameof(CurrentTimePosition)); } }
-        public double CurrentTimePositionValue { get { return _currentTimePositionValue; }
+        public double CurrentTimePositionValue
+        {
+            get { return _currentTimePositionValue; }
             set
             {
                 _currentTimePositionValue = value;
-                int sec = (int) _currentTimePositionValue % 60;
+                int sec = (int)_currentTimePositionValue % 60;
                 int min = (int)_currentTimePositionValue / 60;
                 string secStr;
                 string minStr;
@@ -169,7 +181,8 @@ namespace uVK.ViewModel
                     minStr = "0" + min.ToString();
                 CurrentTimePosition = $"{minStr}:{secStr}";
                 OnPropertyChanged(nameof(CurrentTimePositionValue));
-            } }
+            }
+        }
         public string MaximumTimePosition { get { return _maximumTimePosition; } set { _maximumTimePosition = value; OnPropertyChanged(nameof(MaximumTimePosition)); } }
         public double DurrationMaximum { get { return _durrationMaximum; } set { _durrationMaximum = value; OnPropertyChanged(nameof(DurrationMaximum)); } }
         //Выбранное
@@ -356,7 +369,7 @@ namespace uVK.ViewModel
                 });
             }
         }
-        
+
         public RelayCommand SaveAudio
         {
             get

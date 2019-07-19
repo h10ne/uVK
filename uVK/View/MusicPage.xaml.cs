@@ -13,10 +13,5 @@ namespace uVK.Pages
             InitializeComponent();
             this.DataContext = new PlayerViewModel();
         }
-
-        private void ListView_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
-        {
-            
-        }
     }
 }

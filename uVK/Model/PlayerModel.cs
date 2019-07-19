@@ -11,6 +11,7 @@ using System.Windows;
 using uVK.States;
 using System.Collections.ObjectModel;
 using uVK.Styles.AudioStyles;
+using VkNet.Enums.Filters;
 
 namespace uVK.Model
 {
@@ -64,6 +65,34 @@ namespace uVK.Model
                 PlaylistSourse.Add(playList);
             }
         }
+
+        private static ObservableCollection<VkNet.Model.User> GetFriendsWithOpenAudio()
+        {
+            ObservableCollection<VkNet.Model.User> FriendsWithOpenAudio = new ObservableCollection<VkNet.Model.User>();
+            var friends = ApiDatas.api.Friends.Get(new FriendsGetParams
+            {
+                Fields = ProfileFields.All,
+                Order = VkNet.Enums.SafetyEnums.FriendsOrder.Hints
+            });
+            foreach(var friend in friends)
+            {
+                if (friend.CanSeeAudio)
+                {
+                    FriendsWithOpenAudio.Add(friend);
+                }
+            }
+            return FriendsWithOpenAudio;
+        }
+
+        public static void DownloadFriendsWithOpenAudio(ObservableCollection<FriendsMusic> friendsMusics)
+        {
+            var friends = GetFriendsWithOpenAudio();
+            foreach(var friend in friends)
+            {
+                friendsMusics.Add(new FriendsMusic(friend));
+            }
+        }
+
         public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ObservableCollection<AudioList> MusicList, bool fromSearch = false)
         {
             //MusicList = new ObservableCollection<AudioList>();

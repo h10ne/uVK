@@ -1456,6 +1456,7 @@
             </StackPanel>
         </Grid>
     </DataTemplate>
+
     <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Padding" Value="4,1" />

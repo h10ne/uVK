@@ -25,7 +25,7 @@ namespace uVK.Styles.AudioStyles
             InitializeComponent();
             Title.Text = audio.Title;
             Artist.Text = audio.Artist;
-
+            Durration.Text = Helpers.Decoder.ConvertTimeToString(audio.Duration);
 
             try
             {
