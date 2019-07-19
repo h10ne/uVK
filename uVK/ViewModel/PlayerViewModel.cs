@@ -47,7 +47,7 @@ namespace uVK.ViewModel
 
             PlayerModel.Getplaylists(UserDatas.User_id, PlayLists);
 
-            //PlayerModel.DownloadFriendsWithOpenAudio(FriendsMusic);
+            PlayerModel.DownloadFriendsWithOpenAudio(FriendsMusic);
 
             //download();
             DurrationTimer.Start();
