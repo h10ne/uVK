@@ -43,7 +43,7 @@ namespace uVK.Model
         #endregion
 
 
-        public static void Search(string SearchRequest, ObservableCollection<AudioList> MusicList)
+        public static void Search(string SearchRequest, ObservableCollection<OneAudioViewModel> MusicList)
         {
             //Task.Run(() =>
             //{
@@ -121,14 +121,15 @@ namespace uVK.Model
                         {
                             UserName = $"{friend.FirstName} {friend.LastName}",
                             CountAudio = $"{count} аудиозаписей",
-                            ImageSourse = friend.Photo200.ToString()
+                            ImageSourse = friend.Photo200.ToString()                            
+                            
                         });
                 }
             });
         }
 
 
-        public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ObservableCollection<AudioList> MusicList, bool fromSearch = false)
+        public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ObservableCollection<OneAudioViewModel> MusicList, bool fromSearch = false)
         {
             //MusicList = new ObservableCollection<AudioList>();
             MusicList.Clear();
@@ -162,7 +163,21 @@ namespace uVK.Model
             //}
             foreach (var audio in audios)
             {
-                MusicList.Add(new AudioList(audio));
+                string imageSource = "/Images/ImageMusic.png";
+                try
+                {
+                    imageSource = audio.Album.Cover.Photo270;
+                }
+                catch { }
+
+                MusicList.Add(new OneAudioViewModel()
+                {
+                    ImageSourseString = imageSource,
+                    Artist = audio.Artist,
+                    Title = audio.Title,
+                    Duration = Helpers.Decoder.ConvertTimeToString(audio.Duration),
+                    Width = 800
+                });
             }
         }
         public static void AddCacheToList(ListBox MusicList)

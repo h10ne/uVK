@@ -22,7 +22,6 @@ namespace uVK.ViewModel
 {
     public class PlayerViewModel : ReactiveObject
     {
-        int qwe = 0;
         public PlayerViewModel()
         {
             SaveAudios.AddCache();
@@ -31,9 +30,9 @@ namespace uVK.ViewModel
                 NoSaveMusic = Visibility.Hidden;
             PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) }).ToList();
             State = PlayerModel.PlaylistState.own;
-            // PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
-            // PlayerModel.Playlist = new Playlist(new OwnAudios(this));
-            // PlayerModel.Playlist.SetAudioInfo(this);
+            PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
+            PlayerModel.Playlist = new Playlist(new OwnAudios(this));
+            PlayerModel.Playlist.SetAudioInfo(this);
             Volume = 30;
             PlayerModel.Player.controls.stop();
 
@@ -43,13 +42,13 @@ namespace uVK.ViewModel
             };
             DurrationTimer.Tick += DurrationTimer_Tick;
 
-            //PlayerModel.Getplaylists(UserDatas.User_id, PlayLists);
+            PlayerModel.Getplaylists(UserDatas.User_id, PlayLists);
 
-            var source = new SourceList<FriendsMusicViewModel>();
-            var canc = source.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusic).DisposeMany().Subscribe();
+            var sourceFriendsMusic = new SourceList<FriendsMusicViewModel>();
+            var canc = sourceFriendsMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusic).DisposeMany().Subscribe();
 
             //FriendsMusic = PlayerModel.DownloadFriendsWithOpenAudio();
-            PlayerModel.DownloadFriendsWithOpenAudioAsync(source);           
+            PlayerModel.DownloadFriendsWithOpenAudioAsync(sourceFriendsMusic);           
 
 
             DurrationTimer.Start();
@@ -85,9 +84,9 @@ namespace uVK.ViewModel
         [Reactive] public ObservableCollectionExtended<PlayList> PlayLists { get; set; } = new ObservableCollectionExtended<PlayList>();
         [Reactive] public ObservableCollectionExtended<PlayList> FriendsMusicAlbums { get; set; } = new ObservableCollectionExtended<PlayList>();
         [Reactive] public ObservableCollectionExtended<FriendsMusicViewModel> FriendsMusic { get; set; } = new ObservableCollectionExtended<FriendsMusicViewModel>();
-        [Reactive] public ObservableCollectionExtended<AudioList> FriendsMusicAudios { get; set; } = new ObservableCollectionExtended<AudioList>();
-        [Reactive] public ObservableCollectionExtended<AudioList> UserAudios { get; set; } = new ObservableCollectionExtended<AudioList>();
-        [Reactive] public ObservableCollectionExtended<AudioList> AlbumAudios { get; set; } = new ObservableCollectionExtended<AudioList>();
+        [Reactive] public ObservableCollectionExtended<OneAudioViewModel> FriendsMusicAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
+        [Reactive] public ObservableCollectionExtended<OneAudioViewModel> UserAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
+        [Reactive] public ObservableCollectionExtended<OneAudioViewModel> AlbumAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
 
         [Reactive] public Visibility NoSaveMusic { get; set; } = Visibility.Visible;
         [Reactive] public string ImageSource { get; set; } = @"/Images/ImageMusic.png";
@@ -155,7 +154,7 @@ namespace uVK.ViewModel
         [Reactive] public string MaximumTimePosition { get; set; }
         [Reactive] public double DurrationMaximum { get; set; }
         //Выбранное
-        [Reactive] public AudioList SelectedItem { get; set; }
+        [Reactive] public OneAudioViewModel SelectedItem { get; set; }
         [Reactive]
         public string SearchRequest
         {

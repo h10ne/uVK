@@ -20,26 +20,9 @@ namespace uVK.Styles.AudioStyles
     /// </summary>
     public partial class AudioList : UserControl
     {
-        public AudioList(VkNet.Model.Attachments.Audio audio)
+        public AudioList()
         {
             InitializeComponent();
-            Title.Text = audio.Title;
-            Artist.Text = audio.Artist;
-            Durration.Text = Helpers.Decoder.ConvertTimeToString(audio.Duration);
-
-            try
-            {
-                Uri uriImageSource = new Uri(audio.Album.Cover.Photo135);
-                MusicImage.ImageSource = new BitmapImage(uriImageSource);
-            }
-            catch
-            {
-                //MusicImage.ImageSource = new BitmapImage(new Uri(@"/Images/ImageMusic.png"));
-            }
-        }
-        public override string ToString()
-        {
-            return Artist.Text + " - " + Title.Text;
-        }
+        }        
     }
 }

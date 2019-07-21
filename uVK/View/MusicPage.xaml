@@ -264,12 +264,13 @@
                                 BorderThickness="0"
                                 ItemsSource="{Binding Path=UserAudios, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedIndex="{Binding SelectedIndex}"
-                                SelectedItem="{Binding SelectedItem}" Grid.ColumnSpan="2">
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Vertical" />
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
+                                SelectedItem="{Binding SelectedItem}" 
+                                Grid.ColumnSpan="2">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <controls:AudioList />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
 
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDoubleClick">
@@ -363,11 +364,11 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
 
-                                            <ListView.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <WrapPanel Orientation="Vertical" />
-                                                </ItemsPanelTemplate>
-                                            </ListView.ItemsPanel>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <controls:AudioList />
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
                                         </ListView>
                                         <!--  (RU) Информирование о том что нужно выбрать плейлист / (EN) Informing about the need to choose a playlist  -->
                                         <TextBlock
