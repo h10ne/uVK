@@ -15,6 +15,8 @@ namespace uVK.ViewModel
         [Reactive] public string ImageSourseString { get; set; }
         [Reactive] public string Duration { get; set; }
         [Reactive] public double Width { get; set; }
+        public string Url;
+        public int Durration;
         public override string ToString()
         {
             return $"{Artist} - {Title}";

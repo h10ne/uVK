@@ -170,6 +170,7 @@
     <Compile Include="Styles\AudioStyles\PlayList.xaml.cs">
       <DependentUpon>PlayList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AlbumViewModel.cs" />
     <Compile Include="ViewModel\AuthVeiwModel.cs" />
     <Compile Include="Model\AuthModel.cs" />
     <Compile Include="Helpers\ApiDatas.cs" />

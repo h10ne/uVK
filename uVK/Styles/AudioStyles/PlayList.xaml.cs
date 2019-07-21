@@ -18,32 +18,9 @@ namespace uVK.Styles.AudioStyles
     public partial class PlayList : UserControl
     {
         public List<VkNet.Model.Attachments.Audio> Audios = new List<VkNet.Model.Attachments.Audio>();
-        public PlayList(VkNet.Model.Attachments.AudioPlaylist playlist)
+        public PlayList()
         {
             InitializeComponent();
-            //Инициализация обложки
-            Uri uriImageSource = new Uri(@"https://pp.userapi.com/c848524/v848524102/1d1b12/a2hsTiaW8RU.jpg");
-            if (playlist.Cover!=null)
-                uriImageSource = new Uri(playlist.Cover.Photo135, UriKind.RelativeOrAbsolute);
-            else
-            {
-                uriImageSource = new Uri(playlist.Covers.ToList()[0].Photo135, UriKind.RelativeOrAbsolute);
-            }
-            PlayListImage.ImageSource = new System.Windows.Media.Imaging.BitmapImage(uriImageSource);
-            //Инициализация песен
-            Audios = ApiDatas.api.Audio.Get(new VkNet.Model.RequestParams.AudioGetParams
-            {
-                PlaylistId = playlist.Id
-            }).ToList();
-            Title.Text = playlist.Title;
-            try
-            {
-                Author.Text = playlist.MainArtists.ToList()[0].Name;
-            }
-            catch
-            {
-                Author.Text = $"{UserDatas.Name} {UserDatas.Surname}";
-            }
         }
     }
 }

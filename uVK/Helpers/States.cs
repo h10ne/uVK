@@ -42,101 +42,96 @@ namespace uVK.States
         void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false);
     }
 
-    /*
-    //class IdAudios : IState
-    //{
-    //    public void AudioMenuClick(PlayerViewModel main)
-    //    {
-    //        foreach (var audio in PlayerModel.IdAudios)
-    //            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
-    //            {
-    //                main.api.Audio.Add(audio.Id.GetValueOrDefault(), audio.OwnerId.GetValueOrDefault());
-    //            }
-    //    }
 
-    //    public void SetAudioInfo(PlayerViewModel main, bool isback = false)
-    //    {
-    //        if (main.SelectedIndex == -1)
-    //            main.MusicList.SelectedItem = 0;
-    //        foreach (var audio in PlayerModel.IdAudios)
-    //            if (audio.Artist + " - " + audio.Title == main.MusicList.SelectedItem.ToString())
-    //            {
-    //                if (audio.Url != null)
-    //                {
-    //                    PlayerModel.Player.URL = audio.Url.ToString();
-    //                    main.artist_name.Text = audio.Artist;
-    //                    main.title_name.Text = audio.Title;
-    //                    PlayerModel.Player.controls.play();
-    //                    break;
-    //                }
-    //                else if (isback)
-    //                {
-    //                    main.SelectedIndex -= 1;
-    //                    SetAudioInfo(main, true);
-    //                }
-    //                else
-    //                {
-    //                    main.SelectedIndex += 1;
-    //                    SetAudioInfo(main, false);
-    //                }
-    //            }
-    //        //if (main.VkBools.isBlack)
-    //        //    main.play_pause_btn.Image = Resource1.pause_white;
-    //        //else
-    //        //    main.play_pause_btn.Image = Resource1.pause;
-    //        //main.VkBools.isPlay = true;
-    //    }
+    class IdAudios : IState
+    {
+        int offset = 0;
+        public void NextSong(PlayerViewModel main)
+        {
+            if (main.Random)
+            {
+                Random rnds = new Random();
+                int value = rnds.Next(0, main.FriendsMusicAudios.Count);
+                Thread.Sleep(270);
+                Debug.Print(value.ToString());
+                offset = value;
+                SetAudioInfo(main);
+            }
+            else
+            {
+                try
+                {
+                    offset += 1;
+                    SetAudioInfo(main);
+                }
+                catch
+                {
+                    offset = 0;
+                    SetAudioInfo(main);
+                }
+            }
+            main.SelectedSaveIndex = PlayerModel.OffsetSave;
+        }
 
-    //    public void NextSong(PlayerViewModel main)
-    //    {
-    //        if (main.VkBools.random)
-    //        {
-    //            Random rnds = new Random();
-    //            int rnd_max = int.Parse(main.api.Audio.GetCount(long.Parse(main.IdSongs_box.Text)).ToString());
-    //            if (rnd_max > 1800)
-    //                rnd_max = 1800;
-    //            int value = rnds.Next(0, rnd_max - 1);
-    //            main.SelectedIndex = value;
-    //            Thread.Sleep(270);
-    //            SetAudioInfo(main);
-    //        }
-    //        else
-    //        {
-    //            try
-    //            {
-    //                main.SelectedIndex += 1;
-    //                SetAudioInfo(main);
-    //            }
-    //            catch
-    //            {
-    //                main.SelectedIndex = 0;
-    //                SetAudioInfo(main);
-    //            }
-    //        }
-    //    }
+        public void PrevSong(PlayerViewModel main)
+        {
+            try
+            {
 
-    //    public void PrevSong(PlayerViewModel main)
-    //    {
-    //        try
-    //        {
+                offset -= 1; ;
+                if (offset == -1)
+                    offset = main.FriendsMusicAudios.Count - 1;
+                main.FriendsMusicAudiosSelectedIndex = offset;
+                SetAudioInfo(main, true);
+            }
+            catch
+            {
+                //SetAudioInfo(main, true);
+            }
+        }
 
+        public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
+        {
+            if (fromClick)
+                offset = main.FriendsMusicAudiosSelectedIndex;
+            while (main.FriendsMusicAudios[offset].Url == null)
+            {
+                if (isback)
+                    offset--;
+                else
+                    offset++;
+            }
+            PlayerModel.Player.URL = Decoder.DecodeAudioUrl(PlayerModel.Audio[PlayerModel.OffsetOwn].Url).ToString();
 
-    //            if (main.SelectedIndex <= -1)
-    //            {
-    //                main.SelectedIndex = main.MusicList.Items.Count;
-    //            }
-    //            else
-    //                main.SelectedIndex -= 1;
-    //            SetAudioInfo(main, true);
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            main.SelectedIndex = 4998;
-    //            SetAudioInfo(main, true);
-    //        }
-    //    }
-    //}
-    //*/
+            main.CurrentTimePositionValue = 0;
+            main.MaximumTimePosition = Helpers.Decoder.ConvertTimeToString(main.FriendsMusicAudios[main.FriendsMusicAudiosSelectedIndex].Durration);
+            main.DurrationMaximum = main.FriendsMusicAudios[main.FriendsMusicAudiosSelectedIndex].Durration;
+            main.Artist = main.FriendsMusicAudios[main.FriendsMusicAudiosSelectedIndex].Artist;
+            main.Title = main.FriendsMusicAudios[main.FriendsMusicAudiosSelectedIndex].Title;
+
+            /*
+             * Делает выделение текущей композиции на моделе, если найдено
+             */
+            //for (int i = 0; i < main.UserAudios.Count; i++)
+            //    if (main.UserAudios[i].ToString() == PlayerModel.Audio[PlayerModel.OffsetOwn].Artist + " - " + PlayerModel.Audio[PlayerModel.OffsetOwn].Title)
+            //    {
+            //        string str = main.UserAudios[i].ToString();
+            //        main.SelectedIndex = i;
+            //        break;
+            //    }
+            PlayerModel.Player.controls.play();
+
+            try
+            {
+                main.ImageSource = main.FriendsMusicAudios[main.FriendsMusicAudiosSelectedIndex].ImageSourseString;
+            }
+            catch
+            {
+                main.ImageSource = @"/Images/ImageMusic.png";
+            }
+        }
+    }
+
 
     public class AlbumAudios : IState
     {

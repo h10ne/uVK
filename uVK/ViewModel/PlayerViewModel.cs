@@ -30,27 +30,31 @@ namespace uVK.ViewModel
                 NoSaveMusic = Visibility.Hidden;
             PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) }).ToList();
             State = PlayerModel.PlaylistState.own;
-            PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
+            //Асинхронная загрузка аудио пользователя
+            var sourceOwnMusic = new SourceList<OneAudioViewModel>();
+            var cancOwnMusic = sourceOwnMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(UserAudios).DisposeMany().Subscribe();
+            PlayerModel.AddAudioToListAsync(PlayerModel.Audio, sourceOwnMusic);
+            //Установка параментров плеера
             PlayerModel.Playlist = new Playlist(new OwnAudios(this));
             PlayerModel.Playlist.SetAudioInfo(this);
             Volume = 30;
             PlayerModel.Player.controls.stop();
+
+            //Асинхронное получение плейлистов
+            var sourceAlbums = new SourceList<AlbumViewModel>();
+            var cancAlbums = sourceAlbums.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(PlayLists).DisposeMany().Subscribe();
+            PlayerModel.GetPlaylistsAsync(UserDatas.User_id, sourceAlbums);
+            //Ассинхронная загрузка друзей
+            var sourceFriendsMusic = new SourceList<FriendsMusicViewModel>();
+            var canc = sourceFriendsMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusic).DisposeMany().Subscribe();
+            PlayerModel.DownloadFriendsWithOpenAudioAsync(sourceFriendsMusic);
+
 
             DurrationTimer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 20)
             };
             DurrationTimer.Tick += DurrationTimer_Tick;
-
-            PlayerModel.Getplaylists(UserDatas.User_id, PlayLists);
-
-            var sourceFriendsMusic = new SourceList<FriendsMusicViewModel>();
-            var canc = sourceFriendsMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusic).DisposeMany().Subscribe();
-
-            //FriendsMusic = PlayerModel.DownloadFriendsWithOpenAudio();
-            PlayerModel.DownloadFriendsWithOpenAudioAsync(sourceFriendsMusic);           
-
-
             DurrationTimer.Start();
         }
 
@@ -70,7 +74,7 @@ namespace uVK.ViewModel
         #region Private members
         private PlayerModel.PlaylistState _state;
         private int _volume;
-        private bool _isPlay = false;
+        private int _friendsMusicSelectedIndex;
         private double _currentTimePositionValue;
         private DispatcherTimer DurrationTimer;
         private string _searchRequest = "";
@@ -81,13 +85,22 @@ namespace uVK.ViewModel
         #region Public properties
         public PlayerModel.PlaylistState State { get { return _state; } set { _state = value; if (value != PlayerModel.PlaylistState.album) CurrentPlaylistIndex = -1; } }
         //Коллекции
-        [Reactive] public ObservableCollectionExtended<PlayList> PlayLists { get; set; } = new ObservableCollectionExtended<PlayList>();
+        [Reactive] public ObservableCollectionExtended<AlbumViewModel> PlayLists { get; set; } = new ObservableCollectionExtended<AlbumViewModel>();
         [Reactive] public ObservableCollectionExtended<PlayList> FriendsMusicAlbums { get; set; } = new ObservableCollectionExtended<PlayList>();
         [Reactive] public ObservableCollectionExtended<FriendsMusicViewModel> FriendsMusic { get; set; } = new ObservableCollectionExtended<FriendsMusicViewModel>();
         [Reactive] public ObservableCollectionExtended<OneAudioViewModel> FriendsMusicAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
         [Reactive] public ObservableCollectionExtended<OneAudioViewModel> UserAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
         [Reactive] public ObservableCollectionExtended<OneAudioViewModel> AlbumAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
-
+        public int FriendsMusicSelectedIndex { get { return _friendsMusicSelectedIndex; }
+            set
+            {
+                var source = new SourceList<OneAudioViewModel>();
+                var canc = source.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusicAudios).DisposeMany().Subscribe();
+                PlayerModel.AddAudioToListAsync(null, source, 600, FriendsMusic[value].Id);
+                this.RaiseAndSetIfChanged(ref _friendsMusicSelectedIndex, value);
+            }
+        }
+        [Reactive] public int FriendsMusicAudiosSelectedIndex { get; set; }
         [Reactive] public Visibility NoSaveMusic { get; set; } = Visibility.Visible;
         [Reactive] public string ImageSource { get; set; } = @"/Images/ImageMusic.png";
         [Reactive] public string Title { get; set; }
@@ -117,25 +130,28 @@ namespace uVK.ViewModel
         }
         //Кнопки
         public int Volume { get { return _volume; } set { PlayerModel.Player.settings.volume = value; this.RaiseAndSetIfChanged(ref _volume, value); } }
-        [Reactive]
-        public bool IsPlay
+        [Reactive] public bool IsPlay { get; set; }
+
+        public RelayCommand PlayPause
         {
-            get { return _isPlay; }
-            set
+            get
             {
-                this.RaiseAndSetIfChanged(ref _isPlay, value);
-                if (!_isPlay)
+                return new RelayCommand((obj) =>
                 {
-                    DurrationTimer.Stop();
-                    PlayerModel.Player.controls.pause();
-                }
-                else
-                {
-                    DurrationTimer.Start();
-                    PlayerModel.Player.controls.play();
-                }
+                    if (!IsPlay)
+                    {
+                        PlayerModel.Player.controls.pause();
+                        //DurrationTimer.Stop();
+                    }
+                    else
+                    {
+                        PlayerModel.Player.controls.play();
+                        DurrationTimer.Start();
+                    }
+                });
             }
         }
+
         [Reactive] public bool Random { get; set; }
         [Reactive] public bool Repeat { get; set; }
         [Reactive] public int SelectedIndex { get; set; }

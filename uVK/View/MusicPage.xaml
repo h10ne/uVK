@@ -41,6 +41,7 @@
                                 Height="35"
                                 Foreground="#FFFFFF"
                                 IsChecked="{Binding IsPlay}"
+                                Command="{Binding PlayPause}"
                                 Style="{StaticResource PlayPauseButtonStyle}">
                                 <ToggleButton.RenderTransform>
                                     <TranslateTransform />
@@ -266,6 +267,7 @@
                                 SelectedIndex="{Binding SelectedIndex}"
                                 SelectedItem="{Binding SelectedItem}" 
                                 Grid.ColumnSpan="2">
+
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <controls:AudioList />
@@ -310,28 +312,7 @@
                                             ItemsSource="{Binding PlayLists}"
                                             SelectedIndex="{Binding CurrentPlaylistIndex}" 
                                             Grid.ColumnSpan="2">
-                                            <ListView.ItemContainerStyle>
-                                                <Style TargetType="ListViewItem">
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate>
-                                                                <Border CornerRadius="3" Padding="1" BorderThickness="1" Background="{TemplateBinding Background}">
-                                                                    <ContentPresenter Content="{Binding}" />
-                                                                </Border>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="#E9EDF1" />
-                                                        </Trigger>
-                                                        <Trigger Property="IsSelected" Value="True" >
-                                                            <Setter Property="Background" Value="#E9EDF1" />
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
-                                            
+
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <WrapPanel
@@ -340,6 +321,12 @@
                                                         Orientation="Horizontal" />
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
+                                            
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <controls:PlayList/>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
                                         </ListView>
                                     </Grid>
                                 </ScrollViewer>
@@ -356,7 +343,8 @@
                                             ItemsSource="{Binding AlbumAudios}"
                                             SelectedIndex="{Binding SelectedAlbumAudiosIndex}"
                                             SelectedItem="{Binding SelectedAlbumAudiosItem}"
-                                            Visibility="Visible">
+                                            Visibility="Visible"
+                                            ScrollViewer.HorizontalScrollBarVisibility="Hidden">
 
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDoubleClick">
@@ -432,6 +420,7 @@
                                 <ListView 
                                     BorderBrush="{x:Null}"
                                     ItemsSource="{Binding FriendsMusic}"
+                                    SelectedIndex="{Binding FriendsMusicSelectedIndex}"
                                     Grid.ColumnSpan="2"
                                     Margin="0,0,15,0">
                                     <ListView.ItemTemplate>
@@ -467,13 +456,20 @@
                                     BorderThickness="0"
                                     ItemsSource="{Binding FriendsMusicAudios}"
                                     Width="auto"
+                                    SelectedIndex="{Binding FriendsMusicAudiosSelectedIndex}"
                                     Margin="0,0,15,0">
 
                                     <ListView.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal" />
+                                            <WrapPanel Orientation="Vertical" />
                                         </ItemsPanelTemplate>
                                     </ListView.ItemsPanel>
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <controls:AudioList/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
 
                                 </ListView>
                             </Border>
