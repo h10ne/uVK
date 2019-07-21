@@ -83,6 +83,9 @@
     <Reference Include="ReactiveUI.Fody.Helpers, Version=9.19.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReactiveUI.Fody.9.19.5\lib\net461\ReactiveUI.Fody.Helpers.dll</HintPath>
     </Reference>
+    <Reference Include="ReactiveUI.WPF, Version=9.19.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReactiveUI.WPF.9.19.5\lib\net461\ReactiveUI.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Splat, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Splat.8.0.1\lib\net461\Splat.dll</HintPath>
     </Reference>
@@ -171,6 +174,7 @@
     <Compile Include="Model\AuthModel.cs" />
     <Compile Include="Helpers\ApiDatas.cs" />
     <Compile Include="Helpers\Des_Ser.cs" />
+    <Compile Include="ViewModel\FriendsMusicViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="View\LoginPage.xaml.cs">

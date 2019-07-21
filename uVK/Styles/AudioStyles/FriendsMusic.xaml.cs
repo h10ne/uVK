@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using uVK.Model;
+using uVK.ViewModel;
 
 namespace uVK.Styles.AudioStyles
 {
@@ -22,13 +23,13 @@ namespace uVK.Styles.AudioStyles
     public partial class FriendsMusic : UserControl
     {
         public long Id;
-        public FriendsMusic(VkNet.Model.User user)
+        public FriendsMusic()
         {
             InitializeComponent();
-            Id = user.Id;
-            Username.Text = $"{user.FirstName} {user.LastName}";
-            CountAudio.Text = $"{ApiDatas.api.Audio.GetCount(Id)} аудиозаписей";
-            UserPhoto.ImageSource = new BitmapImage(user.Photo100);
+            //Id = user.Id;
+            //Username.Text = $"{user.FirstName} {user.LastName}";
+            //CountAudio.Text = $"{ApiDatas.api.Audio.GetCount(Id)} аудиозаписей";
+            //UserPhoto.ImageSource = new BitmapImage(user.Photo100);
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using uVK.Helpers;
 using uVK.Model;
 using VkNet.Model.RequestParams;
@@ -18,13 +15,14 @@ using System.Windows.Threading;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using DynamicData.Binding;
-using VkNet.Enums.Filters;
+using DynamicData;
+using System.Reactive.Linq;
 
 namespace uVK.ViewModel
 {
     public class PlayerViewModel : ReactiveObject
     {
-
+        int qwe = 0;
         public PlayerViewModel()
         {
             SaveAudios.AddCache();
@@ -33,9 +31,9 @@ namespace uVK.ViewModel
                 NoSaveMusic = Visibility.Hidden;
             PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) }).ToList();
             State = PlayerModel.PlaylistState.own;
-            PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
-            PlayerModel.Playlist = new Playlist(new OwnAudios(this));
-            PlayerModel.Playlist.SetAudioInfo(this);
+            // PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
+            // PlayerModel.Playlist = new Playlist(new OwnAudios(this));
+            // PlayerModel.Playlist.SetAudioInfo(this);
             Volume = 30;
             PlayerModel.Player.controls.stop();
 
@@ -45,11 +43,15 @@ namespace uVK.ViewModel
             };
             DurrationTimer.Tick += DurrationTimer_Tick;
 
-            PlayerModel.Getplaylists(UserDatas.User_id, PlayLists);
+            //PlayerModel.Getplaylists(UserDatas.User_id, PlayLists);
 
-            PlayerModel.DownloadFriendsWithOpenAudio(FriendsMusic);
+            var source = new SourceList<FriendsMusicViewModel>();
+            var canc = source.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusic).DisposeMany().Subscribe();
 
-            //download();
+            //FriendsMusic = PlayerModel.DownloadFriendsWithOpenAudio();
+            PlayerModel.DownloadFriendsWithOpenAudioAsync(source);           
+
+
             DurrationTimer.Start();
         }
 
@@ -62,27 +64,6 @@ namespace uVK.ViewModel
                 if (!Repeat)
                     PlayerModel.Playlist.NextSong(this);
                 PlayerModel.Player.controls.play();
-            }
-        }
-
-        void download()
-        {
-            ObservableCollectionExtended<VkNet.Model.User> FriendsWithOpenAudio = new ObservableCollectionExtended<VkNet.Model.User>();
-            var friends = ApiDatas.api.Friends.Get(new FriendsGetParams
-            {
-                Fields = ProfileFields.All,
-                Order = VkNet.Enums.SafetyEnums.FriendsOrder.Hints
-            });
-            foreach (var friend in friends)
-            {
-                if (friend.CanSeeAudio)
-                {
-                    FriendsWithOpenAudio.Add(friend);
-                }
-            }
-            foreach (var friend in FriendsWithOpenAudio)
-            {
-                FriendsMusic.Add(new FriendsMusic(friend));
             }
         }
 
@@ -103,7 +84,7 @@ namespace uVK.ViewModel
         //Коллекции
         [Reactive] public ObservableCollectionExtended<PlayList> PlayLists { get; set; } = new ObservableCollectionExtended<PlayList>();
         [Reactive] public ObservableCollectionExtended<PlayList> FriendsMusicAlbums { get; set; } = new ObservableCollectionExtended<PlayList>();
-        [Reactive] public ObservableCollectionExtended<FriendsMusic> FriendsMusic { get; set; } = new ObservableCollectionExtended<FriendsMusic>();
+        [Reactive] public ObservableCollectionExtended<FriendsMusicViewModel> FriendsMusic { get; set; } = new ObservableCollectionExtended<FriendsMusicViewModel>();
         [Reactive] public ObservableCollectionExtended<AudioList> FriendsMusicAudios { get; set; } = new ObservableCollectionExtended<AudioList>();
         [Reactive] public ObservableCollectionExtended<AudioList> UserAudios { get; set; } = new ObservableCollectionExtended<AudioList>();
         [Reactive] public ObservableCollectionExtended<AudioList> AlbumAudios { get; set; } = new ObservableCollectionExtended<AudioList>();
@@ -280,8 +261,8 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                   PlayerModel.Playlist.NextSong(this);
-                   IsPlay = true;
+                    PlayerModel.Playlist.NextSong(this);
+                    IsPlay = true;
                 });
             }
         }
@@ -378,4 +359,6 @@ namespace uVK.ViewModel
         #endregion
 
     }
+
+    
 }

@@ -20,15 +20,15 @@
             RadiusY="40">
             <Rectangle.Fill>
                 
-                <ImageBrush x:Name="UserPhoto" ImageSource="/Images/NoUserPhoto.png"/>
+                <ImageBrush x:Name="UserPhoto" ImageSource="{Binding ImageSourse}"/>
             </Rectangle.Fill>
         </Rectangle>
         <Border Grid.Column="2">
             <StackPanel Orientation="Vertical">
                 <!--  Имя/фамилия пользователя  -->
-                <TextBlock Name="Username" Text="Имя/Фамилия" />
+                <TextBlock Name="Username" Text="{Binding UserName}" />
                 <!--  Сколько аудиозаписей у пользователя  -->
-                <TextBlock Name="CountAudio" Text="Кол-во аудиозаписей" />
+                <TextBlock Name="CountAudio" Text="{Binding CountAudio}" />
             </StackPanel>
         </Border>
     </Grid>

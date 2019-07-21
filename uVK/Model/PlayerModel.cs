@@ -14,6 +14,7 @@ using uVK.Styles.AudioStyles;
 using VkNet.Enums.Filters;
 using DynamicData.Binding;
 using DynamicData;
+using uVK.ViewModel;
 
 namespace uVK.Model
 {
@@ -30,7 +31,7 @@ namespace uVK.Model
         }
 
         #region Variables
-        public static  List<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
+        public static List<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
         public static List<VkNet.Model.Attachments.Audio> Audio { get; set; }
         public static List<VkNet.Model.Attachments.Audio> RecommendedAudio { get; set; }
         public static int OffsetOwn = 0;
@@ -40,21 +41,21 @@ namespace uVK.Model
         public static WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
         public static Playlist Playlist;
         #endregion
-        
+
 
         public static void Search(string SearchRequest, ObservableCollection<AudioList> MusicList)
         {
             //Task.Run(() =>
             //{
-                PlayerModel.SearchAudios = PlayerModel.SearchAudios = ApiDatas.api.Audio.Search(new AudioSearchParams
-                {
-                    Query = SearchRequest,
-                    Autocomplete = true,
-                    SearchOwn = true,
-                    Count = 50,
-                    PerformerOnly = false
-                }).ToList();
-                PlayerModel.AddAudioToList(PlayerModel.SearchAudios, MusicList, true);
+            PlayerModel.SearchAudios = PlayerModel.SearchAudios = ApiDatas.api.Audio.Search(new AudioSearchParams
+            {
+                Query = SearchRequest,
+                Autocomplete = true,
+                SearchOwn = true,
+                Count = 50,
+                PerformerOnly = false
+            }).ToList();
+            PlayerModel.AddAudioToList(PlayerModel.SearchAudios, MusicList, true);
 
             //});
         }
@@ -76,7 +77,7 @@ namespace uVK.Model
                 Fields = ProfileFields.All,
                 Order = VkNet.Enums.SafetyEnums.FriendsOrder.Hints
             });
-            foreach(var friend in friends)
+            foreach (var friend in friends)
             {
                 if (friend.CanSeeAudio)
                 {
@@ -86,14 +87,46 @@ namespace uVK.Model
             return FriendsWithOpenAudio;
         }
 
-        public static void DownloadFriendsWithOpenAudio(ObservableCollectionExtended<FriendsMusic> friendsMusics)
+        public static ObservableCollectionExtended<FriendsMusicViewModel> DownloadFriendsWithOpenAudio()
         {
             var friends = GetFriendsWithOpenAudio();
-            foreach(var friend in friends)
+            ObservableCollectionExtended<FriendsMusicViewModel> friendsMusics = new ObservableCollectionExtended<FriendsMusicViewModel>();
+            int i = 0;
+            foreach (var friend in friends)
             {
-                friendsMusics.Add(new FriendsMusic(friend));
+                //    i++;
+                friendsMusics.Add(new FriendsMusicViewModel()
+                {
+                    UserName = $"{friend.FirstName} {friend.LastName}",
+                    CountAudio = $"{ApiDatas.api.Audio.GetCount(friend.Id)} аудиозаписей",
+                    ImageSourse = friend.Photo200.ToString()
+                });
+                //if (i == 2)
+                //    break;
             }
+            return friendsMusics;
         }
+
+        async public static void DownloadFriendsWithOpenAudioAsync(SourceList<FriendsMusicViewModel> friendsMusics)
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                var friends = GetFriendsWithOpenAudio();
+                int i = 0;
+                foreach (var friend in friends)
+                {
+                    long count = ApiDatas.api.Audio.GetCount(friend.Id);
+                    if (count != 0)
+                        friendsMusics.Add(new FriendsMusicViewModel()
+                        {
+                            UserName = $"{friend.FirstName} {friend.LastName}",
+                            CountAudio = $"{count} аудиозаписей",
+                            ImageSourse = friend.Photo200.ToString()
+                        });
+                }
+            });
+        }
+
 
         public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ObservableCollection<AudioList> MusicList, bool fromSearch = false)
         {
@@ -135,9 +168,9 @@ namespace uVK.Model
         public static void AddCacheToList(ListBox MusicList)
         {
             MusicList.Items.Clear();
-            foreach(var audio in SaveAudios.Audio)
+            foreach (var audio in SaveAudios.Audio)
             {
-                MusicList.Items.Add(audio.Artist + " - " + audio.Title);                
+                MusicList.Items.Add(audio.Artist + " - " + audio.Title);
             }
         }
     }
