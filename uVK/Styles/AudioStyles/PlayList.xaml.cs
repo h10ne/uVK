@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
-using uVK;
-using uVK.Helpers;
-using uVK.Model;
 
 namespace uVK.Styles.AudioStyles
 {

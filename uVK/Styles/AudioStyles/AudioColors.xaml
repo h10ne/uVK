@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:uVK">
 
     <Color x:Key="Dr0bVolumColorBlue">#7E9EC1</Color>
-    <SolidColorBrush x:Key="Dr0bBlueVolum" Color="{StaticResource Dr0bBlueVolum}" />
+    <SolidColorBrush x:Key="Dr0bBlueVolum" />
 
     <!-- Colors -->
     <Color x:Key="ForegroundColor">#414042</Color>

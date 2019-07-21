@@ -1,17 +1,17 @@
 ﻿using System.Windows.Controls;
 using uVK.ViewModel;
 
-namespace uVK.Pages
+namespace uVK.View
 {
     /// <summary>
     /// Логика взаимодействия для LoginPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class LoginPage
     {
         public LoginPage()
         {
             InitializeComponent();
-            this.DataContext = new AuthVeiwModel();
+            DataContext = new AuthVeiwModel();
         }
     }
 }

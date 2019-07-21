@@ -6,17 +6,16 @@ using VkNet;
 using VkNet.AudioBypassService.Extensions;
 using System.IO;
 using uVK.Helpers;
-using System.Windows.Controls;
 
 namespace uVK.Model
 {
     public static class AuthModel
     {
-        private static ServiceCollection service;
+        private static ServiceCollection _service;
 
         private static void AuthToken()
         {
-            ApiDatas.api.Authorize(new ApiAuthParams
+            ApiDatas.Api.Authorize(new ApiAuthParams
             {
                 AccessToken = UserDatas.Token,
                 Settings = Settings.Offline
@@ -30,15 +29,14 @@ namespace uVK.Model
 
         private static void Auth2Fact(string login, string password)
         {
-            string trueCode;
             bool needCode = false;
             try
             {
-                ApiDatas.api.Authorize(new ApiAuthParams
+                ApiDatas.Api.Authorize(new ApiAuthParams
                 {
                     Login = login,
                     Password = password,
-                    Settings = VkNet.Enums.Filters.Settings.Offline,
+                    Settings = Settings.Offline,
                     TwoFactorAuthorization = () =>
                     {
                         needCode = true;
@@ -50,15 +48,15 @@ namespace uVK.Model
             {
                 if (!needCode)
                     return;
-                var input = new InputBoxWindow();
+                var input = new PassBox.InputBoxWindow();
                 input.ShowDialog();
-                trueCode = File.ReadAllText("someFile.tempdat");
+                File.ReadAllText("someFile.tempdat");
 
-                ApiDatas.api.Authorize(new ApiAuthParams
+                ApiDatas.Api.Authorize(new ApiAuthParams
                 {
                     Login = login,
                     Password = password,
-                    Settings = VkNet.Enums.Filters.Settings.Offline,
+                    Settings = Settings.Offline,
                     TwoFactorAuthorization = () =>
                     {
                         string code = File.ReadAllText("someFile.tempdat");
@@ -72,9 +70,9 @@ namespace uVK.Model
         public static bool GetAuth(string login = null, string password = null)
         {
 
-            service = new ServiceCollection();
-            service.AddAudioBypass();
-            ApiDatas.api = new VkApi(service);
+            _service = new ServiceCollection();
+            _service.AddAudioBypass();
+            ApiDatas.Api = new VkApi(_service);
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
             {
                 UserDatasToSerialize datas1 = new UserDatasToSerialize();
@@ -82,7 +80,7 @@ namespace uVK.Model
                 UserDatas.Name = datas1.Name;
                 UserDatas.Surname = datas1.Surname;
                 UserDatas.Token = datas1.Token;
-                UserDatas.User_id = datas1.User_id;
+                UserDatas.UserId = datas1.User_id;
             }
             if (UserDatas.Token != null)
             {
@@ -91,15 +89,14 @@ namespace uVK.Model
             else
             {
                 Auth2Fact(login, password);
-                if (ApiDatas.api.IsAuthorized)
+                if (ApiDatas.Api.IsAuthorized)
                 {
                     {
                         ApiDatas.IsAuth = true;
-                        UserDatasToSerialize datas = new UserDatasToSerialize();
-                        datas.Token = ApiDatas.api.Token;
-                        datas.User_id = ApiDatas.api.UserId.Value;
-                        datas.Name = ApiDatas.api.Account.GetProfileInfo().FirstName;
-                        datas.Surname = ApiDatas.api.Account.GetProfileInfo().LastName;
+                        UserDatasToSerialize datas = new UserDatasToSerialize {Token = ApiDatas.Api.Token};
+                        if (ApiDatas.Api.UserId != null) datas.User_id = ApiDatas.Api.UserId.Value;
+                        datas.Name = ApiDatas.Api.Account.GetProfileInfo().FirstName;
+                        datas.Surname = ApiDatas.Api.Account.GetProfileInfo().LastName;
                         Des_Ser.Serialize(datas);
 
                         System.Diagnostics.Process.Start(System.Windows.Application.ResourceAssembly.Location);

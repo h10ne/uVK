@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using uVK.Helpers;
 using uVK.Model;
 using VkNet.Model.RequestParams;
-using uVK.States;
+using uVK.Helpers.States;
 using uVK.Styles.AudioStyles;
 using System.Windows.Threading;
 using ReactiveUI;
@@ -28,11 +28,11 @@ namespace uVK.ViewModel
             PlayerModel.AddCacheToList(SaveAudiosList);
             if (SaveAudiosList.Items.Count != 0)
                 NoSaveMusic = Visibility.Hidden;
-            PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) }).ToList();
-            State = PlayerModel.PlaylistState.own;
+            PlayerModel.Audio = ApiDatas.Api.Audio.Get(new AudioGetParams { Count = ApiDatas.Api.Audio.GetCount(UserDatas.UserId) }).ToList();
+            State = PlayerModel.PlaylistState.Own;
             //Асинхронная загрузка аудио пользователя
             var sourceOwnMusic = new SourceList<OneAudioViewModel>();
-            var cancOwnMusic = sourceOwnMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(UserAudios).DisposeMany().Subscribe();
+            sourceOwnMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(UserAudios).DisposeMany().Subscribe();
             PlayerModel.AddAudioToListAsync(PlayerModel.Audio, sourceOwnMusic);
             //Установка параментров плеера
             PlayerModel.Playlist = new Playlist(new OwnAudios(this));
@@ -42,20 +42,20 @@ namespace uVK.ViewModel
 
             //Асинхронное получение плейлистов
             var sourceAlbums = new SourceList<AlbumViewModel>();
-            var cancAlbums = sourceAlbums.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(PlayLists).DisposeMany().Subscribe();
-            PlayerModel.GetPlaylistsAsync(UserDatas.User_id, sourceAlbums);
+            sourceAlbums.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(PlayLists).DisposeMany().Subscribe();
+            PlayerModel.GetPlaylistsAsync(UserDatas.UserId, sourceAlbums);
             //Ассинхронная загрузка друзей
             var sourceFriendsMusic = new SourceList<FriendsMusicViewModel>();
-            var canc = sourceFriendsMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusic).DisposeMany().Subscribe();
+            sourceFriendsMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusic).DisposeMany().Subscribe();
             PlayerModel.DownloadFriendsWithOpenAudioAsync(sourceFriendsMusic);
 
 
-            DurrationTimer = new DispatcherTimer
+            _durrationTimer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 20)
             };
-            DurrationTimer.Tick += DurrationTimer_Tick;
-            DurrationTimer.Start();
+            _durrationTimer.Tick += DurrationTimer_Tick;
+            _durrationTimer.Start();
         }
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
@@ -76,28 +76,41 @@ namespace uVK.ViewModel
         private int _volume;
         private int _friendsMusicSelectedIndex;
         private double _currentTimePositionValue;
-        private DispatcherTimer DurrationTimer;
+        private readonly DispatcherTimer _durrationTimer;
         private string _searchRequest = "";
-        private bool isDownloading = false;
+        private bool _isDownloading;
         private int _currentPlaylist = -1;
+        private string _notificationText = "Downloading";
+
         #endregion
 
         #region Public properties
-        public PlayerModel.PlaylistState State { get { return _state; } set { _state = value; if (value != PlayerModel.PlaylistState.album) CurrentPlaylistIndex = -1; } }
+        public PlayerModel.PlaylistState State { get => _state;
+            set
+            {
+                _state = value;
+                if (value != PlayerModel.PlaylistState.Album)
+                    CurrentPlaylistIndex = -1;
+            } }
         //Коллекции
         [Reactive] public ObservableCollectionExtended<AlbumViewModel> PlayLists { get; set; } = new ObservableCollectionExtended<AlbumViewModel>();
-        [Reactive] public ObservableCollectionExtended<PlayList> FriendsMusicAlbums { get; set; } = new ObservableCollectionExtended<PlayList>();
+
+        [Reactive]
+        public ObservableCollectionExtended<PlayList> FriendsMusicAlbums { get; set; } = new ObservableCollectionExtended<PlayList>();
+
         [Reactive] public ObservableCollectionExtended<FriendsMusicViewModel> FriendsMusic { get; set; } = new ObservableCollectionExtended<FriendsMusicViewModel>();
         [Reactive] public ObservableCollectionExtended<OneAudioViewModel> FriendsMusicAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
         [Reactive] public ObservableCollectionExtended<OneAudioViewModel> UserAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
         [Reactive] public ObservableCollectionExtended<OneAudioViewModel> AlbumAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
-        public int FriendsMusicSelectedIndex { get { return _friendsMusicSelectedIndex; }
+        public int FriendsMusicSelectedIndex { get => _friendsMusicSelectedIndex;
             set
             {
                 var source = new SourceList<OneAudioViewModel>();
-                var canc = source.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusicAudios).DisposeMany().Subscribe();
+                source.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusicAudios).DisposeMany().Subscribe();
+                FriendsMusicAudios.Clear();
                 PlayerModel.AddAudioToListAsync(null, source, 600, FriendsMusic[value].Id);
                 this.RaiseAndSetIfChanged(ref _friendsMusicSelectedIndex, value);
+                State = PlayerModel.PlaylistState.Null;
             }
         }
         [Reactive] public int FriendsMusicAudiosSelectedIndex { get; set; }
@@ -109,7 +122,7 @@ namespace uVK.ViewModel
         [Reactive] public Visibility TextChooseAlbumVisibility { get; set; } = Visibility.Visible;
         public int CurrentPlaylistIndex
         {
-            get { return _currentPlaylist; }
+            get => _currentPlaylist;
             set
             {
                 this.RaiseAndSetIfChanged(ref _currentPlaylist, value);
@@ -119,9 +132,9 @@ namespace uVK.ViewModel
                     return;
                 }
 
-                if (State != PlayerModel.PlaylistState.album)
+                if (State != PlayerModel.PlaylistState.Album)
                 {
-                    State = PlayerModel.PlaylistState.album;
+                    State = PlayerModel.PlaylistState.Album;
                 }
                 TextChooseAlbumVisibility = Visibility.Hidden;
                 PlayerModel.Playlist = new Playlist(new AlbumAudios(PlayLists[_currentPlaylist].Audios, this));
@@ -129,7 +142,8 @@ namespace uVK.ViewModel
             }
         }
         //Кнопки
-        public int Volume { get { return _volume; } set { PlayerModel.Player.settings.volume = value; this.RaiseAndSetIfChanged(ref _volume, value); } }
+        public int Volume { get => _volume;
+            set { PlayerModel.Player.settings.volume = value; this.RaiseAndSetIfChanged(ref _volume, value); } }
         [Reactive] public bool IsPlay { get; set; }
 
         public RelayCommand PlayPause
@@ -146,7 +160,7 @@ namespace uVK.ViewModel
                     else
                     {
                         PlayerModel.Player.controls.play();
-                        DurrationTimer.Start();
+                        _durrationTimer.Start();
                     }
                 });
             }
@@ -160,27 +174,25 @@ namespace uVK.ViewModel
         [Reactive]
         public double CurrentTimePositionValue
         {
-            get { return _currentTimePositionValue; }
+            get => _currentTimePositionValue;
             set
             {
                 this.RaiseAndSetIfChanged(ref _currentTimePositionValue, value);
-                CurrentTimePosition = Helpers.Decoder.ConvertTimeToString((int)_currentTimePositionValue);
+                CurrentTimePosition = Decoder.ConvertTimeToString((int)_currentTimePositionValue);
             }
         }
         [Reactive] public string MaximumTimePosition { get; set; }
         [Reactive] public double DurrationMaximum { get; set; }
         //Выбранное
         [Reactive] public OneAudioViewModel SelectedItem { get; set; }
-        [Reactive]
         public string SearchRequest
         {
-            get { return _searchRequest; }
+            get => _searchRequest;
             set
             {
                 this.RaiseAndSetIfChanged(ref _searchRequest, value);
                 if (SearchRequest == "")
-                {
-                    PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
+                { PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
                 }
             }
         }
@@ -194,7 +206,17 @@ namespace uVK.ViewModel
         #region Notification
 
         [Reactive] public string MarginNotification { get; set; } = "0,10,0,0";
-        [Reactive] public string NotificationText { get; set; } = "Downloading";
+
+        [Reactive]
+        public string NotificationText
+        {
+            get => _notificationText;
+            set
+            {
+                _notificationText = value;
+                GetAnimation();
+            } 
+        }
 
         private async void GetAnimation()
         {
@@ -223,7 +245,7 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    DurrationTimer.Stop();
+                    _durrationTimer.Stop();
                 });
             }
         }
@@ -235,7 +257,7 @@ namespace uVK.ViewModel
                 {
                     PlayerModel.Player.controls.currentPosition = CurrentTimePositionValue;
                     CurrentTimePosition = PlayerModel.Player.controls.currentPositionString;
-                    DurrationTimer.Start();
+                    _durrationTimer.Start();
                 });
             }
         }
@@ -245,7 +267,7 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    State = PlayerModel.PlaylistState.search;
+                    State = PlayerModel.PlaylistState.Search;
                     PlayerModel.Search(SearchRequest, UserAudios);
                 });
             }
@@ -302,7 +324,7 @@ namespace uVK.ViewModel
                     {
                         PlayerModel.Playlist = new Playlist(new SearchAudios(this));
                     }
-                    if (State != PlayerModel.PlaylistState.own && SearchRequest == "")
+                    if (State != PlayerModel.PlaylistState.Own && SearchRequest == "")
                     {
                         PlayerModel.Playlist = new Playlist(new OwnAudios(this));
                         PlayerModel.OffsetOwn = 0;
@@ -314,13 +336,29 @@ namespace uVK.ViewModel
             }
         }
 
+        public RelayCommand SetFriendsAudioFromClick
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    if (State != PlayerModel.PlaylistState.IdAudios)
+                    {
+                        State = PlayerModel.PlaylistState.IdAudios;
+                        PlayerModel.Playlist = new Playlist(new IdAudios());
+                    }
+                    PlayerModel.Playlist.SetAudioInfo(this,fromClick:true);
+                });
+            }
+        }
+
         public RelayCommand SetAlbumAudioFromClick
         {
             get
             {
                 return new RelayCommand((obj) =>
                 {
-                    if (State == PlayerModel.PlaylistState.album)
+                    if (State == PlayerModel.PlaylistState.Album)
                     {
                         PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
                         IsPlay = true;
@@ -339,8 +377,8 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    if (State != PlayerModel.PlaylistState.save)
-                        State = PlayerModel.PlaylistState.save;
+                    if (State != PlayerModel.PlaylistState.Save)
+                        State = PlayerModel.PlaylistState.Save;
                     PlayerModel.Playlist = new Playlist(new SavesAudios(this));
                     PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
                     IsPlay = true;
@@ -354,12 +392,12 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    isDownloading = true;
+                    _isDownloading = true;
                     NotificationText = "Загрузка";
                     WebClient webClient = new WebClient();
                     webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
                     webClient.DownloadFileAsync(new Uri(PlayerModel.Player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\" + Artist + "↨" + Title);
-                }, (obj) => !isDownloading);
+                }, (obj) => !_isDownloading);
             }
         }
 
@@ -367,7 +405,7 @@ namespace uVK.ViewModel
         {
             //GetAnimation();
             NotificationText = "Завершено";
-            isDownloading = false;
+            _isDownloading = false;
             SaveAudios.AddCache();
             PlayerModel.AddCacheToList(SaveAudiosList);
         }

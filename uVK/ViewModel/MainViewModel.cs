@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using uVK.Helpers;
 using uVK.Model;
 using uVK.Pages;
 using uVK.View;
@@ -23,7 +20,7 @@ namespace uVK.ViewModel
             _messagePage = new MessagePage();
             CurrentPage = _playerPage;
             Username = UserDatas.Name + " " + UserDatas.Surname;
-            UserPhoto = ApiDatas.api.Users.Get(new long[] { UserDatas.User_id }, VkNet.Enums.Filters.ProfileFields.Photo200)[0].Photo200.ToString();
+            UserPhoto = ApiDatas.Api.Users.Get(new[] { UserDatas.UserId }, VkNet.Enums.Filters.ProfileFields.Photo200)[0].Photo200.ToString();
         }
         #endregion
 
@@ -31,24 +28,31 @@ namespace uVK.ViewModel
         private Visibility _btnCloseMenuVisibility = Visibility.Collapsed;
         private Visibility _btnOpenMenuVisibility = Visibility.Visible;
         private Page _currentPage;
-        private Page _messagePage;
-        private Page _settingsPage;
-        private Page _playerPage;
+        private readonly Page _messagePage;
+        private readonly Page _settingsPage;
+        private readonly Page _playerPage;
         private string _userPhoto;
-        private double _fillOpacity = 0;
+        private double _fillOpacity;
         private Visibility _fillVisibility = Visibility.Hidden;
         private double _width = 45;
         #endregion
 
         #region public properties
-        public Visibility BtnCloseMenuVisibility { get { return _btnCloseMenuVisibility; } set { _btnCloseMenuVisibility = value; OnPropertyChanged(nameof(BtnCloseMenuVisibility)); } }
-        public Visibility BtnOpenMenuVisibility { get { return _btnOpenMenuVisibility; } set { _btnOpenMenuVisibility = value; OnPropertyChanged(nameof(BtnOpenMenuVisibility)); } }
-        public Page CurrentPage { get { return _currentPage; } set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }}
+        public Visibility BtnCloseMenuVisibility { get => _btnCloseMenuVisibility;
+            set { _btnCloseMenuVisibility = value; OnPropertyChanged(nameof(BtnCloseMenuVisibility)); } }
+        public Visibility BtnOpenMenuVisibility { get => _btnOpenMenuVisibility;
+            set { _btnOpenMenuVisibility = value; OnPropertyChanged(nameof(BtnOpenMenuVisibility)); } }
+        public Page CurrentPage { get => _currentPage;
+            set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }}
         public string Username { get; set; }
-        public string UserPhoto { get { return _userPhoto; } set { _userPhoto = value; OnPropertyChanged(nameof(UserPhoto)); } }
-        public double FillOpacity { get { return _fillOpacity; } set { _fillOpacity = value; OnPropertyChanged(nameof(FillOpacity)); } }
-        public Visibility FillVisibility { get { return _fillVisibility; } set { _fillVisibility = value;OnPropertyChanged(nameof(FillVisibility)); } }
-        public double Width { get { return _width; } set { _width = value; OnPropertyChanged(nameof(Width)); } }
+        public string UserPhoto { get => _userPhoto;
+            set { _userPhoto = value; OnPropertyChanged(nameof(UserPhoto)); } }
+        public double FillOpacity { get => _fillOpacity;
+            set { _fillOpacity = value; OnPropertyChanged(nameof(FillOpacity)); } }
+        public Visibility FillVisibility { get => _fillVisibility;
+            set { _fillVisibility = value;OnPropertyChanged(nameof(FillVisibility)); } }
+        public double Width { get => _width;
+            set { _width = value; OnPropertyChanged(nameof(Width)); } }
         #endregion
 
         #region commands

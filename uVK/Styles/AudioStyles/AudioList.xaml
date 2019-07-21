@@ -37,14 +37,14 @@
                     FontSize="14"
                     FontWeight="DemiBold"
                     Foreground="{DynamicResource SidebarForegroundBrush}"
-                    Text="{Binding Artist}"
+                    Text="{Binding Title}"
                     TextTrimming="CharacterEllipsis" />
                 <!--  (RU) Исполнитель аудиозаписи / (EN) Audio artist  -->
                 <TextBlock
                     FontSize="13"
                     FontWeight="Normal"
                     Opacity="0.6"
-                    Text="{Binding Title}"
+                    Text="{Binding Artist}"
                     TextTrimming="CharacterEllipsis" />
             </StackPanel>
         </Border>

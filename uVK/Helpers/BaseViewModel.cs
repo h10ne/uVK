@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace uVK
+namespace uVK.Helpers
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

@@ -11,7 +11,7 @@ namespace uVK.View
         public MessagePage()
         {
             InitializeComponent();
-            this.DataContext = new MessageViewModel();
+            DataContext = new MessageViewModel();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using uVK.Model;
+﻿using System.Windows.Controls;
 using uVK.ViewModel;
 
 namespace uVK.View
@@ -8,12 +6,12 @@ namespace uVK.View
     /// <summary>
     /// Логика взаимодействия для MainPage.xaml
     /// </summary>
-    public partial class MainPage : Page
+    public partial class MainPage
     {
         public MainPage()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
+            DataContext = new MainViewModel();
         }
 
         //private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)

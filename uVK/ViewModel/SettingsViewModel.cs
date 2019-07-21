@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using uVK.Helpers;
 using uVK.Model;
 
 namespace uVK.ViewModel
 {
     class SettingsViewModel:BaseViewModel
     {
-        public string Firstname { get; private set; }
-        public string Lastname { get; private set; }
+        public string Firstname { get; }
+        public string Lastname { get; }
         public SettingsViewModel()
         {            
             Firstname = UserDatas.Name;
