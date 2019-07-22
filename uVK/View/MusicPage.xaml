@@ -419,7 +419,7 @@
                                 <ListView 
                                     BorderBrush="{x:Null}"
                                     ItemsSource="{Binding FriendsMusic}"
-                                    SelectedIndex="{Binding FriendsMusicSelectedIndex}"
+                                    SelectedIndex="{Binding Path=FriendsMusicSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Grid.ColumnSpan="2"
                                     Margin="0,0,15,0">
                                     <ListView.ItemTemplate>
@@ -437,7 +437,14 @@
                                     BorderThickness="0"
                                     ItemsSource="{Binding FriendsMusicAlbums}"
                                     Width="auto"
-                                    Margin="0,0,15,0">
+                                    Margin="0,0,15,0"
+                                    SelectedIndex="{Binding FriendsMusicAlbumSelectedIndex}">
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <controls:PlayList/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
 
                                     <ListView.ItemsPanel>
                                         <ItemsPanelTemplate>

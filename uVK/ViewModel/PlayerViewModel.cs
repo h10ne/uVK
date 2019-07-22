@@ -57,6 +57,7 @@ namespace uVK.ViewModel
             var sourceFriendsMusic = new SourceList<FriendsMusicViewModel>();
             sourceFriendsMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusic).DisposeMany().Subscribe();
             PlayerModel.DownloadFriendsWithOpenAudioAsync(sourceFriendsMusic);
+            FriendsMusicSelectedIndex = -1;
 
 
             _durrationTimer = new DispatcherTimer
@@ -90,7 +91,7 @@ namespace uVK.ViewModel
         private bool _isDownloading;
         private int _currentPlaylist = -1;
         private string _notificationText = "Downloading";
-
+        private int _friendsMusicAlbumSelectedIndex=-1;
         #endregion
 
         #region Public properties
@@ -105,20 +106,43 @@ namespace uVK.ViewModel
         [Reactive] public ObservableCollectionExtended<AlbumViewModel> PlayLists { get; set; } = new ObservableCollectionExtended<AlbumViewModel>();
 
         [Reactive]
-        public ObservableCollectionExtended<PlayList> FriendsMusicAlbums { get; set; } = new ObservableCollectionExtended<PlayList>();
+        public ObservableCollectionExtended<AlbumViewModel> FriendsMusicAlbums { get; set; } = new ObservableCollectionExtended<AlbumViewModel>();
 
         [Reactive] public ObservableCollectionExtended<FriendsMusicViewModel> FriendsMusic { get; set; } = new ObservableCollectionExtended<FriendsMusicViewModel>();
         [Reactive] public ObservableCollectionExtended<OneAudioViewModel> FriendsMusicAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
         [Reactive] public ObservableCollectionExtended<OneAudioViewModel> UserAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
         [Reactive] public ObservableCollectionExtended<OneAudioViewModel> AlbumAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
+        public int FriendsMusicAlbumSelectedIndex
+        {
+            get => _friendsMusicAlbumSelectedIndex;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _friendsMusicAlbumSelectedIndex, value);
+                if(value==-1)
+                    return;
+                State = PlayerModel.PlaylistState.Album;
+                PlayerModel.Playlist = new Playlist(new AlbumAudios(FriendsMusicAlbums[FriendsMusicAlbumSelectedIndex].Audios,this));
+                PlayerModel.Playlist.SetAudioInfo(this);
+                PlayerModel.Player.controls.play();
+            }
+        }
         public int FriendsMusicSelectedIndex { get => _friendsMusicSelectedIndex;
             set
             {
+                this.RaiseAndSetIfChanged(ref _friendsMusicSelectedIndex, value);
+                if (value==-1)
+                    return;
                 var source = new SourceList<OneAudioViewModel>();
                 source.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusicAudios).DisposeMany().Subscribe();
                 FriendsMusicAudios.Clear();
                 PlayerModel.AddAudioToListAsync(null, source, 600, FriendsMusic[value].Id);
-                this.RaiseAndSetIfChanged(ref _friendsMusicSelectedIndex, value);
+                FriendsMusicAlbums.Clear();
+                var sourceAlbums = new SourceList<AlbumViewModel>();
+                sourceAlbums.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusicAlbums)
+                    .DisposeMany().Subscribe();
+                PlayerModel.GetPlaylistsAsync(FriendsMusic[FriendsMusicSelectedIndex].Id, sourceAlbums);
+
+                //PlayerModel.GetPlaylists(FriendsMusic[FriendsMusicSelectedIndex].Id,FriendsMusicAlbums);
                 State = PlayerModel.PlaylistState.Null;
             }
         }

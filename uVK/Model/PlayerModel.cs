@@ -7,6 +7,7 @@ using VkNet.Model.RequestParams;
 using uVK.Helpers;
 using uVK.Helpers.States;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using VkNet.Enums.Filters;
 using DynamicData.Binding;
 using DynamicData;
@@ -76,13 +77,16 @@ namespace uVK.Model
                     }
                     catch
                     {
-                        author = $"{UserDatas.Name} {UserDatas.Surname}";
+                        Debug.Assert(pl.OwnerId != null, "pl.OwnerId != null");
+                        var user =
+                            ApiDatas.Api.Users.Get(userIds: new long[] { pl.OwnerId.Value }, ProfileFields.FirstName)[0];
+                        author = $"{user.FirstName} {user.LastName}";
                     }
 
                     AlbumViewModel playList = new AlbumViewModel()
                     {
                         ImageSource = cover,
-                        Audios = ApiDatas.Api.Audio.Get(new AudioGetParams() { PlaylistId = pl.Id }).ToList(),
+                        Audios = ApiDatas.Api.Audio.Get(new AudioGetParams() { PlaylistId = pl.Id, OwnerId = pl.OwnerId}).ToList(),
                         Author = author,
                         Title = pl.Title
                     };
@@ -187,26 +191,31 @@ namespace uVK.Model
 
         public static void GetPlaylists(long userId, ObservableCollection<AlbumViewModel> playlistSourse)
         {
+            playlistSourse.Clear();
+                //var albums = ApiDatas.Api.Audio
             var playlists = ApiDatas.Api.Audio.GetPlaylists(userId).ToList();
             foreach (var pl in playlists)
             {
                 string cover;
                 cover = pl.Cover != null ? pl.Cover.Photo135 : pl.Covers.ToList()[0].Photo135;
                 string author;
-
                 try
                 {
                     author = pl.MainArtists.ToList()[0].Name;
                 }
                 catch
                 {
-                    author = $"{UserDatas.Name} {UserDatas.Surname}";
+                    Debug.Assert(pl.OwnerId != null, "pl.OwnerId != null");
+                    var user =
+                        ApiDatas.Api.Users.Get(userIds: new long[] {pl.OwnerId.Value}, ProfileFields.FirstName)[0];
+                    author = $"{user.FirstName} {user.LastName}";
                 }
 
+                var audios = ApiDatas.Api.Audio.Get(new AudioGetParams() {PlaylistId = pl.Id, OwnerId = pl.OwnerId}).ToList();
                 AlbumViewModel playList = new AlbumViewModel()
                 {
                     ImageSource = cover,
-                    Audios = ApiDatas.Api.Audio.Get(new AudioGetParams() { PlaylistId = pl.Id }).ToList(),
+                    Audios = audios,
                     Author = author,
                     Title = pl.Title
                 };
