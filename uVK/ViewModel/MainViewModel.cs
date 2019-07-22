@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using uVK.Helpers;
 using uVK.Model;
 using uVK.Pages;
@@ -9,7 +11,7 @@ using uVK.View;
 
 namespace uVK.ViewModel
 {
-    class MainViewModel:BaseViewModel
+    class MainViewModel:ReactiveObject
     {
 
         #region constructor
@@ -25,34 +27,20 @@ namespace uVK.ViewModel
         #endregion
 
         #region private members
-        private Visibility _btnCloseMenuVisibility = Visibility.Collapsed;
-        private Visibility _btnOpenMenuVisibility = Visibility.Visible;
-        private Page _currentPage;
         private readonly Page _messagePage;
         private readonly Page _settingsPage;
         private readonly Page _playerPage;
-        private string _userPhoto;
-        private double _fillOpacity;
-        private Visibility _fillVisibility = Visibility.Hidden;
-        private double _width = 45;
         #endregion
 
         #region public properties
-        public Visibility BtnCloseMenuVisibility { get => _btnCloseMenuVisibility;
-            set { _btnCloseMenuVisibility = value; OnPropertyChanged(nameof(BtnCloseMenuVisibility)); } }
-        public Visibility BtnOpenMenuVisibility { get => _btnOpenMenuVisibility;
-            set { _btnOpenMenuVisibility = value; OnPropertyChanged(nameof(BtnOpenMenuVisibility)); } }
-        public Page CurrentPage { get => _currentPage;
-            set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }}
-        public string Username { get; set; }
-        public string UserPhoto { get => _userPhoto;
-            set { _userPhoto = value; OnPropertyChanged(nameof(UserPhoto)); } }
-        public double FillOpacity { get => _fillOpacity;
-            set { _fillOpacity = value; OnPropertyChanged(nameof(FillOpacity)); } }
-        public Visibility FillVisibility { get => _fillVisibility;
-            set { _fillVisibility = value;OnPropertyChanged(nameof(FillVisibility)); } }
-        public double Width { get => _width;
-            set { _width = value; OnPropertyChanged(nameof(Width)); } }
+        [Reactive] public Visibility BtnCloseMenuVisibility { get; set; } = Visibility.Collapsed;
+        [Reactive] public Visibility BtnOpenMenuVisibility { get; set; } = Visibility.Visible;
+        [Reactive] public Page CurrentPage { get; set; }
+        [Reactive] public string Username { get; set; }
+        [Reactive] public string UserPhoto { get; set; }
+        [Reactive] public double FillOpacity { get; set; }
+        [Reactive] public Visibility FillVisibility { get; set; } = Visibility.Hidden;
+        [Reactive] public double Width { get; set; } = 45;
         #endregion
 
         #region commands

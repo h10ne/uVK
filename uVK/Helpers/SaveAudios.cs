@@ -7,9 +7,9 @@ namespace uVK.Helpers
 {
     public class StructSaveAudios
     {
-        public string Url;
-        public string Artist;
-        public string Title;
+        public readonly string Url;
+        public readonly string Artist;
+        public readonly string Title;
         public StructSaveAudios(string artist, string title, string url)
         {
             Url = url;

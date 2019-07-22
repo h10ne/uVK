@@ -1,8 +1,8 @@
-﻿using uVK.Helpers;
+﻿using ReactiveUI;
 
 namespace uVK.ViewModel
 {
-    class MessageViewModel:BaseViewModel
+    class MessageViewModel:ReactiveObject
     {
 
     }

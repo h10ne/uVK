@@ -29,12 +29,12 @@ namespace uVK.Model
         }
 
         #region Variables
-        public static List<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
+        public static List<VkNet.Model.Attachments.Audio> SearchAudios { get; private set; }
         public static List<VkNet.Model.Attachments.Audio> Audio { get; set; }
         public static int OffsetOwn = 0;
         public static int OffsetSearch = 0;
         public static int OffsetSave = 0;
-        public static WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
+        public static readonly WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
         public static Playlist Playlist;
         #endregion
 
@@ -67,8 +67,7 @@ namespace uVK.Model
                 var playlists = ApiDatas.Api.Audio.GetPlaylists(userId).ToList();
                 foreach (var pl in playlists)
                 {
-                    string cover;
-                    cover = pl.Cover != null ? pl.Cover.Photo135 : pl.Covers.ToList()[0].Photo135;
+                    var cover = pl.Cover != null ? pl.Cover.Photo135 : pl.Covers.ToList()[0].Photo135;
                     string author;
 
                     try
@@ -196,8 +195,7 @@ namespace uVK.Model
             var playlists = ApiDatas.Api.Audio.GetPlaylists(userId).ToList();
             foreach (var pl in playlists)
             {
-                string cover;
-                cover = pl.Cover != null ? pl.Cover.Photo135 : pl.Covers.ToList()[0].Photo135;
+                var cover = pl.Cover != null ? pl.Cover.Photo135 : pl.Covers.ToList()[0].Photo135;
                 string author;
                 try
                 {

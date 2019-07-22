@@ -1,9 +1,10 @@
-﻿using uVK.Helpers;
+﻿using ReactiveUI;
+using uVK.Helpers;
 using uVK.Model;
 
 namespace uVK.ViewModel
 {
-    class SettingsViewModel:BaseViewModel
+    class SettingsViewModel:ReactiveObject
     {
         public string Firstname { get; }
         public string Lastname { get; }

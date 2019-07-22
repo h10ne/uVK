@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.Threading;
 using uVK.Model;
 using uVK.ViewModel;
-using uVK.Helpers;
-using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,7 +10,7 @@ namespace uVK.Helpers.States
 {
     public class Playlist
     {
-        public IState State { get; set; }        
+        private IState State { get; }        
         public Playlist(IState ws)
         {
             State = ws;

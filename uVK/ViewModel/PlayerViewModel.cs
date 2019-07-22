@@ -10,7 +10,6 @@ using uVK.Helpers;
 using uVK.Model;
 using VkNet.Model.RequestParams;
 using uVK.Helpers.States;
-using uVK.Styles.AudioStyles;
 using System.Windows.Threading;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -30,14 +29,14 @@ namespace uVK.ViewModel
             if (SaveAudiosList.Items.Count != 0)
                 NoSaveMusic = Visibility.Hidden;
             PlayerModel.Audio = ApiDatas.Api.Audio.Get(new AudioGetParams { Count = ApiDatas.Api.Audio.GetCount(UserDatas.UserId) }).ToList();
-            List<VkNet.Model.Attachments.Audio> _audios = new List<VkNet.Model.Attachments.Audio>();
+            List<VkNet.Model.Attachments.Audio> audios = new List<VkNet.Model.Attachments.Audio>();
             foreach (var audio in PlayerModel.Audio)
             {
                 if(audio.Url!=null)
-                    _audios.Add(audio);
+                    audios.Add(audio);
             }
 
-            PlayerModel.Audio = _audios;
+            PlayerModel.Audio = audios;
             State = PlayerModel.PlaylistState.Own;
             //Асинхронная загрузка аудио пользователя
             var sourceOwnMusic = new SourceList<OneAudioViewModel>();
@@ -126,6 +125,7 @@ namespace uVK.ViewModel
                 PlayerModel.Player.controls.play();
             }
         }
+
         public int FriendsMusicSelectedIndex { get => _friendsMusicSelectedIndex;
             set
             {
@@ -142,7 +142,6 @@ namespace uVK.ViewModel
                     .DisposeMany().Subscribe();
                 PlayerModel.GetPlaylistsAsync(FriendsMusic[FriendsMusicSelectedIndex].Id, sourceAlbums);
 
-                //PlayerModel.GetPlaylists(FriendsMusic[FriendsMusicSelectedIndex].Id,FriendsMusicAlbums);
                 State = PlayerModel.PlaylistState.Null;
             }
         }
