@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace uVK
+namespace uVK.PassBox
 {
     /// <summary>
     /// Логика взаимодействия для InputBoxWindow.xaml
     /// </summary>
-    public partial class InputBoxWindow : Window
+    public partial class InputBoxWindow
     {
         public InputBoxWindow()
         {
@@ -27,17 +16,17 @@ namespace uVK
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            DragMove();
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            DragMove();
         }
 
         private void BtnOK_Click(object sender, RoutedEventArgs e)

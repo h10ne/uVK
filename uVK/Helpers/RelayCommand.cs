@@ -1,31 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
-namespace uVK
+namespace uVK.Helpers
 {
     public class RelayCommand : ICommand
     {
-        private Action<object> execute;
-        private Func<object, bool> canExecute;
+        private readonly Action<object> _execute;
+        private readonly Func<object, bool> _canExecute;
         public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
         public bool CanExecute(object param)
         {
-            return this.canExecute == null || this.canExecute(param);
+            return _canExecute == null || _canExecute(param);
         }
         public void Execute(object param)
         {
-            this.execute(param);
+            _execute(param);
         }
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
-            this.execute = execute;
-            this.canExecute = canExecute;
+            _execute = execute;
+            _canExecute = canExecute;
         }
     }
 }

@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Height="auto">
-    <Grid Width="800">
+    <Grid Width="{Binding Path=Width}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -24,7 +24,7 @@
                 <!--  (RU) Картинка аудиозаписи / (EN) Audio Picture  -->
                 <ImageBrush
                     x:Name="MusicImage"
-                    ImageSource="/Images/ImageMusic.png"
+                    ImageSource="{Binding ImageSourseString}"
                     Stretch="UniformToFill" />
             </Rectangle.Fill>
         </Rectangle>
@@ -37,21 +37,19 @@
                     FontSize="14"
                     FontWeight="DemiBold"
                     Foreground="{DynamicResource SidebarForegroundBrush}"
-                    Name="Artist"
-                    Text="Artist"
+                    Text="{Binding Title}"
                     TextTrimming="CharacterEllipsis" />
                 <!--  (RU) Исполнитель аудиозаписи / (EN) Audio artist  -->
                 <TextBlock
                     FontSize="13"
                     FontWeight="Normal"
                     Opacity="0.6"
-                    Name="Title"
-                    Text="Title"
+                    Text="{Binding Artist}"
                     TextTrimming="CharacterEllipsis" />
             </StackPanel>
         </Border>
         <Border Grid.Column="2">
-            <TextBlock Name="Durration" FontSize="13" Foreground="Gray" VerticalAlignment="Center"/>
+            <TextBlock Name="Durration" FontSize="13" Foreground="Gray" VerticalAlignment="Center" Text="{Binding Duration}"/>
         </Border>
     </Grid>
 </UserControl>

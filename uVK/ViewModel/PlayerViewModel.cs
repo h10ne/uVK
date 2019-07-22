@@ -1,25 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using uVK.Helpers;
 using uVK.Model;
 using VkNet.Model.RequestParams;
-using uVK.States;
+using uVK.Helpers.States;
 using uVK.Styles.AudioStyles;
-using System.Collections.ObjectModel;
 using System.Windows.Threading;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using DynamicData.Binding;
+using DynamicData;
+using System.Reactive.Linq;
+using System.Collections.Generic;
 
 namespace uVK.ViewModel
 {
-    public class PlayerViewModel : BaseViewModel
+    public class PlayerViewModel : ReactiveObject
     {
         public PlayerViewModel()
         {
@@ -27,23 +29,42 @@ namespace uVK.ViewModel
             PlayerModel.AddCacheToList(SaveAudiosList);
             if (SaveAudiosList.Items.Count != 0)
                 NoSaveMusic = Visibility.Hidden;
-            PlayerModel.Audio = ApiDatas.api.Audio.Get(new AudioGetParams { Count = ApiDatas.api.Audio.GetCount(UserDatas.User_id) }).ToList();
-            State = PlayerModel.PlaylistState.own;
-            PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
+            PlayerModel.Audio = ApiDatas.Api.Audio.Get(new AudioGetParams { Count = ApiDatas.Api.Audio.GetCount(UserDatas.UserId) }).ToList();
+            List<VkNet.Model.Attachments.Audio> _audios = new List<VkNet.Model.Attachments.Audio>();
+            foreach (var audio in PlayerModel.Audio)
+            {
+                if(audio.Url!=null)
+                    _audios.Add(audio);
+            }
+
+            PlayerModel.Audio = _audios;
+            State = PlayerModel.PlaylistState.Own;
+            //Асинхронная загрузка аудио пользователя
+            var sourceOwnMusic = new SourceList<OneAudioViewModel>();
+            sourceOwnMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(UserAudios).DisposeMany().Subscribe();
+            PlayerModel.AddAudioToListAsync(PlayerModel.Audio, sourceOwnMusic);
+            //Установка параментров плеера
             PlayerModel.Playlist = new Playlist(new OwnAudios(this));
             PlayerModel.Playlist.SetAudioInfo(this);
             Volume = 30;
             PlayerModel.Player.controls.stop();
 
-            DurrationTimer = new System.Windows.Threading.DispatcherTimer
+            //Асинхронное получение плейлистов
+            var sourceAlbums = new SourceList<AlbumViewModel>();
+            sourceAlbums.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(PlayLists).DisposeMany().Subscribe();
+            PlayerModel.GetPlaylistsAsync(UserDatas.UserId, sourceAlbums);
+            //Ассинхронная загрузка друзей
+            var sourceFriendsMusic = new SourceList<FriendsMusicViewModel>();
+            sourceFriendsMusic.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusic).DisposeMany().Subscribe();
+            PlayerModel.DownloadFriendsWithOpenAudioAsync(sourceFriendsMusic);
+
+
+            _durrationTimer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 20)
             };
-            DurrationTimer.Tick += DurrationTimer_Tick;
-            PlayerModel.Getplaylists(UserDatas.User_id, PlayLists);
-
-            //PlayerModel.DownloadFriendsWithOpenAudio(FriendsMusic);
-            
+            _durrationTimer.Tick += DurrationTimer_Tick;
+            _durrationTimer.Start();
         }
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
@@ -59,164 +80,152 @@ namespace uVK.ViewModel
         }
 
 
-
         #region Private members
         private PlayerModel.PlaylistState _state;
-        private ObservableCollection<FriendsMusic> _friendsMusics = new ObservableCollection<FriendsMusic>();
-        private ObservableCollection<PlayList> _friendsMusicAlbums = new ObservableCollection<PlayList>();
-        private ObservableCollection<AudioList> _friendsMusicAudios = new ObservableCollection<AudioList>();
-        private Visibility _noSaveMusic = Visibility.Visible;
-        private ListBox _saveAudiosList = new ListBox();
         private int _volume;
-        private string _imageSource = @"/Images/ImageMusic.png";
-        private bool _isPlay = false;
-        private bool _random = false;
-        private bool _repeat;
-        private string _title;
-        private string _artist;
-        private int _selectedIndex;
-        private string _currentTimePosition = "00:00";
-        private string _maximumTimePosition;
+        private int _friendsMusicSelectedIndex;
         private double _currentTimePositionValue;
-        private double _durrationMaximum;
-        private AudioList _selectedItem;
-        private System.Windows.Threading.DispatcherTimer DurrationTimer;
+        private readonly DispatcherTimer _durrationTimer;
         private string _searchRequest = "";
-        private bool isDownloading = false;
-        private string _selectedSaveItem;
-        private int _selectedSaveIndex;
-        private string _selectedAlbumAudiosItem;
-        private int _selectedAlbumAudiosIndex;
-        private ObservableCollection<PlayList> _playLists = new ObservableCollection<PlayList>();
-        private ObservableCollection<AudioList> _userAudios = new ObservableCollection<AudioList>();
-        private ObservableCollection<AudioList> _albumAudios = new ObservableCollection<AudioList>();
+        private bool _isDownloading;
         private int _currentPlaylist = -1;
-        private Visibility _textChooseAlbumVisibility = Visibility.Visible;
+        private string _notificationText = "Downloading";
+
         #endregion
 
         #region Public properties
-        private ObservableCollection<PlayList> FriendsMusicAlbums { get { return _friendsMusicAlbums; } set { _friendsMusicAlbums = value; OnPropertyChanged(nameof(FriendsMusicAlbums)); } }
-        public ObservableCollection<FriendsMusic> FriendsMusic { get { return _friendsMusics; } set { _friendsMusics = value; OnPropertyChanged(nameof(FriendsMusic)); } }
-        public ObservableCollection<AudioList> FriendsMusicAudios { get { return _friendsMusicAudios; } set { _friendsMusicAudios = value; OnPropertyChanged(nameof(FriendsMusicAudios)); } }
-        public PlayerModel.PlaylistState State { get { return _state; } set { _state = value; if (value != PlayerModel.PlaylistState.album) CurrentPlaylistIndex = -1; } }
-        public ObservableCollection<AudioList> UserAudios { get { return _userAudios; } set { _userAudios = value; OnPropertyChanged(nameof(UserAudios)); } }
-        public ObservableCollection<AudioList> AlbumAudios { get { return _albumAudios; } set { _albumAudios = value; OnPropertyChanged(nameof(UserAudios)); } }
-        public Visibility NoSaveMusic { get { return _noSaveMusic; } set { _noSaveMusic = value; OnPropertyChanged(nameof(NoSaveMusic)); } }
-        public string ImageSource { get { return _imageSource; } set { _imageSource = value; OnPropertyChanged(nameof(ImageSource)); } }
-        public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
-        public string Artist { get { return _artist; } set { _artist = value; OnPropertyChanged(nameof(Artist)); } }
-        public ListBox SaveAudiosList { get { return _saveAudiosList; } set { _saveAudiosList = value; OnPropertyChanged(nameof(SaveAudiosList)); } }
-        public Visibility TextChooseAlbumVisibility { get { return _textChooseAlbumVisibility; } set { _textChooseAlbumVisibility = value; OnPropertyChanged(nameof(TextChooseAlbumVisibility)); } }
-        public int CurrentPlaylistIndex
-        {
-            get { return _currentPlaylist; }
+        public PlayerModel.PlaylistState State { get => _state;
             set
             {
-                _currentPlaylist = value;
+                _state = value;
+                if (value != PlayerModel.PlaylistState.Album)
+                    CurrentPlaylistIndex = -1;
+            } }
+        //Коллекции
+        [Reactive] public ObservableCollectionExtended<AlbumViewModel> PlayLists { get; set; } = new ObservableCollectionExtended<AlbumViewModel>();
+
+        [Reactive]
+        public ObservableCollectionExtended<PlayList> FriendsMusicAlbums { get; set; } = new ObservableCollectionExtended<PlayList>();
+
+        [Reactive] public ObservableCollectionExtended<FriendsMusicViewModel> FriendsMusic { get; set; } = new ObservableCollectionExtended<FriendsMusicViewModel>();
+        [Reactive] public ObservableCollectionExtended<OneAudioViewModel> FriendsMusicAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
+        [Reactive] public ObservableCollectionExtended<OneAudioViewModel> UserAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
+        [Reactive] public ObservableCollectionExtended<OneAudioViewModel> AlbumAudios { get; set; } = new ObservableCollectionExtended<OneAudioViewModel>();
+        public int FriendsMusicSelectedIndex { get => _friendsMusicSelectedIndex;
+            set
+            {
+                var source = new SourceList<OneAudioViewModel>();
+                source.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(FriendsMusicAudios).DisposeMany().Subscribe();
+                FriendsMusicAudios.Clear();
+                PlayerModel.AddAudioToListAsync(null, source, 600, FriendsMusic[value].Id);
+                this.RaiseAndSetIfChanged(ref _friendsMusicSelectedIndex, value);
+                State = PlayerModel.PlaylistState.Null;
+            }
+        }
+        [Reactive] public int FriendsMusicAudiosSelectedIndex { get; set; }
+        [Reactive] public Visibility NoSaveMusic { get; set; } = Visibility.Visible;
+        [Reactive] public string ImageSource { get; set; } = @"/Images/ImageMusic.png";
+        [Reactive] public string Title { get; set; }
+        [Reactive] public string Artist { get; set; }
+        [Reactive] public ListBox SaveAudiosList { get; set; } = new ListBox();
+        [Reactive] public Visibility TextChooseAlbumVisibility { get; set; } = Visibility.Visible;
+        public int CurrentPlaylistIndex
+        {
+            get => _currentPlaylist;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _currentPlaylist, value);
                 if (value == -1)
                 {
                     AlbumAudios.Clear();
                     return;
                 }
 
-                if (State != PlayerModel.PlaylistState.album)
+                if (State != PlayerModel.PlaylistState.Album)
                 {
-                    State = PlayerModel.PlaylistState.album;
-                }
-                foreach (var pl in PlayLists)
-                {
-                    //pl.isPlay.IsChecked = false;
+                    State = PlayerModel.PlaylistState.Album;
                 }
                 TextChooseAlbumVisibility = Visibility.Hidden;
                 PlayerModel.Playlist = new Playlist(new AlbumAudios(PlayLists[_currentPlaylist].Audios, this));
-                //PlayLists[_currentPlaylist].isPlay.IsChecked = true;
                 PlayerModel.Playlist.SetAudioInfo(this);
-                OnPropertyChanged(nameof(CurrentPlaylistIndex));
             }
         }
         //Кнопки
-        public int Volume { get { return _volume; } set { _volume = value; PlayerModel.Player.settings.volume = Volume; OnPropertyChanged(nameof(Volume)); } }
-        public bool IsPlay
+        public int Volume { get => _volume;
+            set { PlayerModel.Player.settings.volume = value; this.RaiseAndSetIfChanged(ref _volume, value); } }
+        [Reactive] public bool IsPlay { get; set; }
+
+        public RelayCommand PlayPause
         {
-            get { return _isPlay; }
-            set
+            get
             {
-                _isPlay = value;
-                if (!_isPlay)
+                return new RelayCommand((obj) =>
                 {
-                    DurrationTimer.Stop();
-                    PlayerModel.Player.controls.pause();
-                }
-                else
-                {
-                    DurrationTimer.Start();
-                    PlayerModel.Player.controls.play();
-                }
-                OnPropertyChanged(nameof(IsPlay));
+                    if (!IsPlay)
+                    {
+                        PlayerModel.Player.controls.pause();
+                        //DurrationTimer.Stop();
+                    }
+                    else
+                    {
+                        PlayerModel.Player.controls.play();
+                        _durrationTimer.Start();
+                    }
+                });
             }
         }
-        public bool Random { get { return _random; } set { _random = value; OnPropertyChanged(nameof(Random)); } }
-        public bool Repeat { get { return _repeat; } set { _repeat = value; OnPropertyChanged(nameof(Repeat)); } }
-        public int SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value; OnPropertyChanged(nameof(SelectedIndex)); } }
+
+        [Reactive] public bool Random { get; set; }
+        [Reactive] public bool Repeat { get; set; }
+        [Reactive] public int SelectedIndex { get; set; }
         //Время
-        public string CurrentTimePosition { get { return _currentTimePosition; } set { _currentTimePosition = value; OnPropertyChanged(nameof(CurrentTimePosition)); } }
+        [Reactive] public string CurrentTimePosition { get; set; } = "00:00";
+        [Reactive]
         public double CurrentTimePositionValue
         {
-            get { return _currentTimePositionValue; }
+            get => _currentTimePositionValue;
             set
             {
-                _currentTimePositionValue = value;
-                int sec = (int)_currentTimePositionValue % 60;
-                int min = (int)_currentTimePositionValue / 60;
-                string secStr;
-                string minStr;
-                if (sec > 9)
-                    secStr = sec.ToString();
-                else
-                    secStr = "0" + sec.ToString();
-
-                if (min > 9)
-                    minStr = min.ToString();
-                else
-                    minStr = "0" + min.ToString();
-                CurrentTimePosition = $"{minStr}:{secStr}";
-                OnPropertyChanged(nameof(CurrentTimePositionValue));
+                this.RaiseAndSetIfChanged(ref _currentTimePositionValue, value);
+                CurrentTimePosition = Decoder.ConvertTimeToString((int)_currentTimePositionValue);
             }
         }
-        public string MaximumTimePosition { get { return _maximumTimePosition; } set { _maximumTimePosition = value; OnPropertyChanged(nameof(MaximumTimePosition)); } }
-        public double DurrationMaximum { get { return _durrationMaximum; } set { _durrationMaximum = value; OnPropertyChanged(nameof(DurrationMaximum)); } }
+        [Reactive] public string MaximumTimePosition { get; set; }
+        [Reactive] public double DurrationMaximum { get; set; }
         //Выбранное
-        public AudioList SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
+        [Reactive] public OneAudioViewModel SelectedItem { get; set; }
         public string SearchRequest
         {
-            get { return _searchRequest; }
+            get => _searchRequest;
             set
             {
-                _searchRequest = value;
-
+                this.RaiseAndSetIfChanged(ref _searchRequest, value);
                 if (SearchRequest == "")
-                {
-                    //PlayerModel.state = PlayerModel.State.own;
-                    PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
+                { PlayerModel.AddAudioToList(PlayerModel.Audio, UserAudios);
                 }
-                OnPropertyChanged(nameof(SearchRequest));
             }
         }
-        public int SelectedSaveIndex { get { return _selectedSaveIndex; } set { _selectedSaveIndex = value; OnPropertyChanged(nameof(SelectedSaveIndex)); } }
-        public string SelectedSaveItem { get { return _selectedSaveItem; } set { _selectedSaveItem = value; OnPropertyChanged(nameof(SelectedSaveItem)); } }
-        public int SelectedAlbumAudiosIndex { get { return _selectedAlbumAudiosIndex; } set { _selectedAlbumAudiosIndex = value; OnPropertyChanged(nameof(SelectedAlbumAudiosIndex)); } }
-        public string SelectedAlbumAudiosItem { get { return _selectedAlbumAudiosItem; } set { _selectedAlbumAudiosItem = value; OnPropertyChanged(nameof(SelectedAlbumAudiosItem)); } }
+        [Reactive] public int SelectedSaveIndex { get; set; }
+        [Reactive] public string SelectedSaveItem { get; set; }
+        [Reactive] public int SelectedAlbumAudiosIndex { get; set; }
+        [Reactive] public string SelectedAlbumAudiosItem { get; set; }
 
-        public ObservableCollection<PlayList> PlayLists { get { return _playLists; } set { _playLists = value; OnPropertyChanged(nameof(PlayLists)); } }
         #endregion
 
         #region Notification
 
-        private string _marginNotification = "0,10,0,0";
-        public string MarginNotification { get { return _marginNotification; } set { _marginNotification = value; OnPropertyChanged(nameof(MarginNotification)); } }
+        [Reactive] public string MarginNotification { get; set; } = "0,10,0,0";
 
-        private string _notificationText = "Downloading";
-        public string NotificationText { get { return _notificationText; } set { _notificationText = value; OnPropertyChanged(nameof(NotificationText)); GetAnimation(); } }
+        [Reactive]
+        public string NotificationText
+        {
+            get => _notificationText;
+            set
+            {
+                _notificationText = value;
+                GetAnimation();
+            } 
+        }
 
         private async void GetAnimation()
         {
@@ -245,7 +254,7 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    DurrationTimer.Stop();
+                    _durrationTimer.Stop();
                 });
             }
         }
@@ -257,7 +266,7 @@ namespace uVK.ViewModel
                 {
                     PlayerModel.Player.controls.currentPosition = CurrentTimePositionValue;
                     CurrentTimePosition = PlayerModel.Player.controls.currentPositionString;
-                    DurrationTimer.Start();
+                    _durrationTimer.Start();
                 });
             }
         }
@@ -267,7 +276,7 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    State = PlayerModel.PlaylistState.search;
+                    State = PlayerModel.PlaylistState.Search;
                     PlayerModel.Search(SearchRequest, UserAudios);
                 });
             }
@@ -297,10 +306,10 @@ namespace uVK.ViewModel
             get
             {
                 return new RelayCommand((obj) =>
-               {
-                   PlayerModel.Playlist.NextSong(this);
-                   IsPlay = true;
-               });
+                {
+                    PlayerModel.Playlist.NextSong(this);
+                    IsPlay = true;
+                });
             }
         }
         public RelayCommand PrevSong
@@ -324,7 +333,7 @@ namespace uVK.ViewModel
                     {
                         PlayerModel.Playlist = new Playlist(new SearchAudios(this));
                     }
-                    if (State != PlayerModel.PlaylistState.own && SearchRequest == "")
+                    if (State != PlayerModel.PlaylistState.Own && SearchRequest == "")
                     {
                         PlayerModel.Playlist = new Playlist(new OwnAudios(this));
                         PlayerModel.OffsetOwn = 0;
@@ -336,13 +345,29 @@ namespace uVK.ViewModel
             }
         }
 
+        public RelayCommand SetFriendsAudioFromClick
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    if (State != PlayerModel.PlaylistState.IdAudios)
+                    {
+                        State = PlayerModel.PlaylistState.IdAudios;
+                        PlayerModel.Playlist = new Playlist(new IdAudios());
+                    }
+                    PlayerModel.Playlist.SetAudioInfo(this,fromClick:true);
+                });
+            }
+        }
+
         public RelayCommand SetAlbumAudioFromClick
         {
             get
             {
                 return new RelayCommand((obj) =>
                 {
-                    if (State == PlayerModel.PlaylistState.album)
+                    if (State == PlayerModel.PlaylistState.Album)
                     {
                         PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
                         IsPlay = true;
@@ -361,8 +386,8 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    if (State != PlayerModel.PlaylistState.save)
-                        State = PlayerModel.PlaylistState.save;
+                    if (State != PlayerModel.PlaylistState.Save)
+                        State = PlayerModel.PlaylistState.Save;
                     PlayerModel.Playlist = new Playlist(new SavesAudios(this));
                     PlayerModel.Playlist.SetAudioInfo(this, fromClick: true);
                     IsPlay = true;
@@ -376,12 +401,12 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    isDownloading = true;
+                    _isDownloading = true;
                     NotificationText = "Загрузка";
                     WebClient webClient = new WebClient();
                     webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
                     webClient.DownloadFileAsync(new Uri(PlayerModel.Player.URL), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\" + Artist + "↨" + Title);
-                }, (obj) => !isDownloading);
+                }, (obj) => !_isDownloading);
             }
         }
 
@@ -389,11 +414,13 @@ namespace uVK.ViewModel
         {
             //GetAnimation();
             NotificationText = "Завершено";
-            isDownloading = false;
+            _isDownloading = false;
             SaveAudios.AddCache();
             PlayerModel.AddCacheToList(SaveAudiosList);
         }
         #endregion
 
     }
+
+    
 }

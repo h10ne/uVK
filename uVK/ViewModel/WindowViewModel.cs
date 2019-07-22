@@ -1,21 +1,19 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using uVK.Helpers;
 using uVK.Model;
-using uVK.Pages;
 using uVK.View;
+using LoginPage = uVK.View.LoginPage;
 
-namespace uVK
+namespace uVK.ViewModel
 {
     public class WindowViewModel : BaseViewModel
     {
         #region Private window Member
-        static private Window mWindow;
+        private static Window _mWindow;
         #endregion
 
         #region Window public  Properties
@@ -25,10 +23,11 @@ namespace uVK
         public Page MainPage { get; set; }
         public Page CurrentPage
         {
-            get { return _currentPage; }
+            get => _currentPage;
             set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }
         }
-        public double Opacity { get { return _opacity; } set { _opacity = value; OnPropertyChanged(nameof(Opacity)); } }
+        public double Opacity { get => _opacity;
+            set { _opacity = value; OnPropertyChanged(nameof(Opacity)); } }
         #endregion
 
         #region Commands
@@ -56,22 +55,22 @@ namespace uVK
             {
                 //Minimize();
                 //Thread.Sleep(500);
-                mWindow.WindowState = WindowState.Minimized;
+                _mWindow.WindowState = WindowState.Minimized;
             });
             MaximizeCommand = new RelayCommand((obj) =>
             {
-                if (mWindow.Width == 900)
+                if (_mWindow.Width == 900)
                 {
-                    mWindow.Width = 500;
-                    mWindow.Height = 135;
+                    _mWindow.Width = 500;
+                    _mWindow.Height = 135;
                 }
                 else
                 {
-                    mWindow.Width = 900;
-                    mWindow.Height = 550;
+                    _mWindow.Width = 900;
+                    _mWindow.Height = 550;
                 }
             }, (obj) => CurrentPage == MainPage);
-            CloseCommand = new RelayCommand((obj) => mWindow.Close());
+            CloseCommand = new RelayCommand((obj) => _mWindow.Close());
 
         }
 
@@ -79,28 +78,5 @@ namespace uVK
 
         private double _opacity = 1;
         private Page _currentPage;
-        
-
-        private async void Minimize()
-        {
-            await Task.Factory.StartNew(() =>
-            {
-                for (double i = 1; i > 0; i-=0.1)
-                {
-                    Opacity = i;
-                    Thread.Sleep(50);
-                }
-            });
-        }
-        private async void Maxiize()
-        {
-            await Task.Factory.StartNew(() =>
-            {
-                for (double i = 0; i < 1; i += 0.1)
-                {
-                    Opacity = i;
-                }
-            });
-        }
     }
 }

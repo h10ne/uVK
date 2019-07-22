@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace uVK.Helpers
 {
@@ -21,13 +18,14 @@ namespace uVK.Helpers
         }
         public static string ConvertTimeToString(int durration)
         {
+            if (durration <= 0) throw new ArgumentOutOfRangeException(nameof(durration));
             int minutes = durration;
             int seconds = minutes % 60;
             minutes /= 60;
-            string minutesStr = minutes.ToString(); ;
+            string minutesStr = minutes.ToString();
             if (minutes < 10)
                 minutesStr = "0" + minutes.ToString();
-            string secondsStr = seconds.ToString(); ;
+            string secondsStr = seconds.ToString();
             if (seconds < 10)
                 secondsStr = "0" + seconds.ToString();
             return minutesStr + ":" + secondsStr;

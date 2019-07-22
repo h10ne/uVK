@@ -1,7 +1,6 @@
 ﻿<Application x:Class="uVK.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:uVK"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -14,6 +13,7 @@
                 <ResourceDictionary Source="Styles/AudioStyles/AudioSlider.xaml" />
                 <ResourceDictionary Source="Styles/AudioStyles/AudioColors.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Color x:Key="AccentColor" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

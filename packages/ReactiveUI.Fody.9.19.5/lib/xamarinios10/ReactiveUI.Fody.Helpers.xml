@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReactiveUI.Fody.Helpers</name>
+    </assembly>
+    <members>
+        <member name="T:ReactiveUI.Fody.Helpers.ObservableAsPropertyAttribute">
+            <summary>
+            Attribute that marks an ObservableAsPropertyHelper for weaving.
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="T:ReactiveUI.Fody.Helpers.ObservableAsPropertyExtensions">
+            <summary>
+            Extension methods for observable as property helpers.
+            </summary>
+        </member>
+        <member name="M:ReactiveUI.Fody.Helpers.ObservableAsPropertyExtensions.ToPropertyEx``2(System.IObservable{``1},``0,System.Linq.Expressions.Expression{System.Func{``0,``1}},``1,System.Boolean,System.Reactive.Concurrency.IScheduler)">
+            <summary>
+            To the property execute.
+            </summary>
+            <typeparam name="TObj">The type of the object.</typeparam>
+            <typeparam name="TRet">The type of the ret.</typeparam>
+            <param name="item">The observable with the return value.</param>
+            <param name="source">The source.</param>
+            <param name="property">The property.</param>
+            <param name="initialValue">The initial value.</param>
+            <param name="deferSubscription">if set to <c>true</c> [defer subscription].</param>
+            <param name="scheduler">The scheduler.</param>
+            <returns>An observable property helper with the specified return value.</returns>
+            <exception cref="T:System.Exception">
+            Could not resolve expression " + property + " into a property.
+            or
+            Backing field not found for " + propertyInfo.
+            </exception>
+        </member>
+        <member name="T:ReactiveUI.Fody.Helpers.ReactiveAttribute">
+            <summary>
+            Attribute that marks property for INotifyPropertyChanged weaving.
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="T:ReactiveUI.Fody.Helpers.ReactiveDependencyAttribute">
+            <summary>
+            Attribute that marks a property as a Reactive Dependency.
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="M:ReactiveUI.Fody.Helpers.ReactiveDependencyAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ReactiveUI.Fody.Helpers.ReactiveDependencyAttribute"/> class.
+            </summary>
+            <param name="targetName">Name of the target.</param>
+        </member>
+        <member name="P:ReactiveUI.Fody.Helpers.ReactiveDependencyAttribute.Target">
+            <summary>
+            Gets the name of the backing property.
+            </summary>
+        </member>
+        <member name="P:ReactiveUI.Fody.Helpers.ReactiveDependencyAttribute.TargetProperty">
+            <summary>
+            Gets or sets the target property on the backing property.
+            </summary>
+        </member>
+    </members>
+</doc>

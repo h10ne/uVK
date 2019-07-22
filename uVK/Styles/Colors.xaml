@@ -37,7 +37,6 @@
     <SolidColorBrush x:Key="Dr0bBlackBrush" Color="{StaticResource Dr0bBlack}" />
 
     <Color x:Key="Dr0bVolumColorBlue">#7E9EC1</Color>
-    <SolidColorBrush x:Key="Dr0bBlueVolum" Color="{StaticResource Dr0bBlueVolum}" />
 
 
     <!--  (RU) Цвет текста кнопок / (EN) Button text color  -->

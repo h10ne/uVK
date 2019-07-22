@@ -14,14 +14,17 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Rectangle
-                Width="120"
-                Height="120"
+                Width="115"
+                Height="115"
                 Margin="5"
                 RadiusY="3"
                 RadiusX="3">
-                <Rectangle.Fill>
+                <Rectangle.Fill>                    
                     <!--  (RU) Картинка плейлиста / (EN) PayList Picture  -->
-                    <ImageBrush x:Name="PlayListImage" Stretch="UniformToFill" />
+                    <ImageBrush 
+                        x:Name="PlayListImage" 
+                        Stretch="UniformToFill"
+                        ImageSource="{Binding ImageSource}"/>
                 </Rectangle.Fill>
             </Rectangle>
             <!--  (RU) Кнопка пауза / (EN) Pause button  -->
@@ -43,17 +46,16 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock
-                x:Name="Title"
                 Grid.Row="0"
                 MaxWidth="120"
                 FontSize="11"
-                Text="Title"
+                Text="{Binding Title}"
                 TextWrapping="WrapWithOverflow" />
             <TextBlock
                 x:Name="Author"
                 Grid.Row="1"
                 FontSize="11"
-                Text="author"
+                Text="{Binding Author}"
                 TextWrapping="Wrap" />
         </Grid>
     </Grid>

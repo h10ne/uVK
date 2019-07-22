@@ -1,17 +1,16 @@
-﻿using System.Windows.Controls;
-using uVK.ViewModel;
+﻿using uVK.ViewModel;
 
 namespace uVK.View
 {
     /// <summary>
     /// Логика взаимодействия для SettingsPage.xaml
     /// </summary>
-    public partial class SettingsPage : Page
+    public partial class SettingsPage
     {
         public SettingsPage()
         {
             InitializeComponent();
-            this.DataContext = new MessageViewModel();
+            DataContext = new MessageViewModel();
         }
     }
 }
