@@ -17,6 +17,7 @@ using ReactiveUI.Fody.Helpers;
 using DynamicData.Binding;
 using DynamicData;
 using System.Reactive.Linq;
+using System.Collections.Generic;
 
 namespace uVK.ViewModel
 {
@@ -29,6 +30,14 @@ namespace uVK.ViewModel
             if (SaveAudiosList.Items.Count != 0)
                 NoSaveMusic = Visibility.Hidden;
             PlayerModel.Audio = ApiDatas.Api.Audio.Get(new AudioGetParams { Count = ApiDatas.Api.Audio.GetCount(UserDatas.UserId) }).ToList();
+            List<VkNet.Model.Attachments.Audio> _audios = new List<VkNet.Model.Attachments.Audio>();
+            foreach (var audio in PlayerModel.Audio)
+            {
+                if(audio.Url!=null)
+                    _audios.Add(audio);
+            }
+
+            PlayerModel.Audio = _audios;
             State = PlayerModel.PlaylistState.Own;
             //Асинхронная загрузка аудио пользователя
             var sourceOwnMusic = new SourceList<OneAudioViewModel>();

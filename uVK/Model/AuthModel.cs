@@ -5,6 +5,7 @@ using VkNet.Enums.Filters;
 using VkNet;
 using VkNet.AudioBypassService.Extensions;
 using System.IO;
+using System.Windows;
 using uVK.Helpers;
 
 namespace uVK.Model
@@ -69,41 +70,51 @@ namespace uVK.Model
         }
         public static bool GetAuth(string login = null, string password = null)
         {
-
-            _service = new ServiceCollection();
-            _service.AddAudioBypass();
-            ApiDatas.Api = new VkApi(_service);
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
+            try
             {
-                UserDatasToSerialize datas1 = new UserDatasToSerialize();
-                Des_Ser.Deserialize(ref datas1);
-                UserDatas.Name = datas1.Name;
-                UserDatas.Surname = datas1.Surname;
-                UserDatas.Token = datas1.Token;
-                UserDatas.UserId = datas1.User_id;
-            }
-            if (UserDatas.Token != null)
-            {
-                AuthToken();
-            }
-            else
-            {
-                Auth2Fact(login, password);
-                if (ApiDatas.Api.IsAuthorized)
+                _service = new ServiceCollection();
+                _service.AddAudioBypass();
+                ApiDatas.Api = new VkApi(_service);
+                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
                 {
+                    UserDatasToSerialize datas1 = new UserDatasToSerialize();
+                    DesSer.Deserialize(ref datas1);
+                    UserDatas.Name = datas1.Name;
+                    UserDatas.Surname = datas1.Surname;
+                    UserDatas.Token = datas1.Token;
+                    UserDatas.UserId = datas1.User_id;
+                }
+                if (UserDatas.Token != null)
+                {
+                    AuthToken();
+                }
+                else
+                {
+                    Auth2Fact(login, password);
+                    if (ApiDatas.Api.IsAuthorized)
                     {
-                        ApiDatas.IsAuth = true;
-                        UserDatasToSerialize datas = new UserDatasToSerialize {Token = ApiDatas.Api.Token};
-                        if (ApiDatas.Api.UserId != null) datas.User_id = ApiDatas.Api.UserId.Value;
-                        datas.Name = ApiDatas.Api.Account.GetProfileInfo().FirstName;
-                        datas.Surname = ApiDatas.Api.Account.GetProfileInfo().LastName;
-                        Des_Ser.Serialize(datas);
+                        {
+                            ApiDatas.IsAuth = true;
+                            UserDatasToSerialize datas = new UserDatasToSerialize { Token = ApiDatas.Api.Token };
+                            if (ApiDatas.Api.UserId != null) datas.User_id = ApiDatas.Api.UserId.Value;
+                            datas.Name = ApiDatas.Api.Account.GetProfileInfo().FirstName;
+                            datas.Surname = ApiDatas.Api.Account.GetProfileInfo().LastName;
+                            DesSer.Serialize(datas);
 
-                        System.Diagnostics.Process.Start(System.Windows.Application.ResourceAssembly.Location);
-                        System.Windows.Application.Current.Shutdown();
+                            System.Diagnostics.Process.Start(System.Windows.Application.ResourceAssembly.Location);
+                            System.Windows.Application.Current.Shutdown();
+                        }
                     }
                 }
+                return false;
             }
+            catch
+            {
+                MessageBox.Show("Произошла ошибка. Введите свои данные еще раз.", "Ошибка авторизации",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                File.Delete((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"));
+            }
+
             return false;
         }
     }

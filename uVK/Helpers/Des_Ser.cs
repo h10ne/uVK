@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 namespace uVK.Helpers
 {
-    public static class Des_Ser
+    public static class DesSer
     {
         public static void Serialize(UserDatasToSerialize datas)
         {
