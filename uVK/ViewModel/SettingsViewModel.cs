@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Reactive.Linq;
-using System.Runtime.Remoting.Lifetime;
 using System.Threading.Tasks;
-using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using uVK.Helpers;
@@ -17,30 +14,30 @@ namespace uVK.ViewModel
         #region variables
 
         private bool _isDownloadiong;
-        private bool _isLeaveGroups = false;
+        private bool _isLeaveGroups;
         [Reactive] public string GroupCleanText { get; set; } = "Выполнить очистку";
         [Reactive] public int DownloadValue { get; set; } = 0;
         [Reactive] public int MaxDownloadValue { get; set; } = 1;
         [Reactive] public string SaveAudiosText { get; set; } = "Сохранить все аудиозаписи";
         [Reactive] public bool CheckGroupAdmin { get; set; }
         [Reactive] public bool CheckGroupWallClear { get; set; }
-        private string _groupAFKDays;
+        private string _groupAfkDays;
         public string GroupAFKDays
         {
-            get => _groupAFKDays;
+            get => _groupAfkDays;
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    this.RaiseAndSetIfChanged(ref _groupAFKDays, value);
+                    this.RaiseAndSetIfChanged(ref _groupAfkDays, value);
                     return;
                 }
                 if (char.IsDigit(value[value.Length-1]))
                 {
-                    this.RaiseAndSetIfChanged(ref _groupAFKDays, value);
+                    this.RaiseAndSetIfChanged(ref _groupAfkDays, value);
                     return;
                 }
-                this.RaiseAndSetIfChanged(ref _groupAFKDays, _groupAFKDays);
+                this.RaiseAndSetIfChanged(ref _groupAfkDays, _groupAfkDays);
             }
         }
 

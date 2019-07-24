@@ -84,7 +84,6 @@
                                     <Rectangle.Fill>
                                         <!--  (RU) Картинка аудиозаписи / (EN) Audio Picture  -->
                                         <ImageBrush
-                                            x:Name="MusicImage"
                                             ImageSource="{Binding ImageSource}"
                                             Stretch="UniformToFill" />
                                     </Rectangle.Fill>
@@ -240,10 +239,6 @@
                     <!--  (RU) Свои аудизаписи / (EN) Your audio  -->
                     <TabItem Margin="0,0,0,0" Header="Моя музыка">
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="139*"/>
-                                <ColumnDefinition Width="254*"/>
-                            </Grid.ColumnDefinitions>
                             <!--  (RU) Поиск по музыке / (EN) Music search  -->
                             <TextBox
                                 Name="MusicSearch"
@@ -264,7 +259,6 @@
                                 ItemsSource="{Binding Path=UserAudios, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedIndex="{Binding SelectedIndex}"
                                 SelectedItem="{Binding SelectedItem}" 
-                                Grid.ColumnSpan="2" 
                                 Grid.Column="0">
 
                                 <ListView.ItemTemplate>

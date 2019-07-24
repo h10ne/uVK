@@ -6,10 +6,11 @@
     xmlns:local="clr-namespace:uVK"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:uVK.ViewModel"
-    Title="MainWindow"
+    Title="uVK"
     Width="900"
     Height="550"
     MinWidth="900"
+    Icon="/Images/logo.png"
     Style="{StaticResource Dr0bWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
