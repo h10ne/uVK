@@ -8,6 +8,7 @@ namespace uVK.Styles.AudioStyles
     public partial class FriendsMusic : UserControl
     {
         public long Id;
+
         public FriendsMusic()
         {
             InitializeComponent();

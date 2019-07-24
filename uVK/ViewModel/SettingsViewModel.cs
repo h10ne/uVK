@@ -9,7 +9,7 @@ using uVK.Model;
 
 namespace uVK.ViewModel
 {
-    class SettingsViewModel:ReactiveObject
+    class SettingsViewModel : ReactiveObject
     {
         #region variables
 
@@ -22,6 +22,7 @@ namespace uVK.ViewModel
         [Reactive] public bool CheckGroupAdmin { get; set; }
         [Reactive] public bool CheckGroupWallClear { get; set; }
         private string _groupAfkDays;
+
         public string GroupAFKDays
         {
             get => _groupAfkDays;
@@ -32,25 +33,22 @@ namespace uVK.ViewModel
                     this.RaiseAndSetIfChanged(ref _groupAfkDays, value);
                     return;
                 }
-                if (char.IsDigit(value[value.Length-1]))
+
+                if (char.IsDigit(value[value.Length - 1]))
                 {
                     this.RaiseAndSetIfChanged(ref _groupAfkDays, value);
                     return;
                 }
+
                 this.RaiseAndSetIfChanged(ref _groupAfkDays, _groupAfkDays);
             }
         }
 
         #endregion
+
         public RelayCommand Logout
         {
-            get
-            {
-                return new RelayCommand((obj) =>
-                {
-                    SettingsModel.Logout();
-                });
-            }
+            get { return new RelayCommand((obj) => { SettingsModel.Logout(); }); }
         }
 
         public RelayCommand SaveAllAudioAsyncCommand
@@ -74,10 +72,11 @@ namespace uVK.ViewModel
                                 "\\uVK\\SaveAudios\\" +
                                 SettingsModel.GetRightNameAudio(audio));
                         }
+
                         SaveAudiosText = "Завершено!";
                     });
                     //await SettingsModel.SaveAllAudioAsync(SaveAudiosText);
-                }, (obj => !_isDownloadiong ));
+                }, (obj => !_isDownloadiong));
             }
         }
 
@@ -85,7 +84,7 @@ namespace uVK.ViewModel
         {
             get
             {
-                return  new RelayCommand(async (obj) =>
+                return new RelayCommand(async (obj) =>
                 {
                     await Task.Factory.StartNew(() =>
                     {
@@ -98,8 +97,10 @@ namespace uVK.ViewModel
                         {
                             current++;
                             GroupCleanText = $"Проверяем {current}/{count}";
-                            SettingsModel.AddOrNotGroup(leaveGroups,group,CheckGroupAdmin,CheckGroupWallClear,int.Parse(GroupAFKDays));
+                            SettingsModel.AddOrNotGroup(leaveGroups, group, CheckGroupAdmin, CheckGroupWallClear,
+                                int.Parse(GroupAFKDays));
                         }
+
                         current = 0;
                         count = leaveGroups.Count;
                         foreach (var group in leaveGroups)
@@ -107,6 +108,7 @@ namespace uVK.ViewModel
                             GroupCleanText = $"Выходим {current}/{count}";
                             ApiDatas.Api.Groups.Leave(group);
                         }
+
                         GroupCleanText = "Завершено";
                     });
 

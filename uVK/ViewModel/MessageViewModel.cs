@@ -2,8 +2,7 @@
 
 namespace uVK.ViewModel
 {
-    class MessageViewModel:ReactiveObject
+    class MessageViewModel : ReactiveObject
     {
-
     }
 }

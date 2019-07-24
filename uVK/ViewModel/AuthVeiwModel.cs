@@ -14,14 +14,9 @@ namespace uVK.ViewModel
 
         public RelayCommand Restore
         {
-            get
-            {
-                return new RelayCommand((obj) =>
-                {
-                    AuthModel.Restore();
-                });
-            }
+            get { return new RelayCommand((obj) => { AuthModel.Restore(); }); }
         }
+
         public RelayCommand Authorize
         {
             get

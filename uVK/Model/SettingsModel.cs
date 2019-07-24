@@ -14,7 +14,8 @@ namespace uVK.Model
     {
         public static void Logout()
         {
-            File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin");
+            File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                        "\\uVK\\UserDatas\\data.bin");
             System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();
         }
@@ -27,12 +28,13 @@ namespace uVK.Model
                 foreach (var audio in PlayerModel.Audio)
                 {
                     string Name = audio.Artist + "↨" + audio.Title;
-                    var per = Name.LastIndexOfAny(new[] { '\\', '/', '?', ':', '*', '/', '>', '<', '|', '\"' });
+                    var per = Name.LastIndexOfAny(new[] {'\\', '/', '?', ':', '*', '/', '>', '<', '|', '\"'});
                     while (per != -1)
                     {
                         Name = Name.Remove(per, 1);
-                        per = Name.LastIndexOfAny(new[] { '\\', '/', '?', ':', '*', '/', '>', '<', '|', '\"' });
+                        per = Name.LastIndexOfAny(new[] {'\\', '/', '?', ':', '*', '/', '>', '<', '|', '\"'});
                     }
+
                     webClient.DownloadFile(audio.Url,
                         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\" +
                         Name);
@@ -43,17 +45,18 @@ namespace uVK.Model
         public static string GetRightNameAudio(VkNet.Model.Attachments.Audio audio)
         {
             string Name = audio.Artist + "↨" + audio.Title;
-            var per = Name.LastIndexOfAny(new[] { '\\', '/', '?', ':', '*', '/', '>', '<', '|', '\"' });
+            var per = Name.LastIndexOfAny(new[] {'\\', '/', '?', ':', '*', '/', '>', '<', '|', '\"'});
             while (per != -1)
             {
                 Name = Name.Remove(per, 1);
-                per = Name.LastIndexOfAny(new[] { '\\', '/', '?', ':', '*', '/', '>', '<', '|', '\"' });
+                per = Name.LastIndexOfAny(new[] {'\\', '/', '?', ':', '*', '/', '>', '<', '|', '\"'});
             }
 
             return Name;
         }
 
-        public static void AddOrNotGroup(List<long> leaveGroups, VkNet.Model.Group group, bool isadmin, bool wallclear, int days)
+        public static void AddOrNotGroup(List<long> leaveGroups, VkNet.Model.Group group, bool isadmin, bool wallclear,
+            int days)
         {
             if (isadmin)
                 if (group.IsAdmin == true)
@@ -61,13 +64,14 @@ namespace uVK.Model
                     Debug.WriteLine("Вы админ");
                     return;
                 }
+
             if (ApiDatas.Api.Groups.GetById(null, group.Id.ToString(), GroupsFields.All)[0].Deactivated != null)
             {
                 leaveGroups.Add(group.Id);
                 Debug.WriteLine("Заблокирована!");
                 return;
-
             }
+
             //next step if not banned
             var lastposts = ApiDatas.Api.Wall.Get(new VkNet.Model.RequestParams.WallGetParams
             {
@@ -81,6 +85,7 @@ namespace uVK.Model
                     Debug.WriteLine("Стена пустая!");
                     return;
                 }
+
             try
             {
                 if (lastposts[0].IsPinned.GetValueOrDefault() != true)
@@ -98,15 +103,14 @@ namespace uVK.Model
                     leaveGroups.Add(group.Id);
                     Debug.WriteLine("Мертва!");
                     return;
-
                 }
+
                 Debug.WriteLine("Все в порядке!");
             }
             catch
             {
                 // ignored
             }
-
         }
 
         public static async void GroupCleaner(int days, bool wallclear, bool isadmin)
@@ -125,12 +129,14 @@ namespace uVK.Model
                             Debug.WriteLine("Вы админ");
                             continue;
                         }
+
                     if (ApiDatas.Api.Groups.GetById(null, group.Id.ToString(), GroupsFields.All)[0].Deactivated != null)
                     {
                         leaveGroups.Add(group.Id);
                         Debug.WriteLine("Заблокирована!");
                         continue;
                     }
+
                     //next step if not banned
                     var lastposts = ApiDatas.Api.Wall.Get(new VkNet.Model.RequestParams.WallGetParams
                     {
@@ -150,19 +156,22 @@ namespace uVK.Model
                         if (lastposts[0].IsPinned.GetValueOrDefault() != true)
                         {
                             var qwe = lastposts[0].Date.GetValueOrDefault().Date;
-                            if (DateTime.Now - lastposts[0].Date.GetValueOrDefault().Date > new TimeSpan(days, 0, 0, 0, 0))
+                            if (DateTime.Now - lastposts[0].Date.GetValueOrDefault().Date >
+                                new TimeSpan(days, 0, 0, 0, 0))
                             {
                                 leaveGroups.Add(group.Id);
                                 Debug.WriteLine("Мертва!");
                                 continue;
                             }
                         }
-                        else if (DateTime.Now - lastposts[1].Date.GetValueOrDefault().Date > new TimeSpan(days, 0, 0, 0, 0))
+                        else if (DateTime.Now - lastposts[1].Date.GetValueOrDefault().Date >
+                                 new TimeSpan(days, 0, 0, 0, 0))
                         {
                             leaveGroups.Add(group.Id);
                             Debug.WriteLine("Мертва!");
                             continue;
                         }
+
                         Debug.WriteLine("Все в порядке!");
                     }
                     catch
@@ -170,6 +179,7 @@ namespace uVK.Model
                         // ignored
                     }
                 }
+
                 Debug.WriteLine($"Вы покинете {leaveGroups.Count} групп. Нажмите любую кнопку, что бы подтвердить");
                 foreach (var groupId in leaveGroups)
                 {
@@ -177,6 +187,7 @@ namespace uVK.Model
                     ApiDatas.Api.Groups.Leave(groupId);
                     Debug.WriteLine($"Успешно!");
                 }
+
                 Debug.Write($"Нажмите любую кнопку, что бы закрыть программу");
             });
         }

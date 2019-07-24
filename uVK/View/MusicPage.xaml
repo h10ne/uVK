@@ -246,19 +246,20 @@
                                 Margin="5,10,5,0"
                                 VerticalAlignment="Top"
                                 Tag="Поиск по музыке"
-                                Text="{Binding SearchRequest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                                Text="{Binding SearchRequest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Grid.ColumnSpan="2">
                                 <TextBox.InputBindings>
                                     <KeyBinding Key="Enter" Command="{Binding Path=SearchCommand}" />
                                 </TextBox.InputBindings>
                             </TextBox>
                             <!--  (RU) Список своих аудио / (EN) List of your audio  -->
-                            <ListView  
+                            <ListView
                                 x:Name="UserMusicList"
                                 Margin="0,50,5,0"
                                 BorderThickness="0"
                                 ItemsSource="{Binding Path=UserAudios, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedIndex="{Binding SelectedIndex}"
-                                SelectedItem="{Binding SelectedItem}" 
+                                SelectedItem="{Binding SelectedItem}"
                                 Grid.Column="0">
 
                                 <ListView.ItemTemplate>
@@ -280,7 +281,7 @@
                     <TabItem Header="Плейлисты">
                         <Grid>
                             <Grid
-                                  x:Name="AlbumsGrid">
+                                x:Name="AlbumsGrid">
                                 <!--  (RU) Разметка / (EN)  -->
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -289,21 +290,21 @@
                                 <!--  (RU) Прокрутка списка плейлистов / (EN) Scroll through playlists  -->
                                 <ScrollViewer
                                     Grid.Column="0"
-                                    
+
                                     HorizontalScrollBarVisibility="Auto"
                                     VerticalScrollBarVisibility="Auto">
 
                                     <Grid
                                         x:Name="GridAlbums">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <ListView 
+                                        <ListView
                                             Width="auto"
                                             BorderBrush="{x:Null}"
                                             ItemsSource="{Binding PlayLists}"
-                                            SelectedIndex="{Binding CurrentPlaylistIndex}" 
+                                            SelectedIndex="{Binding CurrentPlaylistIndex}"
                                             Grid.ColumnSpan="2">
 
                                             <ListView.ItemsPanel>
@@ -314,10 +315,10 @@
                                                         Orientation="Horizontal" />
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
-                                            
+
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
-                                                    <controls:PlayList/>
+                                                    <controls:PlayList />
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
                                         </ListView>
@@ -399,18 +400,18 @@
                     <TabItem Header="Друзья">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <!-- Список друзей с открытыми аудио-->
                             <Grid
                                 Grid.RowSpan="2"
                                 Grid.Column="1">
-                                <ListView 
+                                <ListView
                                     BorderBrush="{x:Null}"
                                     ItemsSource="{Binding FriendsMusic}"
                                     SelectedIndex="{Binding Path=FriendsMusicSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -420,13 +421,13 @@
                                         <DataTemplate>
                                             <controls:FriendsMusic />
                                             <!-- Self binding -->
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </Grid>
                             <!-- Альбомы друга-->
                             <Border Grid.Row="0"
-                                  Grid.Column="0">
+                                    Grid.Column="0">
                                 <ListView
                                     BorderThickness="0"
                                     ItemsSource="{Binding FriendsMusicAlbums}"
@@ -436,7 +437,7 @@
 
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <controls:PlayList/>
+                                            <controls:PlayList />
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
 
@@ -473,7 +474,7 @@
 
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <controls:AudioList/>
+                                            <controls:AudioList />
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
 

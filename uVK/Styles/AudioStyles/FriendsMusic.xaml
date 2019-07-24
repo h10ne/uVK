@@ -19,8 +19,8 @@
             RadiusX="40"
             RadiusY="40">
             <Rectangle.Fill>
-                
-                <ImageBrush x:Name="UserPhoto" ImageSource="{Binding ImageSourse}"/>
+
+                <ImageBrush x:Name="UserPhoto" ImageSource="{Binding ImageSourse}" />
             </Rectangle.Fill>
         </Rectangle>
         <Border Grid.Column="2">

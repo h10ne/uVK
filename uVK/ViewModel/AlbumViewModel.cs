@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace uVK.ViewModel
 {
-    public class AlbumViewModel: ReactiveObject
+    public class AlbumViewModel : ReactiveObject
     {
         [Reactive] public string Author { get; set; }
         [Reactive] public string Title { get; set; }

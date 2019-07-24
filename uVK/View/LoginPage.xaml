@@ -43,7 +43,8 @@
                                 Margin="0,15"
                                 Fill="#DEE2E8" />
                             <!--  (RU) Логин / (EN) Login  -->
-                            <TextBox Tag="Номер телефона или email" Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Tag="Номер телефона или email"
+                                     Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <!--  (RU) Пароль / (EN) Password  -->
                             <TextBox
                                 Margin="0,5,0,15"

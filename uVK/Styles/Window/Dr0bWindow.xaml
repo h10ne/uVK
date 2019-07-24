@@ -133,7 +133,8 @@
                                     Background="#FFF"
                                     CornerRadius="1.5" />
                                 <!--  (RU) Граница окна и тени / (EN) Window border and dropshadown  -->
-                                <Border Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}" CornerRadius="1.5">
+                                <Border Background="{Binding ForegroundLightBrush, FallbackValue=#FFFFFF}"
+                                        CornerRadius="1.5">
                                     <Border.Effect>
                                         <DropShadowEffect Opacity="0.4" ShadowDepth="0" />
                                     </Border.Effect>

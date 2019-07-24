@@ -8,16 +8,17 @@
         AllowsTransparency="True" Background="Transparent" WindowStyle="None"
         Title="" Height="170" Width="310" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 
-    <Border  Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+    <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
 
-        <Grid >
+        <Grid>
 
             <Border x:Name="Container"
                     Background="{StaticResource BackgroundLightBrush}"
                     CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" />
 
             <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
-                    Background="{Binding ForegroundLightBrush, FallbackValue=White}" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                    Background="{Binding ForegroundLightBrush, FallbackValue=White}"
+                    MouseLeftButtonDown="Border_MouseLeftButtonDown">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0" Opacity="0.2" />
                 </Border.Effect>
@@ -37,7 +38,7 @@
 
                 </Grid.RowDefinitions>
 
-                <Grid  Grid.Column="0" Panel.ZIndex="1" MouseLeftButtonDown="Grid_MouseLeftButtonDown" >
+                <Grid Grid.Column="0" Panel.ZIndex="1" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
 
                     <Grid.ColumnDefinitions>
 
@@ -54,8 +55,9 @@
 
                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="5">
                             <StackPanel Height="27">
-                                <TextBlock HorizontalAlignment="Center"  Margin="0,0,0,-5">
-                                           <Run Text="u" Foreground="{StaticResource Dr0bOrangeBrush}" /><Run Text="VK" Foreground="{StaticResource Dr0bBlueBrush}" />
+                                <TextBlock HorizontalAlignment="Center" Margin="0,0,0,-5">
+                                    <Run Text="u" Foreground="{StaticResource Dr0bOrangeBrush}" />
+                                    <Run Text="VK" Foreground="{StaticResource Dr0bBlueBrush}" />
                                 </TextBlock>
                             </StackPanel>
                         </Viewbox>
@@ -63,7 +65,8 @@
                     </Grid>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <Button Command="{Binding CloseCommand}" Content="X" Click="Button_Click" Foreground="{DynamicResource Dr0bBlackBrush}" />
+                        <Button Command="{Binding CloseCommand}" Content="X" Click="Button_Click"
+                                Foreground="{DynamicResource Dr0bBlackBrush}" />
                     </StackPanel>
 
                 </Grid>
@@ -75,18 +78,18 @@
                      Height="25"
                      TextWrapping="Wrap"
                      VerticalAlignment="Center"
-                     Width="265" 
-                     TextAlignment="Left" 
-                     FontSize="13"/>
+                     Width="265"
+                     TextAlignment="Left"
+                     FontSize="13" />
 
             <Button Name="btnOK"
-                    Content="Продолжить" 
+                    Content="Продолжить"
                     HorizontalAlignment="Center"
                     Margin="0,0,0,13"
                     VerticalAlignment="Bottom"
                     Height="37"
                     Width="100"
-                    FontSize="12" Background="#FF6BA1FF" BorderBrush="#FFACACAC" Click="BtnOK_Click"/>
+                    FontSize="12" Background="#FF6BA1FF" BorderBrush="#FFACACAC" Click="BtnOK_Click" />
 
         </Grid>
 
@@ -97,8 +100,7 @@
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
             CaptionHeight="{Binding TitleHeight}"
             CornerRadius="0"
-            GlassFrameThickness="0"
-            />
+            GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
 </Window>

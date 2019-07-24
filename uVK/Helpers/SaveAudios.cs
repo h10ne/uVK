@@ -10,6 +10,7 @@ namespace uVK.Helpers
         public readonly string Url;
         public readonly string Artist;
         public readonly string Title;
+
         public StructSaveAudios(string artist, string title, string url)
         {
             Url = url;
@@ -21,11 +22,14 @@ namespace uVK.Helpers
     public static class SaveAudios
     {
         public static List<StructSaveAudios> Audio { get; private set; }
+
         public static void AddCache()
         {
             Audio = new List<StructSaveAudios>();
-            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\");
-            string pathToSave = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\";
+            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                      "\\uVK\\SaveAudios\\");
+            string pathToSave = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                "\\uVK\\SaveAudios\\";
             Directory.GetFiles(pathToSave, "*.*");
             List<string> filesname = Directory.GetFiles(pathToSave, "*.*").ToList();
             foreach (var name in filesname)

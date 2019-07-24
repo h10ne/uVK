@@ -16,6 +16,7 @@ namespace uVK.Helpers
 
             return new Uri($"{audioUrl.Scheme}://{audioUrl.Host}{string.Join("", segments)}{audioUrl.Query}");
         }
+
         public static string ConvertTimeToString(int durration)
         {
             if (durration <= 0) throw new ArgumentOutOfRangeException(nameof(durration));

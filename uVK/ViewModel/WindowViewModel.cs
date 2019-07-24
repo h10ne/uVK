@@ -15,18 +15,21 @@ namespace uVK.ViewModel
     public class WindowViewModel : ReactiveObject
     {
         #region Private window Member
+
         private static Window _mWindow;
         private Page _mainPage;
+
         #endregion
 
         #region Window public  Properties
+
         [Reactive] public double WindowMinimumWidth { get; set; } = 500;
         [Reactive] public double WindowMinimumHeight { get; set; } = 135;
         public Page AuthPage = new LoginPage();
-        [Reactive]
-        public Page CurrentPage { get; set; }
+        [Reactive] public Page CurrentPage { get; set; }
 
         [Reactive] public double Opacity { get; set; } = -1;
+
         #endregion
 
         #region Commands
@@ -44,13 +47,15 @@ namespace uVK.ViewModel
         public WindowViewModel()
         {
             CurrentPage = AuthPage;
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                            "\\uVK\\UserDatas\\data.bin"))
             {
                 AuthModel.GetAuth();
                 _mainPage = new MainPage();
                 CurrentPage = _mainPage;
             }
-            MinimizeCommand = new RelayCommand((obj) => 
+
+            MinimizeCommand = new RelayCommand((obj) =>
             {
                 //Minimize();
                 //Thread.Sleep(500);
@@ -70,10 +75,8 @@ namespace uVK.ViewModel
                 }
             }, (obj) => CurrentPage == _mainPage);
             CloseCommand = new RelayCommand((obj) => _mWindow.Close());
-
         }
 
         #endregion
-
     }
 }

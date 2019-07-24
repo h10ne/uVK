@@ -16,7 +16,6 @@ namespace uVK.Model
 {
     public static class PlayerModel
     {
-
         public enum PlaylistState
         {
             Own,
@@ -28,6 +27,7 @@ namespace uVK.Model
         }
 
         #region Variables
+
         public static List<VkNet.Model.Attachments.Audio> SearchAudios { get; private set; }
         public static List<VkNet.Model.Attachments.Audio> Audio { get; set; }
         public static int OffsetOwn = 0;
@@ -35,8 +35,8 @@ namespace uVK.Model
         public static int OffsetSave = 0;
         public static readonly WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
         public static Playlist Playlist;
-        #endregion
 
+        #endregion
 
 
         public static async void GetPlaylistsAsync(long userId, SourceList<AlbumViewModel> playlistSource)
@@ -57,14 +57,15 @@ namespace uVK.Model
                     {
                         Debug.Assert(pl.OwnerId != null, "pl.OwnerId != null");
                         var user =
-                            ApiDatas.Api.Users.Get(userIds: new[] { pl.OwnerId.Value }, ProfileFields.FirstName)[0];
+                            ApiDatas.Api.Users.Get(userIds: new[] {pl.OwnerId.Value}, ProfileFields.FirstName)[0];
                         author = $"{user.FirstName} {user.LastName}";
                     }
 
                     AlbumViewModel playList = new AlbumViewModel()
                     {
                         ImageSource = cover,
-                        Audios = ApiDatas.Api.Audio.Get(new AudioGetParams() { PlaylistId = pl.Id, OwnerId = pl.OwnerId}).ToList(),
+                        Audios = ApiDatas.Api.Audio.Get(new AudioGetParams() {PlaylistId = pl.Id, OwnerId = pl.OwnerId})
+                            .ToList(),
                         Author = author,
                         Title = pl.Title
                     };
@@ -75,7 +76,8 @@ namespace uVK.Model
 
         private static ObservableCollectionExtended<VkNet.Model.User> GetFriendsWithOpenAudio()
         {
-            ObservableCollectionExtended<VkNet.Model.User> friendsWithOpenAudio = new ObservableCollectionExtended<VkNet.Model.User>();
+            ObservableCollectionExtended<VkNet.Model.User> friendsWithOpenAudio =
+                new ObservableCollectionExtended<VkNet.Model.User>();
             var friends = ApiDatas.Api.Friends.Get(new FriendsGetParams
             {
                 Fields = ProfileFields.All,
@@ -88,6 +90,7 @@ namespace uVK.Model
                     friendsWithOpenAudio.Add(friend);
                 }
             }
+
             return friendsWithOpenAudio;
         }
 
@@ -111,11 +114,12 @@ namespace uVK.Model
             });
         }
 
-        public static async void AddAudioToListAsync(List<VkNet.Model.Attachments.Audio> audios, SourceList<OneAudioViewModel> list, double width = 800, long id = -1)
+        public static async void AddAudioToListAsync(List<VkNet.Model.Attachments.Audio> audios,
+            SourceList<OneAudioViewModel> list, double width = 800, long id = -1)
         {
             await Task.Factory.StartNew(() =>
             {
-                if(id!=-1)
+                if (id != -1)
                 {
                     audios = ApiDatas.Api.Audio.Get(new AudioGetParams()
                     {
@@ -125,7 +129,6 @@ namespace uVK.Model
 
                 foreach (var audio in audios)
                 {
-
                     if (audio.Url == null)
                         continue;
 
@@ -155,7 +158,8 @@ namespace uVK.Model
 
         public static void GetUserAudio()
         {
-            Audio = ApiDatas.Api.Audio.Get(new AudioGetParams { Count = ApiDatas.Api.Audio.GetCount(UserDatas.UserId) }).ToList();
+            Audio = ApiDatas.Api.Audio.Get(new AudioGetParams {Count = ApiDatas.Api.Audio.GetCount(UserDatas.UserId)})
+                .ToList();
             var audios = new List<VkNet.Model.Attachments.Audio>();
             foreach (var audio in Audio)
             {
@@ -165,6 +169,7 @@ namespace uVK.Model
                     audios.Add(audio);
                 }
             }
+
             Audio = audios;
         }
 
@@ -187,6 +192,7 @@ namespace uVK.Model
             {
                 return;
             }
+
             SearchAudios = SearchAudios = ApiDatas.Api.Audio.Search(new AudioSearchParams
             {
                 Query = searchRequest,
@@ -203,7 +209,7 @@ namespace uVK.Model
         public static void GetPlaylists(long userId, ObservableCollection<AlbumViewModel> playlistSourse)
         {
             playlistSourse.Clear();
-                //var albums = ApiDatas.Api.Audio
+            //var albums = ApiDatas.Api.Audio
             var playlists = ApiDatas.Api.Audio.GetPlaylists(userId).ToList();
             foreach (var pl in playlists)
             {
@@ -221,7 +227,8 @@ namespace uVK.Model
                     author = $"{user.FirstName} {user.LastName}";
                 }
 
-                var audios = ApiDatas.Api.Audio.Get(new AudioGetParams() {PlaylistId = pl.Id, OwnerId = pl.OwnerId}).ToList();
+                var audios = ApiDatas.Api.Audio.Get(new AudioGetParams() {PlaylistId = pl.Id, OwnerId = pl.OwnerId})
+                    .ToList();
                 AlbumViewModel playList = new AlbumViewModel()
                 {
                     ImageSource = cover,
@@ -236,7 +243,8 @@ namespace uVK.Model
         public static ObservableCollectionExtended<FriendsMusicViewModel> DownloadFriendsWithOpenAudio()
         {
             var friends = GetFriendsWithOpenAudio();
-            ObservableCollectionExtended<FriendsMusicViewModel> friendsMusics = new ObservableCollectionExtended<FriendsMusicViewModel>();
+            ObservableCollectionExtended<FriendsMusicViewModel> friendsMusics =
+                new ObservableCollectionExtended<FriendsMusicViewModel>();
             foreach (var friend in friends)
             {
                 friendsMusics.Add(new FriendsMusicViewModel()
@@ -246,11 +254,13 @@ namespace uVK.Model
                     ImageSourse = friend.Photo200.ToString()
                 });
             }
+
             return friendsMusics;
         }
 
 
-        public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios, ObservableCollection<OneAudioViewModel> musicList, bool fromSearch = false)
+        public static void AddAudioToList(List<VkNet.Model.Attachments.Audio> audios,
+            ObservableCollection<OneAudioViewModel> musicList, bool fromSearch = false)
         {
             //MusicList = new ObservableCollection<AudioList>();
             musicList.Clear();
@@ -288,6 +298,7 @@ namespace uVK.Model
                 {
                     continue;
                 }
+
                 string imageSource = "/Images/ImageMusic.png";
                 try
                 {
@@ -310,7 +321,7 @@ namespace uVK.Model
                 });
             }
         }
+
         #endregion
     }
 }
-

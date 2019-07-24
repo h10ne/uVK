@@ -66,8 +66,8 @@ namespace uVK.Model
                 });
                 File.Delete("someFile.tempdat");
             }
-
         }
+
         public static bool GetAuth(string login = null, string password = null)
         {
             try
@@ -75,7 +75,8 @@ namespace uVK.Model
                 _service = new ServiceCollection();
                 _service.AddAudioBypass();
                 ApiDatas.Api = new VkApi(_service);
-                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"))
+                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                "\\uVK\\UserDatas\\data.bin"))
                 {
                     UserDatasToSerialize datas1 = new UserDatasToSerialize();
                     DesSer.Deserialize(ref datas1);
@@ -84,6 +85,7 @@ namespace uVK.Model
                     UserDatas.Token = datas1.Token;
                     UserDatas.UserId = datas1.User_id;
                 }
+
                 if (UserDatas.Token != null)
                 {
                     AuthToken();
@@ -95,7 +97,7 @@ namespace uVK.Model
                     {
                         {
                             ApiDatas.IsAuth = true;
-                            UserDatasToSerialize datas = new UserDatasToSerialize { Token = ApiDatas.Api.Token };
+                            UserDatasToSerialize datas = new UserDatasToSerialize {Token = ApiDatas.Api.Token};
                             if (ApiDatas.Api.UserId != null) datas.User_id = ApiDatas.Api.UserId.Value;
                             datas.Name = ApiDatas.Api.Account.GetProfileInfo().FirstName;
                             datas.Surname = ApiDatas.Api.Account.GetProfileInfo().LastName;
@@ -106,6 +108,7 @@ namespace uVK.Model
                         }
                     }
                 }
+
                 return false;
             }
             catch

@@ -43,10 +43,10 @@
     <Color x:Key="WhiteColor">#fff</Color>
     <SolidColorBrush x:Key="Dr0bForeground-Primary" Color="{DynamicResource WhiteColor}" />
     <SolidColorBrush x:Key="ButtonForeground" Color="{DynamicResource WhiteColor}" />
-    
-    <SolidColorBrush x:Key="Dr0bForeground-Muted" Color="{DynamicResource Dr0bMutedForegroundColor}"/>
+
+    <SolidColorBrush x:Key="Dr0bForeground-Muted" Color="{DynamicResource Dr0bMutedForegroundColor}" />
     <Color x:Key="Dr0bMutedForegroundColor">#777</Color>
-    
+
     <!--#region (RU) Цвет текста / (EN) Font color-->
     <!--  (RU) Заголовок / (EN) Headline  -->
     <Color x:Key="DefaultForegroundColor">#333</Color>
@@ -134,7 +134,7 @@
     <Color x:Key="Dr0bWarningColor5">#8a6d3b</Color>
     <SolidColorBrush x:Key="Dr0bForeground-Warning" Color="{DynamicResource Dr0bWarningColor5}" />
     <SolidColorBrush x:Key="Dr0bBorderBrush-Warning3" Color="{DynamicResource Dr0bOrangeColor5}" />
-    
+
     <!--  (RU) Красный цвет / (EN) Red color  -->
     <Color x:Key="Dr0bDangerColor1">#d9534f</Color>
     <SolidColorBrush x:Key="Dr0bBackground-Danger1" Color="{DynamicResource Dr0bDangerColor1}" />

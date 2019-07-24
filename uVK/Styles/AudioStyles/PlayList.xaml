@@ -19,12 +19,12 @@
                 Margin="5"
                 RadiusY="3"
                 RadiusX="3">
-                <Rectangle.Fill>                    
+                <Rectangle.Fill>
                     <!--  (RU) Картинка плейлиста / (EN) PayList Picture  -->
-                    <ImageBrush 
-                        x:Name="PlayListImage" 
+                    <ImageBrush
+                        x:Name="PlayListImage"
                         Stretch="UniformToFill"
-                        ImageSource="{Binding ImageSource}"/>
+                        ImageSource="{Binding ImageSource}" />
                 </Rectangle.Fill>
             </Rectangle>
             <!--  (RU) Кнопка пауза / (EN) Pause button  -->

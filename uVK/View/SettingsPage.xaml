@@ -80,8 +80,8 @@
                                 <TextBlock TextWrapping="WrapWithOverflow"
                                            TextAlignment="Center">
                                     <Run FontSize="15"
-                                         FontFamily="sans-serif" 
-                                         Text="{Binding SaveAudiosText}"/>
+                                         FontFamily="sans-serif"
+                                         Text="{Binding SaveAudiosText}" />
                                 </TextBlock>
                             </Button>
                         </StackPanel>
@@ -91,8 +91,8 @@
                         Margin="10"
                         HorizontalAlignment="Left">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Border
                             BorderBrush="#DEE2E8"
@@ -105,7 +105,7 @@
                                     HorizontalAlignment="Center"
                                     FontSize="20"
                                     Foreground="#FF6BA1FF"
-                                    Text="Очистка групп"/>
+                                    Text="Очистка групп" />
                                 <!--  (RU) Разделительная линия / (EN) Dividing line  -->
                                 <Rectangle
                                     Height="1"
@@ -115,64 +115,64 @@
                                     Name="GridSecond"
                                     Margin="10,5">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <TextBlock 
+                                    <TextBlock
                                         Grid.Column="0"
                                         Grid.Row="0"
                                         Text="Выходить, если я админ"
-                                        Margin="0,0,0,10"/>
+                                        Margin="0,0,0,10" />
                                     <Grid
                                         Grid.Column="0"
                                         Grid.Row="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <TextBlock
                                             Grid.Row="0"
-                                            Text="Максимальное количество"/>
+                                            Text="Максимальное количество" />
                                         <TextBlock
                                             Grid.Row="1"
-                                            Text="дней без постов"/>
+                                            Text="дней без постов" />
                                     </Grid>
-                                    <TextBlock 
+                                    <TextBlock
                                         VerticalAlignment="Center"
                                         Grid.Column="0"
                                         Grid.Row="2"
                                         Margin="0,0,5,10"
-                                        Text="Выходить, если стена пустая"/>
+                                        Text="Выходить, если стена пустая" />
                                     <CheckBox
                                         IsChecked="{Binding CheckGroupAdmin}"
                                         Grid.Column="1"
                                         Grid.Row="0"
-                                        HorizontalAlignment="Center"/>
+                                        HorizontalAlignment="Center" />
                                     <TextBox
                                         Text="{Binding GroupAFKDays, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Grid.Column="1"
                                         Grid.Row="1"
                                         Width="30"
                                         Height="30"
-                                        HorizontalAlignment="Center"/>
+                                        HorizontalAlignment="Center" />
                                     <CheckBox
                                         IsChecked="{Binding CheckGroupWallClear}"
                                         Grid.Column="1"
                                         Grid.Row="2"
-                                        HorizontalAlignment="Center"/>
+                                        HorizontalAlignment="Center" />
                                     <Button
-                                        Grid.ColumnSpan="2" 
+                                        Grid.ColumnSpan="2"
                                         Grid.Column="0"
                                         Grid.Row="3"
                                         Content="{Binding GroupCleanText}"
                                         Command="{Binding Path=LeaveGroups}"
-                                        Width="{Binding ElementName=GridSecond, Path=ActualWidth}"/>
+                                        Width="{Binding ElementName=GridSecond, Path=ActualWidth}" />
                                 </Grid>
 
 

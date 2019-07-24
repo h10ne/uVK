@@ -10,6 +10,6 @@ namespace uVK.Styles.AudioStyles
         public AudioList()
         {
             InitializeComponent();
-        }        
+        }
     }
 }

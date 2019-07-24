@@ -9,6 +9,7 @@ namespace uVK.Styles.AudioStyles
     public partial class PlayList : UserControl
     {
         public List<VkNet.Model.Attachments.Audio> Audios = new List<VkNet.Model.Attachments.Audio>();
+
         public PlayList()
         {
             InitializeComponent();
