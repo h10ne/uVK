@@ -110,9 +110,9 @@ namespace uVK.Model
             }
             catch
             {
-                MessageBox.Show("Произошла ошибка. Введите свои данные еще раз.", "Ошибка авторизации",
+                var result = MessageBox.Show("Произошла ошибка. Введите свои данные еще раз.", "Ошибка авторизации",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-                File.Delete((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\UserDatas\\data.bin"));
+                SettingsModel.Logout();
             }
 
             return false;
