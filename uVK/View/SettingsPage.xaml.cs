@@ -10,7 +10,7 @@ namespace uVK.View
         public SettingsPage()
         {
             InitializeComponent();
-            DataContext = new MessageViewModel();
+            DataContext = new SettingsViewModel();
         }
     }
 }

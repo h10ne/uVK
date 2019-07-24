@@ -39,26 +39,6 @@ namespace uVK.Model
         #endregion
 
 
-        public static void Search(string searchRequest, ObservableCollection<OneAudioViewModel> musicList)
-        {
-            //Task.Run(() =>
-            //{
-            if (searchRequest == String.Empty)
-            {
-                return;
-            }
-            SearchAudios = SearchAudios = ApiDatas.Api.Audio.Search(new AudioSearchParams
-            {
-                Query = searchRequest,
-                Autocomplete = true,
-                SearchOwn = true,
-                Count = 50,
-                PerformerOnly = false
-            }).ToList();
-            AddAudioToList(SearchAudios, musicList, true);
-
-            //});
-        }
 
         public static async void GetPlaylistsAsync(long userId, SourceList<AlbumViewModel> playlistSource)
         {
@@ -78,7 +58,7 @@ namespace uVK.Model
                     {
                         Debug.Assert(pl.OwnerId != null, "pl.OwnerId != null");
                         var user =
-                            ApiDatas.Api.Users.Get(userIds: new long[] { pl.OwnerId.Value }, ProfileFields.FirstName)[0];
+                            ApiDatas.Api.Users.Get(userIds: new[] { pl.OwnerId.Value }, ProfileFields.FirstName)[0];
                         author = $"{user.FirstName} {user.LastName}";
                     }
 
@@ -112,8 +92,6 @@ namespace uVK.Model
             return friendsWithOpenAudio;
         }
 
-
-
         public static async void DownloadFriendsWithOpenAudioAsync(SourceList<FriendsMusicViewModel> friendsMusics)
         {
             await Task.Factory.StartNew(() =>
@@ -133,7 +111,6 @@ namespace uVK.Model
                 }
             });
         }
-
 
         public static async void AddAudioToListAsync(List<VkNet.Model.Attachments.Audio> audios, SourceList<OneAudioViewModel> list, double width = 800, long id = -1)
         {
@@ -177,6 +154,23 @@ namespace uVK.Model
             });
         }
 
+        public static void GetUserAudio()
+        {
+            Audio = ApiDatas.Api.Audio.Get(new AudioGetParams { Count = ApiDatas.Api.Audio.GetCount(UserDatas.UserId) }).ToList();
+            var audios = new List<VkNet.Model.Attachments.Audio>();
+            foreach (var audio in Audio)
+            {
+                if (audio.Url != null)
+                {
+                    audio.Url = Decoder.DecodeAudioUrl(audio.Url);
+                    audios.Add(audio);
+                }
+            }
+            Audio = audios;
+        }
+
+        #region Синхронно
+
         public static void AddCacheToList(ListBox musicList)
         {
             musicList.Items.Clear();
@@ -186,7 +180,26 @@ namespace uVK.Model
             }
         }
 
-        #region Синхронно
+        public static void Search(string searchRequest, ObservableCollection<OneAudioViewModel> musicList)
+        {
+            //Task.Run(() =>
+            //{
+            if (searchRequest == String.Empty)
+            {
+                return;
+            }
+            SearchAudios = SearchAudios = ApiDatas.Api.Audio.Search(new AudioSearchParams
+            {
+                Query = searchRequest,
+                Autocomplete = true,
+                SearchOwn = true,
+                Count = 50,
+                PerformerOnly = false
+            }).ToList();
+            AddAudioToList(SearchAudios, musicList, true);
+
+            //});
+        }
 
         public static void GetPlaylists(long userId, ObservableCollection<AlbumViewModel> playlistSourse)
         {
@@ -205,7 +218,7 @@ namespace uVK.Model
                 {
                     Debug.Assert(pl.OwnerId != null, "pl.OwnerId != null");
                     var user =
-                        ApiDatas.Api.Users.Get(userIds: new long[] {pl.OwnerId.Value}, ProfileFields.FirstName)[0];
+                        ApiDatas.Api.Users.Get(userIds: new[] {pl.OwnerId.Value}, ProfileFields.FirstName)[0];
                     author = $"{user.FirstName} {user.LastName}";
                 }
 

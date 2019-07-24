@@ -19,6 +19,8 @@
                     <!--  (RU) Разметка / (EN) Markup  -->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <!--  (RU) Активность / (EN) Activity  -->
@@ -27,7 +29,9 @@
                         HorizontalAlignment="Left"
                         BorderBrush="#DEE2E8"
                         BorderThickness="1"
-                        CornerRadius="3">
+                        Grid.Column="0"
+                        CornerRadius="3"
+                        Width="200">
                         <StackPanel Margin="10" Orientation="Vertical">
                             <!--  (RU) Заголовок / (EN) Headline  -->
                             <TextBlock
@@ -43,7 +47,6 @@
                                 Fill="#DEE2E8" />
                             <!--  (RU) Вечный онлайн вкл/выкл / (EN) Eternal online on / off  -->
                             <CheckBox
-                                Name="OnlineCheckBox"
                                 Height="24"
                                 HorizontalAlignment="Center"
                                 Content="Вечный онлайн" />
@@ -60,8 +63,124 @@
                                 Height="1"
                                 Margin="0,10"
                                 Fill="#DEE2E8" />
+                            <TextBlock
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                FontSize="20"
+                                Foreground="#FF6BA1FF"
+                                Text="Аудиозаписи" />
+                            <Rectangle
+                                Height="1"
+                                Margin="5,10"
+                                Fill="#DEE2E8" />
+                            <Button
+                                Height="auto"
+                                Margin="5,5"
+                                Width="160"
+                                Command="{Binding Path=SaveAllAudioAsyncCommand}">
+                                <TextBlock TextWrapping="WrapWithOverflow"
+                                           TextAlignment="Center">
+                                    <Run FontSize="15"
+                                         FontFamily="sans-serif" 
+                                         Text="{Binding SaveAudiosText}"/>
+                                </TextBlock>
+                            </Button>
                         </StackPanel>
                     </Border>
+                    <Grid
+                        Grid.Column="1"
+                        Margin="10"
+                        HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border
+                            BorderBrush="#DEE2E8"
+                            BorderThickness="1"
+                            CornerRadius="3"
+                            Grid.Column="0">
+                            <StackPanel>
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Center"
+                                    FontSize="20"
+                                    Foreground="#FF6BA1FF"
+                                    Text="Очистка групп"/>
+                                <!--  (RU) Разделительная линия / (EN) Dividing line  -->
+                                <Rectangle
+                                    Height="1"
+                                    Margin="5,10"
+                                    Fill="#DEE2E8" />
+                                <Grid
+                                    Name="GridSecond"
+                                    Margin="10,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock 
+                                        Grid.Column="0"
+                                        Grid.Row="0"
+                                        Text="Выходить, если я админ"
+                                        Margin="0,0,0,10"/>
+                                    <Grid
+                                        Grid.Column="0"
+                                        Grid.Row="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Text="Максимальное количество"/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Text="дней без постов"/>
+                                    </Grid>
+                                    <TextBlock 
+                                        VerticalAlignment="Center"
+                                        Grid.Column="0"
+                                        Grid.Row="2"
+                                        Margin="0,0,5,10"
+                                        Text="Выходить, если стена пустая"/>
+                                    <CheckBox
+                                        IsChecked="{Binding CheckGroupAdmin}"
+                                        Grid.Column="1"
+                                        Grid.Row="0"
+                                        HorizontalAlignment="Center"/>
+                                    <TextBox
+                                        Text="{Binding GroupAFKDays, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Column="1"
+                                        Grid.Row="1"
+                                        Width="30"
+                                        Height="30"
+                                        HorizontalAlignment="Center"/>
+                                    <CheckBox
+                                        IsChecked="{Binding CheckGroupWallClear}"
+                                        Grid.Column="1"
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Center"/>
+                                    <Button
+                                        Grid.ColumnSpan="2" 
+                                        Grid.Column="0"
+                                        Grid.Row="3"
+                                        Content="Выполнить очистку"
+                                        Command="{Binding LeaveGroups}"
+                                        Width="{Binding ElementName=GridSecond, Path=ActualWidth}"/>
+                                </Grid>
+
+
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

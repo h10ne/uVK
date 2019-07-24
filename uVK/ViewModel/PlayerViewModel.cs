@@ -28,15 +28,7 @@ namespace uVK.ViewModel
             PlayerModel.AddCacheToList(SaveAudiosList);
             if (SaveAudiosList.Items.Count != 0)
                 NoSaveMusic = Visibility.Hidden;
-            PlayerModel.Audio = ApiDatas.Api.Audio.Get(new AudioGetParams { Count = ApiDatas.Api.Audio.GetCount(UserDatas.UserId) }).ToList();
-            List<VkNet.Model.Attachments.Audio> audios = new List<VkNet.Model.Attachments.Audio>();
-            foreach (var audio in PlayerModel.Audio)
-            {
-                if(audio.Url!=null)
-                    audios.Add(audio);
-            }
-
-            PlayerModel.Audio = audios;
+            PlayerModel.GetUserAudio();
             State = PlayerModel.PlaylistState.Own;
             //Асинхронная загрузка аудио пользователя
             var sourceOwnMusic = new SourceList<OneAudioViewModel>();
