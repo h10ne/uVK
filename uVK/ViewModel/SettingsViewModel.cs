@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using uVK.Helpers;
 using uVK.Model;
+using VkNet.Enums.Filters;
+using VkNet.Model.RequestParams;
 
 namespace uVK.ViewModel
 {
@@ -15,13 +18,37 @@ namespace uVK.ViewModel
 
         private bool _isDownloadiong;
         private bool _isLeaveGroups;
+        private bool _isCleanFriends;
         [Reactive] public string GroupCleanText { get; set; } = "Выполнить очистку";
+        [Reactive] public string FriendCleanText { get; set; } = "Выполнить очистку";
         [Reactive] public int DownloadValue { get; set; } = 0;
         [Reactive] public int MaxDownloadValue { get; set; } = 1;
         [Reactive] public string SaveAudiosText { get; set; } = "Сохранить все аудиозаписи";
         [Reactive] public bool CheckGroupAdmin { get; set; }
+        [Reactive] public bool CheckFriendSub { get; set; }
         [Reactive] public bool CheckGroupWallClear { get; set; }
         private string _groupAfkDays;
+        private string _friendAfkDays;
+        public string FriendAFKDays
+        {
+            get => _friendAfkDays;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.RaiseAndSetIfChanged(ref _friendAfkDays, value);
+                    return;
+                }
+
+                if (char.IsDigit(value[value.Length - 1]))
+                {
+                    this.RaiseAndSetIfChanged(ref _friendAfkDays, value);
+                    return;
+                }
+
+                this.RaiseAndSetIfChanged(ref _friendAfkDays, _friendAfkDays);
+            }
+        }
 
         public string GroupAFKDays
         {
@@ -80,6 +107,45 @@ namespace uVK.ViewModel
             }
         }
 
+        public RelayCommand FriendsClean
+        {
+            get
+            {
+                return new RelayCommand(async (obj) =>
+                {
+                    await Task.Factory.StartNew(() =>
+                    {
+                        _isCleanFriends = true;
+                        List<long> friendsToDelete = new List<long>();
+                        var friends = ApiDatas.Api.Friends.Get(new FriendsGetParams(){Fields = ProfileFields.All});
+                        int current = 0;
+                        int count = friends.Count;
+                        foreach (var friend in friends)
+                        {
+                            current++;
+                            FriendCleanText = $"Проверяем {current}/{count}";
+                            SettingsModel.GetFriendCleanResult(friendsToDelete,friend, int.Parse(FriendAFKDays));
+                        }
+                        if (CheckFriendSub)
+                        {
+                            friendsToDelete.AddRange(SettingsModel.GetSubs());
+                        }
+
+                        current = 0;
+                        count = friendsToDelete.Count;
+                        //foreach (var friend in friendsToDelete)
+                        //{
+                        //    current++;
+                        //    FriendCleanText = $"Удаляем {current}/{count}";
+                        //    ApiDatas.Api.Friends.Delete(friend);
+                        //}
+
+                        FriendCleanText = "Завершено";
+                    });
+                }, o => !string.IsNullOrEmpty(FriendAFKDays) && !_isCleanFriends);
+            }
+        }
+
         public RelayCommand LeaveGroups
         {
             get
@@ -103,17 +169,22 @@ namespace uVK.ViewModel
 
                         current = 0;
                         count = leaveGroups.Count;
+                        string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                      "\\uVK\\Logs\\";
+                        Directory.CreateDirectory(path);
+                        StreamWriter writer = new StreamWriter(path + "LeaveGroupsLog.txt", true);
                         foreach (var group in leaveGroups)
                         {
+                            writer.WriteLine($@"https://vk.com/public{group}");
                             GroupCleanText = $"Выходим {current}/{count}";
                             ApiDatas.Api.Groups.Leave(group);
                         }
-
+                        writer.Close();
                         GroupCleanText = "Завершено";
                     });
 
                     //SettingsModel.GroupCleaner(int.Parse(GroupAFKDays),CheckGroupWallClear, CheckGroupAdmin);
-                }, o => !string.IsNullOrEmpty(GroupAFKDays) && _isLeaveGroups);
+                }, o => !string.IsNullOrEmpty(GroupAFKDays) && !_isLeaveGroups);
             }
         }
     }

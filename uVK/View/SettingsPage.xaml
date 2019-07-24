@@ -123,6 +123,11 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <TextBlock
                                         Grid.Column="0"
@@ -173,6 +178,63 @@
                                         Content="{Binding GroupCleanText}"
                                         Command="{Binding Path=LeaveGroups}"
                                         Width="{Binding ElementName=GridSecond, Path=ActualWidth}" />
+                                    
+                                    <TextBlock
+                                        Grid.ColumnSpan="2" 
+                                        Grid.Column="0"
+                                        Grid.Row="4"
+                                        Margin="5"
+                                        HorizontalAlignment="Center"
+                                        FontSize="20"
+                                        Foreground="#FF6BA1FF"
+                                        Text="Очистка друзей" />
+                                    <!--  (RU) Разделительная линия / (EN) Dividing line  -->
+                                    <Rectangle
+                                        Grid.ColumnSpan="2" 
+                                        Grid.Column="0"
+                                        Grid.Row="5"
+                                        Height="1"
+                                        Margin="5,10"
+                                        Fill="#DEE2E8" />
+                                    <Grid
+                                        Grid.Column="0"
+                                        Grid.Row="6"
+                                        Margin="0,0,0,10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Text="Максимальное количество" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Text="дней оффлайн" />
+                                    </Grid>
+                                    <TextBlock
+                                        Margin="0,0,0,10"
+                                        Grid.Column="0"
+                                        Grid.Row="7"
+                                        Text="Удалить непринятые заявки"/>
+                                    <Button
+                                        Grid.Column="0"
+                                        Grid.Row="8"
+                                        Grid.ColumnSpan="2"
+                                        Command="{Binding FriendsClean}"
+                                        Content="{Binding FriendCleanText}"
+                                        Width="{Binding ElementName=GridSecond, Path=ActualWidth}"/>
+                                    <CheckBox
+                                        IsChecked="{Binding CheckFriendSub}"
+                                        Grid.Column="1"
+                                        Grid.Row="7"
+                                        HorizontalAlignment="Center" />
+                                    <TextBox
+                                        Text="{Binding FriendAFKDays, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Column="1"
+                                        Grid.Row="6"
+                                        Width="30"
+                                        Height="30"
+                                        HorizontalAlignment="Center" />
                                 </Grid>
 
 

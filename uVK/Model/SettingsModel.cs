@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using uVK.Helpers;
 using VkNet.Enums.Filters;
+using VkNet.Model.RequestParams;
 
 namespace uVK.Model
 {
@@ -40,6 +43,74 @@ namespace uVK.Model
                         Name);
                 }
             });
+        }
+
+        public static void GetFriendCleanResult(List<long> friends, VkNet.Model.User friend, int days)
+        {
+            if (friend.IsDeactivated)
+            {
+                friends.Add(friend.Id);
+                return;
+            }
+            DateTime lastSeen;
+            if (friend.LastSeen.Time != null)
+            {
+                lastSeen = friend.LastSeen.Time.Value;
+            }
+            else
+            {
+                return;
+            }
+            if (DateTime.Now - lastSeen > new TimeSpan(days, 0, 0, 0))
+            {
+                friends.Add(friend.Id);
+            }
+        }
+
+        public static void FriendsCleaner(int days, bool subCleaner)
+        {
+            List<long> friendsToDelete = new List<long>();
+            var friends = ApiDatas.Api.Friends.Get(new FriendsGetParams()
+            {
+                Fields = ProfileFields.All
+            });
+            foreach (var friend in friends)
+            {
+                if (friend.IsDeactivated)
+                {
+                    friendsToDelete.Add(friend.Id);
+                    continue;
+                }
+
+                DateTime lastSeen;
+                if (friend.LastSeen.Time != null)
+                {
+                    lastSeen = friend.LastSeen.Time.Value;
+                }
+                else
+                {
+                    continue;
+                }
+                if (DateTime.Now - lastSeen > new TimeSpan(days,0,0,0))
+                {
+                    friendsToDelete.Add(friend.Id);
+                    continue;
+                }
+            }
+            if (subCleaner)
+                friendsToDelete.AddRange(GetSubs());
+            foreach (var friend in friendsToDelete)
+            {
+                ApiDatas.Api.Friends.Delete(friend);
+            }
+        }
+        public static List<long> GetSubs()
+        {
+            var friends = ApiDatas.Api.Friends.GetRequests(new FriendsGetRequestsParams()
+            {
+                Out = true
+            }).Items.ToList();
+            return friends;
         }
 
         public static string GetRightNameAudio(VkNet.Model.Attachments.Audio audio)
