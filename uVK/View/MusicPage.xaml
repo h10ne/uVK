@@ -73,7 +73,6 @@
                             <Border
                                 Width="67"
                                 Margin="2"
-                                Background="#E9EDF1"
                                 CornerRadius="3">
                                 <!--  (RU) Круглые углы картинки / (EN) Round corners pictures  -->
                                 <Rectangle
@@ -87,6 +86,13 @@
                                             ImageSource="{Binding ImageSource}"
                                             Stretch="UniformToFill" />
                                     </Rectangle.Fill>
+                                    <Rectangle.Effect>
+                                        <DropShadowEffect 
+                                            Color="Black" 
+                                            BlurRadius="10" 
+                                            ShadowDepth="0" 
+                                            Direction="0" />
+                                    </Rectangle.Effect>
                                 </Rectangle>
                             </Border>
                         </StackPanel>
@@ -318,7 +324,7 @@
 
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
-                                                    <controls:PlayList />
+                                                    <controls:PlayList/>
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
                                         </ListView>

@@ -133,12 +133,12 @@ namespace uVK.ViewModel
 
                         current = 0;
                         count = friendsToDelete.Count;
-                        //foreach (var friend in friendsToDelete)
-                        //{
-                        //    current++;
-                        //    FriendCleanText = $"Удаляем {current}/{count}";
-                        //    ApiDatas.Api.Friends.Delete(friend);
-                        //}
+                        foreach (var friend in friendsToDelete)
+                        {
+                            current++;
+                            FriendCleanText = $"Удаляем {current}/{count}";
+                            ApiDatas.Api.Friends.Delete(friend);
+                        }
 
                         FriendCleanText = "Завершено";
                     });

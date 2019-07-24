@@ -12,10 +12,11 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0"
+              Margin="5,5,5,5">
             <Rectangle
-                Width="115"
-                Height="115"
+                Width="107"
+                Height="107"
                 Margin="5"
                 RadiusY="3"
                 RadiusX="3">
@@ -24,8 +25,16 @@
                     <ImageBrush
                         x:Name="PlayListImage"
                         Stretch="UniformToFill"
-                        ImageSource="{Binding ImageSource}" />
+                        ImageSource="{Binding ImageSource}" >
+                    </ImageBrush>
                 </Rectangle.Fill>
+                <Rectangle.Effect>
+                    <DropShadowEffect 
+                        Color="Black" 
+                        BlurRadius="20" 
+                        ShadowDepth="0" 
+                        Direction="0" />
+                </Rectangle.Effect>
             </Rectangle>
             <!--  (RU) Кнопка пауза / (EN) Pause button  -->
             <!-- <ToggleButton
