@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using VkNet.Model.RequestParams;
 using uVK.Helpers;
-using uVK.Helpers.States;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using VkNet.Enums.Filters;

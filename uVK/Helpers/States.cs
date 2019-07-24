@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using uVK.Model;
 using uVK.ViewModel;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace uVK.Helpers.States
+namespace uVK.Helpers
 {
     public class Playlist
     {

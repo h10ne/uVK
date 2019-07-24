@@ -9,7 +9,6 @@ using System.Windows.Controls;
 using uVK.Helpers;
 using uVK.Model;
 using VkNet.Model.RequestParams;
-using uVK.Helpers.States;
 using System.Windows.Threading;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

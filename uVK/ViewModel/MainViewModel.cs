@@ -6,7 +6,6 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using uVK.Helpers;
 using uVK.Model;
-using uVK.Pages;
 using uVK.View;
 
 namespace uVK.ViewModel
