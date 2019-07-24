@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Reactive.Linq;
+using System.Runtime.Remoting.Lifetime;
 using System.Threading.Tasks;
 using DynamicData;
 using ReactiveUI;
@@ -15,7 +17,8 @@ namespace uVK.ViewModel
         #region variables
 
         private bool _isDownloadiong;
-
+        private bool _isLeaveGroups = false;
+        [Reactive] public string GroupCleanText { get; set; } = "Выполнить очистку";
         [Reactive] public int DownloadValue { get; set; } = 0;
         [Reactive] public int MaxDownloadValue { get; set; } = 1;
         [Reactive] public string SaveAudiosText { get; set; } = "Сохранить все аудиозаписи";
@@ -42,9 +45,6 @@ namespace uVK.ViewModel
         }
 
         #endregion
-        public SettingsViewModel()
-        {       
-        }
         public RelayCommand Logout
         {
             get
@@ -60,13 +60,26 @@ namespace uVK.ViewModel
         {
             get
             {
-                return new RelayCommand((obj) =>
+                return new RelayCommand(async (obj) =>
                 {
-                    //_isDownloadiong = true;
-
-                    SettingsModel.SaveAllAudioAsync(SaveAudiosText);
-                    
-
+                    _isDownloadiong = true;
+                    await Task.Factory.StartNew(() =>
+                    {
+                        int count = PlayerModel.Audio.Count;
+                        int current = 0;
+                        WebClient client = new WebClient();
+                        foreach (var audio in PlayerModel.Audio)
+                        {
+                            current++;
+                            SaveAudiosText = $"Скачивается {current}/{count}";
+                            client.DownloadFile(audio.Url,
+                                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                "\\uVK\\SaveAudios\\" +
+                                SettingsModel.GetRightNameAudio(audio));
+                        }
+                        SaveAudiosText = "Завершено!";
+                    });
+                    //await SettingsModel.SaveAllAudioAsync(SaveAudiosText);
                 }, (obj => !_isDownloadiong ));
             }
         }
@@ -75,10 +88,33 @@ namespace uVK.ViewModel
         {
             get
             {
-                return  new RelayCommand((obj) =>
+                return  new RelayCommand(async (obj) =>
                 {
-                    SettingsModel.GroupCleaner(int.Parse(GroupAFKDays),CheckGroupWallClear, CheckGroupAdmin);
-                }, o => !string.IsNullOrEmpty(GroupAFKDays));
+                    await Task.Factory.StartNew(() =>
+                    {
+                        _isLeaveGroups = true;
+                        List<long> leaveGroups = new List<long>();
+                        var groups = ApiDatas.Api.Groups.Get(new VkNet.Model.RequestParams.GroupsGetParams());
+                        int count = groups.Count;
+                        int current = 0;
+                        foreach (var group in groups)
+                        {
+                            current++;
+                            GroupCleanText = $"Проверяем {current}/{count}";
+                            SettingsModel.AddOrNotGroup(leaveGroups,group,CheckGroupAdmin,CheckGroupWallClear,int.Parse(GroupAFKDays));
+                        }
+                        current = 0;
+                        count = leaveGroups.Count;
+                        foreach (var group in leaveGroups)
+                        {
+                            GroupCleanText = $"Выходим {current}/{count}";
+                            ApiDatas.Api.Groups.Leave(group);
+                        }
+                        GroupCleanText = "Завершено";
+                    });
+
+                    //SettingsModel.GroupCleaner(int.Parse(GroupAFKDays),CheckGroupWallClear, CheckGroupAdmin);
+                }, o => !string.IsNullOrEmpty(GroupAFKDays) && _isLeaveGroups);
             }
         }
     }

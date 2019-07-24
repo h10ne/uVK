@@ -321,7 +321,7 @@ namespace uVK.Helpers.States
                 else
                     PlayerModel.OffsetOwn++;
             }
-            PlayerModel.Player.URL = Decoder.DecodeAudioUrl(PlayerModel.Audio[PlayerModel.OffsetOwn].Url).ToString();
+            PlayerModel.Player.URL = PlayerModel.Audio[PlayerModel.OffsetOwn].Url.ToString();
             main.MaximumTimePosition = PlayerModel.Audio[PlayerModel.OffsetOwn].Duration.ToString();            
 
             main.CurrentTimePositionValue = 0;

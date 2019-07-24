@@ -171,8 +171,8 @@
                                         Grid.ColumnSpan="2" 
                                         Grid.Column="0"
                                         Grid.Row="3"
-                                        Content="Выполнить очистку"
-                                        Command="{Binding LeaveGroups}"
+                                        Content="{Binding GroupCleanText}"
+                                        Command="{Binding Path=LeaveGroups}"
                                         Width="{Binding ElementName=GridSecond, Path=ActualWidth}"/>
                                 </Grid>
 
