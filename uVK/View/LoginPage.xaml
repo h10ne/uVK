@@ -51,7 +51,6 @@
                                 Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <!--  (RU) Текст (ошибка авторизации) / (EN) Text (authorization error)  -->
                             <TextBlock
-                                Name="AuthorizationError"
                                 Margin="0,-10,0,5"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"

@@ -98,7 +98,7 @@
                     <!--  (RU) Выйти / (EN) Log-out  -->
                     <Button
                         Height="45"
-                        Command="{Binding SettingsClickCommand}"
+                        Command="{Binding LogoutCommand}"
                         Style="{StaticResource LogOutButton}" />
                 </StackPanel>
             </Border>

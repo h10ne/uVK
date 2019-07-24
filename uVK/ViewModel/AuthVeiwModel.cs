@@ -10,7 +10,7 @@ namespace uVK.ViewModel
     {
         [Reactive] public string Login { get; set; }
         [Reactive] public string Password { get; set; }
-        [Reactive] public Visibility ErrorVisibility { get; set; }
+        [Reactive] public Visibility ErrorVisibility { get; set; } = Visibility.Hidden;
 
         public RelayCommand Restore
         {
