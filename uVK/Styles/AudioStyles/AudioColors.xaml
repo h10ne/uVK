@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:uVK">
 
-    <Color x:Key="Dr0bVolumColorBlue">#7E9EC1</Color>
-    <SolidColorBrush x:Key="Dr0bBlueVolum" />
+    <Color x:Key="Dr0BVolumColorBlue">#7E9EC1</Color>
+    <SolidColorBrush x:Key="Dr0BBlueVolum" />
 
     <!-- Colors -->
     <Color x:Key="ForegroundColor">#414042</Color>

@@ -56,8 +56,8 @@
                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="5">
                             <StackPanel Height="27">
                                 <TextBlock HorizontalAlignment="Center" Margin="0,0,0,-5">
-                                    <Run Text="u" Foreground="{StaticResource Dr0bOrangeBrush}" />
-                                    <Run Text="VK" Foreground="{StaticResource Dr0bBlueBrush}" />
+                                    <Run Text="u" Foreground="{StaticResource Dr0BOrangeBrush}" />
+                                    <Run Text="VK" Foreground="{StaticResource Dr0BBlueBrush}" />
                                 </TextBlock>
                             </StackPanel>
                         </Viewbox>
@@ -66,14 +66,14 @@
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button Command="{Binding CloseCommand}" Content="X" Click="Button_Click"
-                                Foreground="{DynamicResource Dr0bBlackBrush}" />
+                                Foreground="{DynamicResource Dr0BBlackBrush}" />
                     </StackPanel>
 
                 </Grid>
 
             </Grid>
 
-            <TextBox Name="tbCode"
+            <TextBox Name="TbCode"
                      Tag="  Введите код"
                      Height="25"
                      TextWrapping="Wrap"
@@ -82,7 +82,7 @@
                      TextAlignment="Left"
                      FontSize="13" />
 
-            <Button Name="btnOK"
+            <Button Name="BtnOk"
                     Content="Продолжить"
                     HorizontalAlignment="Center"
                     Margin="0,0,0,13"

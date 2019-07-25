@@ -102,7 +102,7 @@
     </Style>
 
     <!--  (RU) Стиль окна / (EN) Window style  -->
-    <Style x:Key="Dr0bWindow" TargetType="{x:Type Window}">
+    <Style x:Key="Dr0BWindow" TargetType="{x:Type Window}">
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome

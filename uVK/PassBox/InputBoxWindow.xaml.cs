@@ -31,7 +31,7 @@ namespace uVK.PassBox
 
         private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
-            File.WriteAllText("someFile.tempdat", tbCode.Text);
+            File.WriteAllText("someFile.tempdat", TbCode.Text);
             Close();
         }
     }

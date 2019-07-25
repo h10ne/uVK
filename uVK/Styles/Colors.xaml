@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:System="clr-namespace:System;assembly=mscorlib">
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <Color x:Key="BackgroundLight">#efefef</Color>
     <SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroundLight}" />
@@ -21,31 +21,31 @@
     <Color x:Key="ForegroundDark">#bdbdbd</Color>
     <SolidColorBrush x:Key="ForegroundDarkBrush" Color="{StaticResource ForegroundDark}" />
 
-    <Color x:Key="Dr0bBlue">#3099c5</Color>
-    <SolidColorBrush x:Key="Dr0bBlueBrush" Color="{StaticResource Dr0bBlue}" />
+    <Color x:Key="Dr0BBlue">#3099c5</Color>
+    <SolidColorBrush x:Key="Dr0BBlueBrush" Color="{StaticResource Dr0BBlue}" />
 
-    <Color x:Key="Dr0bOrange">#ffa800</Color>
-    <SolidColorBrush x:Key="Dr0bOrangeBrush" Color="{StaticResource Dr0bOrange}" />
+    <Color x:Key="Dr0BOrange">#ffa800</Color>
+    <SolidColorBrush x:Key="Dr0BOrangeBrush" Color="{StaticResource Dr0BOrange}" />
 
-    <Color x:Key="Dr0bRed">#ff4747</Color>
-    <SolidColorBrush x:Key="Dr0bRedBrush" Color="{StaticResource Dr0bRed}" />
+    <Color x:Key="Dr0BRed">#ff4747</Color>
+    <SolidColorBrush x:Key="Dr0BRedBrush" Color="{StaticResource Dr0BRed}" />
 
-    <Color x:Key="Dr0bGreen">#00c541</Color>
-    <SolidColorBrush x:Key="Dr0bGreenBrush" Color="{StaticResource Dr0bGreen}" />
+    <Color x:Key="Dr0BGreen">#00c541</Color>
+    <SolidColorBrush x:Key="Dr0BGreenBrush" Color="{StaticResource Dr0BGreen}" />
 
-    <Color x:Key="Dr0bBlack">#000000</Color>
-    <SolidColorBrush x:Key="Dr0bBlackBrush" Color="{StaticResource Dr0bBlack}" />
+    <Color x:Key="Dr0BBlack">#000000</Color>
+    <SolidColorBrush x:Key="Dr0BBlackBrush" Color="{StaticResource Dr0BBlack}" />
 
-    <Color x:Key="Dr0bVolumColorBlue">#7E9EC1</Color>
+    <Color x:Key="Dr0BVolumColorBlue">#7E9EC1</Color>
 
 
     <!--  (RU) Цвет текста кнопок / (EN) Button text color  -->
     <Color x:Key="WhiteColor">#fff</Color>
-    <SolidColorBrush x:Key="Dr0bForeground-Primary" Color="{DynamicResource WhiteColor}" />
+    <SolidColorBrush x:Key="Dr0BForeground-Primary" Color="{DynamicResource WhiteColor}" />
     <SolidColorBrush x:Key="ButtonForeground" Color="{DynamicResource WhiteColor}" />
 
-    <SolidColorBrush x:Key="Dr0bForeground-Muted" Color="{DynamicResource Dr0bMutedForegroundColor}" />
-    <Color x:Key="Dr0bMutedForegroundColor">#777</Color>
+    <SolidColorBrush x:Key="Dr0BForeground-Muted" Color="{DynamicResource Dr0BMutedForegroundColor}" />
+    <Color x:Key="Dr0BMutedForegroundColor">#777</Color>
 
     <!--#region (RU) Цвет текста / (EN) Font color-->
     <!--  (RU) Заголовок / (EN) Headline  -->
@@ -61,96 +61,96 @@
     <!--#endregion-->
 
     <!--  (RU) Стандартный цвет (Серый) / (EN) Standart color (Gray)  -->
-    <Color x:Key="Dr0bDefaultColor1">#fff</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Default1" Color="{DynamicResource Dr0bDefaultColor1}" />
+    <Color x:Key="Dr0BDefaultColor1">#fff</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Default1" Color="{DynamicResource Dr0BDefaultColor1}" />
 
-    <Color x:Key="Dr0bDefaultColor2">#ccc</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Default1" Color="{DynamicResource Dr0bDefaultColor2}" />
+    <Color x:Key="Dr0BDefaultColor2">#ccc</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Default1" Color="{DynamicResource Dr0BDefaultColor2}" />
 
-    <Color x:Key="Dr0bDefaultColor3">#f5f5f5</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Default2" Color="{DynamicResource Dr0bDefaultColor3}" />
+    <Color x:Key="Dr0BDefaultColor3">#f5f5f5</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Default2" Color="{DynamicResource Dr0BDefaultColor3}" />
 
-    <Color x:Key="Dr0bDefaultColor4">#ddd</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Default2" Color="{DynamicResource Dr0bDefaultColor4}" />
+    <Color x:Key="Dr0BDefaultColor4">#ddd</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Default2" Color="{DynamicResource Dr0BDefaultColor4}" />
 
-    <Color x:Key="Dr0bDefaultColor5">#333</Color>
-    <SolidColorBrush x:Key="Dr0bForeground-Default" Color="{DynamicResource Dr0bDefaultColor5}" />
+    <Color x:Key="Dr0BDefaultColor5">#333</Color>
+    <SolidColorBrush x:Key="Dr0BForeground-Default" Color="{DynamicResource Dr0BDefaultColor5}" />
 
     <!--  (RU) Синий цвет / (EN) Blue color  -->
-    <Color x:Key="Dr0bPrimaryColor1">#428bca</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Primary1" Color="{DynamicResource Dr0bPrimaryColor1}" />
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Primary2" Color="{DynamicResource Dr0bPrimaryColor1}" />
-    <SolidColorBrush x:Key="Dr0bBackground-Primary2" Color="{DynamicResource Dr0bPrimaryColor1}" />
+    <Color x:Key="Dr0BPrimaryColor1">#428bca</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Primary1" Color="{DynamicResource Dr0BPrimaryColor1}" />
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Primary2" Color="{DynamicResource Dr0BPrimaryColor1}" />
+    <SolidColorBrush x:Key="Dr0BBackground-Primary2" Color="{DynamicResource Dr0BPrimaryColor1}" />
 
-    <Color x:Key="Dr0bPrimaryColor2">#357ebd</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Primary1" Color="{DynamicResource Dr0bPrimaryColor2}" />
+    <Color x:Key="Dr0BPrimaryColor2">#357ebd</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Primary1" Color="{DynamicResource Dr0BPrimaryColor2}" />
 
     <!--  (RU) Зелёный цвет / (EN) Green color  -->
-    <Color x:Key="Dr0bSuccessColor1">#5cb85c</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Success1" Color="{DynamicResource Dr0bSuccessColor1}" />
+    <Color x:Key="Dr0BSuccessColor1">#5cb85c</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Success1" Color="{DynamicResource Dr0BSuccessColor1}" />
 
-    <Color x:Key="Dr0bSuccessColor2">#4cae4c</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Success1" Color="{DynamicResource Dr0bSuccessColor2}" />
+    <Color x:Key="Dr0BSuccessColor2">#4cae4c</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Success1" Color="{DynamicResource Dr0BSuccessColor2}" />
 
-    <Color x:Key="Dr0bSuccessColor3">#dff0d8</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Success2" Color="{DynamicResource Dr0bSuccessColor3}" />
+    <Color x:Key="Dr0BSuccessColor3">#dff0d8</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Success2" Color="{DynamicResource Dr0BSuccessColor3}" />
 
-    <Color x:Key="Dr0bSuccessColor4">#d6e9c6</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Success2" Color="{DynamicResource Dr0bSuccessColor4}" />
+    <Color x:Key="Dr0BSuccessColor4">#d6e9c6</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Success2" Color="{DynamicResource Dr0BSuccessColor4}" />
 
-    <Color x:Key="Dr0bSuccessColor5">#3c763d</Color>
-    <SolidColorBrush x:Key="Dr0bForeground-Success" Color="{DynamicResource Dr0bSuccessColor5}" />
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Success3" Color="{DynamicResource Dr0bSuccessColor5}" />
+    <Color x:Key="Dr0BSuccessColor5">#3c763d</Color>
+    <SolidColorBrush x:Key="Dr0BForeground-Success" Color="{DynamicResource Dr0BSuccessColor5}" />
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Success3" Color="{DynamicResource Dr0BSuccessColor5}" />
 
     <!--  (RU) Светло-голубой цвет / (EN) Light blue color  -->
-    <Color x:Key="Dr0bInfoColor1">#5bc0de</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Info1" Color="{DynamicResource Dr0bInfoColor1}" />
+    <Color x:Key="Dr0BInfoColor1">#5bc0de</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Info1" Color="{DynamicResource Dr0BInfoColor1}" />
 
-    <Color x:Key="Dr0bInfoColor2">#46b8da</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Info1" Color="{DynamicResource Dr0bInfoColor2}" />
+    <Color x:Key="Dr0BInfoColor2">#46b8da</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Info1" Color="{DynamicResource Dr0BInfoColor2}" />
 
-    <Color x:Key="Dr0bInfoColor3">#d9edf7</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Info2" Color="{DynamicResource Dr0bInfoColor3}" />
+    <Color x:Key="Dr0BInfoColor3">#d9edf7</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Info2" Color="{DynamicResource Dr0BInfoColor3}" />
 
-    <Color x:Key="Dr0bInfoColor4">#bce8f1</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Info2" Color="{DynamicResource Dr0bInfoColor4}" />
+    <Color x:Key="Dr0BInfoColor4">#bce8f1</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Info2" Color="{DynamicResource Dr0BInfoColor4}" />
 
-    <Color x:Key="Dr0bInfoColor5">#31708f</Color>
-    <SolidColorBrush x:Key="Dr0bForeground-Info" Color="{DynamicResource Dr0bInfoColor5}" />
+    <Color x:Key="Dr0BInfoColor5">#31708f</Color>
+    <SolidColorBrush x:Key="Dr0BForeground-Info" Color="{DynamicResource Dr0BInfoColor5}" />
 
     <!--  (RU) Ораньжевый цвет / (EN) Orange color  -->
-    <Color x:Key="Dr0bWarningColor1">#f0ad4e</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Warning1" Color="{DynamicResource Dr0bWarningColor1}" />
+    <Color x:Key="Dr0BWarningColor1">#f0ad4e</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Warning1" Color="{DynamicResource Dr0BWarningColor1}" />
 
-    <Color x:Key="Dr0bWarningColor2">#eea236</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Warning1" Color="{DynamicResource Dr0bWarningColor2}" />
+    <Color x:Key="Dr0BWarningColor2">#eea236</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Warning1" Color="{DynamicResource Dr0BWarningColor2}" />
 
-    <Color x:Key="Dr0bWarningColor3">#fcf8e3</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Warning2" Color="{DynamicResource Dr0bWarningColor3}" />
+    <Color x:Key="Dr0BWarningColor3">#fcf8e3</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Warning2" Color="{DynamicResource Dr0BWarningColor3}" />
 
-    <Color x:Key="Dr0bWarningColor4">#faebcc</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Warning2" Color="{DynamicResource Dr0bWarningColor4}" />
+    <Color x:Key="Dr0BWarningColor4">#faebcc</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Warning2" Color="{DynamicResource Dr0BWarningColor4}" />
 
-    <Color x:Key="Dr0bWarningColor5">#8a6d3b</Color>
-    <SolidColorBrush x:Key="Dr0bForeground-Warning" Color="{DynamicResource Dr0bWarningColor5}" />
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Warning3" Color="{DynamicResource Dr0bOrangeColor5}" />
+    <Color x:Key="Dr0BWarningColor5">#8a6d3b</Color>
+    <SolidColorBrush x:Key="Dr0BForeground-Warning" Color="{DynamicResource Dr0BWarningColor5}" />
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Warning3" Color="{DynamicResource Dr0bOrangeColor5}" />
 
     <!--  (RU) Красный цвет / (EN) Red color  -->
-    <Color x:Key="Dr0bDangerColor1">#d9534f</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Danger1" Color="{DynamicResource Dr0bDangerColor1}" />
+    <Color x:Key="Dr0BDangerColor1">#d9534f</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Danger1" Color="{DynamicResource Dr0BDangerColor1}" />
 
-    <Color x:Key="Dr0bDangerColor2">#d43f3a</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Danger1" Color="{DynamicResource Dr0bDangerColor2}" />
+    <Color x:Key="Dr0BDangerColor2">#d43f3a</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Danger1" Color="{DynamicResource Dr0BDangerColor2}" />
 
-    <Color x:Key="Dr0bDangerColor3">#f2dede</Color>
-    <SolidColorBrush x:Key="Dr0bBackground-Danger2" Color="{DynamicResource Dr0bDangerColor3}" />
+    <Color x:Key="Dr0BDangerColor3">#f2dede</Color>
+    <SolidColorBrush x:Key="Dr0BBackground-Danger2" Color="{DynamicResource Dr0BDangerColor3}" />
 
-    <Color x:Key="Dr0bDangerColor4">#ebccd1</Color>
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Danger2" Color="{DynamicResource Dr0bDangerColor4}" />
+    <Color x:Key="Dr0BDangerColor4">#ebccd1</Color>
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Danger2" Color="{DynamicResource Dr0BDangerColor4}" />
 
-    <Color x:Key="Dr0bDangerColor5">#a94442</Color>
-    <SolidColorBrush x:Key="Dr0bForeground-Danger" Color="{DynamicResource Dr0bDangerColor5}" />
-    <SolidColorBrush x:Key="Dr0bBorderBrush-Danger3" Color="{DynamicResource Dr0bDangerColor5}" />
+    <Color x:Key="Dr0BDangerColor5">#a94442</Color>
+    <SolidColorBrush x:Key="Dr0BForeground-Danger" Color="{DynamicResource Dr0BDangerColor5}" />
+    <SolidColorBrush x:Key="Dr0BBorderBrush-Danger3" Color="{DynamicResource Dr0BDangerColor5}" />
 
 
     <SolidColorBrush x:Key="FormControlBackground" Color="{DynamicResource WhiteColor}" />

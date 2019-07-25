@@ -81,31 +81,31 @@
         </Setter>
     </Style>
     <Style
-        x:Key="progress-bar-blue"
+        x:Key="Progress-Bar-Blue"
         BasedOn="{StaticResource ProgressBarBaseStyle}"
         TargetType="{x:Type ProgressBar}">
         <Setter Property="Foreground" Value="{DynamicResource Dr0bBackground-Blue1}" />
     </Style>
     <Style
-        x:Key="progress-bar-green"
+        x:Key="Progress-Bar-Green"
         BasedOn="{StaticResource ProgressBarBaseStyle}"
         TargetType="{x:Type ProgressBar}">
         <Setter Property="Foreground" Value="{DynamicResource Dr0bBackground-Green1}" />
     </Style>
     <Style
-        x:Key="progress-bar-lightblue"
+        x:Key="Progress-Bar-Lightblue"
         BasedOn="{StaticResource ProgressBarBaseStyle}"
         TargetType="{x:Type ProgressBar}">
         <Setter Property="Foreground" Value="{DynamicResource Dr0bBackground-LightBlue1}" />
     </Style>
     <Style
-        x:Key="progress-bar-orange"
+        x:Key="Progress-Bar-Orange"
         BasedOn="{StaticResource ProgressBarBaseStyle}"
         TargetType="{x:Type ProgressBar}">
         <Setter Property="Foreground" Value="{DynamicResource Dr0bBackground-Orange1}" />
     </Style>
     <Style
-        x:Key="progress-bar-red"
+        x:Key="Progress-Bar-Red"
         BasedOn="{StaticResource ProgressBarBaseStyle}"
         TargetType="{x:Type ProgressBar}">
         <Setter Property="Foreground" Value="{DynamicResource Dr0bBackground-Red1}" />

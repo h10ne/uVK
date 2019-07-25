@@ -83,52 +83,52 @@
     </Style>
     <!--  panel  -->
     <Style
-        x:Key="panel-default"
+        x:Key="Panel-Default"
         BasedOn="{StaticResource PanelBase}"
         TargetType="{x:Type ContentControl}">
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Default2}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Default2}" />
     </Style>
     <Style
-        x:Key="panel-primary"
+        x:Key="Panel-Primary"
         BasedOn="{StaticResource PanelBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Blue2}" />
     </Style>
     <Style
-        x:Key="panel-success"
+        x:Key="Panel-Success"
         BasedOn="{StaticResource PanelBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Green2}" />
     </Style>
     <Style
-        x:Key="panel-info"
+        x:Key="Panel-Info"
         BasedOn="{StaticResource PanelBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-LightBlue2}" />
     </Style>
     <Style
-        x:Key="panel-warning"
+        x:Key="Panel-Warning"
         BasedOn="{StaticResource PanelBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Orange2}" />
     </Style>
     <Style
-        x:Key="panel-danger"
+        x:Key="Panel-Danger"
         BasedOn="{StaticResource PanelBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Red2}" />
     </Style>
     <!--  panel-heading  -->
     <Style
-        x:Key="panel-heading-default"
+        x:Key="Panel-Heading-Default"
         BasedOn="{StaticResource PanelHeadingBase}"
         TargetType="{x:Type ContentControl}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Default2}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Default2}" />
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Default}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Default2}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Default2}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0BForeground-Default}" />
     </Style>
     <Style
-        x:Key="panel-heading-blue"
+        x:Key="Panel-Heading-Blue"
         BasedOn="{StaticResource PanelHeadingBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Blue2}" />
@@ -136,7 +136,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Blue}" />
     </Style>
     <Style
-        x:Key="panel-heading-green"
+        x:Key="Panel-Heading-Green"
         BasedOn="{StaticResource PanelHeadingBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Green2}" />
@@ -144,7 +144,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Green}" />
     </Style>
     <Style
-        x:Key="panel-heading-lightblue"
+        x:Key="Panel-Heading-Lightblue"
         BasedOn="{StaticResource PanelHeadingBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="Background" Value="{DynamicResource Dr0bBorderBrush-LightBlue2}" />
@@ -152,7 +152,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-LightBlue}" />
     </Style>
     <Style
-        x:Key="panel-heading-orange"
+        x:Key="Panel-Heading-Orange"
         BasedOn="{StaticResource PanelHeadingBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Orange2}" />
@@ -160,7 +160,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Orange}" />
     </Style>
     <Style
-        x:Key="panel-heading-red"
+        x:Key="Panel-Heading-Red"
         BasedOn="{StaticResource PanelHeadingBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Red2}" />
@@ -169,42 +169,42 @@
     </Style>
     <!--  panel-body  -->
     <Style
-        x:Key="panel-body"
+        x:Key="Panel-Body"
         BasedOn="{StaticResource PanelBodyBase}"
         TargetType="{x:Type ContentControl}" />
     <!--  panel-footer  -->
     <Style
-        x:Key="panel-footer-default"
+        x:Key="Panel-Footer-Default"
         BasedOn="{StaticResource PanelFooterBase}"
         TargetType="{x:Type ContentControl}">
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Default2}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Default2}" />
     </Style>
     <Style
-        x:Key="panel-footer-blue"
+        x:Key="Panel-Footer-Blue"
         BasedOn="{StaticResource PanelFooterBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Blue2}" />
     </Style>
     <Style
-        x:Key="panel-footer-green"
+        x:Key="Panel-Footer-Green"
         BasedOn="{StaticResource PanelFooterBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Green2}" />
     </Style>
     <Style
-        x:Key="panel-footer-lightblue"
+        x:Key="Panel-Footer-Lightblue"
         BasedOn="{StaticResource PanelFooterBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-LightBlue2}" />
     </Style>
     <Style
-        x:Key="panel-footer-orange"
+        x:Key="Panel-Footer-Orange"
         BasedOn="{StaticResource PanelFooterBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Orange2}" />
     </Style>
     <Style
-        x:Key="panel-footer-red"
+        x:Key="Panel-Footer-Red"
         BasedOn="{StaticResource PanelFooterBase}"
         TargetType="{x:Type ContentControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Red2}" />

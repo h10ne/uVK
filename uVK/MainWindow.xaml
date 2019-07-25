@@ -11,7 +11,7 @@
     Height="550"
     MinWidth="900"
     Icon="/Images/logo.png"
-    Style="{StaticResource Dr0bWindow}"
+    Style="{StaticResource Dr0BWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Border Background="#FFF">

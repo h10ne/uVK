@@ -157,9 +157,9 @@
 
     <!--  (RU) Стандартный стиль кнопки / (EN) Regular button Style  -->
     <Style BasedOn="{StaticResource ButtonBaseStyle}" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Default1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Default1}" />
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Default}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Default1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Default1}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0BForeground-Default}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#e6e6e6" />
@@ -169,11 +169,11 @@
     </Style>
     <!--  (RU) Синяя кнопка / (EN) Blue button  -->
     <Style
-        x:Key="btn-blue"
+        x:Key="Btn-Blue"
         BasedOn="{StaticResource ButtonBaseStyle}"
         TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Primary1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Primary1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Primary1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Primary1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#3071a9" />
@@ -183,11 +183,11 @@
     </Style>
     <!--  (RU) Зелёная кнопка / (EN) Green button  -->
     <Style
-        x:Key="btn-green"
+        x:Key="Btn-Green"
         BasedOn="{StaticResource ButtonBaseStyle}"
         TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Success1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Success1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Success1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Success1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#449d44" />
@@ -197,11 +197,11 @@
     </Style>
     <!--  (RU) Светло-голубая кнопка / (EN) Light blue button  -->
     <Style
-        x:Key="btn-lightblue"
+        x:Key="Btn-Lightblue"
         BasedOn="{StaticResource ButtonBaseStyle}"
         TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Info1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Info1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Info1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Info1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#31b0d5" />
@@ -211,11 +211,11 @@
     </Style>
     <!--  (RU) Оранжевая кнопка / (EN) Orange button  -->
     <Style
-        x:Key="btn-orange"
+        x:Key="Btn-Orange"
         BasedOn="{StaticResource ButtonBaseStyle}"
         TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Warning1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Warning1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Warning1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Warning1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#ec971f" />
@@ -225,11 +225,11 @@
     </Style>
     <!--  (RU) Красная кнопка / (EN) Red button  -->
     <Style
-        x:Key="btn-red"
+        x:Key="Btn-Red"
         BasedOn="{StaticResource ButtonBaseStyle}"
         TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Danger1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Danger1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Danger1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Danger1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#c9302c" />
@@ -240,9 +240,9 @@
 
     <!--  (RU) Стандартный стиль ToggleButton / (EN) Regular style ToggleButton  -->
     <Style BasedOn="{StaticResource ToggleButtonBaseStyle}" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Default1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Default1}" />
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Default}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Default1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Default1}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0BForeground-Default}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#e6e6e6" />
@@ -252,11 +252,11 @@
     </Style>
     <!--  (RU) Синий ToggleButton / (EN) Blue ToggleButton  -->
     <Style
-        x:Key="tbtn-blue"
+        x:Key="Tbtn-Blue"
         BasedOn="{StaticResource ToggleButtonBaseStyle}"
         TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Primary1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Primary1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Primary1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Primary1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#3071a9" />
@@ -266,11 +266,11 @@
     </Style>
     <!--  (RU) Зелёный ToggleButton / (EN) Green ToggleButton  -->
     <Style
-        x:Key="tbtn-green"
+        x:Key="Tbtn-Green"
         BasedOn="{StaticResource ToggleButtonBaseStyle}"
         TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Success1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Success1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Success1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Success1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#449d44" />
@@ -280,11 +280,11 @@
     </Style>
     <!--  (RU) Светло-голубой ToggleButton / (EN) Light blue ToggleButton  -->
     <Style
-        x:Key="tbtn-lightblue"
+        x:Key="Tbtn-Lightblue"
         BasedOn="{StaticResource ToggleButtonBaseStyle}"
         TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Info1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Info1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Info1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Info1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#31b0d5" />
@@ -294,11 +294,11 @@
     </Style>
     <!--  (RU) Оранжевый ToggleButton / (EN) Orange ToggleButton  -->
     <Style
-        x:Key="tbtn-orange"
+        x:Key="Tbtn-Orange"
         BasedOn="{StaticResource ToggleButtonBaseStyle}"
         TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Warning1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Warning1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Warning1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Warning1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#ec971f" />
@@ -308,11 +308,11 @@
     </Style>
     <!--  (RU) Красный ToggleButton / (EN) Red ToggleButton  -->
     <Style
-        x:Key="tbtn-red"
+        x:Key="Tbtn-Red"
         BasedOn="{StaticResource ToggleButtonBaseStyle}"
         TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource Dr0bBackground-Danger1}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bBorderBrush-Danger1}" />
+        <Setter Property="Background" Value="{DynamicResource Dr0BBackground-Danger1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BBorderBrush-Danger1}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#c9302c" />
@@ -459,7 +459,7 @@
                                                 x:Name="Icon"
                                                 Margin="{TemplateBinding Padding}"
                                                 HorizontalAlignment="Center"
-                                                Data="{StaticResource msgIcon}"
+                                                Data="{StaticResource MsgIcon}"
                                                 Fill="{TemplateBinding Foreground}"
                                                 Stretch="Uniform" />
                                         </Grid>
@@ -519,7 +519,7 @@
                                                 x:Name="Icon"
                                                 Margin="{TemplateBinding Padding}"
                                                 HorizontalAlignment="Center"
-                                                Data="{StaticResource music}"
+                                                Data="{StaticResource Music}"
                                                 Fill="{TemplateBinding Foreground}"
                                                 Stretch="Uniform" />
                                         </Grid>
@@ -639,7 +639,7 @@
                                                 x:Name="Icon"
                                                 Margin="{TemplateBinding Padding}"
                                                 HorizontalAlignment="Center"
-                                                Data="{StaticResource log-out}"
+                                                Data="{StaticResource Log-Out}"
                                                 Fill="{TemplateBinding Foreground}"
                                                 Stretch="Uniform" />
                                         </Grid>
@@ -665,7 +665,7 @@
         </Setter>
     </Style>
     <Style
-        x:Key="emojibutton"
+        x:Key="Emojibutton"
         BasedOn="{StaticResource BaseStyle}"
         TargetType="{x:Type Button}">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
@@ -692,7 +692,7 @@
                                             x:Name="Icon"
                                             Margin="{TemplateBinding Padding}"
                                             HorizontalAlignment="Center"
-                                            Data="{StaticResource emojiicon}"
+                                            Data="{StaticResource Emojiicon}"
                                             Fill="{TemplateBinding Foreground}"
                                             Stretch="Uniform" />
                                     </Grid>
@@ -710,7 +710,7 @@
         </Setter>
     </Style>
     <Style
-        x:Key="photobutton"
+        x:Key="Photobutton"
         BasedOn="{StaticResource BaseStyle}"
         TargetType="{x:Type Button}">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />

@@ -409,7 +409,7 @@
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
         <Setter Property="Background" Value="{DynamicResource ProgressBarBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Foreground" Value="{StaticResource Dr0bBlueBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource Dr0BBlueBrush}" />
         <Setter Property="Template" Value="{StaticResource SliderHorizontal}" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
