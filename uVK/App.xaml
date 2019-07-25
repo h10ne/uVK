@@ -1,19 +1,19 @@
 ﻿<Application x:Class="uVK.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:uVK"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!--  (RU) Важен порядок / (EN) Order is important  -->
-                <ResourceDictionary Source="Styles/Bootstrap.xaml" />
                 <ResourceDictionary Source="Styles/PathGeometries/Glyphicons.xaml" />
+                <ResourceDictionary Source="Styles/Bootstrap.xaml" />
                 <ResourceDictionary Source="Styles/Window/Dr0bWindow.xaml" />
                 <ResourceDictionary Source="Styles/AudioStyles/AudioControlStyles.xaml" />
                 <ResourceDictionary Source="Styles/AudioStyles/AudioSlider.xaml" />
                 <ResourceDictionary Source="Styles/AudioStyles/AudioColors.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Color x:Key="AccentColor" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

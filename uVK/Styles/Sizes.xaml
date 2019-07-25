@@ -1,14 +1,14 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:System="clr-namespace:System;assembly=mscorlib">
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  (RU) Элементы управления / (EN) Control element  -->
     <!--  (RU) Размер / (EN) Size  -->
-    <System:Double x:Key="LargeControlHeight">46</System:Double>
-    <System:Double x:Key="DefaultControlHeight">34</System:Double>
-    <System:Double x:Key="SmallControlHeight">30</System:Double>
-    <System:Double x:Key="ExtraSmallControlHeight">22</System:Double>
+    <system:Double x:Key="LargeControlHeight">46</system:Double>
+    <system:Double x:Key="DefaultControlHeight">34</system:Double>
+    <system:Double x:Key="SmallControlHeight">30</system:Double>
+    <system:Double x:Key="ExtraSmallControlHeight">22</system:Double>
     <!--  (RU) Внутренние поля / (EN) Internal field  -->
     <Thickness x:Key="LargeControlPadding">16,10</Thickness>
     <Thickness x:Key="DefaultControlPadding">12,6</Thickness>

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace uVK
+namespace uVK.Helpers
 {
     public static class UserDatas
     {
-        public static long User_id { get; set; }
+        public static long UserId { get; set; }
         public static string Token { get; set; }
         public static string Surname { get; set; }
         public static string Name { get; set; }

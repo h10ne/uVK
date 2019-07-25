@@ -4,20 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:uVK"
-    xmlns:vm="clr-namespace:uVK.ViewModel"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MainWindow"
-    Width="850"
+    xmlns:vm="clr-namespace:uVK.ViewModel"
+    Title="uVK"
+    Width="900"
     Height="550"
-    Style="{StaticResource Dr0bWindow}"
+    MinWidth="900"
+    Icon="/Images/logo.png"
+    Style="{StaticResource Dr0BWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Border Background="#FFF">
         <Grid>
-            <Frame
-                NavigationUIVisibility="Hidden"
-                Content="{Binding CurrentPage}">
-            </Frame>
+            <Frame Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden" />
         </Grid>
     </Border>
 </Window>

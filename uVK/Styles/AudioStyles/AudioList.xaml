@@ -1,0 +1,56 @@
+﻿<UserControl
+    x:Class="uVK.Styles.AudioStyles.AudioList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:uVK.Styles.AudioStyles"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Height="auto">
+    <Grid Width="{Binding Path=Width}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <!--  (RU) Круглые углы картинки / (EN) Round corners pictures  -->
+        <Rectangle
+            Width="35"
+            Height="35"
+            RadiusX="5"
+            RadiusY="5">
+            <Rectangle.Fill>
+                <!--  (RU) Картинка аудиозаписи / (EN) Audio Picture  -->
+                <ImageBrush
+                    x:Name="MusicImage"
+                    ImageSource="{Binding ImageSourseString}"
+                    Stretch="UniformToFill" />
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Border HorizontalAlignment="Left" Grid.Column="1">
+            <StackPanel Margin="5,2">
+                <!--  (RU) Текст название аудиозаписи / (EN) Text audio title  -->
+                <TextBlock
+                    MaxHeight="36"
+                    FontSize="14"
+                    FontWeight="DemiBold"
+                    Foreground="{DynamicResource SidebarForegroundBrush}"
+                    Text="{Binding Title}"
+                    TextTrimming="CharacterEllipsis" />
+                <!--  (RU) Исполнитель аудиозаписи / (EN) Audio artist  -->
+                <TextBlock
+                    FontSize="13"
+                    FontWeight="Normal"
+                    Opacity="0.6"
+                    Text="{Binding Artist}"
+                    TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="2">
+            <TextBlock Name="Durration" FontSize="13" Foreground="Gray" VerticalAlignment="Center"
+                       Text="{Binding Duration}" />
+        </Border>
+    </Grid>
+</UserControl>

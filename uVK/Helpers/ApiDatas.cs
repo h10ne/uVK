@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using VkNet;
 
-namespace uVK.Model
+namespace uVK.Helpers
 {
     public static class ApiDatas
     {
-        public static VkApi api;
+        public static VkApi Api;
         public static bool IsAuth = false;
+        public static List<VkNet.Model.Attachments.Audio> Audio { get; set; }
     }
 }

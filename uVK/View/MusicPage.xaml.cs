@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using uVK.ViewModel;
 
-namespace uVK.Pages
+namespace uVK.View
 {
     /// <summary>
     /// Логика взаимодействия для MusicPage.xaml
@@ -11,7 +11,6 @@ namespace uVK.Pages
         public MusicPage()
         {
             InitializeComponent();
-            this.DataContext = new PlayerViewModel();
         }
     }
 }

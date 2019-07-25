@@ -7,9 +7,10 @@ namespace uVK.Helpers
 {
     public class StructSaveAudios
     {
-        public string Url;
-        public string Artist;
-        public string Title;
+        public readonly string Url;
+        public readonly string Artist;
+        public readonly string Title;
+
         public StructSaveAudios(string artist, string title, string url)
         {
             Url = url;
@@ -21,18 +22,21 @@ namespace uVK.Helpers
     public static class SaveAudios
     {
         public static List<StructSaveAudios> Audio { get; private set; }
+
         public static void AddCache()
         {
             Audio = new List<StructSaveAudios>();
-            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\");
-            string pathToSave = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\";
-            string[] files2 = Directory.GetFiles(pathToSave, "*.*");
+            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                      "\\uVK\\SaveAudios\\");
+            string pathToSave = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                "\\uVK\\SaveAudios\\";
+            Directory.GetFiles(pathToSave, "*.*");
             List<string> filesname = Directory.GetFiles(pathToSave, "*.*").ToList();
             foreach (var name in filesname)
             {
                 string[] fullPath = name.Split('\\');
-                string[] AudioMix = fullPath[fullPath.Length - 1].Split('↨');
-                Audio.Add(new StructSaveAudios(AudioMix[0], AudioMix[1], name));
+                string[] audioMix = fullPath[fullPath.Length - 1].Split('↨');
+                Audio.Add(new StructSaveAudios(audioMix[0], audioMix[1], name));
             }
         }
     }

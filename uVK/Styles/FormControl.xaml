@@ -6,8 +6,10 @@
         <ResourceDictionary Source="BaseStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!--  (RU) Стиль: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam/ (EN) Style: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam  -->
+    <!--  (RU) Стиль: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam,ListBox/ (EN) Style: TextBox,PasswordBox,ComboBox,CheckBox,RadioButton,Scroll,TabIteam, ListBox  -->
     <!--  (RU) Базовый стиль / (EN) Base Style  -->
+
+
     <Style
         x:Key="FormControlBaseStyle"
         BasedOn="{StaticResource BaseStyle}"
@@ -143,7 +145,9 @@
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
+                                        <DataTrigger
+                                            Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Value="">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -228,7 +232,7 @@
 
     <!--  验证 源码行数:2594-2683  -->
     <Style
-        x:Key="has-success"
+        x:Key="Has-Success"
         BasedOn="{StaticResource FormControlBaseStyle}"
         TargetType="{x:Type Control}">
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush-Success3}" />
@@ -313,7 +317,7 @@
         </Style.Triggers>
     </Style>
     <Style
-        x:Key="has-warning"
+        x:Key="Has-Warning"
         BasedOn="{StaticResource FormControlBaseStyle}"
         TargetType="{x:Type Control}">
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush-Warning3}" />
@@ -398,7 +402,7 @@
         </Style.Triggers>
     </Style>
     <Style
-        x:Key="has-error"
+        x:Key="Has-Error"
         BasedOn="{StaticResource FormControlBaseStyle}"
         TargetType="{x:Type Control}">
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush-Danger3}" />
@@ -484,7 +488,7 @@
     </Style>
     <!--  控件尺寸 源码行数:2528-2535 2547-2554  -->
     <Style
-        x:Key="input-sm"
+        x:Key="Input-Sm"
         BasedOn="{StaticResource FormControlBaseStyle}"
         TargetType="{x:Type Control}">
         <Setter Property="Height" Value="{DynamicResource SmallControlHeight}" />
@@ -575,7 +579,7 @@
         </Style.Triggers>
     </Style>
     <Style
-        x:Key="input-lg"
+        x:Key="Input-Lg"
         BasedOn="{StaticResource FormControlBaseStyle}"
         TargetType="{x:Type Control}">
         <Setter Property="Height" Value="{DynamicResource LargeControlHeight}" />
@@ -941,8 +945,10 @@
                 <Setter TargetName="Shdw" Property="Background" Value="#71000000" />
             </Trigger>
             <Trigger SourceName="DropDownScrollViewer" Property="ScrollViewer.CanContentScroll" Value="false">
-                <Setter TargetName="OpaqueRect" Property="Canvas.Top" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
-                <Setter TargetName="OpaqueRect" Property="Canvas.Left" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
+                <Setter TargetName="OpaqueRect" Property="Canvas.Top"
+                        Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
+                <Setter TargetName="OpaqueRect" Property="Canvas.Left"
+                        Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -958,7 +964,8 @@
                     <Grid x:Name="MainGrid" SnapsToDevicePixels="true">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="0" MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+                            <ColumnDefinition Width="0"
+                                              MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
                         </Grid.ColumnDefinitions>
                         <Popup
                             x:Name="PART_Popup"
@@ -1039,9 +1046,12 @@
                             </MultiTrigger.Conditions>
                             <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
                         </MultiTrigger>
-                        <Trigger SourceName="DropDownScrollViewer" Property="ScrollViewer.CanContentScroll" Value="false">
-                            <Setter TargetName="OpaqueRect" Property="Canvas.Top" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
-                            <Setter TargetName="OpaqueRect" Property="Canvas.Left" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
+                        <Trigger SourceName="DropDownScrollViewer" Property="ScrollViewer.CanContentScroll"
+                                 Value="false">
+                            <Setter TargetName="OpaqueRect" Property="Canvas.Top"
+                                    Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
+                            <Setter TargetName="OpaqueRect" Property="Canvas.Left"
+                                    Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -1066,11 +1076,11 @@
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <Grid SnapsToDevicePixels="true">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="14" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="14" />
                         </Grid.ColumnDefinitions>
                         <Border
-                            Grid.Column="0"
+                            Grid.Column="1"
                             Width="14"
                             Height="14"
                             Background="{TemplateBinding Background}"
@@ -1095,8 +1105,8 @@
                             </Grid>
                         </Border>
                         <ContentPresenter
-                            Grid.Column="1"
-                            Margin="{TemplateBinding Padding}"
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             RecognizesAccessKey="True"
@@ -1119,25 +1129,25 @@
     </Style>
     <Style BasedOn="{StaticResource CheckBoxBaseStyle}" TargetType="{x:Type CheckBox}" />
     <Style
-        x:Key="checkbox has-success"
+        x:Key="Checkbox Has-Success"
         BasedOn="{StaticResource CheckBoxBaseStyle}"
         TargetType="{x:Type CheckBox}">
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bForeground-Success}" />
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Success}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BForeground-Success}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0BForeground-Success}" />
     </Style>
     <Style
-        x:Key="checkbox has-warning"
+        x:Key="Checkbox Has-Warning"
         BasedOn="{StaticResource CheckBoxBaseStyle}"
         TargetType="{x:Type CheckBox}">
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bForeground-Warning}" />
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Warning}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BForeground-Warning}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0BForeground-Warning}" />
     </Style>
     <Style
-        x:Key="checkbox has-error"
+        x:Key="Checkbox Has-Error"
         BasedOn="{StaticResource CheckBoxBaseStyle}"
         TargetType="{x:Type CheckBox}">
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bForeground-Danger}" />
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Danger}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BForeground-Danger}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0BForeground-Danger}" />
     </Style>
     <!--  RadioButton  -->
     <Style
@@ -1193,25 +1203,25 @@
     </Style>
     <Style BasedOn="{StaticResource RadioButtonBaseStyle}" TargetType="{x:Type RadioButton}" />
     <Style
-        x:Key="radio has-success"
+        x:Key="Radio Has-Success"
         BasedOn="{StaticResource RadioButtonBaseStyle}"
         TargetType="{x:Type RadioButton}">
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bForeground-Success}" />
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Success}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BForeground-Success}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0BForeground-Success}" />
     </Style>
     <Style
-        x:Key="radio has-warning"
+        x:Key="Radio Has-Warning"
         BasedOn="{StaticResource RadioButtonBaseStyle}"
         TargetType="{x:Type RadioButton}">
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bForeground-Warning}" />
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Warning}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BForeground-Warning}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0BForeground-Warning}" />
     </Style>
     <Style
-        x:Key="radio has-error"
+        x:Key="Radio Has-Error"
         BasedOn="{StaticResource RadioButtonBaseStyle}"
         TargetType="{x:Type RadioButton}">
-        <Setter Property="BorderBrush" Value="{DynamicResource Dr0bForeground-Danger}" />
-        <Setter Property="Foreground" Value="{DynamicResource Dr0bForeground-Danger}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Dr0BForeground-Danger}" />
+        <Setter Property="Foreground" Value="{DynamicResource Dr0BForeground-Danger}" />
     </Style>
 
     <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
@@ -1224,7 +1234,7 @@
                         x:Name="rectangle"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
-                        Background="{StaticResource Dr0bBlueBrush}"
+                        Background="{StaticResource Dr0BBlueBrush}"
                         CornerRadius="3"
                         SnapsToDevicePixels="True" />
                 </ControlTemplate>
@@ -1401,17 +1411,22 @@
         </Setter>
     </Style>
 
-    <!--TabIteam-->
+    <!--  TabIteam  -->
     <Style TargetType="TabItem">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
-                    <Border Name="Border" BorderThickness="0,0,0,1" BorderBrush="Gainsboro" Margin="4,0">
-                        <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        ContentSource="Header"
-                                        Margin="10,2"/>
+                    <Border
+                        Name="Border"
+                        Margin="4,0"
+                        BorderBrush="Gainsboro"
+                        BorderThickness="0,0,0,1">
+                        <ContentPresenter
+                            x:Name="ContentSite"
+                            Margin="10,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ContentSource="Header" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
@@ -1419,6 +1434,115 @@
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
                             <Setter TargetName="Border" Property="BorderBrush" Value="#CAD2DB" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ListBox  -->
+    <DataTemplate x:Key="ListBoxItemTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="220" />
+            </Grid.ColumnDefinitions>
+            <Path
+                Width="28"
+                Height="28"
+                Data="{Binding Image}"
+                Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}, Path=Foreground}"
+                Stretch="Uniform" />
+            <StackPanel Grid.Column="1" Margin="5">
+                <TextBlock
+                    FontFamily="Segoe UI Light"
+                    FontSize="23"
+                    Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}, Path=Foreground}"
+                    Text="{Binding Path=Title, FallbackValue=Title}" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Padding" Value="4,1" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="VerticalContentAlignment"
+                Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border
+                        x:Name="Bd"
+                        Height="27"
+                        Margin="5,0,20,5"
+                        Padding="{TemplateBinding Padding}"
+                        Background="#FF6BA1FF"
+                        BorderBrush="#FF6BA1FF"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="3"
+                        SnapsToDevicePixels="True">
+                        <ContentPresenter
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="#E9EDF1" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{x:Null}" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="False" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="{x:Null}" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{x:Null}" />
+                            <Setter Property="Foreground" Value="#000" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="#E9EDF1" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{x:Null}" />
+                            <Setter Property="Foreground" Value="#000" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="TextElement.Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
