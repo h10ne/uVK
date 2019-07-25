@@ -84,6 +84,23 @@
                                          Text="{Binding SaveAudiosText}" />
                                 </TextBlock>
                             </Button>
+                            <Grid Margin="5,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <CheckBox 
+                                    Grid.Row="4"
+                                    IsEnabled="{Binding JoinEnable}"
+                                    IsChecked="{Binding Path=IsInGroup}"
+                                    Command="{Binding JoinToGroup}"
+                                    Content="Вступить в группу вк" 
+                                    FlowDirection="RightToLeft"
+                                    HorizontalAlignment="Left"/>
+                            </Grid>
                         </StackPanel>
                     </Border>
                     <Grid

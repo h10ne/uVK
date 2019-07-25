@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using ReactiveUI;
@@ -12,13 +13,37 @@ using VkNet.Model.RequestParams;
 
 namespace uVK.ViewModel
 {
-    class SettingsViewModel : ReactiveObject
+    public class SettingsViewModel : ReactiveObject
     {
+        public SettingsViewModel()
+        {
+            if (ApiDatas.Api.Groups.IsMember("180253523",UserDatas.UserId,null,null).Select(x=>x.Member).FirstOrDefault())
+            {
+                IsInGroup = true;
+                JoinEnable = false;
+            }
+        }
         #region variables
 
         private bool _isDownloadiong;
         private bool _isLeaveGroups;
         private bool _isCleanFriends;
+        [Reactive] public bool IsInGroup { get; set; } = false;
+
+        public RelayCommand JoinToGroup
+        {
+            get
+            {
+                return  new RelayCommand((obj) =>
+                {
+                    ApiDatas.Api.Groups.Join(180253523);
+                    IsInGroup = true;
+                    JoinEnable = false;
+                }, o => JoinEnable);
+            }
+        }
+
+        [Reactive] public bool JoinEnable { get; set; } = true;
         [Reactive] public string GroupCleanText { get; set; } = "Выполнить очистку";
         [Reactive] public string FriendCleanText { get; set; } = "Выполнить очистку";
         [Reactive] public string SaveAudiosText { get; set; } = "Сохранить все аудиозаписи";
