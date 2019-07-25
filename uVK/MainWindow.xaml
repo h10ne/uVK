@@ -10,7 +10,7 @@
     Width="900"
     Height="550"
     MinWidth="900"
-    Icon="/Images/logo.png"
+    Icon="/Images/favicon.ico"
     Style="{StaticResource Dr0BWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
