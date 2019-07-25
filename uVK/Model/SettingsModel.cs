@@ -28,7 +28,7 @@ namespace uVK.Model
             await Task.Factory.StartNew(() =>
             {
                 WebClient webClient = new WebClient();
-                foreach (var audio in PlayerModel.Audio)
+                foreach (var audio in ApiDatas.Audio)
                 {
                     string Name = audio.Artist + "↨" + audio.Title;
                     var per = Name.LastIndexOfAny(new[] {'\\', '/', '?', ':', '*', '/', '>', '<', '|', '\"'});

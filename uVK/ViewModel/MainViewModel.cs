@@ -17,7 +17,8 @@ namespace uVK.ViewModel
         public MainViewModel()
         {
             _settingsPage = new SettingsPage();
-            _playerPage = new MusicPage();
+            Model.PlayerModel playerM = new PlayerModel();
+            _playerPage = new MusicPage() {DataContext = new PlayerViewModel(playerM)};
             _messagePage = new MessagePage();
             CurrentPage = _playerPage;
             Username = UserDatas.Name + " " + UserDatas.Surname;

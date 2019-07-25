@@ -21,8 +21,6 @@ namespace uVK.ViewModel
         private bool _isCleanFriends;
         [Reactive] public string GroupCleanText { get; set; } = "Выполнить очистку";
         [Reactive] public string FriendCleanText { get; set; } = "Выполнить очистку";
-        [Reactive] public int DownloadValue { get; set; } = 0;
-        [Reactive] public int MaxDownloadValue { get; set; } = 1;
         [Reactive] public string SaveAudiosText { get; set; } = "Сохранить все аудиозаписи";
         [Reactive] public bool CheckGroupAdmin { get; set; }
         [Reactive] public bool CheckFriendSub { get; set; }
@@ -87,10 +85,10 @@ namespace uVK.ViewModel
                     _isDownloadiong = true;
                     await Task.Factory.StartNew(() =>
                     {
-                        int count = PlayerModel.Audio.Count;
+                        int count = ApiDatas.Audio.Count;
                         int current = 0;
                         WebClient client = new WebClient();
-                        foreach (var audio in PlayerModel.Audio)
+                        foreach (var audio in ApiDatas.Audio)
                         {
                             current++;
                             SaveAudiosText = $"Скачивается {current}/{count}";

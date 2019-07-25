@@ -133,6 +133,7 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\Decoder.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Interfaces\IPlayerModel.cs" />
     <Compile Include="PassBox\InputBoxWindow.xaml.cs">
       <DependentUpon>InputBoxWindow.xaml</DependentUpon>
     </Compile>

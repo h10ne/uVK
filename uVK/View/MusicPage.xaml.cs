@@ -11,7 +11,6 @@ namespace uVK.View
         public MusicPage()
         {
             InitializeComponent();
-            DataContext = new PlayerViewModel();
         }
     }
 }

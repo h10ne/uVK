@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using uVK.Model;
 using uVK.ViewModel;
+using VkNet.Model.Attachments;
+using VkNet.Model.RequestParams;
 
 namespace uVK.Helpers
 {
@@ -70,7 +72,7 @@ namespace uVK.Helpers
                 }
             }
 
-            main.SelectedSaveIndex = PlayerModel.OffsetSave;
+            main.SelectedSaveIndex = _offset;
         }
 
         public void PrevSong(PlayerViewModel main)
@@ -101,7 +103,7 @@ namespace uVK.Helpers
                     _offset++;
             }
 
-            PlayerModel.Player.URL = main.FriendsMusicAudios[_offset].Url;
+            main.Player.URL = main.FriendsMusicAudios[_offset].Url;
 
             main.CurrentTimePositionValue = 0;
             main.MaximumTimePosition = Decoder.ConvertTimeToString(main.FriendsMusicAudios[_offset].Durration);
@@ -119,7 +121,7 @@ namespace uVK.Helpers
             //        main.SelectedIndex = i;
             //        break;
             //    }
-            PlayerModel.Player.controls.play();
+            main.Player.controls.play();
 
             try
             {
@@ -135,14 +137,14 @@ namespace uVK.Helpers
 
     public class AlbumAudios : IState
     {
-        private readonly List<VkNet.Model.Attachments.Audio> _audios;
+        private readonly List<Audio> _audios;
         private int _offset;
 
-        public AlbumAudios(List<VkNet.Model.Attachments.Audio> audios, PlayerViewModel main)
+        public AlbumAudios(List<Audio> audios, PlayerViewModel main)
         {
             _audios = audios;
-            main.State = PlayerModel.PlaylistState.Album;
-            PlayerModel.AddAudioToList(_audios, main.AlbumAudios);
+            main.State = PlayerViewModel.PlaylistState.Album;
+            main.Model.AddAudioToList(_audios, main.AlbumAudios);
         }
 
         public void NextSong(PlayerViewModel main)
@@ -197,7 +199,7 @@ namespace uVK.Helpers
                     _offset++;
             }
 
-            PlayerModel.Player.URL = Decoder.DecodeAudioUrl(_audios[_offset].Url).ToString();
+            main.Player.URL = Decoder.DecodeAudioUrl(_audios[_offset].Url).ToString();
             main.MaximumTimePosition = _audios[_offset].Duration.ToString();
             main.IsPlay = true;
             main.CurrentTimePositionValue = 0;
@@ -216,7 +218,7 @@ namespace uVK.Helpers
                     break;
                 }
 
-            PlayerModel.Player.controls.play();
+            main.Player.controls.play();
 
             try
             {
@@ -231,9 +233,10 @@ namespace uVK.Helpers
 
     public class SavesAudios : IState
     {
+        private int _offset;
         public SavesAudios(PlayerViewModel main)
         {
-            main.State = PlayerModel.PlaylistState.Save;
+            main.State = PlayerViewModel.PlaylistState.Save;
         }
 
         public void NextSong(PlayerViewModel main)
@@ -244,34 +247,32 @@ namespace uVK.Helpers
                 int value = rnds.Next(0, SaveAudios.Audio.Count);
                 Thread.Sleep(270);
                 Debug.Print(value.ToString());
-                PlayerModel.OffsetSave = value;
+                _offset = value;
                 SetAudioInfo(main);
             }
             else
             {
                 try
                 {
-                    PlayerModel.OffsetSave += 1;
+                    _offset += 1;
                     SetAudioInfo(main);
                 }
                 catch
                 {
-                    PlayerModel.OffsetSave = 0;
+                    _offset = 0;
                     SetAudioInfo(main);
                 }
             }
-
-            main.SelectedSaveIndex = PlayerModel.OffsetSave;
         }
 
         public void PrevSong(PlayerViewModel main)
         {
             try
             {
-                PlayerModel.OffsetSave -= 1;
-                if (PlayerModel.OffsetSave == -1)
-                    PlayerModel.OffsetSave = SaveAudios.Audio.Count - 1;
-                main.SelectedSaveIndex = PlayerModel.OffsetSave;
+                _offset -= 1;
+                if (_offset == -1)
+                    _offset = SaveAudios.Audio.Count - 1;
+                main.SelectedSaveIndex = _offset;
                 SetAudioInfo(main, true);
             }
             catch
@@ -285,13 +286,13 @@ namespace uVK.Helpers
             main.ImageSource = @"/Images/ImageMusic.png";
             if (fromClick)
             {
-                PlayerModel.OffsetSave = main.SelectedSaveIndex;
+                _offset = main.SelectedSaveIndex;
             }
 
-            PlayerModel.Player.URL = SaveAudios.Audio[PlayerModel.OffsetSave].Url;
-            main.Artist = SaveAudios.Audio[PlayerModel.OffsetSave].Artist;
-            main.Title = SaveAudios.Audio[PlayerModel.OffsetSave].Title;
-            PlayerModel.Player.controls.play();
+            main.Player.URL = SaveAudios.Audio[_offset].Url;
+            main.Artist = SaveAudios.Audio[_offset].Artist;
+            main.Title = SaveAudios.Audio[_offset].Title;
+            main.Player.controls.play();
             SetDurration(main);
         }
 
@@ -302,8 +303,8 @@ namespace uVK.Helpers
                 await Task.Factory.StartNew(() =>
                 {
                     Thread.Sleep(100);
-                    main.DurrationMaximum = PlayerModel.Player.currentMedia.duration;
-                    main.MaximumTimePosition = PlayerModel.Player.currentMedia.durationString;
+                    main.DurrationMaximum = main.Player.currentMedia.duration;
+                    main.MaximumTimePosition = main.Player.currentMedia.durationString;
                 });
             }
             catch
@@ -315,48 +316,49 @@ namespace uVK.Helpers
 
     public class OwnAudios : IState
     {
+        private int _offset;
         public OwnAudios(PlayerViewModel main)
         {
-            main.State = PlayerModel.PlaylistState.Own;
+            main.State = PlayerViewModel.PlaylistState.Own;
         }
 
         public void SetAudioInfo(PlayerViewModel main, bool isback = false, bool fromClick = false)
         {
             if (fromClick)
-                PlayerModel.OffsetOwn = main.SelectedIndex;
-            while (PlayerModel.Audio[PlayerModel.OffsetOwn].Url == null)
+                _offset = main.SelectedIndex;
+            while (ApiDatas.Audio[_offset].Url == null)
             {
                 if (isback)
-                    PlayerModel.OffsetOwn--;
+                    _offset--;
                 else
-                    PlayerModel.OffsetOwn++;
+                    _offset++;
             }
 
-            PlayerModel.Player.URL = PlayerModel.Audio[PlayerModel.OffsetOwn].Url.ToString();
-            main.MaximumTimePosition = PlayerModel.Audio[PlayerModel.OffsetOwn].Duration.ToString();
+            main.Player.URL = ApiDatas.Audio[_offset].Url.ToString();
+            main.MaximumTimePosition = ApiDatas.Audio[_offset].Duration.ToString();
 
             main.CurrentTimePositionValue = 0;
-            main.MaximumTimePosition = Decoder.ConvertTimeToString(PlayerModel.Audio[PlayerModel.OffsetOwn].Duration);
-            main.DurrationMaximum = PlayerModel.Audio[PlayerModel.OffsetOwn].Duration;
-            main.Artist = PlayerModel.Audio[PlayerModel.OffsetOwn].Artist;
-            main.Title = PlayerModel.Audio[PlayerModel.OffsetOwn].Title;
+            main.MaximumTimePosition = Decoder.ConvertTimeToString(ApiDatas.Audio[_offset].Duration);
+            main.DurrationMaximum = ApiDatas.Audio[_offset].Duration;
+            main.Artist = ApiDatas.Audio[_offset].Artist;
+            main.Title = ApiDatas.Audio[_offset].Title;
 
             /*
              * Делает выделение текущей композиции на моделе, если найдено
              */
             for (int i = 0; i < main.UserAudios.Count; i++)
-                if (main.UserAudios[i].ToString() == PlayerModel.Audio[PlayerModel.OffsetOwn].Artist + " - " +
-                    PlayerModel.Audio[PlayerModel.OffsetOwn].Title)
+                if (main.UserAudios[i].ToString() == ApiDatas.Audio[_offset].Artist + " - " +
+                    ApiDatas.Audio[_offset].Title)
                 {
                     main.SelectedIndex = i;
                     break;
                 }
 
-            PlayerModel.Player.controls.play();
+            main.Player.controls.play();
 
             try
             {
-                main.ImageSource = PlayerModel.Audio[PlayerModel.OffsetOwn].Album.Cover.Photo135;
+                main.ImageSource = ApiDatas.Audio[_offset].Album.Cover.Photo135;
             }
             catch
             {
@@ -369,21 +371,21 @@ namespace uVK.Helpers
             if (main.Random)
             {
                 Random rnds = new Random();
-                int value = rnds.Next(0, PlayerModel.Audio.Count - 1);
+                int value = rnds.Next(0, ApiDatas.Audio.Count - 1);
                 Thread.Sleep(270);
-                PlayerModel.OffsetOwn = value;
+                _offset = value;
                 SetAudioInfo(main);
             }
             else
             {
                 try
                 {
-                    PlayerModel.OffsetOwn += 1;
+                    _offset += 1;
                     SetAudioInfo(main);
                 }
                 catch
                 {
-                    PlayerModel.OffsetOwn = 0;
+                    _offset = 0;
                     SetAudioInfo(main);
                 }
             }
@@ -393,9 +395,9 @@ namespace uVK.Helpers
         {
             try
             {
-                PlayerModel.OffsetOwn -= 1;
-                if (PlayerModel.OffsetOwn == -1)
-                    PlayerModel.OffsetOwn = PlayerModel.Audio.Count - 1;
+                _offset -= 1;
+                if (_offset == -1)
+                    _offset = ApiDatas.Audio.Count - 1;
                 SetAudioInfo(main, true);
             }
             catch
@@ -407,46 +409,49 @@ namespace uVK.Helpers
 
     public class SearchAudios : IState
     {
-        public SearchAudios(PlayerViewModel main)
+        private readonly List<Audio> _audios;
+        private int _offset;
+        public SearchAudios(PlayerViewModel main, List<Audio> audios)
         {
-            main.State = PlayerModel.PlaylistState.Search;
+            _audios = audios;
+            main.State = PlayerViewModel.PlaylistState.Search;
         }
 
         public void PrevSong(PlayerViewModel main)
         {
             try
             {
-                PlayerModel.OffsetSearch -= 1;
+                _offset -= 1;
                 SetAudioInfo(main);
             }
             catch
             {
-                PlayerModel.OffsetSearch = PlayerModel.SearchAudios.Count - 1;
+                _offset = _audios.Count - 1;
                 SetAudioInfo(main, true);
             }
         }
 
         public void NextSong(PlayerViewModel main)
         {
-            if (PlayerModel.SearchAudios != null)
+            if (_audios != null)
             {
                 if (main.Random)
                 {
                     Random rnds = new Random();
-                    var value = rnds.Next(0, PlayerModel.SearchAudios.Count);
-                    PlayerModel.OffsetSearch = value;
+                    var value = rnds.Next(0, _audios.Count);
+                    _offset = value;
                     SetAudioInfo(main);
                 }
                 else
                 {
                     try
                     {
-                        PlayerModel.OffsetSearch += 1;
+                        _offset += 1;
                         SetAudioInfo(main);
                     }
                     catch
                     {
-                        PlayerModel.OffsetSearch = 0;
+                        _offset = 0;
                         SetAudioInfo(main);
                     }
                 }
@@ -457,42 +462,42 @@ namespace uVK.Helpers
         {
             if (fromClick)
             {
-                PlayerModel.OffsetSearch = main.SelectedIndex;
-                if (PlayerModel.OffsetSearch == -1)
+                _offset = main.SelectedIndex;
+                if (_offset == -1)
                     return;
             }
 
-            while (PlayerModel.Audio[PlayerModel.OffsetSearch].Url == null)
+            while (ApiDatas.Audio[_offset].Url == null)
             {
                 if (isback)
-                    PlayerModel.OffsetSearch--;
+                    _offset--;
                 else
-                    PlayerModel.OffsetSearch++;
+                    _offset++;
             }
 
-            PlayerModel.Player.URL = Decoder.DecodeAudioUrl(PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Url)
+            main.Player.URL = Decoder.DecodeAudioUrl(_audios[_offset].Url)
                 .ToString();
-            main.Artist = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist;
-            main.Title = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title;
+            main.Artist = _audios[_offset].Artist;
+            main.Title = _audios[_offset].Title;
             main.MaximumTimePosition =
-                Decoder.ConvertTimeToString(PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Duration);
-            main.DurrationMaximum = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Duration;
+                Decoder.ConvertTimeToString(_audios[_offset].Duration);
+            main.DurrationMaximum = _audios[_offset].Duration;
             for (int i = 0; i < main.UserAudios.Count; i++)
             {
-                if (main.UserAudios[i].ToString() == PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Artist
-                    + " - " + PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Title)
+                if (main.UserAudios[i].ToString() == _audios[_offset].Artist
+                    + " - " + _audios[_offset].Title)
                 {
                     main.SelectedIndex = i;
                     break;
                 }
             }
 
-            PlayerModel.Player.controls.play();
+            main.Player.controls.play();
 
 
             try
             {
-                main.ImageSource = PlayerModel.SearchAudios[PlayerModel.OffsetSearch].Album.Cover.Photo135;
+                main.ImageSource = _audios[_offset].Album.Cover.Photo135;
             }
             catch
             {
@@ -563,7 +568,7 @@ namespace uVK.Helpers
     //        }
     //        var url = PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Url;
     //        string path = url.Scheme + "://" + url.Authority + url.AbsolutePath;
-    //        PlayerModel.Player.URL = url.Scheme + "://" + url.Authority + url.AbsolutePath;
+    //        main.Player.URL = url.Scheme + "://" + url.Authority + url.AbsolutePath;
     //        main.Artist = PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Artist;
     //        main.Title = PlayerModel.RecommendedAudio[PlayerModel.OffsetRecom].Title;
     //        for (int i = 0; i < main.MusicList.Items.Count; i++)
@@ -573,7 +578,7 @@ namespace uVK.Helpers
     //                main.RecommendationsList.SelectedIndex = i;
     //                break;
     //            }
-    //        PlayerModel.Player.controls.play();
+    //        main.Player.controls.play();
 
     //        try
     //        {
@@ -634,10 +639,10 @@ namespace uVK.Helpers
     //            {
     //                if (audio.Url != null)
     //                {
-    //                    PlayerModel.Player.URL = audio.Url.ToString();
+    //                    main.Player.URL = audio.Url.ToString();
     //                    main.Artist = audio.Artist;
     //                    main.Title = audio.Title;
-    //                    PlayerModel.Player.controls.play();
+    //                    main.Player.controls.play();
     //                    break;
     //                }
     //                else if (isback)
