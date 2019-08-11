@@ -36,7 +36,8 @@ namespace uVK.ViewModel
         public IPlayerModel Model;
         public PlayerViewModel(IPlayerModel _model)
         {
-            this.Model = _model; 
+            this.Model = _model;
+            Player = new WindowsPlayer();
             Helpers.SaveAudios.AddCache();
             Model.AddCacheToList(SaveAudiosList);
             if (SaveAudiosList.Items.Count != 0)
@@ -51,8 +52,7 @@ namespace uVK.ViewModel
             Playlist = new Playlist(new OwnAudios(this));
             Playlist.SetAudioInfo(this);
             Volume = 30;
-            Player.controls.stop();
-
+            Player.Stop();
             //Асинхронное получение плейлистов
             var sourceAlbums = new SourceList<AlbumViewModel>();
             sourceAlbums.Connect().ObserveOn(RxApp.MainThreadScheduler).Bind(PlayLists).DisposeMany().Subscribe();
@@ -75,13 +75,13 @@ namespace uVK.ViewModel
 
         private void DurrationTimer_Tick(object sender, EventArgs e)
         {
-            CurrentTimePosition = Player.controls.currentPositionString;
-            CurrentTimePositionValue = Player.controls.currentPosition;
-            if (Player.status == "Остановлено")
+            CurrentTimePosition = Player.CurrentPositionString;
+            CurrentTimePositionValue = Player.CurrentPosition;
+            if (Player.Status == "Остановлено")
             {
                 if (!Repeat)
                     Playlist.NextSong(this);
-                Player.controls.play();
+                Player.Play();
             }
         }
 
@@ -104,7 +104,7 @@ namespace uVK.ViewModel
         #region Public properties
 
         public List<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
-        public WMPLib.WindowsMediaPlayer Player { get; set; } = new WMPLib.WindowsMediaPlayer();
+        public WindowsPlayer Player { get; set; }
         private Playlist Playlist { get; set;   }
 
         public PlaylistState State
@@ -155,7 +155,7 @@ namespace uVK.ViewModel
                 Playlist =
                     new Playlist(new AlbumAudios(FriendsMusicAlbums[FriendsMusicAlbumSelectedIndex].Audios, this));
                 Playlist.SetAudioInfo(this);
-                Player.controls.play();
+                Player.Play();
             }
         }
 
@@ -219,7 +219,7 @@ namespace uVK.ViewModel
             get => _volume;
             set
             {
-                Player.settings.volume = value;
+                Player.Volume = value;
                 this.RaiseAndSetIfChanged(ref _volume, value);
             }
         }
@@ -234,11 +234,11 @@ namespace uVK.ViewModel
                 {
                     if (!IsPlay)
                     {
-                        Player.controls.pause();
+                        Player.Pause();
                     }
                     else
                     {
-                        Player.controls.play();
+                        Player.Play();
                         _durrationTimer.Start();
                     }
                 });
@@ -340,8 +340,8 @@ namespace uVK.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    Player.controls.currentPosition = CurrentTimePositionValue;
-                    CurrentTimePosition = Player.controls.currentPositionString;
+                    Player.CurrentPosition = CurrentTimePositionValue;
+                    CurrentTimePosition = Player.CurrentPositionString;
                     _durrationTimer.Start();
                 });
             }
@@ -478,7 +478,7 @@ namespace uVK.ViewModel
                     NotificationText = "Загрузка";
                     WebClient webClient = new WebClient();
                     webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
-                    webClient.DownloadFileAsync(new Uri(Player.URL),
+                    webClient.DownloadFileAsync(new Uri(Player.Url),
                         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\uVK\\SaveAudios\\" +
                         Artist + "↨" + Title);
                 }, (obj) => !_isDownloading);

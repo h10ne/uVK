@@ -103,7 +103,7 @@ namespace uVK.Helpers
                     _offset++;
             }
 
-            main.Player.URL = main.FriendsMusicAudios[_offset].Url;
+            main.Player.Url = main.FriendsMusicAudios[_offset].Url;
 
             main.CurrentTimePositionValue = 0;
             main.MaximumTimePosition = Decoder.ConvertTimeToString(main.FriendsMusicAudios[_offset].Durration);
@@ -121,7 +121,7 @@ namespace uVK.Helpers
             //        main.SelectedIndex = i;
             //        break;
             //    }
-            main.Player.controls.play();
+            main.Player.Play();
 
             try
             {
@@ -199,7 +199,7 @@ namespace uVK.Helpers
                     _offset++;
             }
 
-            main.Player.URL = Decoder.DecodeAudioUrl(_audios[_offset].Url).ToString();
+            main.Player.Url = Decoder.DecodeAudioUrl(_audios[_offset].Url).ToString();
             main.MaximumTimePosition = _audios[_offset].Duration.ToString();
             main.IsPlay = true;
             main.CurrentTimePositionValue = 0;
@@ -218,7 +218,7 @@ namespace uVK.Helpers
                     break;
                 }
 
-            main.Player.controls.play();
+            main.Player.Play();
 
             try
             {
@@ -289,10 +289,10 @@ namespace uVK.Helpers
                 _offset = main.SelectedSaveIndex;
             }
 
-            main.Player.URL = SaveAudios.Audio[_offset].Url;
+            main.Player.Url = SaveAudios.Audio[_offset].Url;
             main.Artist = SaveAudios.Audio[_offset].Artist;
             main.Title = SaveAudios.Audio[_offset].Title;
-            main.Player.controls.play();
+            main.Player.Play();
             SetDurration(main);
         }
 
@@ -303,8 +303,8 @@ namespace uVK.Helpers
                 await Task.Factory.StartNew(() =>
                 {
                     Thread.Sleep(100);
-                    main.DurrationMaximum = main.Player.currentMedia.duration;
-                    main.MaximumTimePosition = main.Player.currentMedia.durationString;
+                    main.DurrationMaximum = main.Player.Duration;
+                    main.MaximumTimePosition = main.Player.DurrationString;
                 });
             }
             catch
@@ -334,7 +334,7 @@ namespace uVK.Helpers
                     _offset++;
             }
 
-            main.Player.URL = ApiDatas.Audio[_offset].Url.ToString();
+            main.Player.Url = ApiDatas.Audio[_offset].Url.ToString();
             main.MaximumTimePosition = ApiDatas.Audio[_offset].Duration.ToString();
 
             main.CurrentTimePositionValue = 0;
@@ -354,7 +354,7 @@ namespace uVK.Helpers
                     break;
                 }
 
-            main.Player.controls.play();
+            main.Player.Play();
 
             try
             {
@@ -475,7 +475,7 @@ namespace uVK.Helpers
                     _offset++;
             }
 
-            main.Player.URL = Decoder.DecodeAudioUrl(_audios[_offset].Url)
+            main.Player.Url = Decoder.DecodeAudioUrl(_audios[_offset].Url)
                 .ToString();
             main.Artist = _audios[_offset].Artist;
             main.Title = _audios[_offset].Title;
@@ -492,7 +492,7 @@ namespace uVK.Helpers
                 }
             }
 
-            main.Player.controls.play();
+            main.Player.Play();
 
 
             try
