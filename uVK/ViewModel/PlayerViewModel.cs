@@ -104,7 +104,7 @@ namespace uVK.ViewModel
         #region Public properties
 
         public List<VkNet.Model.Attachments.Audio> SearchAudios { get; set; }
-        public WindowsPlayer Player { get; set; }
+        public IPlayer Player { get; }
         private Playlist Playlist { get; set;   }
 
         public PlaylistState State
