@@ -120,17 +120,23 @@ namespace uVK.Model
                     {
                         // ignored
                     }
-
-                    list.Add(new OneAudioViewModel()
+                    try
                     {
-                        ImageSourseString = imageSource,
-                        Artist = audio.Artist,
-                        Title = audio.Title,
-                        Duration = Decoder.ConvertTimeToString(audio.Duration),
-                        Width = width,
-                        Url = Decoder.DecodeAudioUrl(audio.Url).ToString(),
-                        Durration = audio.Duration
-                    });
+                        list.Add(new OneAudioViewModel()
+                        {
+                            ImageSourseString = imageSource,
+                            Artist = audio.Artist,
+                            Title = audio.Title,
+                            Duration = Decoder.ConvertTimeToString(audio.Duration),
+                            Width = width,
+                            Url = Decoder.DecodeAudioUrl(audio.Url).ToString(),
+                            Durration = audio.Duration
+                        });
+                    }
+                    catch
+                    {
+                        int i = 0;
+                    }
                 }
             });
         }
@@ -144,6 +150,10 @@ namespace uVK.Model
             {
                 if (audio.Url != null)
                 {
+                    if (audio.Title == "Venom (feat. Shakewell)")
+                    {
+                        int i = 0;
+                    }
                     audio.Url = Decoder.DecodeAudioUrl(audio.Url);
                     audios.Add(audio);
                 }
@@ -288,7 +298,6 @@ namespace uVK.Model
                 {
                     // ignored
                 }
-
                 musicList.Add(new OneAudioViewModel()
                 {
                     ImageSourseString = imageSource,

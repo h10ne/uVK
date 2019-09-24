@@ -9,12 +9,18 @@ namespace uVK.Helpers
         {
             var segments = audioUrl.Segments.ToList();
 
+            if (segments.Count == 3)
+            {
+                return audioUrl;
+            }
             segments.RemoveAt((segments.Count - 1) / 2);
             segments.RemoveAt(segments.Count - 1);
 
             segments[segments.Count - 1] = segments[segments.Count - 1].Replace("/", ".mp3");
 
-            return new Uri($"{audioUrl.Scheme}://{audioUrl.Host}{string.Join("", segments)}{audioUrl.Query}");
+            var UriToReturn = new Uri($"{audioUrl.Scheme}://{audioUrl.Host}{string.Join("", segments)}{audioUrl.Query}");
+
+            return UriToReturn;
         }
 
         public static string ConvertTimeToString(int durration)
