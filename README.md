@@ -6,21 +6,26 @@ uVK - неофициальный музыкальный плеер для соц
 <br>
 
 ![](./Screenshoots/main.png)
+<hr>
 Слушай как треки из своих аудиозаписей, так и из плейлистов!
 <br>
 
 ![](./Screenshoots/playlists.png)
+<hr>
+
 Узнавай, что нового у друзей!
 <br>
-
 ![](./Screenshoots/friends.png)
+<hr>
 Сохраняй свои любимые треки и слушай их когда угодно!
 <br>
 
 ![](./Screenshoots/save.png)
+
+<hr>
+
 Очисти неактив из списков своих групп и друзей!
 <br>
-
 ![](./Screenshoots/other.png)
 <h3><a href="https://www.microsoft.com/ru-RU/download/details.aspx?id=17851">Для функционирования приложения требуется .NET Framework</a></h3>
 <hr>
