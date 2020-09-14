@@ -114,7 +114,7 @@ namespace uVK.Model
                     string imageSource = "/Images/ImageMusic.png";
                     try
                     {
-                        imageSource = audio.Album.Cover.Photo270;
+                        imageSource = audio.Album?.Cover?.Photo270;
                     }
                     catch
                     {
@@ -279,15 +279,7 @@ namespace uVK.Model
                     continue;
                 }
 
-                string imageSource = "/Images/ImageMusic.png";
-                try
-                {
-                    imageSource = audio.Album.Cover.Photo270;
-                }
-                catch
-                {
-                    // ignored
-                }
+                string imageSource = audio.Album?.Cover?.Photo270 ?? "/Images/ImageMusic.png";
 
                 musicList.Add(new OneAudioViewModel()
                 {

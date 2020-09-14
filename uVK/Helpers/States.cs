@@ -123,14 +123,8 @@ namespace uVK.Helpers
             //    }
             main.Player.controls.play();
 
-            try
-            {
-                main.ImageSource = main.FriendsMusicAudios[_offset].ImageSourseString;
-            }
-            catch
-            {
-                main.ImageSource = @"/Images/ImageMusic.png";
-            }
+            main.ImageSource = main.FriendsMusicAudios[_offset].ImageSourseString ?? @"/Images/ImageMusic.png";
+
         }
     }
 
@@ -220,14 +214,7 @@ namespace uVK.Helpers
 
             main.Player.controls.play();
 
-            try
-            {
-                main.ImageSource = _audios[_offset].Album.Cover.Photo135;
-            }
-            catch
-            {
-                main.ImageSource = @"/Images/ImageMusic.png";
-            }
+            main.ImageSource = _audios[_offset].Album?.Cover?.Photo135 ?? @"/Images/ImageMusic.png";
         }
     }
 
@@ -356,14 +343,9 @@ namespace uVK.Helpers
 
             main.Player.controls.play();
 
-            try
-            {
-                main.ImageSource = ApiDatas.Audio[_offset].Album.Cover.Photo135;
-            }
-            catch
-            {
-                main.ImageSource = @"/Images/ImageMusic.png";
-            }
+
+            main.ImageSource = ApiDatas.Audio[_offset]?.Album?.Cover?.Photo135 ?? @"/Images/ImageMusic.png";
+
         }
 
         public void NextSong(PlayerViewModel main)
@@ -494,15 +476,8 @@ namespace uVK.Helpers
 
             main.Player.controls.play();
 
-
-            try
-            {
-                main.ImageSource = _audios[_offset].Album.Cover.Photo135;
-            }
-            catch
-            {
-                main.ImageSource = @"/Images/ImageMusic.png";
-            }
+            main.ImageSource = _audios[_offset].Album?.Cover?.Photo135 ?? @"/Images/ImageMusic.png";
+        
         }
     }
 
