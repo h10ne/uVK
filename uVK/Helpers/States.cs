@@ -214,7 +214,7 @@ namespace uVK.Helpers
 
             main.Player.controls.play();
 
-            main.ImageSource = _audios[_offset].Album?.Cover?.Photo135 ?? @"/Images/ImageMusic.png";
+            main.ImageSource = _audios[_offset].Album?.Thumb?.Photo135 ?? @"/Images/ImageMusic.png";
         }
     }
 
@@ -344,7 +344,7 @@ namespace uVK.Helpers
             main.Player.controls.play();
 
 
-            main.ImageSource = ApiDatas.Audio[_offset]?.Album?.Cover?.Photo135 ?? @"/Images/ImageMusic.png";
+            main.ImageSource = ApiDatas.Audio[_offset]?.Album?.Thumb?.Photo135 ?? @"/Images/ImageMusic.png";
 
         }
 
@@ -476,7 +476,7 @@ namespace uVK.Helpers
 
             main.Player.controls.play();
 
-            main.ImageSource = _audios[_offset].Album?.Cover?.Photo135 ?? @"/Images/ImageMusic.png";
+            main.ImageSource = _audios[_offset].Album?.Thumb?.Photo135 ?? @"/Images/ImageMusic.png";
         
         }
     }

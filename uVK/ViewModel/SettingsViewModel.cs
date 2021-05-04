@@ -155,14 +155,17 @@ namespace uVK.ViewModel
                         }
 
                         current = 0;
-                        count = friendsToDelete.Count;
+                        count = friendsToDelete.Count; string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                       "\\uVK\\Logs\\";
+                        Directory.CreateDirectory(path);
+                        StreamWriter writer = new StreamWriter(path + "DeleteFriendsLog.txt", true);
                         foreach (var friend in friendsToDelete)
                         {
                             current++;
+                            writer.WriteLine($@"https://vk.com/id{friend}");
                             FriendCleanText = $"Удаляем {current}/{count}";
                             ApiDatas.Api.Friends.Delete(friend);
                         }
-
                         FriendCleanText = "Завершено";
                     });
                 }, o => !string.IsNullOrEmpty(FriendAFKDays) && !_isCleanFriends);

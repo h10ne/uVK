@@ -25,7 +25,7 @@ namespace uVK.Model
                 var playlists = ApiDatas.Api.Audio.GetPlaylists(userId).ToList();
                 foreach (var pl in playlists)
                 {
-                    var cover = pl.Cover != null ? pl.Cover.Photo135 : pl.Covers.ToList()[0].Photo135;
+                    var cover = pl.Photo != null ? pl.Photo.Photo135 : pl.Thumbs[0].Photo135;
                     string author;
 
                     try
@@ -114,7 +114,7 @@ namespace uVK.Model
                     string imageSource = "/Images/ImageMusic.png";
                     try
                     {
-                        imageSource = audio.Album?.Cover?.Photo270;
+                        imageSource = audio.Album?.Thumb?.Photo270;
                     }
                     catch
                     {
@@ -193,7 +193,7 @@ namespace uVK.Model
             var playlists = ApiDatas.Api.Audio.GetPlaylists(userId).ToList();
             foreach (var pl in playlists)
             {
-                var cover = pl.Cover != null ? pl.Cover.Photo135 : pl.Covers.ToList()[0].Photo135;
+                var cover = pl.Photo != null ? pl.Photo.Photo135 : pl.Photo.Photo270;
                 string author;
                 try
                 {
@@ -279,7 +279,7 @@ namespace uVK.Model
                     continue;
                 }
 
-                string imageSource = audio.Album?.Cover?.Photo270 ?? "/Images/ImageMusic.png";
+                string imageSource = audio.Album?.Thumb?.Photo270 ?? "/Images/ImageMusic.png";
 
                 musicList.Add(new OneAudioViewModel()
                 {

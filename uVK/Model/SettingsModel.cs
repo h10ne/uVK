@@ -53,6 +53,8 @@ namespace uVK.Model
                 return;
             }
             DateTime lastSeen;
+            if (friend.LastSeen == null)
+                return;
             if (friend.LastSeen.Time != null)
             {
                 lastSeen = friend.LastSeen.Time.Value;
